@@ -1,180 +1,264 @@
 <?php
-
-$var =  @mysql_connect(localhost, ziccarelli, pa724);
-mysql_select_db(medievalbattles_com) or die(darnit);
-$dbnam = "medievalbattles_com";
-
-	session_register('login');
-	session_register('email');
-	session_register('pw');
-
-include("functions.php");
-
-?>
-<HTML>
-<HEAD>
-<TITLE>Medieval Battles</TITLE>
-	<link rel=stylesheet type="text/css" href="css/ingame.css">
-</HEAD>
-<BODY>
-<!-- THIS IS OUTER TABLE -->
-<table class=outer border="0" cellpadding="1" cellspacing="0"  width="100%">
- <TR>
-  <TD valign="top" colspan="2">
-   <table border="0" width="100%" cellpadding=0 cellspacing=0>
-	<tr>
-	 <td><center><img src="images/igtop.gif"></center></td>
-</TD>
-   <table border="1" cellpadding="2" cellspacing="0" bgcolor="#336600" bordercolor="#630000" width="100%">
-	<tr>
-	 <td class=top><b>GP:</b><? echo"$gp"; ?> </td>
-	 <td class=top><b>Civilians:</b><? echo"$civ"; ?></td>
-	 <td class=top><b>Land:</b> <? echo"$land"; ?></td>
-	 <td class=top><b>Mountains:</b><? echo"$mts"; ?></td>
-	 <td class=top><b>Experience:</b><? echo"$exp"; ?></td>
-	</table>	
-</TD>
-</TR>  
-<TR valign="top">
- <TD width="15%">
-	<?php
-		include("include/ignavbar.php");
+		include("include/igtop.php");
 	?>
- </TD>
- <TD width="85%"> <!-- BODY OF PAGE BEGINS HERE -->
+
+
+ <!-- BODY OF PAGE BEGINS HERE -->
 <br><br>
-
-
-	
-	<table border="1" bordercolor="#000000" align=center width="80%">
-	<tr>
-		  <td colspan=5>
 			<form method="post" action="settlement.php">
-			<center>
-			<b class=reg>Change Settlement:</b> <input type="number" name="snum" size="3" maxlength="2">
+			<center>			  <?
+			     //$nnum = $csnum -1; echo"<a href=settlement.php?change=1&snum=$nnum><-- &nbsp; </a>"; 
+			     $nnum = $setid; echo"| <a href=settlement.php?change=1&snum=$nnum>Home</a> |";
+				 $nnum = rand(1,40);  echo" <a href=settlement.php?change=1&snum=$nnum>Random</a> |";
+				 //$nnum = $csnum +1; echo"<a href=settlement.php?change=1&snum=$nnum>&nbsp; --></a>"; 
+			     
+			  ?><br><br>
+			<b class=reg>View Settlement:</b> <input type="number" name="snum" size="3" maxlength="2">
 			<input type="submit" name="change" value="Change" class=button>
 			<input type="hidden" name="change" value="1">
+			<br><br>
+
 			</center>
 			</form>
-			</td>
-	
-
-	
-	
 	
 <?php
 if (!IsSet($change))
 {
 ?>	
-	<? $ssettlementpic = mysql($dbnam, "SELECT setpic FROM settlement WHERE setid = '$setid'");	
-	$settlepic = mysql_result($ssettlementpic,"settlepic");	
-	$ssettlementname = mysql($dbnam, "SELECT setname FROM settlement WHERE setid = '$setid'");	
-	$settlename = mysql_result($ssettlementname,"settlename");
 
-	echo"<img src=$settlepic width=300 height=200><br><br>$settlename"; ?>
+<?php 
+	$ssettlementpic = mysql($dbnam, "SELECT setpic FROM settlement WHERE setid = '$csnum'");	
+	$settlepic = mysql_result($ssettlementpic,"settlepic");	
+	$ssettlementname = mysql($dbnam, "SELECT setname FROM settlement WHERE setid = '$csnum'");	
+	$settlename = mysql_result($ssettlementname,"settlename");
+	$thenap = mysql($dbnam, "SELECT nap FROM settlement WHERE setid = '$csnum'");	
+	$nap = mysql_result($thenap,"nap");
+
+	$thesetguild = mysql($dbnam, "SELECT setguild FROM settlement WHERE setid = '$csnum'");	
+	$setguild = mysql_result($thesetguild,"setguild");
+		
+
+	echo "
+		<div align=center>	
+		<table border=0 width=\"300\" align=center>
+		  <tr>
+			<td width=\"20%\" align=center colspan=2><b class=rtop>Name:</b> $settlename</td>
+		  <tr>
+			<td colspan=2><img src=$settlepic width=300 height=200></td>
+      	  <tr>
+			<td width=\"20%\" align=center colspan=2><b class=rtop>NAP:</b> $nap</td>
+		  <tr>
+			<td width=\"20%\" align=center colspan=2><b class=rtop>Guild:</b> $setguild</td>
+		</table>
+		</div>
+		 ";
+?>
+
 <?php
  
-	
 
-	
-	$var =  @mysql_connect(localhost, ziccarelli, pa724);
-	mysql_select_db(medievalbattles_com) or die(darnit);
-	$dbnam = "medievalbattles_com";
-	$tablename = "user";
-	function display_db_table($tablename, $var)
-	{	
-		global $setid;
-			$query_string = "SELECT ename, mts, land, exp FROM user WHERE setid='$setid'";
-			$result_id = mysql_query($query_string, $var);
-			$column_count = mysql_num_fields($result_id);
-
-			while ($row = mysql_fetch_row($result_id))
-		{
-				print("<TR ALIGN=center VALIGN=TOP colspan=4>");
-				for ($column_num = 0;
-				$column_num < $column_count;
-				$column_num++)
-					
-					print("<TD bgcolor=#404040>$row[$column_num]</TD>\n");
-				print("</TR>\n");
-		}
-		print("</TABLE>\n");
-	}
-
-echo "
+			include("include/connect.php");
+			$tablename = "user";
+echo "  <br><br>
+		<table border=1 bordercolor=#000000 align=center width=\"80%\" cellpadding = 0 cellspacing = 0>
 		<tr>
-		  <td class=\"main\" colspan=\"4\"><b class=\"reg\">Settlement: $setid</b></td>
+		  <td class=\"main\" colspan=\"5\"><b class=\"reg\">Settlement: $csnum</b></td>
 		<tr>
 		  <td class=\"main2\" width=><b class=\"reg\">Empire Name</b></td>
+		  <td class=\"main2\" width=><b class=\"reg\">Class</b></td>
 		  <td class=\"main2\" width=><b class=\"reg\">Mountains</b></td>
 		  <td class=\"main2\" width=><b class=\"reg\">Land</b></td>
 		  <td class=\"main2\" width=><b class=\"reg\">Experience</b></td>
-		<tr colspan=\"4\">
-		  <td colspan=\"4\">"; 
-				display_db_table("user", $var);
-echo "
-				</td>
-	    </table>";
-}
-else
-{
-		if($snum <1)
-	{echo"There is no such settlement.";die();
+";
+
+		$query_string = "SELECT userid, ename, class, mts, land, exp FROM user WHERE setid = '$csnum'";
+		$result_id = mysql_query($query_string, $var);
+		while ($row = mysql_fetch_row($result_id))
+		    {
+
+				$ONLINE_NO = mysql($dbnam, "SELECT online FROM user WHERE ename='$row[1]'");	
+				$OLINE = mysql_result($ONLINE_NO,"OLINE");
+	
+			if($OLINE == 1)
+				{$O_line = "<font class=red>*</font>";}
+			else{$O_line = "";}
+				
+			//CHECK TO SEE IF SL IS THERE
+						$SL_query = ("SELECT sl FROM user WHERE ename='$row[1]'");
+						$SL_result = mysql_query($SL_query);
+						$SLcheck = mysql_fetch_array($SL_result);
+							if($SLcheck[0] == yes)
+								{$color = "#632910";
+										$SL_SELECT = mysql($dbnam, "SELECT ename FROM user WHERE sl='yes' AND setid='$setid'");	
+	    								$SL_S = mysql_result($SL_SELECT,"SL_S");
+								}
+							if($SLcheck[0] != yes)
+								{$color = "#404040";} 
+							if($row[1] == "$ename")
+								{$color = "#635208";}
+
+					
+		    print("<TR ALIGN=center VALIGN=TOP colspan=6>
+				   <td bgcolor=$color><a href=\"messaging.php?value=$row[0]&snum=$csnum&setchg=1\">$row[1]</a>$O_line</td>
+				   <td bgcolor=$color>$row[2]</td>
+				   <td bgcolor=$color>$row[3]</td>
+				   <td bgcolor=$color>$row[4]</td>
+				   <td bgcolor=$color>$row[5]</td>\n");
+		    }
+$COUNT_MEMBERS = mysql($dbnam, "SELECT count(userid) FROM user WHERE setid = '$csnum'");	
+	$C_MEM = mysql_result($COUNT_MEMBERS,"C_MEM");
+
+	$totT = $C_MEM;
+
+	While($C_MEM < 5 AND $totT < 5)
+		{	echo"
+ 		 <tr>
+		  <td class=\"inner2\" width=><b class=\"reg\">NONE</b></td>
+		  <td class=\"inner2\" width=><b class=\"reg\">NONE</b></td>
+		  <td class=\"inner2\" width=><b class=\"reg\">NONE</b></td>
+		  <td class=\"inner2\" width=><b class=\"reg\">NONE</b></td>
+		  <td class=\"inner2\" width=><b class=\"reg\">NONE</b></td>
+				";
+			$totT = $totT + 1;
+		}
+	
+
+
+		echo "
+				</table>
+				<br>
+		";
+
+	include("include/connect.php");
+	$SET_STRENGTH = mysql($dbnam, "SELECT sum(exp) FROM user WHERE setid = '$csnum'");	
+	$S_STRENGTH = mysql_result($SET_STRENGTH,"S_STRENGTH");
+	echo "<br><div align=center><b class=rtop>Settlement Strength:</b> $S_STRENGTH</div></td></table>";
+
 	}
 	else
+	{
+
+		if($snum < 1 OR $snum > 40) 
+			{echo"<center>Settlement $snum does not exist $ename.</center>";die();
+			}
+		else
 		{
-
-
+			mysql_query("UPDATE user SET csnum = \"$snum\" WHERE email = \"$email\"");
+			if($snum == 0 OR $snum == "")
+				{mysql_query("UPDATE user SET csnum = \"$nnum\" WHERE email = \"$email\"");
+				}
 	$ssettlementpic = mysql($dbnam, "SELECT setpic FROM settlement WHERE setid = '$snum'");	
 	$settlepic = mysql_result($ssettlementpic,"settlepic");	
-
-
-	
 	$ssettlementname = mysql($dbnam, "SELECT setname FROM settlement WHERE setid = '$snum'");	
 	$settlename = mysql_result($ssettlementname,"settlename");
+	$thenap = mysql($dbnam, "SELECT nap FROM settlement WHERE setid = '$snum'");	
+	$nap = mysql_result($thenap,"nap");
 
-	echo"<img src=$settlepic width=300 height=200><br><br>$settlename";
+	$thesetguild = mysql($dbnam, "SELECT setguild FROM settlement WHERE setid = '$snum'");	
+	$setguild = mysql_result($thesetguild,"setguild");
+		
 
-	$var =  @mysql_connect(localhost, ziccarelli, pa724);
-	mysql_select_db(medievalbattles_com) or die(darnit);
-	$dbnam = "medievalbattles_com";
-	$tablename = "user";
-	function display_db_table($tablename, $var)
-	{	
-		global $snum;
-			$query_string = "SELECT ename, mts, land, exp FROM user WHERE setid='$snum'";
-			$result_id = mysql_query($query_string, $var);
-			$column_count = mysql_num_fields($result_id);
+	echo "
+		<div align=center>	
+		<table border=0 width=\"300\" align=center>
+		  <tr>
+			<td width=\"20%\" align=center colspan=2><b class=rtop>Name:</b> $settlename</td>
+		  <tr><td colspan=2><img src=$settlepic width=300 height=200></td>
+      	  <tr>
+			<td width=\"20%\" align=center colspan=2><b class=rtop>NAP:</b> $nap</td>
+		  <tr>
+			<td width=\"20%\" align=center colspan=2><b class=rtop>Guild:</b> $setguild</td>
+		</table>
+		</div>
+		 ";
 
-			while ($row = mysql_fetch_row($result_id))
-		{
-				print("<TR ALIGN=center VALIGN=TOP colspan=4>");
-				for ($column_num = 0;
-				$column_num < $column_count;
-				$column_num++)
-					
-					print("<TD bgcolor=#404040>$row[$column_num]</TD>\n");
-				print("</TR>\n");
-		}
-		print("</TABLE>\n");
-	}
-echo "
+
+
+			include("include/connect.php");
+			$tablename = "user";
+echo "<br><br>
+		<table border=1 bordercolor=#000000 align=center width=\"80%\" cellpadding = 0 cellspacing = 0>
 		<tr>
-		  <td class=\"main\" colspan=\"4\"><b class=\"reg\">Settlement: $snum</b></td>
+		  <td class=\"main\" colspan=\"5\"><b class=\"reg\">Settlement: $snum</b></td>
 		<tr>
 		  <td class=\"main2\" width=><b class=\"reg\">Empire Name</b></td>
+		  <td class=\"main2\" width=><b class=\"reg\">Class</b></td>
 		  <td class=\"main2\" width=><b class=\"reg\">Mountains</b></td>
 		  <td class=\"main2\" width=><b class=\"reg\">Land</b></td>
 		  <td class=\"main2\" width=><b class=\"reg\">Experience</b></td>
-		<tr colspan=\"4\">
-		  <td colspan=\"4\">"; 
-				display_db_table("user", $var);
-echo "
-				</td>
-	    </table>";
+";
 
+		$query_string = "SELECT userid, ename, class, mts, land, exp FROM user WHERE setid = '$snum'";
+		$result_id = mysql_query($query_string, $var);
+		while ($row = mysql_fetch_row($result_id))
+		    {
+
+
+			$ONLINE_NO = mysql($dbnam, "SELECT online FROM user WHERE ename='$row[1]'");	
+			$OLINE = mysql_result($ONLINE_NO,"OLINE");
+	
+			if($OLINE == 1)
+				{$O_line = "<font class=red>*</font>";}
+			else{$O_line = "";}
+
+				//CHECK TO SEE IF SL IS THERE
+						$SL_query = ("SELECT sl FROM user WHERE ename='$row[1]'");
+						$SL_result = mysql_query($SL_query);
+						$SLcheck = mysql_fetch_array($SL_result);
+							if($SLcheck[0] == yes)
+								{$color = "#632910";}
+							if($SLcheck[0] != yes)
+								{$color = "#404040";} 
+							if($row[1] == "$ename")
+								{$color = "#635208";}
+
+		    print("<TR ALIGN=center VALIGN=TOP colspan=6>
+				   <td bgcolor=$color><a href=\"messaging.php?snum=$snum&setchg=1\">$row[1]</a>$O_line</td>
+				   <td bgcolor=$color>$row[2]</td>
+				   <td bgcolor=$color>$row[3]</td>
+				   <td bgcolor=$color>$row[4]</td>
+				   <td bgcolor=$color>$row[5]</td>\n");
+
+				
+
+
+		    }
+	
+	$COUNT_MEMBERS = mysql($dbnam, "SELECT count(userid) FROM user WHERE setid = '$snum'");	
+	$C_MEM = mysql_result($COUNT_MEMBERS,"C_MEM");
+	
+	$totT = $C_MEM;
+
+	While($C_MEM < 5 AND $totT < 5)
+		{	echo"
+ 		 <tr>
+		  <td class=\"inner2\" width=><b class=\"reg\">NONE</b></td>
+		  <td class=\"inner2\" width=><b class=\"reg\">NONE</b></td>
+		  <td class=\"inner2\" width=><b class=\"reg\">NONE</b></td>
+		  <td class=\"inner2\" width=><b class=\"reg\">NONE</b></td>
+		  <td class=\"inner2\" width=><b class=\"reg\">NONE</b></td>
+				";
+			$totT = $totT + 1;
+		}
+
+
+		echo "
+				</table>
+				<br>
+		";
+
+  
+
+	include("include/connect.php");
+	$SET_STRENGTH = mysql($dbnam, "SELECT sum(exp) FROM user WHERE setid = '$snum'");	
+	$S_STRENGTH = mysql_result($SET_STRENGTH,"S_STRENGTH");
+	echo"<br><div align=center><b class=rtop>Settlement Strength:</b> $S_STRENGTH</div></td></table>";
+			
+		}
  }
-}
+
+
+
 ?>
  
  

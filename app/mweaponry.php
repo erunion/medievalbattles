@@ -22,7 +22,7 @@
 	 <table border="0" bordercolor="red" width="100%" align="center">
 		
 		<tr align="center" valign="top">
-		 	<td><font size="+5" color="#bfbfbf">MB Manual</font></td>
+		 	<td><font size="+5" color="#bfbfbf">Medieval Battles<br> Manual</font></td>
 	
 		<tr>
 		 	<td align="center"><hr color="red" width="50%"></td>
@@ -34,21 +34,28 @@
 		 <td>   <!-- This is where the main part of the page goes -->
 			<br><br><blockquote> 
 		
-Below are the avilable weapons that can be built.  A weapon with a speed factor helps to determine your attacking time.  Damage tells you how many hitpoints that it can take off of the enemy.  There also is the amount of iron that is required to construct the weapon.
+Below are the avilable weapons that can be built. A weapon with a speed factor helps to determine your attacking time. Damage tells you how many hitpoints that it can take off of the enemy. There also is the amount of iron that is required to construct the weapon.
 <br><br>
 
 <ul>
 <li><b>Melee</b>
 	
 
-	<ul><li><b class=other>Short Sword</b>- 1 handed weapon.	
-		<br>Speed Factor: 4 
-		<br>Damage:7
+			
+	<ul><li><b class=other>Dagger</b>- 1 handed weapon.	
+		<br>Speed Factor: 6
+		<br>Damage:3
+		<br>Only usable by warriors
+
+		<br><br>
+	<li><b class=other>Short Sword</b>- 1 handed weapon.	
+		<br>Speed Factor: 7
+		<br>Damage:6
 		<br>Only usable by warriors
 
 		<br><br>
 	<li><b class=other>Long Sword</b>- 1 handed weapon.	
-		<br>Speed Factor: 5 
+		<br>Speed Factor: 8 
 		<br>Damage:9
 		<br>Only usable by warriors
 
@@ -60,32 +67,77 @@ Below are the avilable weapons that can be built.  A weapon with a speed factor 
 
 		<br><br>
 <li><b class=other>Great Axe</b>- 2 handed weapon.	
-		<br>Speed Factor: 12
-		<br>Damage:18
+		<br>Speed Factor: 14
+		<br>Damage:20
 		<br>Only usable by warriors
 
 		<br><br>
 <li><b class=other>Ice Sword</b>- 2 handed weapon.	
-		<br>Speed Factor: 9
-		<br>Damage:20
+		<br>Speed Factor: 18
+		<br>Damage:25
 		<br>Only usable by warriors
 		
-<li><b class=other>Club</b>- 2 handed weapon.	
-		<br>Speed Factor: 5
+		<br><br>
+<li><b class=other>Quarter Staff</b>- 2 handed weapon.	
+		<br>Speed Factor: 6
+		<br>Damage: 2
+		<br>Only usable by priests
+		
+		<br><br>
+<li><b class=other>Spiked Club</b>- 1 handed weapon.	
+		<br>Speed Factor: 6
 		<br>Damage: 6
-		<br>Only usable by warriors and priests
+		<br>Only usable by priests
 		
+ 		
+		<br><br>
+<li><b class=other>Mace</b>- 1 handed weapon.	
+		<br>Speed Factor: 8
+		<br>Damage: 9
+		<br>Only usable by priests
+
+		
+		<br><br>
+<li><b class=other>Grand Scepter</b>- 1 handed weapon.	
+		<br>Speed Factor: 9
+		<br>Damage: 15
+		<br>Only usable by priests
 	
 
-
-
-	
-	 
-</ul>
+</ul></ul>
+<ul>
+<li><b>Distance</b>		
+		<br><br>
+<ul>
+<li><b class=other>Bow</b>- 2 handed weapon.	
+		<br>Speed Factor: 5
+		<br>Damage: 2
+		<br>Only usable by archers
 
 		
-</blockquote>
-			
+		<br><br>
+<li><b class=other>Short Bow</b>- 2 handed weapon.	
+		<br>Speed Factor: 6
+		<br>Damage: 7
+		<br>Only usable by archers
+
+		
+		<br><br>
+<li><b class=other>Long Bow</b>- 2 handed weapon.	
+		<br>Speed Factor: 7
+		<br>Damage: 14
+		<br>Only usable by archers
+
+		
+		<br><br>
+<li><b class=other>Medieval War Bow</b>- 2 handed weapon.	
+		<br>Speed Factor: 8
+		<br>Damage: 22
+		<br>Only usable by archers
+
+
+
+</blockquote>			
            </td>
 	</tr>
      </table>

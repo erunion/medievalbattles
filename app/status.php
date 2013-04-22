@@ -1,151 +1,231 @@
 <?php
-
-$var =  @mysql_connect(localhost, ziccarelli, pa724);
-mysql_select_db(medievalbattles_com) or die(darnit);
-$dbnam = "medievalbattles_com";
-
-	session_register('login');
-	session_register('email');
-	session_register('pw');
-
-include("functions.php");
-
-?>
-<HTML>
-<HEAD>
-<TITLE>Medieval Battles</TITLE>
-	<link rel=stylesheet type="text/css" href="css/ingame.css">
-</HEAD>
-<BODY>
-<!-- THIS IS OUTER TABLE -->
-<table class=outer border="0" cellpadding="1" cellspacing="0"  width="100%">
- <TR>
-  <TD valign="top" colspan="2">
-   <table border="0" width="100%" cellpadding=0 cellspacing=0>
-	<tr>
-	 <td><center><img src="images/igtop.gif"></center></td>
-</TD>
-   <table border="1" cellpadding="2" cellspacing="0" bgcolor="#336600" bordercolor="#630000" width="100%">
-	<tr>
-	 <td class=top><b>GP:</b><? echo"$gp"; ?> </td>
-	 <td class=top><b>Civilians:</b><? echo"$civ"; ?></td>
-	 <td class=top><b>Land:</b> <? echo"$land"; ?></td>
-	 <td class=top><b>Mountains:</b><? echo"$mts"; ?></td>
-	 <td class=top><b>Experience:</b><? echo"$exp"; ?></td>
-	</table>	
-</TD>
-</TR>  
-<TR valign="top">
- <TD width="15%">
-	<?php
-		include("include/ignavbar.php");
+		include("include/igtop.php");
 	?>
- </TD>
- <TD width="85%"> <!-- BODY OF PAGE BEGINS HERE -->
+<!-- BODY OF PAGE BEGINS HERE -->
 
-		<table border=0 cellpadding=2 cellspacing=0 width="100%" valign="top">
- 		<tr>
-		<td><br><br><br>
+	<br><br>
 		
-							
-		<table border="0" bordercolor="#808080" align=center width="60%">
-	
-				<tr><td class=main colspan=2><b class=top>Empire Status</b></td>
-				<tr><td class=main2><b class=top>Type</b><td class=main2><b class=top>Hourly</b>
-				
-					<tr>
-						<td class=inner>Iron</td>
-							<td class=inner2><? echo"$imhourly"; ?></td>
-					<tr>
-						<td class=inner>Gold</td>
-							<td class=inner2><? echo"$gmhourly"; ?></td>
-					<tr>
-						<td class=inner>Civilian</td>
-							<td class=inner2><? echo"$civhourly"; ?></td>
-					<tr>
-						<td class=inner>Food</td>
-							<td class=inner2><? echo"$foodhourly"; ?></td>
+			<center> <b class=reg> | <a href="status.php?pageid=production"> -Production- </a> |  <a href="status.php?pageid=fleets"> -Fleets- </a> | <a href="status.php?pageid=building"> -Building- </a> | <a href="status.php?pageid=training"> -Training- </a> | </b></center><br>				
+<center>At the status page, you can see how your empire is doing and what is in development</center><br>
 
-		</table>
-<br><br>
+<? if ($pageid == 'production'){?>
+
+			<table border="0" bordercolor="#808080" align=center width="40%">
+				<tr>
+				  <td class=main colspan=2><b class=reg>Empire Status</b></td>
+				<tr>
+				  <td class=main2><b class=top>Type</b><td class=main2><b class=top>Hourly</b>
+				<tr>
+					<td class=inner><b class=reg>Iron Production</b></td>
+					<td class=inner2><? echo"$imhourly"; ?></td>
+				<tr>
+					<td class=inner><b class=reg>Gold Production</b></td>
+					<td class=inner2><? echo"$gmhourly"; ?></td>
+				<tr>
+					<td class=inner><b class=reg>New Civilians </b></td>
+					<td class=inner2><? echo"$civhourly"; ?></td>
+				<tr>
+					<td class=inner><b class=reg>New Recruits </b></td>
+					<td class=inner2><? echo"$rechourly"; ?></td>
+				<tr>
+					<td class=inner><b class=reg>Food Production</b></td>
+					<td class=inner2><? echo"$foodhourly"; ?></td>
+		<? if($r6pts >= 125000)
+			{echo"<tr>
+					<td class=inner><b class=reg>Lumber Production</b></td>
+					<td class=inner2>$woodhourly</td>
+				";
+			}
+		?>
+			</table>
+<? } ?>
+
+
+
+<? if ($pageid == 'building'){?>
+
 		<table border="0" bordercolor="#808080" width="60%" align=center>
-
-				<tr><td class=main colspan=7><b class=top>Land Status</b></td>
+			
+				<tr>
+				  <td class=main colspan=9><b class=reg>Land/Mining Status</b></td>
+				
+				<tr>
+				  <td class=main2 colspan=9>The first number is how many are being built and the number in "()" is how many hours is left until it is built.</td>
+				
 				<tr align=center>
-					<td class=main2>Home</td>
-					<td class=main2>Barrack</td>
-					<td class=main2>Farm</td>
-					<td class=main2>Lab</td>
-					
+					<td class=main2><b class=reg>Home</b></td>
+					<td class=main2><b class=reg>Barrack</b></td>
+					<td class=main2><b class=reg>Farm</b></td>
+					<td class=main2><b class=reg>Wooden Platform</b></td>
+					<td class=main2><b class=reg>Gold Mines</b></td>
+					<td class=main2><b class=reg>Iron Mines</b></td>
+				<? if($r6pts >= 125000){echo"<td class=main2><b class=reg>Lumber Mill</td>";} ?>
 
 				<tr align=center>	
-					<td class=inner2><? echo"$dhome"; ?></td>	
-					<td class=inner2><? echo"$dbarrack"; ?></td>
-					<td class=inner2><? echo"$dfarm"; ?></td>
-					<td class=inner2><? echo"$dlab"; ?></td>
-					
+					<td class=inner2><? echo"$dhome ($Hhrs)"; ?></td>	
+					<td class=inner2><? echo"$dbarrack ($Bhrs)"; ?></td>
+					<td class=inner2><? echo"$dfarm ($Fhrs)"; ?></td>
+					<td class=inner2><? echo"$dwp ($Whrs)"; ?></td>
+					<td class=inner2><? echo"$dgm($Ghrs)"; ?></td>
+					<td class=inner2><? echo"$dim($Ihrs)"; ?></td>
+				<? if($r6pts >= 125000){echo"<td class=inner2>$dlmill($Lhrs)</td>";} ?>
 		</table>
 
-<br><br>
-		<table border="0" bordercolor="#808080"  width="60%" align=center>
+<? } ?>
 
-			<tr><td class=main colspan=2><b class=top>Mining Status</b></td>
-			<tr align=center>
-				<td class=main2>Gold Mines</td>
-				<td class=main2>Iron Mines</td>
-				
 
-			<tr align=center>
-				<td class=inner2><? echo"$dgm"; ?></td>
-				<td class=inner2><? echo"$dim"; ?></td>
-				
-		</table>
-<br><br>
 	
 		  	
-			</td>
-			</tr>
-			</table>
-		
+	
+<? if ($pageid == 'training'){?>
+	
 <table border=0 bordercolor="#808080" align=center width="60%">
 	  <tr>
-	    <td class=main colspan=5><b class=reg>Hourly Status</b></td>
+	    <td class=main colspan=5><b class=reg>Training Status</b></td>
 	  <tr>
 	    <td class=main2><b class=reg>Unit</b></td>
-		<td class=main2><b class=reg>Hour 1 Amount</b></td>
-		<td class=main2><b class=reg>Hour 2 Amount</b></td>
+		<td class=main2><b class=reg>Training (1hr)</b></td>
+		<td class=main2><b class=reg>Training (2hrs)</b></td>
 	  <tr> 
-		<td class=inner2>Warrior</td>
+		<td class=inner2><b class=reg>Warrior</b></td>
 		<td class=inner2><? echo"$dbwar"; ?></td>
 		<td class=inner2><? echo"$dbwar2"; ?></td>
 	  <tr>
-		<td class=inner2>Wizard</td>
+		<td class=inner2><b class=reg>Wizard</td>
 		<td class=inner2><? echo"$dbwiz"; ?></td>
 		<td class=inner2><? echo"$dbwiz2"; ?></td>
 	  <tr>
-		<td class=inner2>Priest</td>
+		<td class=inner2><b class=reg>Priest</b></td>
 		<td class=inner2><? echo"$dbpri"; ?></td>
 		<td class=inner2><? echo"$dbpri2"; ?></td>
-	</table>
-<br><br>
-	<table border=0 bordercolor="#808080" align=center width="60%">
-	  <tr>
-	    <td class=main colspan=4><b class=reg>Hourly Status</b></td>
 	  <tr>
 	    <td class=main2><b class=reg>Unit</b></td>
-		<td class=main2><b class=reg>Hour 1 Amount</b></td>
-		
+		<td class=main2 colspan=2><b class=reg>Training (1hr)</b></td>
 	  <tr> 
-		<td class=inner2>Scientist</td>
-		<td class=inner2><? echo"$dbscientist"; ?></td>
+		<td class=inner2><b class=reg>Scientist</b></td>
+		<td class=inner2 colspan=2><? echo"$dbscientist"; ?></td>
 	  <tr>
-		<td class=inner2>Thief</td>
-		<td class=inner2><? echo"$dbthief"; ?></td>
+		<td class=inner2><b class=reg>Thief</b></td>
+		<td class=inner2 colspan=2><? echo"$dbthief"; ?></td>
 	  <tr>
-		<td class=inner2>Explorer</td>
-		<td class=inner2><? echo"$dbexplorer"; ?></td>
+		<td class=inner2><b class=reg>Explorer</b></td>
+		<td class=inner2 colspan=2><? echo"$dbexplorer"; ?></td>
+	</table>
+	<? } ?>
+
+<? if ($pageid == 'fleets'){?>
+<table border=0 bordercolor="#808080" align=center width="60%">
+	  <tr>
+	    <td class=main colspan=5><b class=reg>Fleet Status</b></td>
+	  <tr>
+	    <td class=main2><b class=reg>Unit</b></td>
+		<td class=main2><b class=reg>Status</b></td>
+		<td class=main2><b class=reg>Amount</b></td>
 		
-	</table>	
+
+
+	
+
+	 
+
+
+		<tr> 
+	    <td class=main2 colspan=3><b class=reg>Fleet 1</b></td>
+	 <tr>
+		<td class=inner2><b class=reg>Warrior</b></td>
+		<td class=inner2><? if($WAR_4 > 0 OR  $WIZ_4 > 0 OR $PRI_4 > 0 OR $ARCH_4 > 0 OR $TIME_4 > 0){echo"Returning ($TIME_4 hrs)";}else{echo"Defending";} ?></td>
+		<td class=inner2><? if($TIME_4 == 0){echo"---";}else{echo"$WAR_4";} ?></td>
+	<tr>	
+		<td class=inner2><b class=reg>Wizard</b></td>
+		<td class=inner2><? if($WAR_4 > 0 OR  $WIZ_4 > 0 OR $PRI_4 > 0 OR $ARCH_4 > 0 OR $TIME_4 > 0){echo"Returning ($TIME_4 hrs)";}else{echo"Defending";} ?></td>
+		<td class=inner2><? if($TIME_4 == 0){echo"---";}else{echo"$WIZ_4";} ?></td>
+	<tr>	
+		<td class=inner2><b class=reg>Priest</b></td>
+		<td class=inner2><? if($WAR_4 > 0 OR  $WIZ_4 > 0 OR $PRI_4 > 0 OR $ARCH_4 > 0 OR $TIME_4 > 0){echo"Returning ($TIME_4 hrs)";}else{echo"Defending";} ?></td>
+		<td class=inner2><? if($TIME_4 == 0){echo"---";}else{echo"$PRI_4";} ?></td>
+<? if($r6pts >= 125000){
+	echo"
+	<tr>	
+		<td class=inner2><b class=reg>Archer</b></td>
+		<td class=inner2> "; if($WAR_4 > 0 OR  $WIZ_4 > 0 OR $PRI_4 > 0 OR $ARCH_4 > 0 OR $TIME_4 > 0){echo"Returning ($TIME_4 hrs)";}else{echo"Defending";} echo"</td>";
+echo"<td class=inner2>"; if($TIME_4 == 0){echo"---";}else{echo"$ARCH_4";} echo"</td>";
+}
+?>
+
+	<tr> 
+	    <td class=main2 colspan=3><b class=reg>Fleet 2</b></td>
+	 <tr>
+		<td class=inner2><b class=reg>Warrior</b></td>
+		<td class=inner2><? if($WAR_3 > 0 OR  $WIZ_3 > 0 OR $PRI_3 > 0 OR $ARCH_3 > 0 OR $TIME_3 > 0){echo"Returning ($TIME_3 hrs)";}else{echo"Defending";} ?></td>
+		<td class=inner2><? if($TIME_3 == 0){echo"---";}else{echo"$WAR_3";} ?></td>
+	<tr>	
+		<td class=inner2><b class=reg>Wizard</b></td>
+		<td class=inner2><? if($WAR_3 > 0 OR  $WIZ_3 > 0 OR $PRI_3 > 0 OR $ARCH_3 > 0 OR $TIME_3 > 0){echo"Returning ($TIME_3 hrs)";}else{echo"Defending";} ?></td>
+		<td class=inner2><? if($TIME_3 == 0){echo"---";}else{echo"$WIZ_3";} ?></td>
+	<tr>	
+		<td class=inner2><b class=reg>Priest</b></td>
+		<td class=inner2><? if($WAR_3 > 0 OR  $WIZ_3 > 0 OR $PRI_3 > 0 OR $ARCH_3 > 0 OR $TIME_3 > 0){echo"Returning ($TIME_3 hrs)";}else{echo"Defending";} ?></td>
+		<td class=inner2><? if($TIME_3 == 0){echo"---";}else{echo"$PRI_3";} ?></td>
+	<? if($r6pts >= 125000){
+	echo"
+	<tr>	
+		<td class=inner2><b class=reg>Archer</b></td>
+		<td class=inner2> "; if($WAR_3 > 0 OR  $WIZ_3 > 0 OR $PRI_3 > 0 OR $ARCH_3 > 0 OR $TIME_3 > 0){echo"Returning ($TIME_3 hrs)";}else{echo"Defending";} echo"</td>";
+   echo"<td class=inner2>"; if($TIME_3 == 0){echo"---";}else{echo"$ARCH_3";} echo"</td>";
+}
+?>
+
+
+	<tr> 
+	    <td class=main2 colspan=3><b class=reg>Fleet 3</b></td>
+	 <tr>
+		<td class=inner2><b class=reg>Warrior</b></td>
+		<td class=inner2><? if($WAR_2 > 0 OR  $WIZ_2 > 0 OR $PRI_2 > 0 OR $ARCH_2 > 0 OR $TIME_2 > 0){echo"Returning ($TIME_2 hrs)";}else{echo"Defending";} ?></td>
+		<td class=inner2><? if($TIME_2 == 0){echo"---";}else{echo"$WAR_2";} ?></td>
+	<tr>	
+		<td class=inner2><b class=reg>Wizard</b></td>
+		<td class=inner2><? if($WAR_2 > 0 OR  $WIZ_2 > 0 OR $PRI_2 > 0 OR $ARCH_2 > 0 OR $TIME_2 > 0){echo"Returning ($TIME_2 hrs)";}else{echo"Defending";} ?></td>
+		<td class=inner2><? if($TIME_2 == 0){echo"---";}else{echo"$WIZ_2";} ?></td>
+	<tr>	
+		<td class=inner2><b class=reg>Priest</b></td>
+		<td class=inner2><? if($WAR_2 > 0 OR  $WIZ_2 > 0 OR $PRI_2 > 0 OR $ARCH_2 > 0 OR $TIME_2 > 0){echo"Returning ($TIME_2 hrs)";}else{echo"Defending";} ?></td>
+		<td class=inner2><? if($TIME_2 == 0){echo"---";}else{echo"$PRI_2";} ?></td>
+
+<? if($r6pts >= 125000){
+	echo"
+	<tr>	
+		<td class=inner2><b class=reg>Archer</b></td>
+		<td class=inner2> "; if($WAR_2 > 0 OR  $WIZ_2 > 0 OR $PRI_2 > 0 OR $ARCH_2 > 0 OR $TIME_2 > 0){echo"Returning ($TIME_2 hrs)";}else{echo"Defending";} echo"</td>";
+   echo"<td class=inner2>"; if($TIME_2 == 0){echo"---";}else{echo"$ARCH_2";} echo"</td>";
+}
+?>
+
+	<tr> 
+	    <td class=main2 colspan=3><b class=reg>Fleet 4</b></td>
+	 <tr>
+		<td class=inner2><b class=reg>Warrior</b></td>
+		<td class=inner2><? if($WAR_1 > 0 OR  $WIZ_1 > 0 OR $PRI_1 > 0 OR $ARCH_1 > 0 OR $TIME_1 > 0){echo"Returning ($TIME_1 hrs)";}else{echo"Defending";} ?></td>
+		<td class=inner2><? if($TIME_1 == 0){echo"---";}else{echo"$WAR_1";} ?></td>
+	<tr>	
+		<td class=inner2><b class=reg>Wizard</b></td>
+		<td class=inner2><? if($WAR_1 > 0 OR  $WIZ_1 > 0 OR $PRI_1 > 0 OR $ARCH_1 > 0 OR $TIME_1 > 0){echo"Returning ($TIME_1 hrs)";}else{echo"Defending";} ?></td>
+		<td class=inner2><? if($TIME_1 == 0){echo"---";}else{echo"$WIZ_1";} ?></td>
+	<tr>	
+		<td class=inner2><b class=reg>Priest</b></td>
+		<td class=inner2><? if($WAR_1 > 0 OR  $WIZ_1 > 0 OR $PRI_1 > 0 OR $ARCH_1 > 0 OR $TIME_1 > 0){echo"Returning ($TIME_1 hrs)";}else{echo"Defending";} ?></td>
+		<td class=inner2><? if($TIME_1 == 0){echo"---";}else{echo"$PRI_1";} ?></td>
+<? if($r6pts >= 125000){
+echo"
+	<tr>	
+		<td class=inner2><b class=reg>Archer</b></td>
+		<td class=inner2> "; if($WAR_1 > 0 OR  $WIZ_1 > 0 OR $PRI_1 > 0 OR $ARCH_1 > 0 OR $TIME_1 > 0){echo"Returning ($TIME_1 hrs)";}else{echo"Defending";} echo"</td>";
+   echo"<td class=inner2>"; if($TIME_1 == 0){echo"---";}else{echo"$ARCH_1";} echo"</td>";
+}
+?>
+
+</table>
+
+<? } ?>
 	<!-- body ends here -->
 </TD>
 </TR>

@@ -1,100 +1,28 @@
 <?php
-
-@mysql_connect (localhost, root, password);
-mysql_select_db(medieval) or die(darnit);
-$dbnam = "medieval";
-// save time() in a session var, and on the session start, if that var is older than however long, delete the //session
-	session_register('login');
-	session_register('email');
-	session_register('pw');
-
-include("functions.php");
-
-?>
-<HTML>
-<HEAD>
-<TITLE>Medieval Battles</TITLE>
-	<link rel=stylesheet type="text/css" href="css/ingame.css">
-
-</HEAD>
-<BODY>
-<!-- THIS IS OUTER TABLE -->
-<table class=outer border="0" cellpadding="1" cellspacing="0"  width="100%">
- <TR>
-  <TD valign="top" colspan="2">
-   <table border="0" width="100%" cellpadding=0 cellspacing=0>
-	<tr>
-	 <td><center><img src="images/igtop.gif"></center></td>
-</TD>
-   <table border="1" cellpadding="2" cellspacing="0" bgcolor="#336600" bordercolor="#630000" width="100%">
-	<tr>
-	 <td class=top><b>GP:</b><? echo"$gp"; ?> </td>
-	 <td class=top><b>Civilians:</b><? echo"$civ"; ?></td>
-	 <td class=top><b>Land:</b> <? echo"$land"; ?></td>
-	 <td class=top><b>Mountains:</b><? echo"$mts"; ?></td>
-	 <td class=top><b>Experience:</b><? echo"$exp"; ?></td>
-	</table>	
-</TD>
-</TR>  
-<TR valign="top">
- <TD width="15%">
-	<?php
-		include("include/ignavbar.php");
+		include("include/igtop.php");
 	?>
- </TD>
- <TD width="85%"> <!-- BODY OF PAGE BEGINS HERE -->
-<br><br><br>
-<form type=post action="intel.php">
+
+ <!-- BODY OF PAGE BEGINS HERE -->
+<br><br>
+
 <center>
+<form type=post action="intel.php">
+<b class=reg>Settlement:</b><input type="number" name="snum" size=3 maxlength=3>
+<input type="hidden" name="setchg" value="1">
+<input type="submit" value="Change">
+</form>
+<br><br>
+
+
+
 
 <?php
 	if(!IsSet($gather))
 {
   ?> 
 
-<?php
 
-	$var =   @mysql_connect (localhost, ziccarelli, pa724);
-	mysql_select_db(medievalbattles_com) or die(darnit);
-	$dbnam = "medievalbattles_com";
-	$tablename = "user";
-
-
-echo "
-	<select name=\"empvalue\">
-	    <option selected value=ns>-Select Empire-</option>
-		";
-
-/* Download list of Presidents */
-$query_string = "SELECT userid, ename FROM user WHERE setid = '$setid'";
-$result_id = mysql_query($query_string, $var);
-while ($row = mysql_fetch_row($result_id))
-    {
-    print("<option value=$row[0]>$row[1]\n</option>");
-    }
-
-
-echo "
-		
-		</select>
-<br><br>";
-
-?>
-</center>
-<table border="1" bordercolor="#000000" align=center width="60%">
-	<tr>
-		<td class=main colspan=2><b class=reg>Itelligence</b></td>
-	<tr>
-		<td class=main2 colspan=2>Here, you can gather information on an empire.<br>
-		You have <? echo"$thieves thieves"; ?> available.</td>
-	<tr>
-		<td class=inner2>Thieves:</td><td class=inner2><input type="number" name="send" size=4></td>
-	
-
-	<tr>
-		<td class=inner2 colspan=2><input type="submit" name="gather" value="Send" class=button></td>
-			<input type="hidden" name="gather" value="1">
-
+<? include("include/S_INTEL.php"); ?>
 
 
 
@@ -102,14 +30,20 @@ echo "
 }
 else
 {
-		if($empvalue == ns)
-	{echo"You did not specify anyone to gather information on.";die();
+		
+
+
+
+if($empvalue == ns)
+	{echo"<div align=center><font class=yellow>You did not specify anyone to gather information on.</font></div>"; include("include/S_INTEL.php");die();
 	}
 	elseif($send == "")
-	{echo"You did not send any thieves.";die();
+	{echo"<div align=center><font class=yellow>You did not send any thieves.</font></div>";include("include/S_INTEL.php");die();
 	}
+	elseif($send <= 0)
+	{echo"<div align=center><font class=yellow>You cant send 0 or negative thieves.</font></div>";include("include/S_INTEL.php");die();}
 	elseif($send > $thieves)
-{echo"You do not have that many thieves to send.";
+{echo"<div align=center><font class=yellow>You do not have that many thieves to send.</font></div>";include("include/S_INTEL.php");die();
 }
 else
 	{
@@ -121,14 +55,26 @@ else
 	//attackee empire name
 		$theirthieves = mysql($dbnam, "SELECT thieves FROM military WHERE userid = '$empvalue'");	
 		$tthieves = mysql_result($theirthieves,"tthieves");
+	//attackee new no
+		$e_newno = mysql($dbnam, "SELECT nno FROM user WHERE userid = '$empvalue'");	
+		$e_nno = mysql_result($e_newno,"e_nno");
 	
 	if($thieves < $tthieves)
-		{echo"You have failed to gather information on $empireattacked and lost 10% of your thieves.";
+		{echo"<div align=center><font class=yellow>You have failed to gather information on $empireattacked and lost 10% of your thieves.</div></align>";
 		
 		
-$newthieves = $thieves - ($send * .1);
-mysql_query("UPDATE military SET thieves =\"$newthieves\" WHERE email='$email' AND pw='$pw'");
+				$newthieves = $thieves - ($send * .1);
+				mysql_query("UPDATE military SET thieves =\"$newthieves\" WHERE email='$email' AND pw='$pw'");
+				
 
+					$newno = $e_nno + 1;
+
+					mysql_query("UPDATE user SET nno =\"$newno\" WHERE userid='$empvalue'");
+					mysql_query("INSERT INTO empnews (date, news, yourid) 
+						VALUES	('$clock', \"<font class=yellow>$ename has failed to gather information on you</font>\" , '$empvalue') ");
+			
+				include("include/S_INTEL.php");
+				die();
 		}
 		else
 		{
@@ -151,31 +97,67 @@ mysql_query("UPDATE military SET thieves =\"$newthieves\" WHERE email='$email' A
 		$theirciv = mysql($dbnam, "SELECT civ FROM military WHERE userid = '$empvalue'");	
 		$tciv = mysql_result($theirciv,"tciv");
 
-$newthieves = $thieves - ($send * .03);
-mysql_query("UPDATE military SET thieves =\"$newthieves\" WHERE email='$email' AND pw='$pw'");
+		$theirarch = mysql($dbnam, "SELECT archers FROM military WHERE userid = '$empvalue'");	
+		$tarch = mysql_result($theirarch,"tarch");
+
+		$newthieves = $thieves - ($send * .03);
+			
+		mysql_query("UPDATE military SET thieves =\"$newthieves\" WHERE email='$email' AND pw='$pw'");
+			
+
+					$newno = $e_nno + 1;
+
+					mysql_query("UPDATE user SET nno =\"$newno\" WHERE userid='$empvalue'");
+		
+					mysql_query("INSERT INTO empnews (date, news, yourid) 
+						VALUES	('$clock', \"<font class=yellow>An unknown empire has gathered information on you</font>\" , '$empvalue') ");
+
+// Determine defense of empire probed
+	$theirwarpower = mysql($dbnam, "SELECT warpower FROM military WHERE userid = '$empvalue'");
+	$twarpower = mysql_result($theirwarpower,"twarpower");
+
+	$theirwizpower = mysql($dbnam, "SELECT wizpower FROM military WHERE userid = '$empvalue'");
+	$twizpower = mysql_result($theirwizpower,"twizpower");
+
+	$theirpripower = mysql($dbnam, "SELECT pripower FROM military WHERE userid = '$empvalue'");
+	$tpripower = mysql_result($theirpripower,"tpripower");
+
+	$theirarchpower = mysql($dbnam, "SELECT archpower FROM military WHERE userid = '$empvalue'");
+	$tarchpower = mysql_result($theirarchpower,"tarchpower");
+
+$theirclass = mysql($dbnam, "SELECT class FROM user WHERE userid = '$empvalue'");
+$tclass = mysql_result($theirclass,"tclass");
+
+$theirwp = mysql($dbnam, "SELECT wp FROM buildings WHERE userid = '$empvalue'"); 
+$twp = mysql_result($theirwp,"twp");
+
+if($tclass== Fighter)
+	{ $tempmodifier = 1.05; }
+if($tclass == Cleric)
+	{ $tempmodifier = 1; }
+if($tclass == Mage)
+	{ $tempmodifier = .95; }
+
+$itdefense = (($twars * $twarpower) + ($twiz * $twizpower) + ($tpri * $tpripower) +  ($tarch * $tarchpower) + ($twp * 5)) * $tempmodifier;
+$itdefense = round ($itdefense);
 
 		echo"
-		    You have successfully gathered information on $empireattacked and you only lost 3% of your thieves!<br><br>
+		    <div align=center><font class=yellow>You have successfully gathered information on $empireattacked and you only lost 3% of your thieves!<font></div><br><br>
 				<table border=1 width=\"40%\" align=center bordercolor=#000000>
-		<tr>
-			<td class=main colspan=2>Stats of <b class=reg>$empireattacked</b></td>
-<tr>
-	<td class=inner2>Gold Pieces: $tgp</td>
-<tr>
-			<td class=inner2>	Iron: $tiron</td>
-<tr>
-			<td class=inner2>	Civilians: $tciv</td>
-<tr>
-			<td class=inner2>	Warriors defending $twars<br>
-<tr>
-			<td class=inner2>	Wizards defending: $twiz</td>
-<tr>
-			<td class=inner2>	Priests defending: $tpri</td>
+		<tr><td class=main colspan=2>Stats of <b class=reg>$empireattacked</b></td>
+		<tr><td class=inner2>Gold Pieces: $tgp</td>
+		<tr><td class=inner2>Iron: $tiron</td>
+		<tr><td class=inner2>Civilians: $tciv</td>
+		<tr><td class=inner2>Warriors defending $twars<br>
+		<tr><td class=inner2>Wizards defending: $twiz</td>
+		<tr><td class=inner2>Priests defending: $tpri</td>
+		<tr><td class=inner2>Archers defending: $tarch</td>
+		<tr><td class=inner2>Empire Defense: $itdefense</td>
 			</table>
 
 				";
 		
-		
+		include("include/S_INTEL.php");die();
 		}
 	
 	}
@@ -195,3 +177,7 @@ mysql_query("UPDATE military SET thieves =\"$newthieves\" WHERE email='$email' A
 </TABLE>
 </BODY>
 </HTML>
+
+<?php
+ob_end_flush();
+?>

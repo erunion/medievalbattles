@@ -22,7 +22,7 @@
 	 <table border="0" bordercolor="red" width="100%" align="center">
 		
 		<tr align="center" valign="top">
-		 	<td><font size="+5" color="#bfbfbf">MB Manual</font></td>
+		 	<td><font size="+5" color="#bfbfbf">Medieval Battles<br> Manual</font></td>
 	
 		<tr>
 		 	<td align="center"><hr color="red" width="50%"></td>
@@ -35,7 +35,7 @@
 			<br><br><blockquote>  
 			
 
-If you send more thieves than the person you are thieving haves, you will be successful.  You will then recieve their info on how much gold, iron, civilians, warriors, wizards and priests they have.  You will lose thieves each time and there is no return time for them.  If you fail, you will lose more thieves.  The empire being thieved does not lose any thieves though.
+In order to successfully spy on another empire, you need to send more Thieves than the person you are spying on has. You will then recieve their info on how much Gold Pieces, Iron, Civilians, Warriors, Wizards and Priests they have. You will lose Thieves each time and there is no return time for them.  If you fail, you will lose more Thieves. The empire being thieved does not lose any Thieves though.
 
   	</ul>
 		</blockquote>

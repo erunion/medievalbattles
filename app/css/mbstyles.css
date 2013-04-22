@@ -8,26 +8,29 @@ td.specsize		{font-size: 40px}
 font 		{ color:"#ffffff" }
 table 		{ font-size: 12px }
 
-body		{background-color: "#000000"; FONT-FAMILY: }
 
-body    {
-        scrollbar-face-color:#FF0000;
-        scrollbar-highlight-color:#000000;
-        scrollbar-3dlight-color:#000000;
-        scrollbar-darkshadow-color:#000000;
-        scrollbar-shadow-color:#000000;
-        scrollbar-track-color:#000000;
-        scrollbar-arrow-color:#000000;
+
+body    {background-color: "#000000"; FONT-FAMILY: color: #ffffff;
+        scrollbar-face-color:#630000;
+        scrollbar-highlight-color:#808080;
+        scrollbar-3dlight-color:#808080;
+        scrollbar-darkshadow-color:#808080;
+        scrollbar-shadow-color:#808080;
+        scrollbar-track-color:#404040;
+        scrollbar-arrow-color:#808080;
         }
-b		{ COLOR: #630000; font-size: 20px;}
-b.other		{ COLOR: #089494; font-size: 12px }
+b.3		{ COLOR: #d66321; font-size: 12px;}
+b.2		{ COLOR: #ad0000; font-size: 18px;}
+b		{ COLOR: #ad0000; font-size: 20px;}
+b.other		{ color: #a1a1a1; font-size: 12px }
 
 hr.red		{color: red }
 	
-input		{background-color: #630000;border-color: #003139; color: #bfbfbf}
+input		{background-color: #630000;border-color: #808080; color: #bfbfbf}
 select		{background-color: #630000;border-color: #003139; color: #bfbfbf}
 textarea	{background-color: #630000;border-color: #003139; color: #bfbfbf}
-input.button	{font-family: Verdana; font-weight: none; color:#089494; background-color: #003139; border-color: #089494}
+input.button	{font-family: Verdana; font-weight: none; color: #212121; background-color: #616161; border-color: #212121}
+input.button2   {font-family: verdana; font-weight: none; color:#089494; background-color: #630000; border-color: #089494}
 
 font	{font-family: Verdana;font-size: 12px}
 font.important		{color: yellow}

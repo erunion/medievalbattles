@@ -22,20 +22,23 @@
 	 <table border="0" bordercolor="red" width="100%" align="center">
 		
 		<tr align="center" valign="top">
-		 	<td><font size="+5" color="#bfbfbf">MB Manual</font></td>
+		 	<td><font size="+5" color="#bfbfbf">Medieval Battles<br> Manual</font></td>
 	
 		<tr>
 		 	<td align="center"><hr color="red" width="50%"></td>
         
 	
-<tr><td align="center">Guild
+<tr><td align="center">Guilds
 	<hr color="red" width="50%"></td>
 		<tr>
 		 <td>   <!-- This is where the main part of the page goes -->
 			<br><br><blockquote>  
-The settlement leader can choose a guild to enter if they know the guild name and the password for that particular guild.  If you want to make a guild, simply go to the guild center.  Anyone can make a guild but only a settlement leader can join a guild.  For the alpha game, there is settlement guilds, meaning, when a settlement leader joins the guild, the whole settlement joins the guild.
-<br><br>
-Settlements can be kicked from guilds by the guild leader.  The Guild leader can also change the password of the guild as well.
+The Settlement Leader can choose a guild to enter if they know the guild name and the password for that particular guild. If you want to make a guild, simply go to the guild center. Anyone can make a guild but only a Settlement Leader can join a guild. For the alpha game, there is settlement guilds, meaning, when a settlement leader joins the guild, the whole settlement joins the guild. Guild Leaders DO NOT have to be a Settlement Leader, but can if they want to.
+  	<br><br>
+		<ul>
+			<li><b>Guild Management</b>-In the Guild Management page, you can change various settings concerning the guild you are the Guild Leader of. You can change the joining password, change the guild info, remove settlements from the guild, and delete the guild itself. The Guild Management page is on the Main Page. <b class=other>Note:</b>There can only be 5 settlements in each guild at max
+
+	</ul>
 
 		</blockquote>
 			

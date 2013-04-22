@@ -1,192 +1,70 @@
 <?php
-
- @mysql_connect (localhost, ziccarelli, pa724);
-mysql_select_db(medievalbattles_com) or die(darnit);
-$dbnam = "medievalbattles_com";
-// save time() in a session var, and on the session start, if that var is older than however long, delete the //session
-	session_register('login');
-	session_register('email');
-	session_register('pw');
-
-include("functions.php");
-
-?>
-<HTML>
-<HEAD>
-<TITLE>Medieval Battles</TITLE>
-	<link rel=stylesheet type="text/css" href="css/ingame.css">
-
-</HEAD>
-<BODY>
-<!-- THIS IS OUTER TABLE -->
-<table class=outer border="0" cellpadding="1" cellspacing="0"  width="100%">
- <TR>
-  <TD valign="top" colspan="2">
-   <table border="0" width="100%" cellpadding=0 cellspacing=0>
-	<tr>
-	 <td><center><img src="images/igtop.gif"></center></td>
-</TD>
-   <table border="1" cellpadding="2" cellspacing="0" bgcolor="#336600" bordercolor="#630000" width="100%">
-	<tr>
-	 <td class=top><b>GP:</b><? echo"$gp"; ?> </td>
-	 <td class=top><b>Civilians:</b><? echo"$civ"; ?></td>
-	 <td class=top><b>Land:</b> <? echo"$land"; ?></td>
-	 <td class=top><b>Mountains:</b><? echo"$mts"; ?></td>
-	 <td class=top><b>Experience:</b><? echo"$exp"; ?></td>
-	</table>	
-</TD>
-</TR>  
-<TR valign="top">
- <TD width="15%">
-	<?php
-		include("include/ignavbar.php");
+		include("include/igtop.php");
 	?>
- </TD>
- <TD width="85%"> <!-- BODY OF PAGE BEGINS HERE -->
+<!-- BODY OF PAGE BEGINS HERE -->
 <br><br>
-<?
 
-		if($sl === no)
-		{
-			echo"<center><b class=yellow>You are not a SL!</b>";
-			die();
-		}
-		else
-		{
-		
-		}
-		?>
-			
+<?php if($sl === no){echo"<center><b class=yellow>You are not a SL!</b>";die();}else{}?>
+
+
+
+	  <?php
+		//SELECT GUILD CURRENTLY IN
+		$thesetguild = mysql($dbnam, "SELECT setguild FROM settlement WHERE setid = '$setid'");	
+		$setguild = mysql_result($thesetguild,"setguild");
+		echo"<center><b class=red>Guild:</b>$setguild</center>";
+	  ?>
+
+		<?php if($setguild != None){echo"<br><center><a href=\"slg.php\">Click here to leave your guild<br><br></a></center>";}else{}?>
+
 
 <?php
 	if(!IsSet($update))
 {
   ?> 
-	<?	
-		$ssettlementpic = mysql($dbnam, "SELECT setpic FROM settlement WHERE setid = '$setid'");	
-		$settlepic = mysql_result($ssettlementpic,"settlepic");	
-		$ssettlementname = mysql($dbnam, "SELECT setname FROM settlement WHERE setid = '$setid'");	
-		$settlename = mysql_result($ssettlementname,"settlename"); 
-	?>
+	
+						
 
-			<form type=post action=sl.php>
-		<table border=0 width=\"60%\" align=center>
-			<tr>
-				<td colspan=2 class=main><b class=reg>Settlement Options</b></td>
-			<tr>
-				<td colspan=2 class=main2>Here, you can select a settlement name and picture for your settlement.</td>
-			<tr>
-				<td class=inner2><b class=other>Settlement Name:</b></td><td class=inner2><input type=text name=thesetname value=<? echo"$settlename"; ?>></td>
-				<br>
-			<tr>
-				<td class=inner2><b class=other>Settlement pic URL:</b></td><td class=inner2><input type=text name=theseturl value=<? echo"$settlepic"; ?>></td>
-				<br>
-			<tr>
-				<td class=inner2 colspan=2>		
-					<center><input type="submit" name="update" value="Update" class=button></center>
-							<input type="hidden" name="update" value="1">
-				</td>
-			</table>
-			
+		
+			<? include("include/S_SINFO.php"); ?>
+
 			
 <?php
 }
 else
 {
 	
-	
+		include("include/S_SINFOS.php");
 
-		    mysql_query("UPDATE settlement SET setpic =\"$theseturl\" WHERE setid='$setid'");
-			mysql_query("UPDATE settlement SET setname =\"$thesetname\" WHERE  setid='$setid'");
+	mysql_query("UPDATE settlement SET setpic =\"$theseturl\" WHERE setid='$setid'");
+	mysql_query("UPDATE settlement SET setname =\"$thesetname\" WHERE  setid='$setid'");
+	mysql_query("UPDATE settlement SET nap =\"$thenap\" WHERE  setid='$setid'");
+
+	echo"<div align=center>Your settlement information has been updated.</div>";
+	include("include/S_SINFO.php");include("include/S_SFUND.php");include("include/S_SJG.php");
+	die();
 
 }
 
 
 ?>					
-</form>
-			
-			
-				<form type=post action=sl.php>
-		<table border=0 width=\"60%\" align=center>
-			<tr>
-				<td colspan=2 class=main><b class=reg>Guild Selection</b></td>
-			<tr>
-				<td colspan=2 class=main2>Make sure you enter in all of the information correctly, Guild name <br> and Guild password are case sensitive.</td>
-			<tr>
-				<td class=inner2><b class=other>Guild Name:</b></td><td class=inner2><input type=text name=theguildname></td>
-				<br>
-			<tr>
-				<td class=inner2><b class=other>Guild Password:</b></td><td class=inner2><input type=password name=thepw></td>
-			</table>
-			</form>
-			
+
+
 <?php
 	if(!IsSet($donate))
 {
   ?> 			
-		<?
-				$yyourgold = mysql($dbnam, "SELECT fgold FROM settlement WHERE setid = '$setid'");	
-			$yourgold = mysql_result($yyourgold,"yourgold");
 
-			$yyouriron = mysql($dbnam, "SELECT firon FROM settlement WHERE setid = '$setid'");	
-			$youriron = mysql_result($yyouriron,"youriron");
-
-		?>
-	
-			<form type=post action=sl.php>
-		<table border=0 width=\"60%\" align=center>
-			<tr>
-				<td colspan=2 class=main><b class=reg>Funds</b></td>
-			<tr>
-				<td colspan=2 class=main2>Your settlement has <? echo"$yourgold gp"; ?> and <? echo"$youriron iron";?> in the fund.</td>
-			<tr>
-				<td class=inner2><b class=other>Gold:</b></td><td class=inner2><input type=number name=goldd></td>
-			<tr>
-				<td class=inner2><b class=other>Metal:</b></td><td class=inner2><input type=number name=metald></td>	
-		<tr>
-		<td class=inner2 colspan=2><br>
-			
-<?php
-
-	$var =   @mysql_connect (localhost, ziccarelli, pa724);
-	mysql_select_db(medievalbattles_com) or die(darnit);
-	$dbnam = "medievalbattles_com";
-	$tablename = "user";
-
-
-echo "
-	<select name=\"empvalue\">
-	    <option selected value=ns>-Donate-</option>
-		";
-
-/* Download list of Presidents */
-$query_string = "SELECT userid, ename FROM user WHERE setid = '$setid'";
-$result_id = mysql_query($query_string, $var);
-while ($row = mysql_fetch_row($result_id))
-    {
-    print("<option value=$row[0]>$row[1]\n</option>");
-    }
-
-
-echo "
-		
-		</select>
-<br><br>";
-
-?>
-			</td>
-		<tr>
-			<center><td class=inner2 colspan=2><input class=button type="submit" name="donate" value="Donate"></center>
-			<input type="hidden" name="donate" value="3">
-	</table>
-			</form>
+			<? include("include/S_SFUND.php"); ?>
 			
 <?php
 }
 else
 {
-
-$dbnam = "medievalbattles_com";
+		include("include/connect.php");
+		$goldd = strip_tags($goldd);
+		$irond = strip_tags($irond);
+		$dbnam = "medievalbattles_com";
 			$yyourgold = mysql($dbnam, "SELECT fgold FROM settlement WHERE setid = '$setid'");	
 			$yourgold = mysql_result($yyourgold,"yourgold");
 
@@ -194,39 +72,76 @@ $dbnam = "medievalbattles_com";
 			$youriron = mysql_result($yyouriron,"youriron");
 
 		if($empvalue == ns)
-	{echo"You did not choose someone to donate to.";die();
-	}
-	elseif($goldd == "" AND $irond == "")
-	{echo"You did not choose to donate anything from the funds.";die();
-	}
-	elseif($goldd > $yourgold)
-	{echo"You cannot donate that much gold.";die();
-	}
-	elseif($irond > $youriron)
-	{echo"You cannot donate that much metal.";die();
-	}
-	else
-		{
-			
+			{echo"<div align=center>You did not choose someone to donate to.</div>";include("include/S_SFUND.php"); include("include/S_SJG.php");die();
+			}
+		elseif($goldd == "" AND $irond == "")
+			{echo"<div align=center>You did not choose to donate anything from the funds.</div>";include("include/S_SFUND.php"); include("include/S_SJG.php");die();
+			}
+		elseif($goldd > $yourgold)
+			{echo"<div align=center>You cannot donate that much gold.</div>";include("include/S_SFUND.php"); include("include/S_SJG.php");die();
+			}
+		elseif($irond > $youriron)
+			{echo"<div align=center>You cannot donate that much iron.</div>";include("include/S_SFUND.php"); include("include/S_SJG.php");die();
+			}
+			else
+				{
+		
+				//EMPIRE NAME DONATED TO
+					$empattacked = mysql($dbnam, "SELECT ename FROM user WHERE userid = '$empvalue'");	
+					$empireattacked = mysql_result($empattacked,"empireattacked");
+				//EMPS setid
+					$EMPIRE_ID = mysql($dbnam, "SELECT setid FROM user WHERE userid = '$empvalue' AND ename=\"$empireattacked\"");	
+					$EMP_ID = mysql_result($EMPIRE_ID,"EMP_ID");
+				
+				if($EMP_ID != $setid)
+					{echo"<div align=center>This empire is not in your settlement.</div>";include("include/S_SFUND.php"); include("include/S_SJG.php");die();}
+				elseif($irond == "" OR $irond <= 0)
+				{
+					$thenews = "<font class=green><b>$empireattacked</b> has received $goldd gp from the fund</font>";
+				}	
+				elseif($goldd == "" OR $goldd <= 0)
+				{$thenews = "<font class=green><b>$empireattacked</b> has received $irond iron from the fund</font>";
+				}
+				elseif($goldd > 0 AND $irond > 0)
+				{$thenews = "<font class=green><b>$empireattacked</b> has received $goldd gp and $irond iron from the funds</font>";
+				}
+				else
+					{
+					
+						
+						}
+
+
+	
+		mysql_query("INSERT INTO setnews (date, news, setid) 
+			VALUES	('$clock', \"$thenews\", '$setid') ");
+	
 		$empiregold = mysql($dbnam, "SELECT gp FROM user WHERE userid = '$empvalue'");	
 		$empgold = mysql_result($empiregold,"empgold");	
+		
 		$empireiron = mysql($dbnam, "SELECT iron FROM user WHERE userid = '$empvalue'");
 		$empiron = mysql_result($empireiron,"empiron");
+		
+		$empiredonated = mysql($dbnam, "SELECT ename FROM user WHERE userid = '$empvalue'");
+		$empd = mysql_result($empiredonated,"empd");
 
-
-		    $newgold = $fgold - $goldd;
-			$newmetal = $fmetal - $metald;
+		//settlement  gold and iron being donated
+		    $newgold = $yourgold - $goldd;
+			$newmetal = $youriron - $irond;
 			
 			mysql_query("UPDATE settlement SET fgold =\"$newgold\" WHERE setid='$setid'");
 			mysql_query("UPDATE settlement SET firon =\"$newiron\" WHERE  setid='$setid'");
 
-			$yournewgold = $gp + $goldd;
-			$yournewmetal = $iron + $irond;
+		//selected empire new gold and iron
+			$yournewgold = $empgold + $goldd;
+			$yournewmetal = $empiron + $irond;
 
 			mysql_query("UPDATE user SET gp =\"$yournewgold\" WHERE userid='$empvalue'");
-			mysql_query("UPDATE user SET metal =\"$yournewiron\" WHERE  userid='$empvalue'"); 
+			mysql_query("UPDATE user SET iron =\"$yournewiron\" WHERE  userid='$empvalue'"); 
 			
-		die();
+			echo"<div align=center>The empire has recieved what you have donated.</div>";
+			include("include/S_SFUND.php"); include("include/S_SJG.php");
+			die();
 			
 	}	
 			
@@ -234,13 +149,126 @@ $dbnam = "medievalbattles_com";
 
 
 ?>	
-		
+<?php
+	if(!IsSet($enter))
+{
+  ?> 		
+		<? include("include/S_SJG.php"); ?>
+
+<?php
+}
+else
+{
+	$zguild = strip_tags($zguild);
+	$zpw = strip_tags($zpw);
+
+	//SELECT GUILD CURRENTLY IN
+		$thesetguild = mysql($dbnam, "SELECT setguild FROM settlement WHERE setid = '$setid'");	
+		$setguild = mysql_result($thesetguild,"setguild");
+
+	//CHECK GUILD
+		$gquery = ("SELECT epw FROM guild WHERE gname='$zguild'");
+		$gresult = mysql_query($gquery);
+		$guildcheck = mysql_fetch_array($gresult);
+
+  	if($setguild != None)
+  	  	{echo"<div align=center>You must leave your current guild before joining another guild.</div>";include("include/S_SJG.php");die();
+		}
+	elseif($zguild == "" OR $zpw == "")
+		{echo"<div align=center>You did not specify all fields.</div>";include("include/S_SJG.php");die();
+		}
+ 	elseif($guildcheck[0] != $zpw) 
+		{echo"<div align=center>Incorrect password/guild name!</div>";include("include/S_SJG.php");die();
+		}
 
 
+					//SELECT NEW GUILD NAME
+						$tgname = mysql($dbnam, "SELECT gname FROM guild WHERE gname='$zguild'");	
+						$z_gname = mysql_result($tgname,"z_gname");
+			
+					//SELECT MEMBERS IN NEW GUILD
+						$numberofmem = mysql($dbnam, "SELECT mem FROM guild WHERE gname='$z_gname'");	
+						$nomem = mysql_result($numberofmem,"nomem");
+						
 
-   <!-- body ends here -->
- </TD>
+					
+					
+				if($nomem == 5)
+					{
+					
+						echo"<div align=center><font class=yellow>There are currently 5 settlements in this guild, you cannot join.</div></font>";
+						include("include/S_SJG.php");die();
+					}
+				elseif($setguild == None)
+					{
+
+						//SELECT SETNO1 SETNO2 AND SETNO3
+						$settno1 = mysql($dbnam, "SELECT setno1 FROM guild WHERE gname='$zguild'");	
+						$setno1 = mysql_result($settno1,"setno1");
+				
+						$settno2 = mysql($dbnam, "SELECT setno2 FROM guild WHERE gname='$zguild'");	
+						$setno2 = mysql_result($settno2,"setno2");
+				
+						$settno3 = mysql($dbnam, "SELECT setno3 FROM guild WHERE gname='$zguild'");	
+						$setno3 = mysql_result($settno3,"setno3");
+
+						$settno4 = mysql($dbnam, "SELECT setno4 FROM guild WHERE gname='$zguild'");	
+						$setno4 = mysql_result($settno4,"setno4");
+				
+						$settno5 = mysql($dbnam, "SELECT setno5 FROM guild WHERE gname='$zguild'");	
+						$setno5 = mysql_result($settno5,"setno5");
+
+						//SELECT NEW GUILD NAME
+						$tgname = mysql($dbnam, "SELECT gname FROM guild WHERE gname='$zguild'");	
+						$z_gname = mysql_result($tgname,"z_gname");
+					
+						//SELECT MEMBERS IN NEW GUILD
+						$numberofmem = mysql($dbnam, "SELECT mem FROM guild WHERE gname='$zguild'");	
+						$nomem = mysql_result($numberofmem,"nomem");
+				
+						//SELECT GUILD CURRENTLY IN
+						$thesetguild = mysql($dbnam, "SELECT setguild FROM settlement WHERE setid = '$setid'");	
+						$setguild = mysql_result($thesetguild,"setguild");
+
+							$newmem = $nomem + 1;
+						mysql_query("UPDATE guild SET mem =\"$newmem\" WHERE gname='$z_gname'");
+						
+		   				mysql_query("UPDATE settlement SET setguild =\"$z_gname\" WHERE setid='$setid'");
+						echo"<center>You have joined $z_gname!</center>";
+
+						
+						mysql_query("INSERT INTO setnews (date, news, setid) 
+							VALUES	('$clock', '<font class=blue>Your settlement has joined <b>$z_gname</b>!</font>', '$setid') ");
+
+							if($setno1 < 1)
+								{$setin = setno1;}
+							if($setno2 < 1)
+								{$setin = setno2;}
+							if($setno3 < 1)
+								{$setin = setno3;}
+							if($setno4 < 1)
+								{$setin = setno4;}
+							if($setno5 < 1)
+								{$setin = setno5;}
+
+				
+								mysql_query("UPDATE guild SET $setin =\"$setid\" WHERE gname='$z_gname'");
+								mysql_query("UPDATE settlement SET gsetno =\"$setin\" WHERE setid='$setid'");
+								include("include/S_SJG.php");die();	
+					
+						}
+						else
+							{
+								echo"<div align=center>You have entered a wrong name or password.</div>";
+								include("include/S_SJG.php");
+								die();
+							}
+			}
+?>
+<!-- body ends here -->
+</TD>
 </TR>
 </TABLE>
 </BODY>
 </HTML>
+		

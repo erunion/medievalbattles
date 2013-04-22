@@ -1,28 +1,33 @@
 A:link { text-decoration: none; color:"#a1a1a1" }
 A:visited { text-decoration: none; color:"#a1a1a1" }
-A:hover { text-decoration: underline overline; color:"red" }
+A:hover { text-decoration: none; color:"red" }
 
+font.orange {color: #ff8429;}
+font.blue {color: #00a5c6}
+font.red {color: #d60000}
+font.green {color: green}
+font.yellow {color: yellow}
+font.lg {color: #9c7bbd}
+font 		{ color:"#ffffff";font-family: "Tahoma";}
+table 		{ font-size: 12px;font-family: "Tahoma"; }
+table.f 		{ font-size: 14px;font-family: "Tahoma"; }
 
+li		{color: #ff8429;}
 
-
-font 		{ color:"#ffffff" }
-table 		{ font-size: 14px }
-
-body		{background-color: "#000000"; color: "#bfbfbf"}
-<!-- orig color is #003139 -->#003139
-body    {
-        scrollbar-face-color:#FF0000;
-        scrollbar-highlight-color:#000000;
-        scrollbar-3dlight-color:#000000;
-        scrollbar-darkshadow-color:#000000;
-        scrollbar-shadow-color:#000000;
-        scrollbar-track-color:#000000;
-        scrollbar-arrow-color:#000000;
+body    {background-color: "#000000"; color: "#bfbfbf" ;font-family: "Tahoma";
+        scrollbar-face-color:#630000;
+        scrollbar-highlight-color:#808080;
+        scrollbar-3dlight-color:#808080;
+        scrollbar-darkshadow-color:#808080;
+        scrollbar-shadow-color:#808080;
+        scrollbar-track-color:#404040;
+        scrollbar-arrow-color:#808080;
         }
-b		{ COLOR: #089494;}
-b.other		{ COLOR: silver; }
 
-hr.red		{color: red }
+	
+b.other		{ COLOR: silver; font-family: "Tahoma";}
+
+hr.red		{color: red; font-family: "Tahoma";}
 	
 input		{background-color: #630000;border-color: #003139; color: #bfbfbf}
 select		{background-color: #630000;border-color: #003139; color: #bfbfbf}
@@ -38,11 +43,12 @@ table.outer
 <!-- END OF NAVBAR STYLES -->
 
 <!-- THESE ARE THE TABLES IN THE IN-GAME PAGES -->
-td.main2	{background-color: "#212121"; text-align: center}
+td.main2	{background-color: "#313131"; text-align: center}
 td.inner2	{background-color: "#404040"; text-align: center}
-b.top		{color: #bfbfbf; font-style: bold}
-b.reg		{color: #a1a1a1}
+b.top		{color: #bfbfbf; font-style: bold;font-family: "Tahoma";}
+b.reg		{color: #a1a1a1;font-family: "Tahoma";}
 td.num		{text-align: center}
-b.black		{color: #000000}
-
-textarea		{background-color: #630000;border-color: #003139; color: #bfbfbf}
+b.black		{color: #000000;font-family: "Tahoma";}
+b.rtop		{color: #A10606;font-family: "Tahoma";}
+b.forum		{color: #A10606;font-family: "Tahoma";}
+textarea		{background-color: #630000;border-color: #003139; color: #bfbfbf;}

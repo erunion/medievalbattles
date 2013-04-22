@@ -21,7 +21,7 @@
 	 <table border="0" bordercolor="red" width="100%" align="center">
 		
 		<tr align="center" valign="top">
-		 	<td><font size="+5" color="#bfbfbf">MB Manual</font></td>
+		 	<td><font size="+5" color="#bfbfbf">Medieval Battles<br> Manual</font></td>
 	
 		<tr>
 		 	<td align="center"><hr color="red" width="50%"></td>
@@ -32,19 +32,20 @@
 		<tr>
 		 <td>   <!-- This is where the main part of the page goes -->
 			<br><br><blockquote>  
-			In all, you have a total of 4 war generals.  Depending on what race you are will determine your advantages and disadvantages of how your empire is run.
+			Depending on which class you choose, will determine the point of view from which your empire is run.  Each class has their advantages and disadvantages.  Your playing style will determine what class you pick.  Fighters are very strong and powerful, thus they gain an advantage to their offense and defense but a penalty to their gold production.  Clerics are intelligent and carry much wisdom upon their shoulders.  The cleric starts out with better stats and gains more experience than any other class.  The mage is very intelligent but very weak.  The mage has a disadvantage when it comes to offense and defense but gains more gold.
 <br><br>
 <b>Class</b>
 				<ul>
 					<li><b class=other>Fighter</b>-+5% to offense/defense <br> 
-											-10% to gold production   
+											-5% to gold production   
 					<br><br>
 
-					<li><b class=other>Cleric</b>-Special Weapon<br> 
-												-5% to iron production <br>
-													-5% damage taken by troops 
+					<li><b class=other>Cleric</b>-Better stats when starting out<br> 
+												+5% exp gains
+												
+												 
 					<br><br>
-					<li><b class=other>Mage</b>-+10% to gold production<br> 
+					<li><b class=other>Mage</b>-+5% to gold production<br> 
 												-5% to offense/defense
 					
 

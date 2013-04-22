@@ -13,9 +13,9 @@
 	 <tr>
 	  <td class=inner2><a href="mostmts.php">Most Mountains</a></td>
 	 <tr>
-	  <td class=inner2>Strongest Settlements</td>
+	  <td class=inner2><a href="setstrength.php">Strongest Settlements</a></td>
 	 <tr>
-	  <td class=inner2>Strongest Guilds</td>
+	  <td class=inner2><a href="sguild.php">Strongest Guilds</a></td>
 	 </table>
 	
 

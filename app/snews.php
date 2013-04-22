@@ -1,71 +1,41 @@
 <?php
-
-$var =  @mysql_connect(localhost, ziccarelli, pa724);
-mysql_select_db(medievalbattles_com) or die(darnit);
-$dbnam = "medievalbattles_com";
-// save time() in a session var, and on the session start, if that var is older than however long, delete the //session
-	session_register('login');
-	session_register('email');
-	session_register('pw');
-
-include("functions.php");
-
-?>
-<HTML>
-<HEAD>
-<TITLE>Medieval Battles</TITLE>
-	<link rel=stylesheet type="text/css" href="css/ingame.css">
-
-</HEAD>
-<BODY>
-<!-- THIS IS OUTER TABLE -->
-<table class=outer border="0" cellpadding="1" cellspacing="0"  width="100%">
- <TR>
-  <TD valign="top" colspan="2">
-   <table border="0" width="100%" cellpadding=0 cellspacing=0>
-	<tr>
-	 <td><center><img src="images/igtop.gif"></center></td>
-</TD>
-   <table border="1" cellpadding="2" cellspacing="0" bgcolor="#336600" bordercolor="#630000" width="100%">
-	<tr>
-	 <td class=top><b>GP:</b><? echo"$gp"; ?> </td>
-	 <td class=top><b>Civilians:</b><? echo"$civ"; ?></td>
-	 <td class=top><b>Land:</b> <? echo"$land"; ?></td>
-	 <td class=top><b>Mountains:</b><? echo"$mts"; ?></td>
-	 <td class=top><b>Experience:</b><? echo"$exp"; ?></td>
-	</table>	
-</TD>
-</TR>  
-<TR valign="top">
- <TD width="15%">
-	<?php
-		include("include/ignavbar.php");
+		include("include/igtop.php");
 	?>
- </TD>
- <TD width="85%"> <!-- BODY OF PAGE BEGINS HERE -->
+
+<!-- BODY OF PAGE BEGINS HERE -->
 <br><br>
 
-	   
-		
-	<? $settable = "setnews" . "$setid";	?>
-		
-		
-		
-		
- 
- <?php
-	$var =  @mysql_connect(localhost, ziccarelli, pa724);
-	mysql_select_db(medievalbattles_com) or die(darnit);
-	$dbnam = "medievalbattles_com";
+
+<?	// check votefor
+			$SN_query = ("SELECT setid FROM setnews WHERE setid='$setid'");
+			$SN_result = mysql_query($SN_query);
+			$SN_check = mysql_fetch_array($SN_result); 
+			if($SN_check[0] == "" OR $SN_check[0] == 0)
+				{echo"<div align=center>Your settlement does not have any news to display.</div>";die();}
+
+
+?>	   
+<div align=center>		
+	<font class=red>Empire Joining/Deleting</font><br>
+	<font class=green>Donating/Receiving from Funds</font><br>
+	<font class=blue>Leaving/Joining a Guild</font><br>
+	<font class=yellow>Attacking (successful/unsuccessful)</font><br>
+	<font class=orange>Successfully defended empire</font><br>
+	<font class=lg>Unsuccessfully defended empire</font><br>
+</div>
+
+
+<?php
+	include("include/connect.php");
 	$tablename = user;
 	function display_db_table($tablename, $var)
 	{	
 
 			
-		global $settable;
 		
+			Global $setid;
 
-			$query_string = "SELECT date, news FROM $settable";
+			$query_string = "SELECT date, news FROM setnews  WHERE setid='$setid' ORDER BY date DESC";
 			$result_id = mysql_query($query_string, $var);
 			$column_count = mysql_num_fields($result_id);
 
@@ -78,7 +48,7 @@ include("functions.php");
 				$column_num < $column_count;
 				$column_num++)
 		
-					print("<TD bgcolor=#404040>$row[$column_num]</TD>\n");
+					print("<TD bgcolor=#404040 align=left>$row[$column_num]</TD>\n");
 				print("</TR>\n");
 		}
 		
@@ -86,21 +56,19 @@ include("functions.php");
 	}
 
 	?>
-
 	
 
 		
-		<table border=0 bordercolor="#404040" width="95%" align=right cellspacing=1>
+		<table border=0 bordercolor="#404040" width="95%" align=center cellspacing=1>
 	  <tr>
 	    <td colspan=4 class=main><b class=reg>News for settlement <? echo"$setid"; ?></b></td>
-	  <tr>
-		<td class=main2 width="20%"><b class=reg>Date/Time</b></td>
-		<td class=main2><b class=reg width="80%">News</b></td>
+	  <tr align=left>
+		<td class=main2 width="20%" align=left><b class=reg>Date/Time</b></td>
+		<td class=main2 align=left><b class=reg width="80%">News</b></td>
 		
-	  <tr>
-        <td><?php display_db_table("user", $var);?></td>
-	</table>
-</td></table>
+	  <?php display_db_table("user", $var);?>
+	
+
 
    <!-- body ends here -->
  </TD>

@@ -1,514 +1,464 @@
 <?php
-
-$var =  @mysql_connect (localhost, ziccarelli, pa724);
-mysql_select_db(medievalbattles_com) or die(darnit);
-$dbnam = "medievalbattles_com";
-
-	session_register('login');
-	session_register('email');
-	session_register('pw');
-
-include("functions.php");
-
-?>
-<HTML>
-<HEAD>
-<TITLE>Medieval Battles</TITLE>
-	<link rel=stylesheet type="text/css" href="css/ingame.css">
-</HEAD>
-<BODY>
-<!-- THIS IS OUTER TABLE -->
-<table class=outer border="0" cellpadding="1" cellspacing="0"  width="100%">
- <TR>
-  <TD valign="top" colspan="2">
-   <table border="0" width="100%" cellpadding=0 cellspacing=0>
-	<tr>
-	 <td><center><img src="images/igtop.gif"></center></td>
-</TD>
-   <table border="1" cellpadding="2" cellspacing="0" bgcolor="#336600" bordercolor="#630000" width="100%">
-	<tr>
-	 <td class=top><b>GP:</b><? echo"$gp"; ?> </td>
-	 <td class=top><b>Civilians:</b><? echo"$civ"; ?></td>
-	 <td class=top><b>Land:</b> <? echo"$land"; ?></td>
-	 <td class=top><b>Mountains:</b><? echo"$mts"; ?></td>
-	 <td class=top><b>Experience:</b><? echo"$exp"; ?></td>
-	</table>	
-</TD>
-</TR>  
-<TR valign="top">
- <TD width="15%">
-	<?php
-		include("include/ignavbar.php");
+		include("include/igtop.php");
 	?>
- </TD>
- <TD width="85%"> <!-- BODY OF PAGE BEGINS HERE -->
+ <!-- BODY OF PAGE BEGINS HERE -->
  <br><br><br>
 	  
 	    
-		<center> <b class=reg> | <a href="equip.php"> -Equip- </a> | <a href="wconstruct.php"> -Construct Weapon- </a> | <a href="aconstruct.php"> -Construct Armor- </a> | </b></center>
+		<center> <b class=reg> | <a href="equip.php"> -Equip- </a> | <a href="wconstruct.php"> -Construct Weapon- </a> | <a href="aconstruct.php"> -Construct Armor- </a> | </b></center><br>
 
-		<br><br>
-	<table border=0 bordercolor="#808080" align=center width="80%">
-	  <tr>
-	    <td class=main colspan=4><b class=reg>Equip Weapon/Magic</b></td>
 	
-	  <tr>
-	    <td class=main2><b class=reg>Units</b></td>
-		<td class=main2><b class=reg>Current Weapon</b></td>
-		
-		
-		<td class=main2><b class=reg>Item</b></td>
-		<td class=main2><b class=reg>Equip</b></td>
-		
-	  
 <?php
 	if(!IsSet($update))
 {
    ?> 
+			
+		<? include("include/S_EQUIPO.php"); ?>
 
-	 <form type=get action="equip.php">	 
-	  <tr>
-		<td class=inner2>Warrior</td>
-		<td class=inner2><? echo"$cweapon"; ?></td>
-		
-		
-		<td class=inner2><center><select name="uwarrior">
-	    <option selected value=ns>-Choose a Weapon-</option>
-		<? if($ssword > 0)
-				echo"<option value=\"Short Sword\">Short Sword</option>";
-			else
-				echo"";
-			?>
-		<?  if($lsword > 0)
-					echo"<option value=\"Long Sword\">Long Sword</option>";
-				else
-					echo"";
-			?>
-		<? if($axe > 0)
-				echo"<option value=\"Axe\">Axe</option>";
-			else
-				echo"";
-			?>
-		<? if($gaxe > 0)
-				echo"<option value=\"Great Axe\">Great Axe</option>";
-			else
-				echo"";
-			?>
-		<? if($club > 0)
-				echo"<option value=\"Club\">Club</option>";
-			else
-				echo"";
-			?>
-			</select>
-			<td class=inner2><center><input class=button type="submit" name="update" value="Equip"></center>
-				<input type="hidden" name="update" value="1">
-				</form>
-			</td>
 <?php
 }
 else
 {
-		if (!IsSet($update2) && $update2 =="2" or !IsSet($update3) && $update3 =="3" or !IsSet($update4) && $update4 =="4" or !IsSet($update5) && $update5 =="5" or !IsSet($update6) && $update6 =="6")
-		{echo""; die();
-		}
-	elseif($uwarrior === ns)
-		{print "You did not specify any weapon to equip."; die();
-		}
+		
+		
+		if($uwarrior == ns AND $uwizard == ns AND $upriest == ns AND $uarcher == ns)
+			{echo"<div align=center><font class=yellow>You did not specify anything to equip.</font></div>";include("include/S_EQUIPO.php"); include("include/S_EQUIPA.php");die();
+			}
+		elseif($uwarrior != "Short Sword" AND $uwarrior != "Long Sword" AND $uwarrior != "Axe" AND $uwarrior != "Great Axe" AND $uwarrior != "Ice Sword"  AND $uwarrior != ns AND $uwarrior != "Dagger")
+			{echo"<div align=center><font class=yellow>Invalid item.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
+			}
+		elseif($uwizard != "Magic Missile" AND $uwizard != "Ice Storm" AND $uwizard != "Fireball" AND $uwizard != "Cloud Kill" AND $uwizard != ns)
+			{echo"<div align=center><font class=yellow>Invalid item.</font></div>"; include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
+			}
+		elseif($upriest != "Spiked Club" AND $upriest != ns AND $upriest != "Quarterstaff" AND $upriest != "Mace" AND $upriest != "Grand Scepter")
+			{echo"<div align=center><font class=yellow>Invalid item.</font></div>"; include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
+			}
+		elseif($uarcher != "Bow" AND $uarcher != "Short Bow" AND $uarcher != "Long Bow" AND $uarcher != "Medieval War Bow" AND $uarcher != ns AND $uarcher != "")
+			{echo"<div align=center><font class=yellow>Invalid item.</font></div>";include("include/S_EQUIPO.php"); include("include/S_EQUIPA.php");die();
+			}
 		else
 			{
-					
+
+
+				if($uwizard == "Fireball" AND r1pts >= 10000)
+					{echo"<div align=center><font class=yellow>You have to research Fireball first to equip it.</div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
+					}
+				if($uwizard == "Ice Storm" AND r1pts >= 40000)
+					{echo"<div align=center><font class=yellow>You have to research Ice Storm first to equip it.</div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
+					}
+				if($uwizard == "Cloud Kill" AND r1pts >= 100000)
+					{echo"<div align=center><font class=yellow>You have to research Cloud Kill first to equip it.</div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
+					}
+				if($uarcher == "Bow"  AND $r6pts < 125000)
+					{echo"<div align=center><font class=yellow>You must research archery before you can do this.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
+					}
+				if($uarcher == "Short Bow" AND $r6pts < 125000)
+					{echo"<div align=center><font class=yellow>You must research archery before you can do this.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
+					}
+				if($uarcher == "Long Bow" AND $r6pts < 125000)
+					{echo"<div align=center><font class=yellow>You must research archery before you can do this.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
+					}
+				if($uarcher == "Medieval War Bow" AND $r6pts < 125000)
+					{echo"<div align=center><font class=yellow>You must research archery before you can do this.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
+					}
+				
+				
+				include("include/connect.php");
+
+			if($uwarrior != ns)
+			  {	
+
+				if($uwarrior == "Dagger")
+					{
+							$wspeed = 6;
+							$wpower = 3;
+							$w_c_name = 1;
+					}
 				if($uwarrior == "Short Sword")
 						{
-							$wspeed = 4;
-							$wpower = 7;
-			
+							$wspeed = 7;
+							$wpower = 6;
+							$w_c_name = $ssword;
 						}
 				if($uwarrior == "Long Sword")
 						{
-							$wspeed = 5;
+							$wspeed = 8;
 							$wpower = 9;
-			
+							$w_c_name = $lsword;
 						}
 				if($uwarrior == "Axe")
 						{
 							$wspeed = 9;
 							$wpower = 12;
-			
+							$w_c_name = $axe;
 						}
 				if($uwarrior == "Great Axe")
 						{
-							$wspeed = 12;
-							$wpower = 18;
-			
+							$wspeed = 14;
+							$wpower = 20;
+							$w_c_name = $gaxe;
 						}
 				if($uwarrior == "Ice Sword")
 						{
-							$wspeed = 9;
-							$wpower = 20;
+							$wspeed = 18;
+							$wpower = 25;
+							$w_c_name = $icesword;
+						}
 			
-						}
-				if($uwarrior == "Club")
+				
+					
+					
+
+							if($w_c_name < 1)
+								{echo"<div align=center><font class=yellow>You need to construct $uwarrior first before you use it.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();}
+					
+						$warspeedw = $wspeed;
+						$warpower = $wpower;
+						$cweapon = $uwarrior;
+						
+						mysql_query("UPDATE military SET cweapon =\"$cweapon\" WHERE email='$email' AND pw='$pw'");
+						mysql_query("UPDATE military SET warspeedw =\"$warspeedw\" WHERE email='$email' AND pw='$pw'");
+						mysql_query("UPDATE military SET warpower =\"$warpower\" WHERE email='$email' AND pw='$pw'");
+
+				}
+	
+			
+
+
+
+			if($uwizard != ns)
+			  {
+			
+				if($uwizard == "Magic Missile")
 						{
-							$wspeed = 5;
-							$wpower = 6;
+							$wspeed = 7;
+							$wpower = 4;
+						
 						}
-				$newwarpower = $wspeed;
-				$newwarspeed = $wpower;
+				if($uwizard == "Ice Storm")
+						{
+							$wspeed = 8;
+							$wpower = 10;
+						
+						}
+				if($uwizard == "Fireball")
+						{
+							$wspeed = 9;
+							$wpower = 15;
+						
+						}
+				if($uwizard == "Cloud Kill")
+						{
+							$wspeed = 15;
+							$wpower = 25;
+						
+						}
+
+						if($uwizard == "Fireball" AND $r1pts < 10000)
+							{echo"<div align=center><font class=yellow>You have to research Fireball before you use it.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();}
+							
+						if($uwizard == "Ice Storm" AND $r2pts < 40000)
+							{echo"<div align=center><font class=yellow>You have to research Ice Storm before you use it.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();}
+						
+						if($uwizard == "Cloud Kill" AND $r3pts < 100000)
+							{echo"<div align=center><font class=yellow>You have to research Cloud Kill before you use it.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();}
+						$wizpower = $wpower;
+						$wizspeeds = $wspeed;
+						$cspell = $uwizard;
+			
+						mysql_query("UPDATE military SET cspell =\"$cspell\" WHERE email='$email' AND pw='$pw'");
+						mysql_query("UPDATE military SET wizspeeds =\"$wizspeeds\" WHERE email='$email' AND pw='$pw'");
+						mysql_query("UPDATE military SET wizpower =\"$wizpower\" WHERE email='$email' AND pw='$pw'");
+
+				}
 
 
-				@mysql_connect (localhost, ziccarelli, pa724);
-				mysql_select_db (medievalbattles_com);
-				mysql_query("UPDATE military SET cweapon =\"$uwarrior\" WHERE email='$email' AND pw='$pw'");
-				mysql_query("UPDATE military SET warspeedw =\"$newwarspeed\" WHERE email='$email' AND pw='$pw'");
-				mysql_query("UPDATE military SET warpower =\"$newwarpower\" WHERE email='$email' AND pw='$pw'");
+				
+
+				if($upriest != ns)
+			 	  {
+						
+					if($upriest == "Quarterstaff")
+						{
+							$wspeed = 6;
+							$wpower = 2;
+							$w_pc_name = 1;
+						}
+					if($upriest == "Spiked Club")
+						{
+							$wspeed = 6;
+							$wpower = 6;
+							$w_pc_name = $club;
+						}
+					if($upriest == "Mace")
+						{
+							$wspeed = 8;
+							$wpower = 9;
+							$w_pc_name = $mace;
+						}
+					if($upriest == "Grand Scepter")
+						{
+							$wspeed = 9;
+							$wpower = 15;
+							$w_pc_name = $gs;
+						}
+
+								if($w_pc_name < 1)
+									{echo"<div align=center><font class=yellow>You must construct $upriest first.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();}
+		
+						$pripower = $wpower;
+						$prispeedw = $wspeed;
+						$cstaff = $upriest;
+			
+						mysql_query("UPDATE military SET cstaff =\"$cstaff\" WHERE email='$email' AND pw='$pw'");
+						mysql_query("UPDATE military SET prispeedw =\"$prispeedw\" WHERE email='$email' AND pw='$pw'");
+						mysql_query("UPDATE military SET pripower =\"$pripower\" WHERE email='$email' AND pw='$pw'");
+
+				  }
+
+			if($uarcher != ns)
+			 	  {		
+						
+					if($uarcher == "Bow")
+						{
+							$wspeeda = 5;
+							$wpowera = 2;
+							$A_name = 1;
+						}
+					if($uarcher == "Short Bow")
+						{
+							$wspeeda = 6;
+							$wpowera = 7;
+							$A_name = $bow1;
+						}
+					if($uarcher == "Long Bow")
+						{
+							$wspeeda = 7;
+							$wpowera = 14;
+							$A_name = $bow3;
+						}
+					if($uarcher == "Medieval War Bow")
+						{
+							$wspeeda = 8;
+							$wpowera = 22;
+							$A_name = $bow3;
+						}
+
+								if($A_name < 1)
+									{echo"<div align=center><font class=yellow>$A_name You must construct $uarcher first.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();}
+		
+						$archpower = $wpowera;
+						$archspeedw = $wspeeda;
+						$cbow = $uarcher;
+			
+						mysql_query("UPDATE military SET cbow =\"$cbow\" WHERE email='$email' AND pw='$pw'");
+						mysql_query("UPDATE military SET archspeedw =\"$archspeedw\" WHERE email='$email' AND pw='$pw'");
+						mysql_query("UPDATE military SET archpower =\"$archpower\" WHERE email='$email' AND pw='$pw'");
+
+				  }
+				
+
+					echo"<div align=center><font class=yellow>Your troops have been equipped with what you specified.</font></div>";
+					include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");		
+					die();
+
 	 }
    }
 ?>
-	
 <?php
 	if(!IsSet($update2))
 {
    ?> 
-	 <form type=get action="equip.php">	 
-	  <tr>
-		<td class=inner2>Wizard</td>
-		<td class=inner2><? echo"$cspell"; ?></td>
-		
-		
-		<td class=inner2><center>
-		<select name="uwizard">
-	    <option selected value="ns">-Choose a Spell-</option>
-		<option value="Ice Storm">Ice Storm</option>
-		<option value="Fireball">Fireball</option>";
-		<option value="Magic Missile">Magic Missile</option>
-		<option value="Cloud Kill">Cloud Kill</option>
-		
-		
-			</select>
-			<td class=inner2><center><input class=button type="submit" name="update2" value="Equip"></center>
-				<input type="hidden" name="update2" value="2">
-				</form>
-			</td>
+
+			<? include("include/S_EQUIPA.php"); ?>
+
 <?php
 }
 else
 {
-		if (!IsSet($update) && $update =="1" or !IsSet($update3) && $update3 =="3" or !IsSet($update4) && $update4 =="4" or !IsSet($update5) && $update5 =="5" or !IsSet($update6) && $update6 =="6")
-		{echo""; die();
-		}
-	elseif($uwizard === ns)
-		{print "You did not specify any spell to equip."; die();
-		}
+		if($uwararmor == ns AND $uwizarmor == ns AND $upriarmor == ns AND $uarcharmor == ns)
+			{echo"<div align=center><font class=yellow>You did not specify any armor to equip.</font></div>"; include("include/S_EQUIPA.php");die();
+			}
+		elseif($uwararmor != "Studded Leather" AND $uwararmor != "Chain Shirt" AND $uwararmor != "Chain Mail" AND $uwararmor != "Breast Plate" AND $uwararmor != "Medieval Armor" AND $uwararmor != ns)
+			{echo"<div align=center><font class=yellow>Invalid item.</font></div>"; include("include/S_EQUIPA.php");die();}
+		elseif($uarcharmor != "Studded Leather" AND $uarcharmor != "Chain Shirt" AND $uarcharmor != "Chain Mail" AND $uarcharmor != "Breast Plate" AND $uwararmor != "Medieval Armor" AND $uarcharmor != ns AND $uarcharmor != "")
+			{echo"<div align=center><font class=yellow>Invalid item.</font></div>"; include("include/S_EQUIPA.php");die();}
+		elseif($uwizarmor != "Robe" AND $uwizarmor != ns)
+			{echo"<div align=center><font class=yellow>Invalid item.</font></div>"; include("include/S_EQUIPA.php");die();
+			}
+		elseif($upriarmor != "Leather" AND $upriarmor != ns)
+			{echo"<div align=center>Invalid item.</font></div>";include("include/S_EQUIPA.php");die();
+			}
+		elseif($uarcharmor != "" AND $r6pts < 125000)
+			{echo"<div align=center>You must research archery first before you can equip your archers.</font></div>";include("include/S_EQUIPA.php");die();
+			}
 		else
 			{
-			if($uwizard == "Magic Missile")
-						{
-							$wspeed = 4;
-							$wpower = 5;
 			
-						}
-			if($uwizard == "Ice Storm")
-						{
-							$wspeed = 5;
-							$wpower = 10;
+				  include("include/connect.php");
+
+			if($uwararmor != ns)
+				{
+						if($uwararmor == "Studded Leather")
+							{
+								$aspeed = 0;
+								$mod = 1;
+								$A_NAME = 1;
 			
-						}
-				if($uwizard == "Fireball")
-						{
-							$wspeed = 5;
-							$wpower = 15;
+							}
+						if($uwararmor == "Chain Shirt")
+							{
+								$aspeed = 1;
+								$mod = 3;
+								$A_NAME = $cs;
 			
-						}
-				if($uwizard == "Cloud Kill")
-						{
-							$wspeed = 9;
-							$wpower = 20;
+							}
+						if($uwararmor == "Chain Mail")
+							{
+								$aspeed = 2;
+								$mod = 5;
+								$A_NAME = $cm;
 			
-						}
+							}
+						if($uwararmor == "Breast Plate")
+							{
+								$aspeed = 3;
+								$mod = 6;
+								$A_NAME = $bp;
+			
+							}
+						if($uwararmor == "Medieval Armor")
+							{
+								$aspeed = 5;
+								$mod = 9;
+								$A_NAME = $fp;
+			
+							}
+
+						
+						
+
+
+							if($A_NAME < 1)
+								{echo"<div align=center><font class=yellow>Invalid item.</font></div>"; include("include/S_EQUIPA.php");die();}
+
+							$wardef = $mod;
+							$warspeeda = $aspeed;
+							$wararmor = $uwararmor;
+
+							 mysql_query("UPDATE military SET wararmor =\"$wararmor\" WHERE email='$email' AND pw='$pw'");
+				 			 mysql_query("UPDATE military SET wardef =\"$wardef\" WHERE email='$email' AND pw='$pw'");
+				 			 mysql_query("UPDATE military SET warspeeda =\"$warspeeda\" WHERE email='$email' AND pw='$pw'");
+					}
+
 				
-				$newwizpower = $wpower;
-				$newwizspeed = $wspeed;
+				if($uwizarmor != ns)
+					{
 
-				@mysql_connect (localhost, ziccarelli, pa724);
-				mysql_select_db (medievalbattles_com);
-				mysql_query("UPDATE military SET cspell =\"$uwizard\" WHERE email='$email' AND pw='$pw'");
-				mysql_query("UPDATE military SET wizspeeds =\"$newwizspeed\" WHERE email='$email' AND pw='$pw'");
-				mysql_query("UPDATE military SET wizpower =\"$newwizpower\" WHERE email='$email' AND pw='$pw'");
-	 }
-   }
-?>
-<?php
-	if(!IsSet($update3))
-{
-   ?> 
-	<form type=get action="equip.php">	 
-	  <tr>
-		<td class=inner2>Priest</td>
-		<td class=inner2><? echo"$cstaff"; ?></td>
-		
-		
-		<td class=inner2><center>
-		<select name="upriest">
-	    <option selected value="ns">-Choose a Weapon-</option>
-		<? if($club > 0)
-				echo"<option value=\"Club\">Club</option>";
-			else
-				echo"";
-			?>
-		
-		</select></td>
-		<td class=inner2><center><input class=button type="submit" name="update3" value="Equip"></center>
-				<input type="hidden" name="update3" value="3">
-				</form>
-			</td>
-		</table> 
-		</form>
-<?php
-}
-else
-{
-		if (!IsSet($update2) && $update2 =="2" or !IsSet($update) && $update =="1" or !IsSet($update4) && $update4 =="4" or !IsSet($update5) && $update5 =="5" or !IsSet($update6) && $update6 =="6")
-		{echo""; die();
-		}
-	elseif($upriest === ns)
-		{print "You did not specify any weapon to equip."; die();
-		}
-		else
-			{
+						if($uwizarmor == "Robe")
+							{
+								$aspeed = 0;
+								$mod = 1;
+							
+							}
 
-				if($upriest == "Club")
-						{
-							$wspeed = 5;
-							$wpower = 6;
-						}
+								$wizdef = $mod;
+								$wizspeeda = $aspeed;
+								$wizarmor = $uwizarmor;
 
-				$newpripower = $wpower;
-				$newprispeed = $wspeed;
+				 				mysql_query("UPDATE military SET wizarmor =\"$wizarmor\" WHERE email='$email' AND pw='$pw'");
+				 				mysql_query("UPDATE military SET wizdef =\"$wizdef\" WHERE email='$email' AND pw='$pw'");
+				 				mysql_query("UPDATE military SET wizspeeda =\"$wizspeeda\" WHERE email='$email' AND pw='$pw'");
+
+					}
+
+				if($upriarmor != ns)
+					{
+
+						if($upriarmor == "Leather")
+							{
+								$aspeed = 1;
+								$mod = 2;
+							
+							}
+									$pridef = $mod;
+									$prispeeda = $aspeed;
+									$priarmor = $upriarmor;
+
+				 					mysql_query("UPDATE military SET priarmor =\"$priarmor\" WHERE email='$email' AND pw='$pw'");
+				 					mysql_query("UPDATE military SET pridef =\"$pridef\" WHERE email='$email' AND pw='$pw'");
+								    mysql_query("UPDATE military SET prispeeda =\"$prispeeda\" WHERE email='$email' AND pw='$pw'");
+							}
 				
-				@mysql_connect (localhost, ziccarelli, pa724);
-				mysql_select_db (medievalbattles_com);
-				mysql_query("UPDATE military SET cstaff =\"$upriest\" WHERE email='$email' AND pw='$pw'");
-				mysql_query("UPDATE military SET prispeedw =\"$newpripower\" WHERE email='$email' AND pw='$pw'");
-				mysql_query("UPDATE military SET pripower =\"$newprispeed\" WHERE email='$email' AND pw='$pw'");
-	 }
-   }
-?>
-
-<br><br><br>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<table border=0 bordercolor="#808080" align=center width="80%">
-	  <tr>
-	    <td class=main colspan=4><b class=reg>Equip Armor</b></td>
-	 
-	  <tr>
-	    <td class=main2><b class=reg>Units</b></td>
-		<td class=main2><b class=reg>Current Armor</b></td>
-		
-		
-		<td class=main2><b class=reg>Item</b></td>
-		<td class=main2><b class=reg>Equip</b></td>
-
-
-
-<?php
-	if(!IsSet($update4))
-{
-   ?> 
-
-	 <form type=get action="equip.php">	 
-	  <tr>
-		<td class=inner2>Warrior</td>
-		<td class=inner2><? echo"$wararmor"; ?></td>
-		
-		
-		<td class=inner2><center><select name="uwararmor">
-	    <option selected value=ns>-Choose Armor-</option>
-		<option value="Studded Leather">Studded Leather</option>";
+					if($uarcharmor != ns)
+				{
+						if($uarcharmor == "Studded Leather")
+							{
+								$aspeed = 0;
+								$mod = 1;
+								$A_NAME = 1;
 			
-		
-			</select>
-			<td class=inner2><center><input class=button type="submit" name="update4" value="Equip"></center>
-				<input type="hidden" name="update4" value="4">
-				</form>
-			</td>
-<?php
-}
-else
-{
-		if (!IsSet($update2) && $update2 =="2" or !IsSet($update3) && $update3 =="3" or !IsSet($update) && $update =="1" or !IsSet($update5) && $update5 =="5" or !IsSet($update6) && $update6 =="6")
-		{echo""; die();
-		}
-	elseif($uwararmor === ns)
-		{print "You did not specify any armor to equip."; die();
-		}
-		else
-			{
-			if($wararmor == "Studded Leather")
-						{
-							$aspeed = 0;
-							$mod = -1;
-							
+							}
+						if($uarcharmor == "Chain Shirt")
+							{
+								$aspeed = 1;
+								$mod = 3;
+								$A_NAME = $cs;
 			
-						}
-			if($wararmor == "Chain Shirt")
-						{
-							$aspeed = 2;
-							$mod = -2;
-							
+							}
+						if($uarcharmor == "Chain Mail")
+							{
+								$aspeed = 2;
+								$mod = 5;
+								$A_NAME = $cm;
 			
-						}
-				if($wararmor == "Chain Mail")
-						{
-							$aspeed = 5;
-							$mod = -4;
-							
+							}
+						if($uwararmor == "Breast Plate")
+							{
+								$aspeed = 3;
+								$mod = 6;
+								$A_NAME = $bp;
 			
-						}
-				if($wararmor == "Breast Plate")
-						{
-							$aspeed = 2;
-							$mod = -5;
-							
+							}
+						if($uarcharmor == "Medieval Armor")
+							{
+								$aspeed = 5;
+								$mod = 9;
+								$A_NAME = $fp;
 			
-						}
-				if($wararmor == "Medieval Armor")
-						{
-							$aspeed = 4;
-							$mod = -8;
-							
-			
-						}
-				
-				$armordef = $mod;
-				$armorspeed = $aspeed;
-				@mysql_connect (localhost, ziccarelli, pa724);
-				 mysql_select_db (medievalbattles_com);
-				 mysql_query("UPDATE military SET wararmor =\"$uwararmor\" WHERE email='$email' AND pw='$pw'");
-				 mysql_query("UPDATE military SET wardef =\"$armordef\" WHERE email='$email' AND pw='$pw'");
-				 mysql_query("UPDATE military SET warspeeda =\"$armorspeed\" WHERE email='$email' AND pw='$pw'");
-	 }
-   }
-?>
+							}
+
+						
+						
+
+
+							if($A_NAME < 1)
+								{echo"<div align=center><font class=yellow>Invalid item.</font></div>"; include("include/S_EQUIPA.php");die();}
+
+							$archdef = $mod;
+							$archspeeda = $aspeed;
+							$archarmor = $uarcharmor;
+
+							 mysql_query("UPDATE military SET archarmor =\"$archarmor\" WHERE email='$email' AND pw='$pw'");
+				 			 mysql_query("UPDATE military SET archdef =\"$archdef\" WHERE email='$email' AND pw='$pw'");
+				 			 mysql_query("UPDATE military SET archspeeda =\"$aspeed\" WHERE email='$email' AND pw='$pw'");
+					}
+
+
+
+							echo"<div align=center><font class=yellow>Your troops have been equipped with what you specified.</font></div>";
+							include("include/S_EQUIPA.php");		
+							die();
+
 	
-<?php
-	if(!IsSet($update5))
-{
-   ?> 
-	 <form type=get action="equip.php">	 
-	  <tr>
-		<td class=inner2>Wizard</td>
-		<td class=inner2><? echo"$wizarmor"; ?></td>
-		
-		
-		<td class=inner2><center>
-		<select name="uwizarmor">
-	    <option selected value="ns">-Choose Armor-</option>
-		<option value="Robe">Robe</option>
-		
-		
-		
-			</select>
-			<td class=inner2><center><input class=button type="submit" name="update5" value="Equip"></center>
-				<input type="hidden" name="update5" value="5">
-				</form>
-			</td>
-<?php
-}
-else
-{
-		if (!IsSet($update2) && $update2 =="2" or !IsSet($update3) && $update3 =="3" or !IsSet($update4) && $update4 =="4" or !IsSet($update) && $update =="1" or !IsSet($update6) && $update6 =="6")
-		{echo""; die();
-		}
-	elseif($wizarmor === ns)
-		{print "You did not specify any armor to equip."; die();
-		}
-		else
-			{
-				if($wizarmor == "Robe")
-						{
-							$aspeed = 0;
-							$mod = -1;
-							
+
 			
-						}
-				$armordef = $mod;
-				$armorspeed = $aspeed;
-				@mysql_connect (localhost, ziccarelli, pa724);
-				 mysql_select_db (medievalbattles_com);
-				 mysql_query("UPDATE military SET wizarmor =\"$uwizarmor\" WHERE email='$email' AND pw='$pw'");
-				 mysql_query("UPDATE military SET wizdef =\"$armordef\" WHERE email='$email' AND pw='$pw'");
-				 mysql_query("UPDATE military SET wizspeeda =\"$armorspeed\" WHERE email='$email' AND pw='$pw'");
 	 }
    }
 ?>
-<?php
-	if(!IsSet($update6))
-{
-   ?> 
-	<form type=get action="equip.php">	 
-	  <tr>
-		<td class=inner2>Priest</td>
-		<td class=inner2><? echo"$priarmor"; ?></td>
-		
-		<td class=inner2><center>
-		<select name="upriarmor">
-	    <option selected value="ns">-Choose Armor-</option>
-		<option value="Leather Armor">Leather Armor</option>
-			
-		</select></td>
-		<td class=inner2><center><input class=button type="submit" name="update6" value="Equip"></center>
-				<input type="hidden" name="update6" value="6">
-				</form>
-			</td>
-		</table> 
-		
-<?php
-}
-else
-{
-		if (!IsSet($update2) && $update2 =="2" or !IsSet($update3) && $update3 =="3" or !IsSet($update4) && $update4 =="4" or !IsSet($update5) && $update5 =="5" or !IsSet($update) && $update =="1")
-		{echo""; die();
-		}
-	elseif($upriarmor === ns)
-		{print "You did not specify any armor to equip."; die();
-		}
-		else
-			{
-						if($priarmor == "Leather")
-						{
-							$aspeed = 0;
-							$mod = -2;
-							
-			
-						}
-				$armordef = $mod;
-				$armorspeed = $aspeed;
-				@mysql_connect (localhost, ziccarelli, pa724);
-				 mysql_select_db (medievalbattles_com);
-				 mysql_query("UPDATE military SET priarmor =\"$upriarmor\" WHERE email='$email' AND pw='$pw'");
-				 mysql_query("UPDATE military SET pridef =\"$armordef\" WHERE email='$email' AND pw='$pw'");
-				 mysql_query("UPDATE military SET prispeeda =\"$armorspeed\" WHERE email='$email' AND pw='$pw'");
-	 }
-   }
-?>
-</table>
 <!-- body ends here -->	
-  </table>
- </TD>
+</table>
+</TD>
 </TR>
 </TABLE>
 </BODY>

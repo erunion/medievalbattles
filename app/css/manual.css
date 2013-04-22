@@ -14,16 +14,14 @@
 	A:hover		{ COLOR: red; TEXT-DECORATION: underline;font-size:12;}
 	b		{ COLOR: red;}
 	b.other		{ COLOR: #ff8429; }
-
-body    {
-        scrollbar-face-color:#FF0000;
-        scrollbar-highlight-color:#000000;
-        scrollbar-3dlight-color:#000000;
-        scrollbar-darkshadow-color:#000000;
-        scrollbar-shadow-color:#000000;
-        scrollbar-track-color:#000000;
-        scrollbar-arrow-color:#000000;
+body    {background-color: "#000000"; color: "#bfbfbf" ;
+        scrollbar-face-color:#630000;
+        scrollbar-highlight-color:#808080;
+        scrollbar-3dlight-color:#808080;
+        scrollbar-darkshadow-color:#808080;
+        scrollbar-shadow-color:#808080;
+        scrollbar-track-color:#404040;
+        scrollbar-arrow-color:#808080;
         }
-body		{background-color: "#000000"}
 
 b.important	{COLOR: yellow}

@@ -36,13 +36,13 @@
 There are 4 different status'.  Each are on the same page.
 <br><br>
 <ul>
-	<li><b>Empire Status</b>-Here, you can view everything that your empire is producing and how much is produced an hour.
+	<li><b>Empire Status</b>-Here, you can view everything that your empire is producing and how much is produced per tick.
 	<br><br>
-	<li><b>Military Status</b>-You can view your military status.  This tells you how many wizards/warriors/priests you have training and how long it will take for them to be done with training.
+	<li><b>Training Status</b>-You can view your military status.  This tells you how many wizards/warriors/priests you have training and how long it will take for them to be done with training.
 	<br><br>
 	<li><b>Returning Status</b>-This shows if your have fleets returning or not.  You have 4 war generals so you can only attack four times, then you have to wait for your fleets to return.
 	<br><br>
-	<li><b>Construction Status</b>-Itt tells you what type of buildings you are building.  It also tells you how many are building and how long it will take until building them is completed.  
+	<li><b>Building Status</b>-It tells you what type of buildings you are building.  It also tells you how many are building and how long it will take until building them is completed.  
 		</blockquote>
 			
            </td>
