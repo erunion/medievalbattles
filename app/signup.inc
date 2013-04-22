@@ -18,7 +18,6 @@
 				<td><select name=race>
 					<option selected value=ns>-----------</option>
 					<option value=Human>Human</option>
-					<option value=Orc>Orc</option>
 					<option value=Dwarf>Dwarf</option>
 					<option value=Elf>Elf</option>
 					<option value=Giant>Giant</option>

@@ -30,12 +30,12 @@ echo"
 					<td class=inner2><b><font class=red>Gold Pieces:</font></b> $gp</td>
 					<td class=inner2><b><font class=red>Food:</font></b> $food</td>
 				<tr>";
-if($res[r6pts] >= 125000)	 {
+if($res[r13pts] >= 125000)	 {
 	echo "
 					<td class=inner2><b><font class=red>Lumber:</font></b> $lumber</td>
 					<td class=inner2><b><font class=red>Empire Defense:</font></b> $tdefense</td>	
 				<tr><td colspan=2>&nbsp;</td>
-				<tr><td class=inner2 colspan=2><b><font class=red>SL Notice:</font></b> $setnotice</td>";
+				<tr><td class=inner2 colspan=2><b><font class=red>SL Notice:</font></b> $setnotice[0]</td>";
 	if($empireguild != None)	{
 		echo "<tr><td class=inner2 colspan=2><b><font class=red>GL Notice:</font></b> $guildnotice[0]</td>";
 	}
@@ -99,9 +99,9 @@ echo "
 </table>
 </td></table>
 <? } ?>
-<!-- body ends here -->
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+
+</td>
+</tr>
+</table>
+</body>
+</html>

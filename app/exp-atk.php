@@ -1,15 +1,17 @@
-<?	 include("include/igtop.php");	?>
+<?	 
+include("include/igtop.php");	
+echo "<div align=center><font class=yellow>Explorer Attacks are currently down while we fix some bugs with them</font></div>";
+die();
 
+echo "
 <center>
- <form type=post action="exp-atk.php">
-  <b class=reg>Settlement:</b><input type="number" name="snum" size=3 maxlength=3>
-   <input type="hidden" name="setchg" value="1">
-   <input type="submit" value="Change">
-  </form>
- <br>
-<br>
+<form type=post action=exp-atk.php>
+	<b class=reg>Settlement:</b><input type=number name=snum size=3 maxlength=3>
+	<input type=hidden name=setchg value=1>
+	<input type=submit value=Change>
+</form>
+<br><br>";
 
-<?
 if(!IsSet($exploreratk))	{
 	include("include/S_EXPATK.php");
 }
@@ -71,47 +73,41 @@ else	{
 			include("include/S_EXPATK.php");
 			die();
 		}
-		elseif($evu[guild] === $empireguild)	{
+		elseif($evu[guild] === $empireguild AND $evu[guild] != "None" AND $empireguild != "None")	{
 			echo"<div align=center><font class=yellow>You can't attack someone who is in your guild!</font></div>";
 			include("include/S_EXPATK.php");
 			die();
 		}
 		// dogs split up for attacking
-			$send = round($send / 2);	 
+			$atk_dogs = round($send / 2);	 
 
 		// dogs attack land explorers
-			$dog_land_atk = max(0, $send - ($eve['expland'] * 3));	
+			$dog_land_atk = max(0, $atk_dogs - ($eve[expland] * 3));	
 			$dog_land_atk = round($dog_land_atk);
 		// dogs attack mountain explorers
-			$dog_mt_atk = max(0, $send - ($eve['expmt'] * 3));
+			$dog_mt_atk = max(0, $atk_dogs - ($eve[expmt] * 3));
 			$dog_mt_atk = round($dog_mt_atk);
 
 		// land explorers fight back
-			$land_explorers = max(0, $eve['expland'] - ($send / 5));	
+			$land_explorers = max(0, $eve[expland] - ($atk_dogs / 5));	
 			$land_explorers = round($land_explorers);
 		// mountain explorers fight back
-			$mt_explorers = max(0, $eve['expmt'] - ($send / 5));	
+			$mt_explorers = max(0, $eve[expmt] - ($atk_dogs / 5));	
 			$mt_explorers = round($mt_explorers);
 
-		// calculate dogs lost
-			$killed_dog_land_atk = $send - $dog_land_atk;
-			$killed_dog_mt_atk = $send - $dog_mt_atk;
-			$killed_dogs = $killed_dog_land_atk + $killed_dog_mt_atk;
-		// calculate surviving dogs
-			$new_dogs = $send - $killed_dogs;
-			$surviving_dogs = $dogs - $new_dogs;
+		// calculate dogs new dogs
+			$killed_dogs = (($atk_dogs - $dog_land_atk) + ($atk_dogs - $dog_mt_atk));
+			$surviving_dogs = ($dogs - ($atk_dogs - $killed_dogs));
  
-
-		$dead_land_explorers = $eve['expland'] - $land_explorers;	// count dead land explorers
-		$dead_mt_explorers = $eve['expland'] - $land_explorers;		// count dead mountain explorers
-		$killed_explorers = $dead_land_explorers + $dead_mt_explorers;	 // total killed explorers calculated
+		//	calculate killed explorers
+			$killed_explorers = (($eve[expland] - $land_explorers) + ($eve[expmt] - $mt_explorers));
 		
 		echo "<div align=center><font class=yellow>You have attacked $evu[ename], lost $killed_dogs dogs and killed $killed_explorers explorers.</font></div>";
 						
 			mysql_query("UPDATE return SET dogs='$surviving_dogs' WHERE email='$email' AND pw='$pw'");
 			mysql_query("UPDATE return SET dogtime='3' WHERE email='$email' AND pw='$pw'");
-			mysql_query("UPDATE explore SET expland=$land_explorers WHERE userid='$empvalue'");
-			mysql_query("UPDATE explore SET expmt=$mt_explorers WHERE userid='$empvalue'");
+			mysql_query("UPDATE explore SET expland='$land_explorers' WHERE userid='$empvalue'");
+			mysql_query("UPDATE explore SET expmt='$mt_explorers' WHERE userid='$empvalue'");
 			mysql_query("UPDATE user SET nno=nno+1 WHERE userid='$empvalue'");
 
 		//  attack news - their empire news		

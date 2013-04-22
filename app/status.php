@@ -60,9 +60,6 @@ if ($pageid == 'production')	{
 					<td class=inner><b class=reg>New Recruits </b></td>
 					<td class=inner2><? echo "$rechourly"; ?></td>
 				<tr>
-					<td class=inner><b class=reg>New Puppies </b></td>
-					<td class=inner2><? $newpuppies = $kennel * .25;	echo "$newpuppies"; ?></td>
-				<tr>
 					<td class=inner><b class=reg>Food Production</b></td>
 					<td class=inner2><? echo "$foodhourly"; ?></td>
 		<? 
@@ -90,7 +87,6 @@ if ($pageid == 'building')	 {
 				
 				<tr align=center>
 					<td class=main2><b class=reg>Homes</b></td>
-					<td class=main2><b class=reg>Kennels</b></td>
 					<td class=main2><b class=reg>Barracks</b></td>
 					<td class=main2><b class=reg>Farms</b></td>
 					<? if($race != Orc)	{	echo "<td class=main2><b class=reg>Wooden Platform</b></td>";	}	?>
@@ -100,7 +96,6 @@ if ($pageid == 'building')	 {
 
 				<tr align=center>	
 					<td class=inner2><? echo"$dhome ($Hhrs)"; ?></td>	
-					<td class=inner2><? echo"$dkennel ($Khrs)"; ?></td>	
 					<td class=inner2><? echo"$dbarrack ($Bhrs)"; ?></td>
 					<td class=inner2><? echo"$dfarm ($Fhrs)"; ?></td>
 					<? if($race != Orc)	{	echo "<td class=inner2>$dwp ($Whrs)</td>";	}	?>
@@ -112,59 +107,80 @@ if ($pageid == 'building')	 {
 <? 
 }
 if ($pageid == 'training')	 {
-?>
-	
-<table border=0 bordercolor="#808080" align=center width="60%">
-	  <tr>
-	    <td class=main colspan=5><b class=reg>Training Status</b></td>
-	  <tr>
+	echo "
+<table border=0 bordercolor=#808080 align=center width=60%>
+	<tr>
+		<td class=main colspan=10><b class=reg>Training Status</b></td>
+	<tr>
+		<td class=main2><b class=reg>Unit</b></td>
+		<td class=main2 colspan=2><b class=reg>Training (1 tick)</b></td>
+	<tr> 
+		<td class=inner2><b class=reg>Scientist</b></td>
+		<td class=inner2 colspan=2>$dbscientist</td>
+	<tr>
+		<td class=inner2><b class=reg>Thief</b></td>
+		<td class=inner2 colspan=2>$dbthief</td>
+	<tr>
+		<td class=inner2><b class=reg>Explorer</b></td>
+		<td class=inner2 colspan=2>$dbexplorer</td>
+</table>
+<table border=0 bordercolor=#808080 align=center width=60%>
+	<tr>
 	    <td class=main2><b class=reg>Unit</b></td>
 		<td class=main2><b class=reg>Training (1 tick)</b></td>
 		<td class=main2><b class=reg>Training (2 ticks)</b></td>
-	  <tr> 
+	<tr> 
 		<td class=inner2><b class=reg>Warrior</b></td>
-		<td class=inner2><? echo"$dbwar"; ?></td>
-		<td class=inner2><? echo"$dbwar2"; ?></td>
-<? if($race != Giant)	 {
+		<td class=inner2>$dbwar</td>
+		<td class=inner2>$dbwar2</td>";
+
+if($race != Giant)	 {
 	echo "
-	  <tr>
+	<tr>
 		<td class=inner2><b class=reg>Wizard</td>
 		<td class=inner2>$dbwiz</td>
 		<td class=inner2>$dbwiz2</td>
-	  <tr>
+	<tr>
 		<td class=inner2><b class=reg>Priest</b></td>
 		<td class=inner2>$dbpri</td>
-		<td class=inner2>$dbpri2</td>
-		";
-	  } 
-	  if($res[r13pts] >= 125000)	{
+		<td class=inner2>$dbpri2</td>";
+} 
+if($res[r13pts] >= 125000)	{
 	echo "
-	  <tr>
+	<tr>
 		<td class=inner2><b class=reg>Archer</td>
 		<td class=inner2>$dbarch</td>
-		<td class=inner2>$dbarch2</td>
-		";
-	  }  
-?>
+		<td class=inner2>$dbarch2</td>";
+}  
 
-	  <tr>
+echo "</table>";
+
+if($res[r13pts] >= 125000 OR $res[r14pts] >= 125000)	 {
+	echo "
+<table border=0 bordercolor=#808080 align=center width=60%>
+	<tr>
 	    <td class=main2><b class=reg>Unit</b></td>
-		<td class=main2 colspan=2><b class=reg>Training (1 tick)</b></td>
-	  <tr> 
-		<td class=inner2><b class=reg>Scientist</b></td>
-		<td class=inner2 colspan=2><? echo"$dbscientist"; ?></td>
-	  <tr>
-		<td class=inner2><b class=reg>Thief</b></td>
-		<td class=inner2 colspan=2><? echo"$dbthief"; ?></td>
-	  <tr>
-		<td class=inner2><b class=reg>Explorer</b></td>
-		<td class=inner2 colspan=2><? echo"$dbexplorer"; ?></td>
-	  <tr>
-		<td class=inner2><b class=reg>Rottweiler</b></td>
-		<td class=inner2 colspan=2><? echo"$dbdog"; ?></td>
-	</table>
-<? 
+		<td class=main2><b class=reg>Training (1 tick)</b></td>
+		<td class=main2><b class=reg>Training (2 ticks)</b></td>
+		<td class=main2><b class=reg>Training (3 ticks)</b></td>";
+	if($res[r13pts] >= 125000)	 {
+		echo "
+	<tr>
+	    <td class=inner2><b class=reg>Catapult</b></td>
+		<td class=inner2><b class=reg>$dbcatapult</b></td>
+		<td class=inner2><b class=reg>$dbcatapult2</b></td>
+		<td class=inner2><b class=reg>$dbcatapult3</b></td>";
 	}
+	if($res[r14pts] >= 125000)	 {
+		echo"
+	<tr>
+	    <td class=inner2><b class=reg>Suicide Civilian</b></td>
+		<td class=inner2><b class=reg>$dbsuicide</b></td>
+		<td class=inner2><b class=reg>$dbsuicide2</b></td>
+		<td class=inner2><b class=reg>$dbsuicide3</b></td>";
+	}
+}
+}
 if ($pageid == 'parties')	{
 ?>
 	

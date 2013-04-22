@@ -1,0 +1,54 @@
+BODY {
+	scrollbar-face-color:       #FF0000;
+	scrollbar-highlight-color:  #000000;
+	scrollbar-shadow-color:     #000000;
+	scrollbar-3Dlight-color:    #000000;
+	scrollbar-arrow-color:      #000000;
+	scrollbar-track-color:      #000000;
+	scrollbar-darkshadow-color: #000000;
+}
+td.signup {
+	FONT-SIZE: 12px; 
+	COLOR: #ffffff; 
+	FONT-FAMILY: tahoma, Verdana, Arial, Helvetica, sans-serif;
+}
+input {
+	FONT-SIZE: 12px; 
+	COLOR: #ffffff; 
+	FONT-FAMILY: tahoma, Verdana, Arial, Helvetica, sans-serif;
+	BACKGROUND-COLOR: #000000;
+	BORDER-COLOR: #990000;
+}
+textarea {
+	BACKGROUND-COLOR: #000000;
+	BORDER-COLOR: #990000;
+}
+select {
+	FONT-SIZE: 12px; 
+	COLOR: #ffffff; 
+	FONT-FAMILY: tahoma, Verdana, Arial, Helvetica, sans-serif;
+	BACKGROUND-COLOR: #000000;
+	BORDER-COLOR: #990000;
+}
+.button {
+	FONT-SIZE: 12px; 
+	COLOR: #ffffff; 
+	FONT-FAMILY: tahoma, Verdana, Arial, Helvetica, sans-serif; 
+	BACKGROUND-COLOR: #000000;
+}
+A:active {
+	COLOR: #000000; 
+	TEXT-DECORATION: none;
+}
+A:link {
+	COLOR: #ffffff; 
+	TEXT-DECORATION: none;
+}
+A:visited {
+	COLOR: #ffffff; 
+	TEXT-DECORATION: none;
+}
+A:hover {
+	COLOR: #ffffff; 
+	TEXT-DECORATION: none;
+}

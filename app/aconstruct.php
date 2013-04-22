@@ -1,15 +1,17 @@
-<?	 include("include/igtop.php");	?>
+<?	 
 
-	
+include("include/igtop.php");
+
+echo "	
 <center>
-<b class=reg>| <a href="equip.php"> -Equip- </a> | <a href="wconstruct.php"> -Construct Weapon- </a> | <a href="aconstruct.php"> -Construct Armor- </a>|</b>
+<b class=reg>| <a href=equip.php> -Equip- </a> | <a href=wconstruct.php> -Construct Weapon- </a> | <a href=aconstruct.php> -Construct Armor- </a>|</b>
 </center>
-<br><br>
+<br><br>";
 
-<?
 $PREFIX = "<div align=center><font class=yellow>";
 $SUFFIX = "<br><br></font></div>";
 
+//	chain shirt
 if(!IsSet($update2))	{
 
 }
@@ -26,7 +28,7 @@ else	{
 		include("include/S_ARMOR.php");
 		die(); 
 	} 
-	elseif($cs >= 1)	{
+	elseif($armor[cs] >= 1)	{
 		echo "$PREFIX You have allready constructed this armor. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die(); 
@@ -52,6 +54,7 @@ else	{
 	die();
 }
 
+//	chain mail
 if(!IsSet($update3))	{
 }
 else	{
@@ -67,12 +70,12 @@ else	{
 		include("include/S_ARMOR.php");
 		die(); 
 	} 
-	elseif ($cm >= 1)	 {
+	elseif ($armor[cm] >= 1)	 {
 		echo "$PREFIX You have allready constructed this armor. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die(); 
 	}
-	elseif ($cs < 1)	{
+	elseif ($armor[cs] < 1)	{
 		echo "$PREFIX You must construct chain shirts before constructing chain mail. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die(); 
@@ -98,6 +101,7 @@ else	{
 	die();
 }
 
+//	breast plate
 if(!IsSet($update4))	{
 }
 else	{
@@ -114,17 +118,17 @@ else	{
 		include("include/S_ARMOR.php");
 		die();
 	} 
-	elseif($bp >= 1)	{
+	elseif($armor[bp] >= 1)	{
 		echo "$PREFIX You have allready constructed this armor. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die();
 	}
-	elseif ($cs < 1)	{
+	elseif ($armor[cs] < 1)	{
 		echo "$PREFIX You must construct chain shirts before constructing Breast Plates. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die(); 
 	}
-	elseif ($cm < 1)	{
+	elseif ($armor[cm] < 1)	{
 		echo "$PREFIX You must construct chain mails before constructing Breast Plates. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die(); 
@@ -150,6 +154,7 @@ else	{
 	die();
 }
 
+//	medieval armor
 if(!IsSet($update6))	{
 }
 else	{
@@ -166,7 +171,7 @@ else	{
 		include("include/S_ARMOR.php");
 		die(); 
 	} 
-	elseif($fp >= 1)	{
+	elseif($armor[fp] >= 1)	{
 		echo "$PREFIX You have allready constructed this armor. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die(); 
@@ -176,17 +181,17 @@ else	{
 		include("include/S_ARMOR.php");
 		die();
 	}
-	elseif ($cs < 1)	{
+	elseif ($armor[cs] < 1)	{
 		echo "$PREFIX You must construct chain shirts before constructing Medieval Armor. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die(); 
 	}
-	elseif ($cm < 1)	{
+	elseif ($armor[cm] < 1)	{
 		echo "$PREFIX You must construct chain mails before constructing Medieval Armor. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die(); 
 	}
-	elseif ($bp < 1)	{
+	elseif ($armor[bp] < 1)	{
 		echo "$PREFIX You must construct breast plates before constructing Medieval Armor. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die(); 
@@ -209,6 +214,7 @@ else	{
 	die();
 }
 
+//	golden armor
 if(!IsSet($update8))	{
 }
 else	{
@@ -225,7 +231,7 @@ else	{
 		include("include/S_ARMOR.php");
 		die(); 
 	} 
-	elseif($ga >= 1)	{
+	elseif($armor[ga] >= 1)	{
 		echo "$PREFIX You have allready constructed this armor. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die(); 
@@ -251,6 +257,7 @@ else	{
 	die();
 }
 
+//	blessed armor
 if(!IsSet($update9))	{
 }
 else	{
@@ -267,7 +274,7 @@ else	{
 		include("include/S_ARMOR.php");
 		die(); 
 	} 
-	elseif($ba >= 1)	{
+	elseif($armor[ba] >= 1)	{
 		echo "$PREFIX You have allready constructed this armor. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die(); 
@@ -277,7 +284,7 @@ else	{
 		include("include/S_ARMOR.php");
 		die();
 	}
-	elseif($ga < 1)	 {
+	elseif($armor[ga] < 1)	 {
 		echo "$PREFIX You must construct golden armors before constructing Blessed Armor. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die();
@@ -300,6 +307,7 @@ else	{
 	die();
 }
 
+//	travellers robs
 if(!IsSet($update10))	{
 }
 else	{
@@ -311,7 +319,7 @@ else	{
 		include("include/S_ARMOR.php");
 		die();
 	}
-	elseif($tr >= 1)	{
+	elseif($armor[tr] >= 1)	{
 		echo "$PREFIX You have allready constructed this armor. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die(); 
@@ -335,6 +343,7 @@ else	{
 	die();
 }
 
+//	magicians robe
 if(!IsSet($update11))	{
 }
 else	{
@@ -346,13 +355,13 @@ else	{
 		include("include/S_ARMOR.php");
 		die();
 	}
-	elseif($mr >= 1)	{
-		echo "$PREFIX You have allready constructed this armor. $SUFFIX";
+	elseif($armor[mr] >= 1)	{
+		echo "$PREFIX You have already constructed this armor. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die(); 
 	} 
-	elseif($tr < 1)	 {
-		echo "$PREFIX You must construct travellers robe before construction Magicians Robe. $SUFFIX";
+	elseif($armor[tr] < 1)	 {
+		echo "$PREFIX You must construct Travellers Robe before construction Magicians Robe. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die(); 
 	}
@@ -376,6 +385,7 @@ else	{
 				
 }
 
+//	mythril armor
 if(!IsSet($update7))	{
 }
 else	{
@@ -392,22 +402,22 @@ else	{
 		include("include/S_ARMOR.php");
 		die(); 
 	} 
-	elseif($ma == 1)	{
-		echo "$PREFIX You have allready constructed this armor. $SUFFIX";
+	elseif($armor[ma] == 1)	{
+		echo "$PREFIX You have already constructed this armor. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die(); 
 	} 
 	elseif($class != Mage)	{
-		echo "$PREFIX You must be a mage to construct mythril armor. $SUFFIX";
+		echo "$PREFIX You must be a mage to construct Mythril Armor. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die();
 	}
-	elseif($tr < 1)	 {
+	elseif($armor[tr] < 1)	 {
 		echo "$PREFIX You must construct travellers robe before construction Mythril Armor. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die(); 
 	}
-	elseif($mr < 1)		{
+	elseif($armor[mr] < 1)		{
 		echo"$PREFIX You must construct magicians robe before construction Mythril Armor. $SUFFIX";
 		include("include/S_ARMOR.php");
 		die(); 
@@ -432,9 +442,8 @@ else	{
 
 include("include/S_ARMOR.php");
 ?>
-
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+</td>
+</tr>
+</table>
+</body>
+</html>

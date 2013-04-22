@@ -1,13 +1,14 @@
 <?php
-			include("include/connect.php");
+include("include/connect.php");
+
 // check and make sure email exists
-$EMAIL_QUERY = ("SELECT email FROM user WHERE email=\"$email\" AND pw='$pw'");
-$EMAIL_RESULT = mysql_query($EMAIL_QUERY);
+$EMAIL_QUERY = "SELECT email FROM user WHERE email='$email' AND pw='$pw'";
+$EMAIL_RESULT = mysql_db_query($dbnam, $EMAIL_QUERY);
 $E_Check = mysql_fetch_array($EMAIL_RESULT);
 
 if($login == 1 AND $pw != "" AND $email !="")	 {
 
-	$uuserid = mysql($dbnam, "SELECT userid FROM user WHERE email = '$email' AND pw = '$pw'");
+	$uuserid = mysql_db_query($dbnam, "SELECT userid FROM user WHERE email = '$email' AND pw = '$pw'");
 	$userid = mysql_result($uuserid,"userid");	
 	
 // select all armors
@@ -109,7 +110,6 @@ $military = mysql_fetch_array($military_query);
 	## current unit x
 		$civ = $military['civ'];
 		$recruits = $military['recruits'];
-		$puppies = $military['puppies'];
 		$wizards = $military['wizards'];
 		$warriors = $military['warriors'];
 		$priests = $military['priests'];
@@ -117,7 +117,8 @@ $military = mysql_fetch_array($military_query);
 		$scientists = $military['scientists'];
 		$thieves = $military['thieves'];
 		$explorers = $military['explorers'];
-		$dogs = $military['dogs'];
+		$suicide = $military['suicide'];
+		$catapult = $military['catapult'];
 		$maxciv = $military['maxciv'];
 	## equipped weapon, spell, bow and armor
 		$cweapon = $military['cweapon'];
@@ -153,14 +154,15 @@ $military = mysql_fetch_array($military_query);
 		$archdef = $military['archdef'];
 		$tarchers = $archers + $arch1 + $arch2 + $arch3 + $arch4;
 	## units in creation	
+		$dbexplorer = $military['dbexplorer'];
+		$dbscientist = $military['dbscientist'];
+		$dbthief = $military['dbthief'];
 		$dbwar = $military['dbwar'];	$dbwar2 = $military['dbwar2'];
 		$dbwiz = $military['dbwiz'];		$dbwiz2 = $military['dbwiz2'];
 		$dbpri = $military['dbpri'];		$dbpri2 = $military['dbpri2'];
 		$dbarch = $military['dbarch'];	$dbarch2 = $military['dbarch2'];
-		$dbexplorer = $military['dbexplorer'];
-		$dbscientist = $military['dbscientist'];
-		$dbthief = $military['dbthief'];
-		$dbdog = $military['dbdog'];
+		$dbsuicide = $military['dbsuicide'];	$dbsuicide2 = $military['dbsuicide2'];	$dbsuicide3 = $military['dbsuicide3'];
+		$dbcatapult = $military['dbcatapult'];	$dbcatapult2 = $military['dbcatapult2'];	$dbcatapult3 = $military['dbcatapult3'];
 
 //	select explore items
 $explore_query = "SELECT * FROM explore WHERE email='$email' AND pw= '$pw'";
@@ -181,35 +183,28 @@ $return = mysql_fetch_array($return_query);
 		$wiz1 = $return['wiz1'];			$WIZ_1 = $return['wiz1'];
 		$pri1 = $return['pri1'];			$PRI_1 = $return['pri1'];
 		$arch1 = $return['arch1'];		$ARCH_1 = $return['arch1'];
-		$dog1 = $return['dog1'];		$DOG_1 = $return['dog1'];
 		$time1 = $return['time1'];		$TIME_1 = $return['time1'];
 	## party 2	
 		$war2 = $return['war2'];		$WAR_2 = $return['war2'];
 		$wiz2 = $return['wiz2'];			$WIZ_2 = $return['wiz2'];
 		$pri2 = $return['pri2'];			$PRI_2 = $return['pri2'];
 		$arch2 = $return['arch2'];		$ARCH_2 = $return['arch2'];
-		$dog2 = $return['dog2'];		$DOG_2 = $return['dog2'];
 		$time2 = $return['time2'];		$TIME_2 = $return['time2'];
 	## party 3
 		$war3 = $return['war3'];	 	$WAR_3 = $return['war3'];
 		$wiz3 = $return['wiz3'];			$WIZ_3 = $return['wiz3'];
 		$pri3 = $return['pri3'];			$PRI_3 = $return['pri3'];
 		$arch3 = $return['arch3'];		$ARCH_3 = $return['arch3'];
-		$dog3 = $return['dog3'];		$DOG_3 = $return['dog3'];
 		$time3 = $return['time3'];		$TIME_3 = $return['time3'];
 	## party 4
 		$war4 = $return['war4'];		$WAR_4 = $return['war4'];
 		$wiz4 = $return['wiz4'];			$WIZ_4 = $return['wiz4'];
 		$pri4 = $return['pri4'];			$PRI_4 = $return['pri4'];
 		$arch4 = $return['arch4'];		$ARCH_4 = $return['arch4'];
-		$dog4 = $return['dog4'];		$DOG_4 = $return['dog4'];
 		$time4 = $return['time4'];		$TIME_4 = $return['time4'];
-	## dogs
-		$return_dogs = $return['dogs'];
-		$dog_time = $return['dogtime'];
 	## fleets					
 		$FLEETS_ = mysql_db_query($dbnam, "SELECT fleets FROM user WHERE userid='$userid'");
-		$_FLEETS = mysql_result($FLEETS_,"_FLEETS");	
+		$_FLEETS = mysql_result($FLEETS_, "_FLEETS");	
 //	total all units together
 	$warquery = "SELECT sum(amount) FROM barter WHERE seller='$ename' AND type='Warrior'";
 	$warresult = mysql_db_query($dbnam, $warquery) or die("Error: " . mysql_error());
@@ -229,8 +224,9 @@ $return = mysql_fetch_array($return_query);
 
 	$ascientists = $scientists;
 	$aexplorers = $explorers;
-	$tscientists = $scientists + $res['r1'] + $res['r2'] + $res['r3'] + $res['r4'] + $res['r5'] + $res['r6'] + $res['r7'] + $res['r8'] + $res['r9'] + $res['r10'] + $res['r11'] + $res['r12'] + $res['r13'];
+	$tscientists = $scientists + $res['r1'] + $res['r2'] + $res['r3'] + $res['r4'] + $res['r5'] + $res['r6'] + $res['r7'] + $res['r8'] + $res['r9'] + $res['r10'] + $res['r11'] + $res['r12'] + $res['r13'] + $res['r14'];
 	$texplorers = $explorers + $expland + $expmt;
+//	cost for units
     $warriorc = (($warriors + $dbwar + $dbwar2 + $WAR_1 + $WAR_2 + $WAR_3 + $WAR_4 + $warcheck[0]) * .8) + 500;
 	$wizardc = (($wizards + $dbwiz + $dbwiz2 + $WIZ_1 + $WIZ_2 + $WIZ_3 + $WIZ_4 + $wizcheck[0]) * .7) + 400;
 	$priestc = (($priests + $dbpri + $dbpri2 + $PRI_1 + $PRI_2 + $PRI_3 + $PRI_4 + $pricheck[0]) *  .65) + 100;
@@ -244,8 +240,8 @@ $return = mysql_fetch_array($return_query);
 	$explorec = round($explorec);
 	
 //	cost for buildings ( b_cost=land & bm_cost=mountains )
-		$bm_cost =  300 + (20 * (($gm + $im + $dim + $dgm) * .2));	
- 	 	$b_cost =  300 + (20  * (($home + $kennel + $barrack + $farm + $lmill + $wp + $dhome + $dkennel + $dbarrack + $dfarm + $dwp + $dlmill) * .2));
+	$bm_cost =  300 + (20 * (($gm + $im + $dim + $dgm) * .2));	
+ 	$b_cost =  300 + (20  * (($home + $kennel + $barrack + $farm + $lmill + $wp + $dhome + $dkennel + $dbarrack + $dfarm + $dwp + $dlmill) * .2));
 
 //	buttons for construct armor page
 $acsbutton = " <form type=get action=aconstruct.php><input class=button type=submit name=update2 value=Construct><input type=hidden name=update2 value=2></form>";
@@ -265,10 +261,9 @@ $amrbutton = "<form type=get action=aconstruct.php><input class=button type=subm
 	if($class == Ranger)	{	$empmodifier = 1.00;	}
 	if($class == Mage)	{	$empmodifier = .95;		}
 	if($race == Giant)		{	$empmodifier = $empmodifier + .25;	 }
-	if($race == Orc)	{	$empmodifier = $empmodifier - .15;	}
 
 // defense calculation
-	$tdefense = (($warriors * $warpower) + ($wizards * $wizpower) + ($priests * $pripower) + ($archers * $archpower) + ($wp * 15)) * $empmodifier;
+	$tdefense = (($warriors * $warpower) + ($wizards * $wizpower) + ($priests * $pripower) + ($archers * $archpower) + ($catapult * 30) + ($wp * 15)) * $empmodifier;
 	$tdefense = round ($tdefense);
 
 // gold production for fighters
@@ -336,7 +331,6 @@ $amrbutton = "<form type=get action=aconstruct.php><input class=button type=subm
 
 	if($class == Ranger)	{	$woodhourly = $lmill * 2.1;	 }	// wood production for rangers
 	if($race == Elf)	{	$civhourly == $home * .165;	}	// civilian production for elves
-	if($race == Orc)	{	$civhourly == $home * .465;	}	// civilian production for orcs
 	if($race == Giant)	 {	$foodhourly = $farm * .6;	}	// food production for giants
 
 	$rechourly = $civ * .007;
@@ -436,9 +430,6 @@ $amrbutton = "<form type=get action=aconstruct.php><input class=button type=subm
 		// thieves
 		$thieves = number_format($thieves);	
 		$dbthief = number_format($dbthief);
-		// dogs
-		$dbdogs = number_format($dbdogs);	## dogs building
-		$dogs = number_format($dogs);	## total dogs
 		// maximum values
 		$maxciv = number_format($maxciv);
 		$maxtrain = number_format($maxtrain);
@@ -459,9 +450,6 @@ $amrbutton = "<form type=get action=aconstruct.php><input class=button type=subm
 		// homes
 		$home = number_format($home);	
 		$dhome = number_format($dhome);
-		// kenels
-		$kennel = number_format($kennel);	
-		$dkennel = number_format($dkennel);
 		// barracks
 		$barrack = number_format($barrack);	
 		$dbarrack = number_format($dbarrack);
@@ -481,8 +469,9 @@ $amrbutton = "<form type=get action=aconstruct.php><input class=button type=subm
 		$im = number_format($im);				
 		$dim = number_format($dim);
 	
-// set user to be online
+//	update various user info
 	mysql_query("UPDATE user SET online='1' WHERE email='$email'");
+	mysql_query("UPDATE user SET countdown='336' WHERE email='$email' AND pw='$pw'");
 
 }
 else	{

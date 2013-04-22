@@ -1,20 +1,18 @@
-<?php include("include/igtop.php");?>
+<?
+include("include/igtop.php");
 
-<center><b class=reg>| <a href="attack.php"> -Land- </a> | <a href="attackr.php"> -Resource- </a> | <a href="attackm.php"> -Mountain- </a> | </b></center>
-	
+echo "
 <center>
+<b class=reg>| <a href=attack.php> -Land- </a> | <a href=attackr.php> -Resource- </a> | <a href=attackm.php> -Mountain- </a> | </b>
 
-<form type=post action="attackm.php">
- <b class=reg>Settlement:</b><input type="number" name="snum" size=3 maxlength=3>
-  <input type="hidden" name="setchg" value="1">
-  <input type="submit" value="Change">
+<form type=post action=attackm.php>
+ <b class=reg>Settlement:</b><input type=number name=snum size=3 maxlength=3>
+  <input type=hidden name=setchg value=1>
+  <input type=submit value=Change>
  </form>
 </center>
-<br>
-<br>
+<br><br>";
 
-
-<?php
 if(!IsSet($attack))	{
 	include("include/attack/mdrop.php");
 	include("include/attack/table.php");
@@ -89,7 +87,7 @@ else	{
 		include("include/attack/table.php");
 		die();
 	}
-	elseif($EMPs_guild == $empireguild)	{
+	elseif($EMPs_guild == $empireguild AND $EMPs_guild != "None" AND $empireguild != "None")	{
 		echo"<div align=center><font class=yellow>You cannot attack someone that is in your guild.</font></div><br><br>";
 		include("include/attack/ldrop.php");
 		include("include/attack/table.php");

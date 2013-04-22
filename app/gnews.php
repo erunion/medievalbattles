@@ -1,22 +1,19 @@
 <?php 
+
 include("include/igtop.php");
 
 if($empireguild == None)	{
 	echo "<div align=center><font class=yellow>You must be the member of a guild to view this page.</font></div>";
 	die();
 }
-?>
-  
 
+echo  "
 <div align=center>		
-	<font class=blue>Settlement Leaving/Joining a Guild</font><br>
+	<font class=blue>Empire Leaving/Joining a Guild</font><br>
 	<font class=yellow>Attacking (successful/unsuccessful)</font><br>
 	<font class=orange>Successfully defended empire</font><br>
 	<font class=lg>Unsuccessfully defended empire</font><br>
-</div>
-
-
-<?php
+</div>";
 
 //	determine guild id
 $guild_id_query = mysql_db_query($dbnam, "SELECT gid FROM guild WHERE gname='$empireguild'");
@@ -42,6 +39,7 @@ echo "
 		<td bgcolor=404040 align=left>$row[1]</td>\n";
 }
 ?>
+
 </td>
 </tr>
 </table>

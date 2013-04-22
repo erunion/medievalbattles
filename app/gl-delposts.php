@@ -21,8 +21,8 @@ else	{
 	include("commong.php");
 	include("include/connect.php");
 
-	mysql_query("DELETE FROM $topicdb WHERE topicid='$tid'"); 
-	mysql_query("DELETE FROM $msgsdb WHERE topicid='$tid'"); 
+	mysql_query("DELETE FROM guildthreads WHERE topicid='$tid'"); 
+	mysql_query("DELETE FROM guildmsgs WHERE topicid='$tid'"); 
 
 	header ("Location: gl-forum.php"); 
 }
@@ -35,8 +35,8 @@ else	{
 	include("commong.php");
 	include("include/connect.php");
 
-	mysql_query("DELETE FROM $topicdb WHERE topicid='$postid'"); 
-	mysql_query("DELETE FROM $msgsdb WHERE topicid='$postid'"); 
+	mysql_query("DELETE FROM guildthreads WHERE topicid='$postid'"); 
+	mysql_query("DELETE FROM guildmsgs WHERE topicid='$postid'"); 
 
 	header ("Location: gl-topic.php"); 
 }

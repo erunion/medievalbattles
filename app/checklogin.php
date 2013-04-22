@@ -13,8 +13,8 @@ session_register('pw');
 include("include/connect.php");
 include("include/clock.php");
 
-$uename = mysql_db_query($dbnam, "SELECT ename FROM user WHERE email='$email' AND pw='$pw'");
-$ename = mysql_result($uename,"ename");
+$uename = @mysql_db_query($dbnam, "SELECT ename FROM user WHERE email='$email' AND pw='$pw'");
+$ename = @mysql_result($uename,"ename");
 	
 // check user
 $query = "SELECT pw FROM user WHERE email='$email'";
@@ -25,7 +25,7 @@ if($pwcheck[0] == $pw)	{
 	// insert ip address into db
 	function gethostname()		{
 		$ipaddress = getenv('REMOTE_ADDR');
-		if (!$ipaddress) { $ipaddress = getenv('REMOTE_HOST'); }
+		if (!$ipaddress) { $ipaddress = getenv('REMOTE_ADDR'); }
 		$ipaddress = @GetHostByAddr($ipaddress);
 		return $ipaddress;
 	}
@@ -35,17 +35,8 @@ if($pwcheck[0] == $pw)	{
 	mysql_query("UPDATE user SET lastlogin='$clock' WHERE ename='$ename'");
 	mysql_query("UPDATE user SET online='1' WHERE ename='$ename'");
 
-			$O_line_mem = mysql_db_query($dbnam, "SELECT count(online) FROM user WHERE online='1'");
-			$onlineusers = mysql_result($O_line_mem,"onlineusers");
-			
-			$MOST_INFO = mysql_db_query($dbnam, "SELECT mostonline FROM Game_Info");
-			$mostonline = mysql_result($MOST_INFO,"mostonline");
-
-			if($onlineusers > $mostonline)	 {
-				mysql_query("UPDATE Game_Info SET mostonline='$onlineusers'");
-			}
-		$L_SETID = mysql_db_query($dbnam, "SELECT setid FROM user WHERE email='$email' AND pw='$pw'");
-		$set = mysql_result($L_SETID,"set");
+	$user_set_query = mysql_db_query($dbnam, "SELECT setid FROM user WHERE email='$email' AND pw='$pw'");
+		$set = mysql_result($user_set_query, "set");
 
 	mysql_query("UPDATE user SET csnum='$set' WHERE email='$email'");
 	session_unregister('bad');
@@ -58,7 +49,7 @@ else	{
 	session_unregister('login');
 	session_unregister('email');
 	session_unregister('pw');
-	echo "Invalid email or password.";
+	echo "Your email or password is incorrect.<br>";
 	echo "<a href=index.php>Login again.</a>";
 	die();
 }

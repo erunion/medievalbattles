@@ -24,54 +24,18 @@ if($signup)	{
 		$email1 = strtolower($email);
 		$emnamecheck1 = strtolower($emnamecheck[0]);
 
-	if($enamecheck1 == $ename1 AND $ename != "")	{
-		echo "$ename is already being used!";
-		die();
-	}
-	elseif($emnamecheck1 == $email1 AND $email != "")	{
-		echo"$email is already being used!";
-		die();
-	}
-		
-	if($class == ns)	{
-		echo "You gotta have a class to play the game!";
-		die();
-	}
-	
-	if($race == ns)	{
-		echo "You gotta have a race to play the game!";
-		die();
-	}
-	
-	if($ename == "")	{
-		echo "You gotta have an empire name to play the game!";
-		die();
-	}
-
-	if($noplayers >= 600)	{
-		echo "Game is full! Try again later!";
-		die();
-	}	
-	elseif (($email == "") and ($cemail == ""))	{
-		echo "You gotta have an email to play!";
-		die();
-	}
-	elseif ($email != $cemail)	{
-		echo "Emails don't match!";
-		die();
-	}	
-	elseif (($pw == "") and ($cpw == ""))	{
-		echo "You gotta have a password to play!";
-		die();
-	}
-	elseif ($pw != $cpw)	 {
-		echo "Passwords don't match!";
-		die();
-	}
-	elseif($class != Cleric AND $class != Fighter AND $class != Mage AND $class != Ranger AND $class != Goblin)	{
-		echo "That class doesn't exist!";
-		die();
-	}
+	if($enamecheck1 == $ename1 AND $ename != "")	{	echo "$ename is already being used!";	die();	 }
+	elseif($emnamecheck1 == $email1 AND $email != "")	{	echo "$email is already being used!";	 die();	}
+	elseif (!ereg("([[:alnum:]\.\-]+)(\@[[:alnum:]\.\-]+\.+)", $email)) {	echo "Email address is invalid!";	 die();	}
+	elseif($class == ns)	{	echo "You must have a class to play the game!";	die();	 }
+	elseif($race == ns)	{	echo "You must have a race to play the game!";	die();	 }
+	elseif($ename == "")	{	echo "You must have an empire name to play the game!";	die();	 }
+	elseif($noplayers >= 600)	{	echo "Game is full! Try again later!";	die();	 }	
+	elseif (($email == "") and ($cemail == ""))	{	echo "You must have an email to play!";	die();	 }
+	elseif ($email != $cemail)	{	echo "Emails don't match!";	die();	 }	
+	elseif (($pw == "") and ($cpw == ""))	{	echo "You must have a password to play!";	die();	 }
+	elseif ($pw != $cpw)	 {	echo "Passwords don't match!";	die();	 }
+	elseif($class != Cleric AND $class != Fighter AND $class != Mage AND $class != Ranger)	 {	echo "That class doesn't exist!";	 die();	}
 	
 	//	select minimum amount of members
 	$Sett_least = mysql_db_query($dbnam, "SELECT min(members) FROM settlement");
@@ -90,7 +54,7 @@ if($signup)	{
 		 $Sett_least = mysql_db_query($dbnam, "SELECT min(members) FROM settlement");
 		 $least_set = mysql_result($Sett_least,"least_set");
 		
-		 $Sel_members = mysql_db_query($dbnam, "SELECT setid FROM settlement WHERE members ='$least_set'");
+		 $Sel_members = mysql_db_query($dbnam, "SELECT setid FROM settlement WHERE members='$least_set'");
 		 $sel_mem = mysql_result($Sel_members,"sel_mem");
 	}
 
@@ -99,7 +63,7 @@ if($signup)	{
 	}
 
 	$new_mem = $least_set + 1;
-	mysql_query("UPDATE settlement SET members ='$new_mem' WHERE setid='$sel_mem'");
+	mysql_query("UPDATE settlement SET members='$new_mem' WHERE setid='$sel_mem'");
 	
 	$snum = $sel_mem;
 
@@ -137,20 +101,11 @@ if($signup)	{
 				$maxciv = rand(250,350);
 			}
 			
-			if($class == "Ranger")	{
-				$arch = rand(4, 10);
-			}
-			if($race == 'Giant')	 {
-				$wiz = 0;
-				$pri = 0;
-			}
-			if($class == 'Ranger')	{
-				$r13pts = 125000;
-				$wiz = 0;
-			}
-			else	{
-				$r13pts = 0;
-			}
+			if($class == "Ranger")	{	$arch = rand(4, 10);	 }
+			if($race == 'Giant')	 {	$wiz = 0;	$pri = 0;	 }
+			if($class == 'Ranger')	{	$r13pts = 125000;	$wiz = 0;	}
+			else	{	$r13pts = 0;	}
+
 		//exp values  
 		$archexp = 26;
 		$warexp = 23;
@@ -169,49 +124,41 @@ if($signup)	{
 			}
 		
 		$exp = ($war * $warexp) + ($pri * $priexp) + ($wiz * $wizexp) + ($arch * $archexp) + ($maxciv * 10) + (250 * 8) + (200 * 5);
-		mysql_query ("INSERT INTO user (email,  pw, ename, msn, aim, gp, iron, exp, food, land, mts, setid, class, userid, race, safemode) 
-                VALUES ('$email', '$pw', '$ename', '$msn', '$aim', '$gp', '$iron', '$exp', '1500', '250', '200', '$snum', '$class', '$newbuserid', '$race', '48')
-             ");
+		mysql_query ("INSERT INTO user (email,  pw, ename, msn, aim, gp, iron, exp, food, land, mts, setid, class, userid, race, safemode)	 VALUES ('$email', '$pw', '$ename', '$msn', '$aim', '$gp', '$iron', '$exp', '1500', '250', '200', '$snum', '$class', '$newbuserid', '$race', '48')	");
 		
-		mysql_query("INSERT INTO buildings (email, pw, home, barrack, farm, wp, gm, im, aland, amts, userid) 
-			VALUES	('$email', '$pw', '50', '50', '50', '0', '50', '50', '100', '100', '$newbuserid') ");
+		mysql_query("INSERT INTO buildings (email, pw, home, barrack, farm, wp, gm, im, aland, amts, userid)	VALUES	('$email', '$pw', '50', '50', '50', '0', '50', '50', '100', '100', '$newbuserid') ");
 		
-		mysql_query("INSERT INTO military (email, pw, civ, recruits, warriors, wizards, priests, maxciv, userid, warpower, warspeedw, cweapon, wizpower, wizspeeds, cspell, pripower, prispeedw, cstaff, cbow, archspeedw, archpower, wararmor, wizarmor, priarmor, wardef, wizdef, pridef, warspeeda, wizspeeda, prispeeda, archers, puppies) 
-			VALUES	('$email', '$pw', '$civ', '$recruits', '$war', '$wiz', '$pri', '$maxciv', '$newbuserid', '3', '6','Dagger', '4', '7', 'Magic Missile', '2', '6', 'Quarterstaff', 'None', '0', '0', 'Studded Leather', 'Robe', 'Leather', '1', '1', '2', '0', '0', '1', '$arch', '$puppies') ");
+		mysql_query("INSERT INTO military (email, pw, civ, recruits, warriors, wizards, priests, maxciv, userid, warpower, warspeedw, cweapon, wizpower, wizspeeds, cspell, pripower, prispeedw, cstaff, cbow, archspeedw, archpower, wararmor, wizarmor, priarmor, wardef, wizdef, pridef, warspeeda, wizspeeda, prispeeda, archers)	VALUES	('$email', '$pw', '$civ', '$recruits', '$war', '$wiz', '$pri', '$maxciv', '$newbuserid', '3', '6','Dagger', '4', '7', 'Magic Missile', '2', '6', 'Quarterstaff', 'None', '0', '0', 'Studded Leather', 'Robe', 'Leather', '1', '1', '2', '0', '0', '1', '$arch') ");
 		
-		mysql_query("INSERT INTO research (email, pw, userid, r13pts) 
-			VALUES	('$email', '$pw', '$newbuserid', '$r13pts') ");
+		mysql_query("INSERT INTO research (email, pw, userid, r13pts)	VALUES	('$email', '$pw', '$newbuserid', '$r13pts') ");
 		
-		mysql_query("INSERT INTO explore (email, pw, userid) 
-			VALUES	('$email', '$pw', '$newbuserid') ");
+		mysql_query("INSERT INTO explore (email, pw, userid)		VALUES	('$email', '$pw', '$newbuserid') ");
 	
-	$selectempire = mysql_db_query($dbnam, "SELECT setid FROM user WHERE email = '$email' AND pw = '$pw'");	
-	$semp = mysql_result($selectempire,"semp");
+		$selectempire = mysql_db_query($dbnam, "SELECT setid FROM user WHERE email='$email' AND pw='$pw'");	
+			$semp = mysql_result($selectempire,"semp");
 		
 		include("include/clock.php");
 
-		mysql_query("INSERT INTO setnews (date, news, setid) 
-			VALUES	('$clock', '<font class=red>$ename has joined the settlement</font>', '$snum') ");
-		mysql_query("INSERT INTO return (email, pw, userid) 
-			VALUES	('$email', '$pw', '$newbuserid') ");
+		mysql_query("INSERT INTO setnews (date, news, setid)	 VALUES	('$clock', '<font class=red>$ename has joined the settlement</font>', '$snum') ");
+		mysql_query("INSERT INTO return (email, pw, userid)	 VALUES	('$email', '$pw', '$newbuserid') ");
 
-	echo "Thank you for signing up for Medieval Battles.  You are in settlement $snum.  <br>
-			Your login information has been emailed to you.<br><br><a href=index.php>You can login now here</a>";	
+		echo "Thank you for signing up for Medieval Battles. You are in settlement $snum.<br>
+		Your login information has been emailed to you.<br><br><a href=index.php>You can login now here</a>";	
 
-	$subject = "Welcome to Medieval Battles";
-	$body = "
-	Thank you for being apart of the new online game, Medieval Battles.
-	Your empire name is $ename
-	Your email is $email
-	Your password is $opw
-	You will need your email and password to login to your account.
+		$subject = "Welcome to Medieval Battles";
+		$body = "
+		Thank you for being apart of the new online game, Medieval Battles.
+		Your empire name is $ename
+		Your email is $email
+		Your password is $opw
+		You will need your email and password to login to your account.
 
-	If you have any questions you can email us at support@medievalbattles.com";
+		If you have any questions you can email us at support@medievalbattles.com";
 
-	$from = "From: support@medievalbattles.com\r\nbcc: phb@sendhost\r\nContent-type: text/plain\r\nX-mailer: PHP/" . phpversion();
-	$mailsend = mail("$email","$subject","$body","$from");
+		$from = "From: support@medievalbattles.com\r\nbcc: phb@sendhost\r\nContent-type: text/plain\r\nX-mailer: PHP/" . phpversion();
+		$mailsend = mail("$email","$subject","$body","$from");
 
-	die();
+		die();
 	}
 }
 else	{

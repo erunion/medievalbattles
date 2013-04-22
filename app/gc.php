@@ -1,6 +1,7 @@
 <?
 include("include/igtop.php");
-	if(!IsSet($sendmessage))	{
+
+if(!IsSet($sendmessage))	{
 }
 else	{
 	
@@ -56,7 +57,7 @@ if ($pageid == 'mgl')	{
 session_unregister('gid');
 
 
-if ($request == 'yes')	{
+if($request == 'yes')	{
 	session_register('guild');
 
 	$guild_info_query = mysql_db_query($dbnam, "SELECT gname, gid, owner FROM guild WHERE gname='$guild'");	
@@ -83,7 +84,7 @@ echo "  <br><br>
 	<tr>
 		<td class=main colspan=5><b class=reg>Current Guilds</b></td>
 	<tr>
-		<td class=main2 colspan=5><font class=yellow size=2px><b>Only 20 Empires Per Guild</b></font></td>
+		<td class=main2 colspan=5><font class=yellow size=2px><b>Only 30 Empires Per Guild</b></font></td>
 	<tr>
 		<td class=main2 width=20%><b class=reg>Name</b></td>
 		<td class=main2 width=60%><b class=reg>Info</b></td>
@@ -91,7 +92,7 @@ echo "  <br><br>
 		<td class=main2 width=16%><b class=reg>Created</b></td>
 		<td class=main2 width=16%><b class=reg>Request</b></td>";
 
-$query_string = "SELECT gname, info, datemade, gid FROM guild ORDER BY gid DESC";
+$query_string = "SELECT g.gname, g.info, g.datemade, g.gid, count(u.ename) AS guildmem FROM guild g LEFT JOIN user u ON g.gname = u.guild GROUP BY u.guild ORDER BY guildmem DESC";
 $result_id = mysql_query($query_string, $var);
 while ($row = mysql_fetch_row($result_id))	{
 	$row[0] = htmlspecialchars($row[0]);
@@ -182,14 +183,15 @@ else	{
 		include("include/connect.php");
 		mysql_query("INSERT INTO guild (gname, info, gid, datemade, cpw, owner)	 VALUES	('$gname', '$info', '$gid', '$clock', '$cpw', '$userid') ");
 		mysql_query("UPDATE user SET guild='$gname' WHERE email='$email' AND pw='$pw'");
+		mysql_query("DELETE FROM guildrequests WHERE applicant='$userid'");
 						
 		$gname = ereg_replace(" ", "", "$gname");
 
 		$tblname = "$gname" . "main" . "$gid";
 		$tblname2 = "$gname" . "msgs" . "$gid";
 
-		mysql_query("CREATE TABLE  $tblname (topicid smallint(6) not null unique auto_increment, name varchar(30) null, host varchar(50) null, topic varchar(60) null, lastpost varchar(20) default 0 null, lastposter varchar(255) default 0 null, replies smallint(6) default 0 null, message text null, datestamp varchar(20) default 0 null)");			
-		mysql_query("CREATE TABLE  $tblname2 (messageid smallint(6) not null unique auto_increment, name varchar(30) null, host varchar(50) null, topic varchar(60) null, topicid smallint(6) null, message text null, datestamp varchar(20) default 0 null)");
+		//mysql_query("CREATE TABLE  $tblname (topicid smallint(6) not null unique auto_increment, name varchar(30) null, host varchar(50) null, topic varchar(60) null, lastpost varchar(20) default 0 null, lastposter varchar(255) default 0 null, replies smallint(6) default 0 null, message text null, datestamp varchar(20) default 0 null)");			
+		//mysql_query("CREATE TABLE  $tblname2 (messageid smallint(6) not null unique auto_increment, name varchar(30) null, host varchar(50) null, topic varchar(60) null, topicid smallint(6) null, message text null, datestamp varchar(20) default 0 null)");
 		
 		echo"<div align=center><font class=yellow><b><u>$gname</u> has been successfully created!</b></font></div>";
 		include("include/S_GM.php");

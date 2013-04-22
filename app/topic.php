@@ -16,9 +16,8 @@ echo"
 	echo "
 		<tr>
 			<td bgcolor=$color3 width=30% align=left><b class=forum>$name</b></td>
-			<td bgcolor=$color3 width=200 align=center><b class=forum>$datestamp</b></td>
+			<td bgcolor=$color3 width=200><b class=forum>$datestamp</b></td>
 			<td bgcolor=$color3 width=30% align=right><b class=forum>$topic</b></td>
-			<td bgcolor=$color3></td>
 		</tr>
 		<tr>
 			<td bgcolor=$color2 valign=top colspan=4><strong class=black>$message<br><br></strong></td>
@@ -43,9 +42,8 @@ echo	"
 	echo "
 		<tr>
 			<td bgcolor=$color3 width=30% align=left><b class=forum>$name</b></td>
-			<td bgcolor=$color3 width=200 align=center><b class=forum>$datestamp</b></td>
+			<td bgcolor=$color3 width=200><b class=forum>$datestamp</b></td>
 			<td bgcolor=$color3 width=30% align=right><b class=forum>$topic</b></td>
-			<td bgcolor=$color3><strong class=white><a href=delposts.php?delpost=true&mid=$messageid&tid=$topicid><font size=-2> &nbsp; Delete</a></strong></td>
 		</tr>
 		<tr>
 			<td bgcolor=$color2 valign=top colspan=4><small class=black>$message<br><br></small></td>

@@ -4,8 +4,8 @@
 # http://phpmyadmin.sourceforge.net/ (download page)
 #
 # Host: localhost
-# Generation Time: Jan 11, 2003 at 07:00 PM
-# Server version: 3.23.54
+# Generation Time: Apr 14, 2003 at 09:53 PM
+# Server version: 3.23.56
 # PHP Version: 4.2.3
 # Database : `medieval`
 # --------------------------------------------------------
@@ -14,7 +14,6 @@
 # Table structure for table `barter`
 #
 
-DROP TABLE IF EXISTS barter;
 CREATE TABLE barter (
   seller varchar(255) NOT NULL default '',
   type varchar(255) NOT NULL default '',
@@ -22,7 +21,9 @@ CREATE TABLE barter (
   cost bigint(255) NOT NULL default '0',
   barterid bigint(255) NOT NULL default '0',
   userid bigint(255) NOT NULL default '0',
-  method varchar(255) NOT NULL default 'gp'
+  method varchar(255) NOT NULL default 'gp',
+  page varchar(255) NOT NULL default '',
+  guild varchar(255) NOT NULL default ''
 ) TYPE=MyISAM;
 
 #
@@ -35,7 +36,6 @@ CREATE TABLE barter (
 # Table structure for table `buildings`
 #
 
-DROP TABLE IF EXISTS buildings;
 CREATE TABLE buildings (
   email varchar(50) NOT NULL default '',
   pw varchar(50) NOT NULL default '',
@@ -50,7 +50,6 @@ CREATE TABLE buildings (
   gm bigint(255) NOT NULL default '0',
   im bigint(255) NOT NULL default '0',
   dhome bigint(255) NOT NULL default '0',
-  dkennel bigint(255) NOT NULL default '0',
   dbarrack bigint(255) NOT NULL default '0',
   dfarm bigint(255) NOT NULL default '0',
   dwp bigint(255) NOT NULL default '0',
@@ -58,7 +57,6 @@ CREATE TABLE buildings (
   dgm bigint(255) NOT NULL default '0',
   dim bigint(255) NOT NULL default '0',
   Hhrs bigint(255) NOT NULL default '0',
-  Khrs bigint(255) NOT NULL default '0',
   Bhrs bigint(255) NOT NULL default '0',
   Fhrs bigint(255) NOT NULL default '0',
   Whrs bigint(255) NOT NULL default '0',
@@ -78,7 +76,6 @@ CREATE TABLE buildings (
 # Table structure for table `empnews`
 #
 
-DROP TABLE IF EXISTS empnews;
 CREATE TABLE empnews (
   date varchar(255) NOT NULL default '',
   news blob NOT NULL,
@@ -95,7 +92,6 @@ CREATE TABLE empnews (
 # Table structure for table `explore`
 #
 
-DROP TABLE IF EXISTS explore;
 CREATE TABLE explore (
   email varchar(50) NOT NULL default '',
   pw varchar(50) NOT NULL default '',
@@ -113,26 +109,9 @@ CREATE TABLE explore (
 # --------------------------------------------------------
 
 #
-# Table structure for table `friends`
-#
-
-DROP TABLE IF EXISTS friends;
-CREATE TABLE friends (
-  useremail varchar(200) NOT NULL default '0',
-  friendid int(11) NOT NULL default '0'
-) TYPE=MyISAM;
-
-#
-# Dumping data for table `friends`
-#
-
-# --------------------------------------------------------
-
-#
 # Table structure for table `game_info`
 #
 
-DROP TABLE IF EXISTS game_info;
 CREATE TABLE game_info (
   mostonline bigint(255) NOT NULL default '0',
   lastset bigint(255) NOT NULL default '0',
@@ -145,14 +124,13 @@ CREATE TABLE game_info (
 # Dumping data for table `game_info`
 #
 
-INSERT INTO game_info VALUES (2, 1, 'yes', 'no', 'no');
+INSERT INTO game_info VALUES (2, 0, 'yes', 'no', 'no');
 # --------------------------------------------------------
 
 #
 # Table structure for table `guild`
 #
 
-DROP TABLE IF EXISTS guild;
 CREATE TABLE guild (
   gname varchar(255) NOT NULL default '',
   cpw varchar(255) NOT NULL default '',
@@ -172,10 +150,30 @@ CREATE TABLE guild (
 # --------------------------------------------------------
 
 #
+# Table structure for table `guildmsgs`
+#
+
+CREATE TABLE guildmsgs (
+  messageid smallint(6) NOT NULL auto_increment,
+  name varchar(30) NOT NULL default '',
+  host varchar(50) NOT NULL default '',
+  topic varchar(60) NOT NULL default '',
+  topicid smallint(6) NOT NULL default '0',
+  message text NOT NULL,
+  datestamp varchar(20) NOT NULL default '',
+  PRIMARY KEY  (messageid)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `guildmsgs`
+#
+
+# --------------------------------------------------------
+
+#
 # Table structure for table `guildnews`
 #
 
-DROP TABLE IF EXISTS guildnews;
 CREATE TABLE guildnews (
   date varchar(255) NOT NULL default '',
   news varchar(255) NOT NULL default '',
@@ -194,7 +192,6 @@ CREATE TABLE guildnews (
 # Table structure for table `guildrequests`
 #
 
-DROP TABLE IF EXISTS guildrequests;
 CREATE TABLE guildrequests (
   applicant varchar(255) NOT NULL default '',
   gl_userid varchar(255) NOT NULL default ''
@@ -207,10 +204,47 @@ CREATE TABLE guildrequests (
 # --------------------------------------------------------
 
 #
+# Table structure for table `guildthreads`
+#
+
+CREATE TABLE guildthreads (
+  topicid smallint(6) NOT NULL auto_increment,
+  name varchar(30) NOT NULL default '',
+  host varchar(50) NOT NULL default '',
+  topic varchar(60) NOT NULL default '',
+  lastpost varchar(20) NOT NULL default '',
+  lastposter varchar(255) NOT NULL default '',
+  replies smallint(6) NOT NULL default '0',
+  message text NOT NULL,
+  datestamp varchar(20) NOT NULL default '',
+  guildname varchar(100) NOT NULL default '',
+  PRIMARY KEY  (topicid)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `guildthreads`
+#
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `ip_addresses`
+#
+
+CREATE TABLE ip_addresses (
+  ip varchar(255) NOT NULL default ''
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `ip_addresses`
+#
+
+# --------------------------------------------------------
+
+#
 # Table structure for table `messages`
 #
 
-DROP TABLE IF EXISTS messages;
 CREATE TABLE messages (
   origin varchar(255) NOT NULL default '',
   datesent varchar(255) NOT NULL default '',
@@ -230,7 +264,6 @@ CREATE TABLE messages (
 # Table structure for table `military`
 #
 
-DROP TABLE IF EXISTS military;
 CREATE TABLE military (
   email varchar(50) NOT NULL default '',
   pw varchar(50) NOT NULL default '',
@@ -319,9 +352,14 @@ CREATE TABLE military (
   dbexplorer bigint(255) NOT NULL default '0',
   dbthief bigint(255) NOT NULL default '0',
   dbscientist bigint(255) NOT NULL default '0',
-  dogs bigint(255) NOT NULL default '0',
-  dbdog bigint(255) NOT NULL default '0',
-  puppies bigint(255) NOT NULL default '0'
+  suicide bigint(255) NOT NULL default '0',
+  dbsuicide bigint(255) NOT NULL default '0',
+  dbsuicide2 bigint(255) NOT NULL default '0',
+  dbsuicide3 bigint(255) NOT NULL default '0',
+  catapult bigint(255) NOT NULL default '0',
+  dbcatapult bigint(255) NOT NULL default '0',
+  dbcatapult2 bigint(255) NOT NULL default '0',
+  dbcatapult3 bigint(255) NOT NULL default '0'
 ) TYPE=MyISAM;
 
 #
@@ -334,7 +372,6 @@ CREATE TABLE military (
 # Table structure for table `research`
 #
 
-DROP TABLE IF EXISTS research;
 CREATE TABLE research (
   email varchar(50) NOT NULL default '',
   pw varchar(50) NOT NULL default '',
@@ -352,6 +389,7 @@ CREATE TABLE research (
   r11 bigint(255) NOT NULL default '0',
   r12 bigint(255) NOT NULL default '0',
   r13 bigint(255) NOT NULL default '0',
+  r14 bigint(255) NOT NULL default '0',
   r1pts bigint(255) NOT NULL default '0',
   r2pts bigint(255) NOT NULL default '0',
   r3pts bigint(255) NOT NULL default '0',
@@ -364,7 +402,8 @@ CREATE TABLE research (
   r10pts bigint(255) NOT NULL default '0',
   r11pts bigint(255) NOT NULL default '0',
   r12pts bigint(255) NOT NULL default '0',
-  r13pts bigint(255) NOT NULL default '0'
+  r13pts bigint(255) NOT NULL default '0',
+  r14pts bigint(255) NOT NULL default '0'
 ) TYPE=MyISAM;
 
 #
@@ -377,7 +416,6 @@ CREATE TABLE research (
 # Table structure for table `return`
 #
 
-DROP TABLE IF EXISTS return;
 CREATE TABLE return (
   email varchar(50) NOT NULL default '',
   pw varchar(50) NOT NULL default '',
@@ -401,9 +439,7 @@ CREATE TABLE return (
   time1 bigint(255) NOT NULL default '0',
   time2 bigint(255) NOT NULL default '0',
   time3 bigint(255) NOT NULL default '0',
-  time4 bigint(255) NOT NULL default '0',
-  dogs bigint(255) NOT NULL default '0',
-  dogtime bigint(255) NOT NULL default '0'
+  time4 bigint(255) NOT NULL default '0'
 ) TYPE=MyISAM;
 
 #
@@ -416,7 +452,6 @@ CREATE TABLE return (
 # Table structure for table `setforums`
 #
 
-DROP TABLE IF EXISTS setforums;
 CREATE TABLE setforums (
   setid int(10) unsigned NOT NULL default '0',
   topicid smallint(6) NOT NULL auto_increment,
@@ -440,7 +475,6 @@ CREATE TABLE setforums (
 # Table structure for table `setforumsmsgs`
 #
 
-DROP TABLE IF EXISTS setforumsmsgs;
 CREATE TABLE setforumsmsgs (
   setid int(10) unsigned NOT NULL default '0',
   messageid smallint(6) NOT NULL auto_increment,
@@ -462,7 +496,6 @@ CREATE TABLE setforumsmsgs (
 # Table structure for table `setnews`
 #
 
-DROP TABLE IF EXISTS setnews;
 CREATE TABLE setnews (
   date varchar(255) NOT NULL default '',
   news blob NOT NULL,
@@ -481,19 +514,13 @@ CREATE TABLE setnews (
 # Table structure for table `settlement`
 #
 
-DROP TABLE IF EXISTS settlement;
 CREATE TABLE settlement (
   members tinyint(2) NOT NULL default '0',
   setname varchar(255) NOT NULL default 'None',
-  nap varchar(255) NOT NULL default 'None',
-  setpic varchar(255) NOT NULL default 'http://www.medievalbattles.com/setpic.gif',
+  setpic varchar(255) NOT NULL default '',
   setnotice varchar(255) NOT NULL default 'Welcome to Medieval Battles',
-  setguild varchar(255) NOT NULL default 'None',
   setid bigint(255) NOT NULL auto_increment,
   setstrength bigint(255) NOT NULL default '0',
-  fgold bigint(255) NOT NULL default '0',
-  firon bigint(255) NOT NULL default '0',
-  gsetno varchar(255) NOT NULL default '',
   PRIMARY KEY  (setid)
 ) TYPE=MyISAM;
 
@@ -501,33 +528,12 @@ CREATE TABLE settlement (
 # Dumping data for table `settlement`
 #
 
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 1, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 2, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 3, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 4, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 5, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 6, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 7, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 8, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 9, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 10, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 11, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 12, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 13, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 14, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 15, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 16, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 17, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 18, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 19, 0, 0, 0, '');
-INSERT INTO settlement VALUES (0, 'None', 'None', 'setpic.gif', 'Welcome to Medieval Battles', 'None', 20, 0, 0, 0, '');
 # --------------------------------------------------------
 
 #
 # Table structure for table `user`
 #
 
-DROP TABLE IF EXISTS user;
 CREATE TABLE user (
   email varchar(50) NOT NULL default '',
   pw varchar(50) NOT NULL default '',

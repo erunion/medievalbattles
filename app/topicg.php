@@ -3,8 +3,8 @@
 include("include/igtop.php");
 include("commong.php");
 
-$query1 = "SELECT name, topic, message, datestamp FROM $topicdb WHERE topicid='$topicid'";
-$result1 = mysql_query($query1) or die("Could not execute the query");
+$query1 = "SELECT name, topic, message, datestamp FROM guildthreads WHERE topicid='$topicid'";
+$result1 = mysql_query($query1) or die(mysql_error());
 
 if ($result1) { 
 	echo"
@@ -27,8 +27,8 @@ echo "
 mysql_free_result($result1);	
 }
 
-$query2 = "SELECT messageid, name, topic, message, datestamp FROM $msgsdb WHERE topicid='$topicid' ORDER BY messageid ASC";
-$result2 = mysql_query($query2) or die("Could not execute the query!");
+$query2 = "SELECT messageid, name, topic, message, datestamp FROM guildmsgs WHERE topicid='$topicid' ORDER BY messageid ASC";
+$result2 = mysql_query($query2) or die(mysql_error());
 
 if ($result2) { 
 echo "

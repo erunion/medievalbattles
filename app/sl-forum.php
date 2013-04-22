@@ -1,14 +1,12 @@
 <?php
-		include("include/igtop.php");
-	?>
 
-<br><br>
-<?
+include("include/igtop.php");
+
+echo "<br><br>";
+
 if($sl == no) {
 	echo"<center><b class=yellow>You are not Settlement Leader.</b>";
 	die();
-}
-else {
 }
 
 include("common.php");
@@ -18,9 +16,8 @@ if (empty($offset))  {  $offset=0;  }
 
 $numresults=mysql_query("SELECT topicid FROM setforums WHERE setid=$setid");
 $numrows=mysql_num_rows($numresults);
-$pages=intval($numrows/$limit);
 
-$query = "SELECT topicid, name, topic, replies, lastpost, lastposter FROM setforums WHERE setid = '$setid' ORDER by lastpost DESC limit $offset,$limit";
+$query = "SELECT topicid, name, topic, replies, lastpost, lastposter FROM setforums WHERE setid = '$setid' ORDER by lastpost DESC";
 $result= mysql_query($query) or die("Could not run the database query!");
 
 if ($result) { 

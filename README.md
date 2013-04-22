@@ -1,17 +1,15 @@
-Medieval Battles (Version 3)
+Medieval Battles (Version 4)
 
-Originally ran October 2002
+Originally ran April 2003
 
 Copyright (C) 2004 Decoy Media
 
-This code is old, embarassing, buggy and not maintained. We can not say for sure
-that it will run well, if at all. This source is being released solely for
-historical and educational purposes. If you plan on setting it up, you will need
-to edit a few files.
+This code will NOT run. There is no /include folder. But if you want to attempt
+to recreate it all, make sure you edit some pages and upload the database.
 
-- /include/connect.php
+- /admin/include/connect.php
 
-To set up the database, run "version3.sql". You will find this file in the /sql
+To set up the database, run "version4.sql". You will find this file in the /sql
 folder. Medieval Battles requires PHP and MySQL.
 
 We are not offering any support on problems with this code, due to its age. If

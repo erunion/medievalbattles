@@ -10,7 +10,6 @@ if (empty($offset))  {  $offset=0;  }
 
 $numresults=mysql_query("SELECT topicid FROM setforums WHERE setid=$setid");
 $numrows=mysql_num_rows($numresults);
-$pages=intval($numrows/$limit);
 
 $query = "SELECT topicid, name, topic, replies, lastpost, lastposter FROM setforums WHERE setid='$setid' ORDER by topicid DESC";
 $result= mysql_query($query) or die("Could not run the database query!");
@@ -30,13 +29,16 @@ echo "
 					</tr>";										
 	while ($r = mysql_fetch_array($result)) {	
 	extract ($r);	
-	
+
+		$topicreplies = mysql_db_query($dbnam, "SELECT count(topicid) FROM setforumsmsgs WHERE topicid=$topicid");
+		$treplies = mysql_result($topicreplies, "treplies");
+
 echo "
 					<tr bgcolor=$color2>
 						<td valign=top><strong class=black-small>&nbsp;&nbsp; <a href=topic.php?topicid=$topicid>$topic</a></strong></td>			
 						<td valign=top><strong class=black-small>&nbsp; $name$S_L</strong></td>
 						<td valign=top><strong class=black-small>&nbsp; $lastposter</strong></td>
-						<td valign=top width=\"61\" align=center><strong class=black-small>&nbsp; $replies</strong></td>
+						<td valign=top width=\"61\" align=center><strong class=black-small>&nbsp; $treplies</strong></td>
 						<td valign=top width=\"125\">&nbsp;<nobr><small class=black-small>$lastpost</small></nobr></td>
 					</tr>";		
 	} 

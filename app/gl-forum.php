@@ -18,7 +18,7 @@ if($gnamecheck[0] != $userid)	{
 
 include("commong.php");
 
-$query = "SELECT topicid, name, topic, replies, lastpost, lastposter FROM $topicdb ORDER by lastpost DESC";
+$query = "SELECT topicid, name, topic, replies, lastpost, lastposter FROM guildthreads WHERE guildname='$empireguild' ORDER by lastpost DESC";
 $result= mysql_query($query) or die("Error in query! " . mysql_error());
 
 if ($result) { 
@@ -38,7 +38,7 @@ echo "
 	while ($r = mysql_fetch_array($result)) {
 	extract ($r);
 	
-	$topic_replies_query = mysql_db_query($dbnam, "SELECT count(topicid) FROM $msgsdb WHERE topicid=$topicid");
+	$topic_replies_query = mysql_db_query($dbnam, "SELECT count(topicid) FROM guildmsgs WHERE topicid=$topicid") or die(mysql_error());
 		$topic_replies = mysql_result($topic_replies_query, "topic_replies");
 	
 echo "
@@ -68,10 +68,6 @@ MYSQL_CLOSE();
 <table class=f border=0 width=<? echo $tablewidth; ?> cellpadding=0 cellspacing=0 bgcolor="<? echo $color2; ?>" align="center">
 	<tr>
 		<td valign=top bgcolor="<? echo $color1; ?>" align=center colspan=4><strong class=white>Post a Thread</strong></td>
-	</tr>
-	<tr>
-		<td align=left colspan=2><strong class=black>Post As Real Name?:</strong> <input type="radio" name="realname" value="1"></td>
-		<td width="50%" colspan=2>&nbsp;</td>
 	</tr>
 	<tr>
 		<td align=right><strong class=black>Topic:</strong></td>  

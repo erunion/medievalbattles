@@ -35,23 +35,30 @@ else	{
 		$guild_info = mysql_fetch_array($guild_info_query);
 	// get number of members
 	$guild_members_query = mysql_db_query($dbnam, "SELECT count(ename) FROM user WHERE guild='$guild_info[gname]'");
-		$guild_members = mysql_fetch_array($guild_members_query);
+		$guild_members = mysql_result($guild_members_query, "guild_members");
 	// get their empire name
 	$applicant_ename_query = mysql_db_query($dbnam, "SELECT ename FROM user WHERE userid='$auserid'");
 		$applicant_ename = mysql_fetch_array($applicant_ename_query);
 
-	if($guild_members == 20)	{
+	if($guild_members > 29)	{
 		echo "<div align=center><font class=yellow>Your guild is full! You cannot allow any more members in!</font></div>";
 		die();
 	}
+	else	{
 
-	mysql_query("UPDATE user SET guild='$guild_info[gname]' WHERE userid='$auserid'");
-	mysql_query("INSERT INTO empnews (date, news, yourid) VALUES	('$clock', '<font class=blue>You were accepted into $guild_info[gname].</font>', '$auserid') ");
-	mysql_query("INSERT INTO guildnews (date, news, guildid) VALUES	('$clock', '<font class=blue>$empire_info[0] has joined the guild.</font>', '$guild_info[gid]') ");
-	mysql_query("DELETE FROM guildrequests WHERE applicant='$auserid' AND gl_userid='$userid'");
+		mysql_query("UPDATE user SET guild='$guild_info[gname]' WHERE userid='$auserid'");
+		mysql_query("INSERT INTO empnews (date, news, yourid) VALUES	('$clock', '<font class=blue>You were accepted into $guild_info[gname].</font>', '$auserid') ");
 
-	echo "<div align=center><font class=yellow><b>$applicant_ename[ename] has been accepted into the guild!</b></font></div>";
-	die();
+		$Guild_MaxID = mysql_db_query($dbnam, "SELECT max(gnid) FROM guildnews");
+			$mgnid = mysql_result($Guild_MaxID, "mgnid");
+			$gnid = $mgnid + 1;
+	
+		mysql_query("INSERT INTO guildnews (date, news, gid, gnid)	VALUES	('$clock', '<font class=blue>$applicant_ename[ename] has joined $empireguild</font>', '$guild_info[gid]' , '$gnid') ");
+		mysql_query("DELETE FROM guildrequests WHERE applicant='$auserid'");
+
+		echo "<div align=center><font class=yellow><b>$applicant_ename[ename] has been accepted into the guild!</b></font></div>";
+		die();
+	}
 }
 
 if(!IsSet($reject))	{
@@ -122,6 +129,7 @@ else	{
 	
 	mysql_query("UPDATE user SET guild='None' WHERE userid='$remp'");		// update their guild membership
 	mysql_query("UPDATE guild SET mem='$new_mem' WHERE owner='$userid'");	// update number of members
+	mysql_query("DELETE FROM barter WHERE seller='$empire_info[0]' AND guild='$empireguild'");	 //	 remove any items they placed on the guild barter
 	
 	mysql_query("INSERT INTO empnews (date, news, yourid) VALUES	('$clock', '<font class=blue>You were removed from $guild_info[gname].</font>', '$remp') ");
 	

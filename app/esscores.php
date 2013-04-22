@@ -1,27 +1,21 @@
 <?php
-	include("include/igtop.php");
-?>
 
- <br><br>
-<table border=1 bordercolor="#000000" align=center width="25%">
-	<tr><td class=inner2><a href="esscores.php">Strongest Empires</a></td>
-	<tr><td class=inner2><a href="emland.php">Most Land</a></td>
-	<tr><td class=inner2><a href="emmountains.php">Most Mountains</a></td>
-	<tr><td class=inner2><a href="setstrength.php">Strongest Settlements</a></td>
-	<tr><td class=inner2><a href="sguild.php">Strongest Guilds</a></td>
-</table>
-	
-<?php
-
-include("include/connect.php");
-$tablename = "user";
+include("include/igtop.php");
 
 echo "
-			<br><br>
-	<table border=0 bordercolor=#404040 width=80% align=center cellspacing=1>
-	  <tr>
-	    <td colspan=5 class=main><b class=reg>Strongest Empires</b></td>
-	  <tr>
+<br><br>
+<table border=1 bordercolor=#000000 align=center width=25%>
+	<tr><td class=inner2><a href=esscores.php>Strongest Empires</a></td>
+	<tr><td class=inner2><a href=emland.php>Most Land</a></td>
+	<tr><td class=inner2><a href=emmountains.php>Most Mountains</a></td>
+	<tr><td class=inner2><a href=setstrength.php>Strongest Settlements</a></td>
+	<tr><td class=inner2><a href=sguild.php>Strongest Guilds</a></td>
+</table><br><br>
+
+<table border=0 bordercolor=#404040 width=80% align=center cellspacing=1>
+	<tr>
+		<td colspan=5 class=main><b class=reg>Strongest Empires</b></td>
+	<tr>
 		<td class=main2></td>
 		<td class=main2 width=50%><b class=reg>Empire</b></td>
 		<td class=main2><b class=reg width=15%>Mountains</b></td>

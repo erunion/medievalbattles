@@ -12,15 +12,14 @@
 		<font face=tahoma size=2>Admin:</font>
 			<select name=contact>
 			<option selected value=ns>-----------</option>
-			<option value=Human>Mako</option>
-			<option value=Orc>Shredder</option>
-			<option value=Dwarf>Cyrus</option>
+			<option value=Mako>Mako</option>
+			<option value=Shredder>Shredder</option>
+			<option value=Cyrus>Cyrus</option>
 			</select>
 		<br><br>
 		<textarea bordercolor: #990000 rows=15 cols=25 wrap></textarea>
 		<br><br>
-		<input class=button type=submit name=signup value="Sign-Up (click only once)">
-			
+		<input class=button type=submit name=signup value="Send">
 		</td>
 	</tr>
 </table>

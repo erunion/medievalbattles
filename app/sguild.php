@@ -39,11 +39,15 @@ echo "
 
 		$placeno = $placeno + 1;
 		$row[2] = number_format($row[2]);
+		
+		$guild_mem_query = mysql_db_query($dbnam, "SELECT count(ename) FROM user WHERE guild='$row[0]'");
+			$guildmem = mysql_result($guild_mem_query, "guildmem");
+
 echo "
 	<tr align=center valign=top colspan=7>
 		<td bgcolor=#404040>$placeno</td>
 		<td bgcolor=#404040 align=left>$row[0]</td>
-		<td bgcolor=#404040>$row[1]</td>
+		<td bgcolor=#404040>$guildmem</td>
 		<td bgcolor=#404040>$row[2]</td>";
     }
 echo "

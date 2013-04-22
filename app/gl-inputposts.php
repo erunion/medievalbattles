@@ -25,29 +25,29 @@ $gnamecheck = mysql_fetch_array($gresult);
 if ($addtopic) {
 	
 	$replies = "0";
-	$result = mysql_query("INSERT INTO $topicdb (name, topic, replies, message, datestamp) VALUES ('$ename', '$topic', '$replies', '$message', '$clock')");
+	$result = mysql_query("INSERT INTO guildthreads (name, topic, replies, message, datestamp, guildname) VALUES ('$ename', '$topic', '$replies', '$message', '$clock', '$empireguild')");
 
-	$query4 = "UPDATE $topicdb SET lastpost='$clock' WHERE topic='$topic'";
+	$query4 = "UPDATE guildthreads SET lastpost='$clock' WHERE topic='$topic' AND guildname = '$empireguild'";
 	$result4 = mysql_query($query4);
 
-	$query6 = "UPDATE $topicdb SET lastposter='$ename' WHERE topic='$topic'";
+	$query6 = "UPDATE guildthreads SET lastposter='$ename' WHERE topic='$topic' AND guildname = '$empireguild'";
 	$result6 = mysql_query($query6);
-
+echo $query4 . "<BR>" . $query6;
 	header ("Location: gl-forum.php"); 
 }
 
 elseif ($addreply) {
-	$query1 = mysql_query("INSERT INTO $msgsdb (name, topic, topicid, message, datestamp) VALUES ('$ename', '$topic', '$topicid', '$message', $clock')");
+	$query1 = mysql_query("INSERT INTO guildmsgs (name, topic, topicid, message, datestamp) VALUES ('$ename', '$topic', '$topicid', '$message', $clock')");
 	$result1 = mysql_query($query1);
 	$lastid = mysql_insert_id();	
 
-	$query5 = "UPDATE $topicdb SET lastpost='$clock' WHERE topicid='$topicid'";
+	$query5 = "UPDATE guildthreads SET lastpost='$clock' WHERE topicid='$topicid'";
 	$result5 = mysql_query($query5);
 	
-	$query2 = "UPDATE $topicdb SET lastposter='$ename' WHERE topicid='$topicid'";
+	$query2 = "UPDATE guildthreads SET lastposter= '$ename' WHERE topicid= '$topicid'";
 	$result2 = mysql_query($query2);
 
-	$query3 = "UPDATE $topicdb SET replies=replies+1 WHERE topicid='$topicid'";
+	$query3 = "UPDATE guildthreads SET replies=replies+1 WHERE topicid='$topicid'";
 	$result3 = mysql_query($query3);
 	header ("Location: gl-topic.php?topicid=$topicid");
 }

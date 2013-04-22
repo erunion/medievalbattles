@@ -23,7 +23,7 @@ if($owner_query == $userid)	{
 
 include("commong.php");
 
-$query = "SELECT topicid, name, topic, replies, lastpost, lastposter FROM $topicdb ORDER by lastpost DESC";
+$query = "SELECT topicid, name, topic, replies, lastpost, lastposter FROM guildthreads WHERE guildname='$empireguild' ORDER by lastpost DESC";
 $result= mysql_query($query) or die("Error in query! " . mysql_error());
 
 if ($result) { 
@@ -42,7 +42,7 @@ echo "
 	while ($r = mysql_fetch_array($result)) {
 	extract ($r);
 	
-	$topic_replies_query = mysql_db_query($dbnam, "SELECT count(topicid) FROM $msgsdb WHERE topicid=$topicid");
+	$topic_replies_query = mysql_db_query($dbnam, "SELECT count(topicid) FROM guildmsgs WHERE topicid=$topicid");
 		$topic_replies = mysql_result($topic_replies_query, "topic_replies");
 	
 echo "

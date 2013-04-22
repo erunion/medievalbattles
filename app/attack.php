@@ -1,19 +1,17 @@
-<?php include("include/igtop.php");?>
-
-<center><b class=reg>| <a href="attack.php"> -Land- </a> | <a href="attackr.php"> -Resource- </a> | <a href="attackm.php"> -Mountain- </a> | </b></center>
-	
+<?
+include("include/igtop.php");
+echo "
 <center>
-
-<form type=post action="attack.php">
- <b class=reg>Settlement:</b><input type="number" name="snum" size=3 maxlength=3>
-  <input type="hidden" name="setchg" value="1">
-  <input type="submit" value="Change">
+<b class=reg>| <a href=attack.php> -Land- </a> | <a href=attackr.php> -Resource- </a> | <a href=attackm.php> -Mountain- </a> | </b>
+	
+<form type=post action=attack.php>
+ <b class=reg>Settlement:</b><input type=number name=snum size=3 maxlength=3>
+  <input type=hidden name=setchg value=1>
+  <input type=submit value=Change>
  </form>
 </center>
-<br>
-<br>
+<br><br>";
 
-<?php
 if(!IsSet($attack))	{
 	include("include/attack/ldrop.php");
 	include("include/attack/table.php"); 
@@ -78,7 +76,7 @@ else	{
 	elseif($evu[land] < 200 AND $evu[land] >=10)	{	$landgain = 10;	}
 	else	{	$landgain = $evu[land];	 }
 					
-	$EMPs_guild_query = mysql_db_query($dbnam, "SELECT guild FROM user WHERE userid='$evu[userid]'") or die( mysql_error());
+	$EMPs_guild_query = mysql_db_query($dbnam, "SELECT guild FROM user WHERE userid='$evu[userid]'");
 		$EMPs_guild = mysql_result($EMPs_guild_query,"EMPs_guild");
 
 	if($uwarrior == "" AND $uwizard == "" AND $upriest == "" AND $uarcher == "")	{
@@ -87,7 +85,7 @@ else	{
 		include("include/attack/table.php");
 		die();
 	}
-	elseif($EMPs_guild == $empireguild)	{
+	elseif($EMPs_guild == $empireguild AND $EMPs_guild != "None" AND $empireguild != "None")	{
 		echo"<div align=center><font class=yellow>You cannot attack someone that is in your guild.</font></div><br><br>";
 		include("include/attack/ldrop.php");
 		include("include/attack/table.php");
@@ -161,10 +159,6 @@ else	{
 				$evb[dhome] = $evb[dhome] - 1;
 				$ltally = $ltally + 1;
 			}
-			if($evb[dkennel] > 0 AND $lgain > $ltally AND $evb[akenneld] == 0)	{
-				$evb[dkennel] = $evb[dkennel] - 1;
-				$ltally = $ltally + 1;
-			}
 			if($evb[dbarrack] > 0 AND $lgain > $ltally AND $evb[aland] == 0)	{
 				$evb[dbarrack] = $evb[dbarrack] - 1;
 				$ltally = $ltally + 1;
@@ -182,27 +176,23 @@ else	{
 				$ltally = $ltally + 1;
 			}
 
-			if($evb[home] > 0 AND $lgain > $ltally AND $evb[aland] == 0 AND $evb[dhome] == 0 AND $evb[dkennel] == 0 AND $evb[dbarrack] == 0 AND $evb[dfarm] == 0 AND $evb[dwp] == 0 AND $evb[dlmill] == 0)	{
+			if($evb[home] > 0 AND $lgain > $ltally AND $evb[aland] == 0 AND $evb[dhome] == 0 AND $evb[dbarrack] == 0 AND $evb[dfarm] == 0 AND $evb[dwp] == 0 AND $evb[dlmill] == 0)	{
 				$evb[home] = $evb[home] - 1;
 				$ltally = $ltally + 1;
 			}
-			if($evb[kennel] > 0 AND $lgain > $ltally AND $evb[aland] == 0 AND $evb[dhome] == 0 AND $evb[dkennel] == 0 AND $evb[dbarrack] == 0 AND $evb[dfarm] == 0 AND $evb[dwp] == 0 AND $evb[dlmill] == 0)	{
-				$evb[kennel] = $evb[kennel] - 1;
-				$ltally = $ltally + 1;
-			}
-			if($evb[barrack] > 0 AND $lgain > $ltally AND $evb[aland] == 0 AND $evb[dhome] == 0 AND $evb[dkennel] == 0 AND $evb[dbarrack] == 0 AND $evb[dfarm] == 0 AND $evb[dwp] == 0 AND $evb[dlmill] == 0)	{
+			if($evb[barrack] > 0 AND $lgain > $ltally AND $evb[aland] == 0 AND $evb[dhome] == 0 AND $evb[dbarrack] == 0 AND $evb[dfarm] == 0 AND $evb[dwp] == 0 AND $evb[dlmill] == 0)	{
 				$evb[barrack] = $evb[barrack] - 1;
 				$ltally = $ltally + 1;
 			}
-			if($evb[farm] > 0 AND $lgain > $ltally AND $evb[aland] == 0 AND $evb[dhome] == 0 AND $evb[dkennel] == 0 AND $evb[dbarrack] == 0 AND $evb[dfarm] == 0 AND $evb[dwp] == 0 AND $evb[dlmill] == 0)	{
+			if($evb[farm] > 0 AND $lgain > $ltally AND $evb[aland] == 0 AND $evb[dhome] == 0 AND $evb[dbarrack] == 0 AND $evb[dfarm] == 0 AND $evb[dwp] == 0 AND $evb[dlmill] == 0)	{
 				$evb[farm] = $evb[farm] - 1;
 				$ltally = $ltally + 1;
 			}
-			if($evb[wp] > 0 AND $lgain > $ltally AND $evb[aland] == 0 AND $evb[dhome] == 0 AND $evb[dkennel] == 0 AND $evb[dbarrack] == 0 AND $evb[dfarm] == 0 AND $evb[dwp] == 0 AND $evb[dlmill] == 0)	{
+			if($evb[wp] > 0 AND $lgain > $ltally AND $evb[aland] == 0 AND $evb[dhome] == 0 AND $evb[dbarrack] == 0 AND $evb[dfarm] == 0 AND $evb[dwp] == 0 AND $evb[dlmill] == 0)	{
 				$evb[wp] = $evb[wp] - 1;
 				$ltally = $ltally + 1;
 			}
-			if($evb[lmill] > 0 AND $lgain > $ltally AND $evb[aland] == 0 AND $evb[dhome] == 0 AND $evb[dkennel] == 0 AND $evb[dbarrack] == 0 AND $evb[dfarm] == 0 AND $evb[dwp] == 0 AND $evb[dlmill] == 0)	{
+			if($evb[lmill] > 0 AND $lgain > $ltally AND $evb[aland] == 0 AND $evb[dhome] == 0 AND $evb[dbarrack] == 0 AND $evb[dfarm] == 0 AND $evb[dwp] == 0 AND $evb[dlmill] == 0)	{
 				$evb[lmill] = $evb[lmill] - 1;
 				$ltally = $ltally + 1;
 			}
@@ -212,7 +202,7 @@ else	{
 	mysql_query("UPDATE buildings SET aland = aland + $landgain WHERE email='$email' AND pw='$pw'");
 										
 	mysql_query("UPDATE user SET land = land - $landgain WHERE userid = '$empvalue'");
-	mysql_query("UPDATE buildings SET home=$evb[home], kennel=$evb[kennel], barrack=$evb[barrack], farm=$evb[farm], wp=$evb[wp], lmill=$evb[lmill], dhome=$evb[dhome], dkennel=$evb[kennel], dbarrack=$evb[dbarrack], dfarm=$evb[dfarm], dwp=$evb[dwp], dlmill=$evb[dlmill], aland=$evb[aland] WHERE userid = '$empvalue'");
+	mysql_query("UPDATE buildings SET home=$evb[home], barrack=$evb[barrack], farm=$evb[farm], wp=$evb[wp], lmill=$evb[lmill], dhome=$evb[dhome], dbarrack=$evb[dbarrack], dfarm=$evb[dfarm], dwp=$evb[dwp], dlmill=$evb[dlmill], aland=$evb[aland] WHERE userid = '$empvalue'");
 	 		
 	if($landgain >= 10 AND $evu[land] - $landgain >= 1)	{
 		$sid + $msid + 1;

@@ -1,8 +1,9 @@
-<?	 include("include/igtop.php");	?>
+<?	 
 
-<center><b class=reg>| <a href="dbuildings.php"> -Demolish- </a> | </b></center><br>
+include("include/igtop.php");
+echo "<center><b class=reg>| <a href=dbuildings.php> -Demolish- </a> | </b></center><br>";
 	
-<?
+
 if(!IsSet($update))	{
 	include("include/S_BUILD.php");
 }
@@ -20,17 +21,17 @@ else	{
 		include("include/S_BUILD.php");
 		die();
 	}
-	elseif($uhome < 0 OR $ukennel < 0 OR $ubarrack < 0 OR $ufarm < 0 OR $uwp < 0 OR $ugm < 0 OR $uim < 0 )	{
+	elseif($uhome < 0 OR $ubarrack < 0 OR $ufarm < 0 OR $uwp < 0 OR $ugm < 0 OR $uim < 0 )	{
 		echo"<div align=center><font class=yellow>You can't build negative or 0 buildings.</font></div>"; 
 		include("include/S_BUILD.php");
 		die();
 	}
-	elseif($aland < $uhome + $ukennel + $ubarrack + $ufarm + $uwp)	{
+	elseif($aland < $uhome + $ubarrack + $ufarm + $uwp)	{
 		echo"<div align=center><font class=yellow>Not enough land!</font></div>";
 		include("include/S_BUILD.php");
 		die();
 	}
-	elseif($gp < ($bm_cost * ($ugm + $uim)) + ($b_cost * ($ukennel + $ufarm + $ubarrack + $uhome + $uwp + $ulmill)))	{
+	elseif($gp < ($bm_cost * ($ugm + $uim)) + ($b_cost * ($ufarm + $ubarrack + $uhome + $uwp + $ulmill)))	{
 		echo"<div align=center><font class=yellow>Not enough gold!</font></div>";
 		include("include/S_BUILD.php");
 		die();
@@ -43,23 +44,22 @@ else	{
 		
 	include("include/connect.php");
 
-	$gp = $gp -  (($bm_cost * ($ugm + $uim)) + ($b_cost * ($ukennel + $ufarm + $ubarrack + $uhome + $uwp + $ulmill)));
+	$gp = $gp -  (($bm_cost * ($ugm + $uim)) + ($b_cost * ($ufarm + $ubarrack + $uhome + $uwp + $ulmill)));
 	$gp = round($gp);
 	 
 	$amts = $amts - ($ugm + $uim);
-	$aland = $aland - ($uhome + $ukennel + $ubarrack + $ufarm + $uwp + $ulmill);
+	$aland = $aland - ($uhome + $ubarrack + $ufarm + $uwp + $ulmill);
 
-	$forexp2 = $exp2 + (($uhome + $ukennel + $ubarrack + $ufarm + $uwp + $ulmill) * $landexp) + (($ugm + $uim) * $mtexp); 
+	$forexp2 = $exp2 + (($uhome + $ubarrack + $ufarm + $uwp + $ulmill) * $landexp) + (($ugm + $uim) * $mtexp); 
 
 	$dhome = $dhome + $uhome;
-	$dkennel = $dkennel + $ukennel;
 	$dbarrack = $dbarrack + $ubarrack;
 	$dfarm = $dfarm + $ufarm;
 	$dwp = $dwp + $uwp;
 	$dlmill = $dlmill + $ulmill;
 	$dgm = $dgm + $ugm;
 	$dim = $dim + $uim;
-	$max_land = $max_land - ($ukennel + $uhome + $ubarrack + $ufarm + $ulmill + $uwp);
+	$max_land = $max_land - ($uhome + $ubarrack + $ufarm + $ulmill + $uwp);
 	$max_mt = $max_mt - ($ugm + $uim);
 
 	mysql_query("UPDATE user SET gp ='$gp' WHERE email='$email' AND pw='$pw'");
@@ -70,7 +70,6 @@ else	{
 	mysql_query("UPDATE buildings SET dim='$dim' WHERE email='$email' AND pw='$pw'");
 
 	mysql_query("UPDATE buildings SET aland='$aland' WHERE email='$email' AND pw='$pw'");
-	mysql_query("UPDATE buildings SET dkennel='$dkennel' WHERE email='$email' AND pw='$pw'");  
 	mysql_query("UPDATE buildings SET dhome='$dhome' WHERE email='$email' AND pw='$pw'");  
 	mysql_query("UPDATE buildings SET dbarrack='$dbarrack' WHERE email='$email' AND pw='$pw'");  
 	mysql_query("UPDATE buildings SET dfarm= '$dfarm' WHERE email='$email' AND pw='$pw'"); 
@@ -83,10 +82,6 @@ else	{
 	if($uhome >= 20)	{	$Hhrs = 20;	 }
 	elseif($uhome < 20)	{	$Hhrs = $Hhrs + $uhome;	}
 	elseif($Hhrs > 20)	 {	$Hhrs = 20;	 }
-##	kennels
-	if($ukennel >= 20)	{	$Khrs = 20;	 }
-	elseif($ukennel < 20)	{	$Khrs = $Khrs + $ukennel;	}
-	elseif($Khrs > 20)	 {	$Khrs = 20;	 }
 ##	barracks
 	if($ubarrack >= 20)	{	$Bhrs = 20;	 }
 	elseif($ubarrack < 20)	{	$Bhrs = $Bhrs + $ubarrack;	}
@@ -113,7 +108,6 @@ else	{
 	elseif($Ihrs > 20)	{	$Ihrs = 20;	}
 
 If($Hhrs > 20)	{	$Hhrs = 20;	 }
-If($Khrs > 20)	{	$Khrs = 20;	 }
 If($Bhrs > 20)	{	$Bhrs = 20;	 }
 If($Fhrs > 20)	{	$Fhrs = 20;	 }
 If($Whrs > 20)	 {	$Whrs = 20;	}
@@ -122,7 +116,6 @@ If($Ghrs > 20)	{	$Ghrs = 20;	 }
 If($Ihrs > 20)	{	$Ihrs = 20;	}
 
 	mysql_query("UPDATE buildings SET Hhrs ='$Hhrs' WHERE email='$email' AND pw='$pw'");
-	mysql_query("UPDATE buildings SET Khrs ='$Khrs' WHERE email='$email' AND pw='$pw'");
 	mysql_query("UPDATE buildings SET Bhrs ='$Bhrs' WHERE email='$email' AND pw='$pw'");
 	mysql_query("UPDATE buildings SET Fhrs ='$Fhrs' WHERE email='$email' AND pw='$pw'");
 	mysql_query("UPDATE buildings SET Whrs ='$Whrs' WHERE email='$email' AND pw='$pw'");
@@ -135,8 +128,8 @@ If($Ihrs > 20)	{	$Ihrs = 20;	}
 	die();
 }
 ?>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+</td>
+</tr>
+</table>
+</body>
+</html>
