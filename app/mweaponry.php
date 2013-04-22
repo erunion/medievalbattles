@@ -1,32 +1,4 @@
-<HTML>
-<HEAD>
-<TITLE></TITLE>
-<link rel=stylesheet type="text/css" href="css/manual.css">
-
-</HEAD>
-<BODY BGCOLOR="#003139">
-
-<TABLE BORDER="0" BORDERCOLOR=RED width="100%">
- <TR>
-   <TD valign="top">
-
-	<?php
-			include ("include/mannavbar.php");
-		?>
-
-		</td>   
-	<td valign="top">    
-
-
-<!-- Right table begins here -->
-	 <table border="0" bordercolor="red" width="100%" align="center">
-		
-		<tr align="center" valign="top">
-		 	<td><font size="+5" color="#bfbfbf">Medieval Battles<br> Manual</font></td>
-	
-		<tr>
-		 	<td align="center"><hr color="red" width="50%"></td>
-        
+<? include("include/mantop.php"); ?>    
 	
 <tr><td align="center">Weaponry
 	<hr color="red" width="50%"></td>
@@ -37,106 +9,112 @@
 Below are the avilable weapons that can be built. A weapon with a speed factor helps to determine your attacking time. Damage tells you how many hitpoints that it can take off of the enemy. There also is the amount of iron that is required to construct the weapon.
 <br><br>
 
-<ul>
-<li><b>Melee</b>
-	
-
-			
-	<ul><li><b class=other>Dagger</b>- 1 handed weapon.	
-		<br>Speed Factor: 6
-		<br>Power:3
-		<br>Only usable by warriors
-
-		<br><br>
-	<li><b class=other>Short Sword</b>- 1 handed weapon.	
-		<br>Speed Factor: 7
-		<br>Power:6
-		<br>Only usable by warriors
-
-		<br><br>
-	<li><b class=other>Long Sword</b>- 1 handed weapon.	
-		<br>Speed Factor: 11
-		<br>Power: 4
-		<br>Only usable by warriors
-
-		<br><br>
-	<li><b class=other>Axe</b>-1 handed weapon.		
-		<br>Speed Factor: 9 
-		<br>Power: 12
-		<br>Only usable by warriors
-
-		<br><br>
-<li><b class=other>Great Axe</b>- 2 handed weapon.	
-		<br>Speed Factor: 14
-		<br>Power:20
-		<br>Only usable by warriors
-
-		<br><br>
-<li><b class=other>Ice Sword</b>- 2 handed weapon.	
-		<br>Speed Factor: 18
-		<br>Power:25
-		<br>Only usable by warriors
-		
-		<br><br>
-<li><b class=other>Quarter Staff</b>- 2 handed weapon.	
-		<br>Speed Factor: 6
-		<br>Power: 2
-		<br>Only usable by priests
-		
-		<br><br>
-<li><b class=other>Spiked Club</b>- 1 handed weapon.	
-		<br>Speed Factor: 6
-		<br>Power: 6
-		<br>Only usable by priests
-		
- 		
-		<br><br>
-<li><b class=other>Mace</b>- 1 handed weapon.	
-		<br>Speed Factor: 8
-		<br>Power: 9
-		<br>Only usable by priests
-
-		
-		<br><br>
-<li><b class=other>Grand Scepter</b>- 1 handed weapon.	
-		<br>Speed Factor: 9
-		<br>Power: 15
-		<br>Only usable by priests
-	
-
-</ul></ul>
-<ul>
-<li><b>Distance</b>		
-		<br><br>
-<ul>
-<li><b class=other>Bow</b>- 2 handed weapon.	
-		<br>Speed Factor: 5
-		<br>Damage: 2
-		<br>Only usable by archers
-
-		
-		<br><br>
-<li><b class=other>Short Bow</b>- 2 handed weapon.	
-		<br>Speed Factor: 6
-		<br>Damage: 7
-		<br>Only usable by archers
-
-		
-		<br><br>
-<li><b class=other>Long Bow</b>- 2 handed weapon.	
-		<br>Speed Factor: 7
-		<br>Damage: 14
-		<br>Only usable by archers
-
-		
-		<br><br>
-<li><b class=other>Medieval War Bow</b>- 2 handed weapon.	
-		<br>Speed Factor: 8
-		<br>Damage: 22
-		<br>Only usable by archers
-
-
-
+<table border=1 cellpadding=0 cellspacing=0 width=80% bordercolor=#000000>
+<tr>
+  <td class=main colspan=5><b>Weapon Stats</b></td>
+<tr>
+  <td class=main2>Item</td>
+  <td class=main2>Power Modifier</td>
+  <td class=main2>Speed Modifier</td>
+  <td class=main2>Build Time</td>
+  <td class=main2>Unit</td>
+<tr>
+	<td class=inner>Dagger</td>
+	<td class=inner align=center>2</td>
+	<td class=inner align=center>8</td>
+	<td class=inner align=center>n/a</td>
+	<td class=inner>warrior</td>
+<tr>
+	<td class=inner>Short Sword</td>
+	<td class=inner align=center>3</td>
+	<td class=inner align=center>10</td>
+	<td class=inner align=center>8</td>
+	<td class=inner>warrior</td>
+<tr>
+	<td class=inner>Long Sword</td>
+	<td class=inner align=center>4</td>
+	<td class=inner align=center>11</td>
+	<td class=inner align=center>10</td>
+	<td class=inner>warrior</td>
+<tr>
+	<td class=inner>Axe</td>
+	<td class=inner align=center>7</td>
+	<td class=inner align=center>15</td>
+	<td class=inner align=center>20</td>
+	<td class=inner>warrior</td>
+<tr>
+	<td class=inner>Great Axe</td>
+	<td class=inner align=center>10</td>
+	<td class=inner align=center>17</td>
+	<td class=inner align=center>34</td>
+	<td class=inner>warrior</td>
+<tr>
+	<td class=inner>Ice Sword</td>
+	<td class=inner align=center>15</td>
+	<td class=inner align=center>20</td>
+	<td class=inner align=center>48</td>
+	<td class=inner>warrior</td>
+<tr>
+	<td class=inner>Quarterstaff</td>
+	<td class=inner align=center>2</td>
+	<td class=inner align=center>9</td>
+	<td class=inner align=center>n/a</td>
+	<td class=inner>priest</td>
+<tr>
+	<td class=inner>Spiked Club</td>
+	<td class=inner align=center>6</td>
+	<td class=inner align=center>11</td>
+	<td class=inner align=center>5</td>
+	<td class=inner>priest</td>
+<tr>
+	<td class=inner>Mace</td>
+	<td class=inner align=center>8</td>
+	<td class=inner align=center>13</td>
+	<td class=inner align=center>7</td>
+	<td class=inner>priest</td>
+<tr>
+	<td class=inner>Scepter</td>
+	<td class=inner align=center>11</td>
+	<td class=inner align=center>15</td>
+	<td class=inner align=center>14</td>
+	<td class=inner>priest</td>
+<tr>
+	<td class=inner>Grand Scepter</td>
+	<td class=inner align=center>14</td>
+	<td class=inner align=center>20</td>
+	<td class=inner align=center>30</td>
+	<td class=inner>priest</td>
+<tr>
+	<td class=inner>Bow</td>
+	<td class=inner align=center>2</td>
+	<td class=inner align=center>8</td>
+	<td class=inner align=center>n/a</td>
+	<td class=inner>archer</td>
+<tr>
+	<td class=inner>Short Bow</td>
+	<td class=inner align=center>4</td>
+	<td class=inner align=center>10</td>
+	<td class=inner align=center>7</td>
+	<td class=inner>archer</td>
+<tr>
+	<td class=inner>Long Bow</td>
+	<td class=inner align=center>6</td>
+	<td class=inner align=center>13</td>
+	<td class=inner align=center>14</td>
+	<td class=inner>archer</td>
+<tr>
+	<td class=inner>Acid Bow</td>
+	<td class=inner align=center>9</td>
+	<td class=inner align=center>16</td>
+	<td class=inner align=center>22</td>
+	<td class=inner>archer</td>
+<tr>
+	<td class=inner>Medieval War Bow</td>
+	<td class=inner align=center>13</td>
+	<td class=inner align=center>18</td>
+	<td class=inner align=center>28</td>
+	<td class=inner>archer</td>
+</table>
 </blockquote>			
            </td>
 	</tr>

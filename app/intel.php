@@ -42,163 +42,102 @@ else
 		else
 		{
 
-		include("include/connect.php");
-	//attackee safemode
-		$safe_mo = mysql($dbnam, "SELECT safemode FROM user WHERE userid = '$empvalue'");	
-		$safe_m = mysql_result($safe_mo,"safe_m");
+			include("include/connect.php");
+			
+			$query = ("SELECT safemode,ename,iron,gp,class,race,lumber,setid FROM user WHERE userid=\"$empvalue\"");
+			$result = mysql_query($query);
+			$evu = mysql_fetch_array($result);
 
-	if($safe_m > 0){echo"<div align=center><font class=yellow>You cannot thieve someone that is in safe mode.</font></div>";include("include/S_INTEL.php");die();}
+			$query1 = ("SELECT civ,thieves,warriors,wizards,priests,archers,warpower,wizpower,pripower,archpower FROM military WHERE userid=\"$empvalue\"");
+			$result1 = mysql_query($query1);
+			$evm = mysql_fetch_array($result1);
 
-	//attackee empire name
-		$empattacked = mysql($dbnam, "SELECT ename FROM user WHERE userid = '$empvalue'");	
-		$empireattacked = mysql_result($empattacked,"empireattacked");
-	
-	//attackee empire name
-		$theirthieves = mysql($dbnam, "SELECT thieves FROM military WHERE userid = '$empvalue'");	
-		$tthieves = mysql_result($theirthieves,"tthieves");
 
-	//attackee new no
-		$e_newno = mysql($dbnam, "SELECT nno FROM user WHERE userid = '$empvalue'");	
-		$e_nno = mysql_result($e_newno,"e_nno");
-	
-	if($send < $tthieves)
+			$query2 = ("SELECT wp FROM buildings WHERE userid=\"$empvalue\"");
+			$result2 = mysql_query($query2);
+			$evb = mysql_fetch_array($result2);
+
+	if($evu[safemode] > 0){echo"<div align=center><font class=yellow>You cannot thieve someone that is in safe mode.</font></div>";include("include/S_INTEL.php");die();}
+
+	if($send < $evm[thieves])
 		{echo"<div align=center><font class=yellow>You have failed to gather information on $empireattacked and lost 10% of your thieves.</div></align>";
 		
 		
-				$newthieves = $thieves - ($send * .1);
-				mysql_query("UPDATE military SET thieves =\"$newthieves\" WHERE email='$email' AND pw='$pw'");
 				
-
-					$newno = $e_nno + 1;
-
-					mysql_query("UPDATE user SET nno =\"$newno\" WHERE userid='$empvalue'");
+				mysql_query("UPDATE military SET thieves = round($thieves - ($send * .1)) WHERE email='$email' AND pw='$pw'");
+				mysql_query("UPDATE user SET nno = nno + 1 WHERE userid='$empvalue'");
 					mysql_query("INSERT INTO empnews (date, news, yourid) 
 						VALUES	('$clock', \"<font class=yellow>$ename ($setid) has failed to gather information on you</font>\" , '$empvalue') ");
 			
-				include("include/S_INTEL.php");
-				die();
+			include("include/S_INTEL.php");
+			die();
 		}
 		else
 		{
-				//select iron, gold, warriors, wizards, priests
-		$theiriron = mysql($dbnam, "SELECT iron FROM user WHERE userid = '$empvalue'");	
-		$tiron = mysql_result($theiriron,"tiron");
-		
-		$theirgp = mysql($dbnam, "SELECT gp FROM user WHERE userid = '$empvalue'");	
-		$tgp = mysql_result($theirgp,"tgp");
-
-		$theirwars = mysql($dbnam, "SELECT warriors FROM military WHERE userid = '$empvalue'");	
-		$twars = mysql_result($theirwars,"twars");
-
-		$theirwiz = mysql($dbnam, "SELECT wizards FROM military WHERE userid = '$empvalue'");	
-		$twiz = mysql_result($theirwiz,"twiz");
-
-		$theirpri = mysql($dbnam, "SELECT priests FROM military WHERE userid = '$empvalue'");	
-		$tpri = mysql_result($theirpri,"tpri");
-
-		$theirciv = mysql($dbnam, "SELECT civ FROM military WHERE userid = '$empvalue'");	
-		$tciv = mysql_result($theirciv,"tciv");
-
-		$theirarch = mysql($dbnam, "SELECT archers FROM military WHERE userid = '$empvalue'");	
-		$tarch = mysql_result($theirarch,"tarch");
-
-		$their_race = mysql($dbnam, "SELECT race FROM user WHERE userid = '$empvalue'");	
-		$t_race = mysql_result($their_race,"t_race");
-
-		$newthieves = $thieves - ($send * .03);
-			
-		mysql_query("UPDATE military SET thieves =\"$newthieves\" WHERE email='$email' AND pw='$pw'");
-			
-
-					$newno = $e_nno + 1;
-
-					mysql_query("UPDATE user SET nno =\"$newno\" WHERE userid='$empvalue'");
-		
-					mysql_query("INSERT INTO empnews (date, news, yourid) 
-						VALUES	('$clock', \"<font class=yellow>An unknown empire has gathered information on you</font>\" , '$empvalue') ");
-
-// Determine defense of empire probed
-	$theirwarpower = mysql($dbnam, "SELECT warpower FROM military WHERE userid = '$empvalue'");
-	$twarpower = mysql_result($theirwarpower,"twarpower");
-
-	$theirwizpower = mysql($dbnam, "SELECT wizpower FROM military WHERE userid = '$empvalue'");
-	$twizpower = mysql_result($theirwizpower,"twizpower");
-
-	$theirpripower = mysql($dbnam, "SELECT pripower FROM military WHERE userid = '$empvalue'");
-	$tpripower = mysql_result($theirpripower,"tpripower");
-
-	$theirarchpower = mysql($dbnam, "SELECT archpower FROM military WHERE userid = '$empvalue'");
-	$tarchpower = mysql_result($theirarchpower,"tarchpower");
-
-	$their_set = mysql($dbnam, "SELECT setid FROM user WHERE userid = '$empvalue'");
-	$tsetid = mysql_result($their_set,"tsetid");
 	
-	$emps_thieves = mysql($dbnam, "SELECT thieves FROM military WHERE userid = '$empvalue'"); 
-	$theirthief = mysql_result($emps_thieves,"theirthief");
-
-	$theirclass = mysql($dbnam, "SELECT class FROM user WHERE userid = '$empvalue'");
-	$tclass = mysql_result($theirclass,"tclass");
-
-	$theirwp = mysql($dbnam, "SELECT wp FROM buildings WHERE userid = '$empvalue'"); 
-	$twp = mysql_result($theirwp,"twp");
+		mysql_query("UPDATE military SET thieves = round($thieves - ($send * .03)) WHERE email='$email' AND pw='$pw'");
+		mysql_query("UPDATE user SET nno = nno + 1 WHERE userid='$empvalue'");
+		mysql_query("INSERT INTO empnews (date, news, yourid) 
+						VALUES	('$clock', \"<font class=yellow>Thieves have gathered intelligence on your empire</font>\" , '$empvalue') ");
 
 
-	$wwar_power = mysql($dbnam, "SELECT warpower FROM military WHERE userid = '$empvalue'"); 
-	$war_power = mysql_result($wwar_power,"war_power");
-
-	$wwiz_power = mysql($dbnam, "SELECT wizpower FROM military WHERE userid = '$empvalue'"); 
-	$wiz_power = mysql_result($wwiz_power,"wiz_power");
-
-	$ppri_power = mysql($dbnam, "SELECT pripower FROM military WHERE userid = '$empvalue'"); 
-	$pri_power = mysql_result($ppri_power,"pri_power");
-
-
-	$aarch_power = mysql($dbnam, "SELECT archpower FROM military WHERE userid = '$empvalue'"); 
-	$arch_power = mysql_result($aarch_power,"arch_power");
 
 	$tempmodifier = 1.00;
 
-	if($tclass== Fighter)
+	if($evu['class']== Fighter)
 		{ $tempmodifier = 1.05; }
-	if($tclass == Mage)
+	if($evu['class'] == Mage)
 		{ $tempmodifier = .95; }
 
-	if($t_race == Giant)
+	if($evu[race] == Giant)
 		{ $tempmodifier = $tempmodifier + .25;}
 
-	if($t_race == Orc)
+	if($evu[race] == Orc)
 		{ $tempmodifier = $tempmodifier - .15;
 		}
 
-	
+	$evdef = round( ($evm[warriors] * $evm[warpower]) + ($evm[wizards] * $evm[wizpower]) + ($evm[priests] * $evm[pripower]) + ($evm[archers] * $evm[archpower]) + ($evb[wp] * 15) * $tempmodifier);
 
-	
-
-	$itdefense = (($twars * $twarpower) + ($twiz * $twizpower) + ($tpri * $tpripower) +  ($tarch * $tarchpower) + ($twp * 5)) * $tempmodifier;
-	$itdefense = round ($itdefense);
-
+echo"
+		<div align=center><font class=yellow>You have successfully gathered information on $empireattacked and you only lost 3% of your thieves!<font></div><br><br>";
+		?>
+		The number in () is the power for the unit.<br>
+		<table border=1 width=\"40%\ align=center bordercolor=#000000>
+		<?
+		$evu[gp] = number_format($evu[gp]);
+		$evu[iron]=number_format($evu[iron]);
+		$evu[lumber]=number_format($evu[lumber]);
+		$evm[civ]=number_format($evm[civ]);
+		$evm[thieves]=number_format($evm[thieves]);
+		$evb[wp]=number_format($evb[wp]);
+		$evm[warriors]=number_format($evm[warriors]);
+		$evm[wizards]=number_format($evm[wizards]);
+		$evm[priests]=number_format($evm[priests]);
+		$evm[archers]=number_format($evm[archers]);
+		$evdef=number_format($evdef);
 		echo"
-		    <div align=center><font class=yellow>You have successfully gathered information on $empireattacked and you only lost 3% of your thieves!<font></div><br><br>
-				<table border=1 width=\"40%\" align=center bordercolor=#000000>
-		<tr><td class=main colspan=2>Stats of <b class=reg>$empireattacked ($tsetid)</b></td>
-		<tr><td class=inner2>Gold Pieces: $tgp</td>
-		<tr><td class=inner2>Iron: $tiron</td>
-		<tr><td class=inner2>Civilians: $tciv</td>
-		<tr><td class=inner2>Thieves: $theirthief</td>
-		<tr><td class=inner2>Warriors defending: $twars<br>
-		<tr><td class=inner2>Wizards defending: $twiz</td>
-		<tr><td class=inner2>Priests defending: $tpri</td>
-		<tr><td class=inner2>Archers defending: $tarch</td>
-		<tr><td class=inner2>Warrior power: $war_power</td>
-		<tr><td class=inner2>Wizard power: $wiz_power</td>
-		<tr><td class=inner2>Priest power: $pri_power</td>
-		<tr><td class=inner2>Archer power: $arch_power</td>
-		<tr><td class=inner2>Empire Defense: $itdefense</td>
-			</table>
-
-				";
-		
-		include("include/S_INTEL.php");die();
+		<tr>
+			<td class=main>Empire stats of $evu[ename] ($evu[setid])</td>
+		<tr>
+			<td class=inner2>
+								Race: $evu[race]<br>
+								Class: $evu[class]<br>
+								Gold Pieces: $evu[gp]<br>
+								Iron: $evu[iron]<br>
+								Lumber: $evu[lumber]<br>
+								Civilians: $evm[civ]<br>
+								Thieves: $evm[thieves]<br>
+								Wooden Platforms: $evb[wp]<br>
+								Warriors: $evm[warriors] ($evm[warpower])<br>
+								Wizards: $evm[wizards] ($evm[wizpower])<br>
+								Priests: $evm[priests] ($evm[pripower])<br>
+								Archers: $evm[archers] ($evm[archpower])<br>
+								Defense: $evdef<br>
+			</td>
+		</table>
+";
+		    
+				include("include/S_INTEL.php");die();
 		}
 	
 	}

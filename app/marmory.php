@@ -1,31 +1,4 @@
-<HTML>
-<HEAD>
-<TITLE></TITLE>
-<link rel=stylesheet type="text/css" href="css/manual.css">
-
-</HEAD>
-<BODY BGCOLOR="#003139">
-
-<TABLE BORDER="0" BORDERCOLOR=RED width="100%">
- <TR>
-   <TD valign="top">
-
-	<?php
-			include ("include/mannavbar.php");
-		?>
-
-		</td>   
-	<td valign="top">    
-
-
-<!-- Right table begins here -->
-	 <table border="0" bordercolor="red" width="100%" align="center">
-		
-		<tr align="center" valign="top">
-		 	<td><font size="+5" color="#bfbfbf">Medieval Battles Manual</font></td>
-	
-		<tr>
-		 	<td align="center"><hr color="red" width="50%"></td>
+<? include("include/mantop.php"); ?>
         
 	
 <tr><td align="center">Armory
@@ -36,34 +9,95 @@
 	There isn't very much armoy to chose from in the alpha game.  Each unit starts off with a basic armor, however you have to equip them with that armor.  Not every unit can use every armor, below are all the armors and who can wear them. 
 
 
+<br><br>
+<table border=1 cellpadding=0 cellspacing=0 width=80% bordercolor=#000000>
+<tr>
+  <td class=main colspan=5><b>Armor Stats</b></td>
+<tr>
+  <td class=main2>Item</td>
+  <td class=main2>Armor Modifier</td>
+  <td class=main2>Speed Modifier</td>
+  <td class=main2>Build Time</td>
+  <td class=main2>Unit</td>
+<tr>
+	<td class=inner>Studded Leather</td>
+	<td class=inner align=center>1</td>
+	<td class=inner align=center>0</td>
+	<td class=inner align=center>n/a</td>
+	<td class=inner>warrior/archer</td>
+<tr>
+	<td class=inner>Chain Shirt</td>
+	<td class=inner align=center>3</td>
+	<td class=inner align=center>1</td>
+	<td class=inner align=center>3</td>
+	<td class=inner>warrior/archer</td>
+<tr>
+	<td class=inner>Chain Mail</td>
+	<td class=inner align=center>5</td>
+	<td class=inner align=center>2</td>
+	<td class=inner align=center>11</td>
+	<td class=inner>warrior/archer</td>
+<tr>
+	<td class=inner>Breast Plate</td>
+	<td class=inner align=center>6</td>
+	<td class=inner align=center>3</td>
+	<td class=inner align=center>19</td>
+	<td class=inner>warrior/archer</td>
+<tr>
+	<td class=inner>Medieval Armor</td>
+	<td class=inner align=center>9</td>
+	<td class=inner align=center>5</td>
+	<td class=inner align=center>27</td>
+	<td class=inner>warrior/archer</td>
+<tr>
+	<td class=inner>Robe</td>
+	<td class=inner align=center>1</td>
+	<td class=inner align=center>0</td>
+	<td class=inner align=center>n/a</td>
+	<td class=inner>wizard</td>
+<tr>
+	<td class=inner>Travellers Robe</td>
+	<td class=inner align=center>3</td>
+	<td class=inner align=center>1</td>
+	<td class=inner align=center>9</td>
+	<td class=inner>wizard</td>
+<tr>
+	<td class=inner>Magicians Robe</td>
+	<td class=inner align=center>5</td>
+	<td class=inner align=center>2</td>
+	<td class=inner align=center>19</td>
+	<td class=inner>wizard</td>
+<tr>
+	<td class=inner>Mithril Armor</td>
+	<td class=inner align=center>8</td>
+	<td class=inner align=center>3</td>
+	<td class=inner align=center>29</td>
+	<td class=inner>wizard</td>
+<tr>
+	<td class=inner>Leather</td>
+	<td class=inner align=center>2</td>
+	<td class=inner align=center>1</td>
+	<td class=inner align=center>n/a</td>
+	<td class=inner>priest</td>
+<tr>
+	<td class=inner>Golden Armor</td>
+	<td class=inner align=center>4</td>
+	<td class=inner align=center>3</td>
+	<td class=inner align=center>13</td>
+	<td class=inner>priest</td>
+<tr>
+	<td class=inner>Blessed Armor</td>
+	<td class=inner align=center>6</td>
+	<td class=inner align=center>5</td>
+	<td class=inner align=center>33</td>
+	<td class=inner>priest</td>
+</table>
 
-<ul>	
-
-<li><b>Studded Leather</b>-  Speed Modifier: 0 <br>Armor Modifier: 1
-	<br>*Warriors and archers have this armor ready to equip
-		
-<br><br>
-	
-	<li><b>Chain Shirt</b>-  Speed Modifier: 1 <br>Armor Modifier: 3
-		<br>*Usable by warriors and archers only
-<br><br>
-	<li><b>Chain Mail</b>-   Speed Modifier: 2 <br>Armor Modifier: 5
-		<br>*Usable by warriors and archers only
-<br><br>
-	<li><b>Breast Plate</b>-   Speed Modifier: 3 <br>Armor Modifier: 6
-		<br>*Usable by warriors and archers only
-<br><br>
-	<li><b>Medieval Armor</b>-  Speed Modifier: 5<br>Armor Modifier: 9
-		<br>*Usable by warriors and archers only
 
 
-<br><br>
-	<li><b>Robe</b>-  Speed Modifier: 0<br>Armor Modifier: 1
-	<br>*Wizards have this armor ready to equip
-<br><br>
-	<li><b>Leather</b>-  Speed Modifier: 1<br>Armor Modifier: 2
-	<br>*Priests have this armor ready to equip
-</ul>
+
+
+
 	 
 		
 		</blockquote>

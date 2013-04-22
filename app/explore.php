@@ -21,15 +21,13 @@ else
 	elseif($aexplorers < $exploreland + $exploremt)
 		{echo"<div align=center><font class=yellow>You do not have enough explorers to send.</font></div>"; include("include/S_EXPLORE.php");die();
 		}
-		else
-			{ 
 				include("include/connect.php");
 
      			$explorers = $explorers - ($exploreland + $exploremt);
 	 			$expland = $expland + $exploreland;
 	 			$expmt = $expmt + $exploremt;
 
-	 			 $aexplorers = $aexplorers - ($exploreland + $exploremt);
+	 			$aexplorers = $aexplorers - ($exploreland + $exploremt);
 		
 	  			mysql_query("UPDATE military SET explorers =\"$explorers\" WHERE email='$email' AND pw='$pw'"); 
 	  			mysql_query("UPDATE explore SET expland =\"$expland\" WHERE email='$email' AND pw='$pw'");
@@ -37,7 +35,7 @@ else
 				
 				echo"<div align=center>You have successfully sent your explorer(s).</font></div>";
 				include("include/S_EXPLORE.php");
-      		}
+      		
 }
 ?>	
 <!-- body ends here -->

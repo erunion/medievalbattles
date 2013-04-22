@@ -1,4 +1,5 @@
 <?php include("include/igtop.php");?>
+<? echo"<font class=yellow><div align=center>Guild news is under repair.</div></font>";die(); ?>
  <?
 	$thesetguild = mysql($dbnam, "SELECT setguild FROM settlement WHERE setid = '$setid'");	
 	$setguild = mysql_result($thesetguild,"setguild");
@@ -8,12 +9,15 @@
 				{echo"<div align=center><font class=yellow>Your settlement is currently not in a Guild.</font></div>";
 					die();
 				}
-
+			$Guild_id = ("SELECT gid FROM guild WHERE setno1=$setid OR setno2=$setid OR setno3=$setid OR setno4=$setid OR setno5=$setid");
+			$G_id = mysql_query($Guild_id);
+			$gid = mysql_fetch_array($G_id);
+			
 ?>
   
 
 <div align=center>		
-	<font class=red>Settlement Joining/Leaving</font><br>
+	<font class=blue>Settlement Leaving/Joining a Guild</font><br>
 	<font class=yellow>Attacking (successful/unsuccessful)</font><br>
 	<font class=orange>Successfully defended empire</font><br>
 	<font class=lg>Unsuccessfully defended empire</font><br>
@@ -56,8 +60,8 @@ echo "
 		<td class=main2 width=\"20%\" align=left><b class=reg>Date/Time</b></td>
 		<td class=main2 align=left><b class=reg width=\"80%\">News</b></td>
 ";
-
-$query_string = "SELECT date, news FROM guildnews WHERE setid='$set1' OR setid='$set2' OR setid='$set3' OR setid='$set4' OR setid='$set5' ORDER BY date DESC";
+			
+$query_string = "SELECT date, news, gnid FROM guildnews WHERE gid='$gid[0]' ORDER BY date DESC";
 $result_id = mysql_query($query_string, $var);
 while ($row = mysql_fetch_row($result_id))
     {

@@ -1,7 +1,5 @@
 <?php include("include/igtop.php");?>
-
-  
-   <center>
+<center>
 	<b class=reg> | <a href="equip.php"> -Equip- </a> | <a href="wconstruct.php"> -Construct Weapon- </a> | <a href="aconstruct.php"> -Construct Armor- </a>|</b>
 	 </center>
 	  <br>
@@ -79,7 +77,7 @@ else
 			if($race == Human){$barrack_cap = $barrack * 35;}
 
 
-	if($uarcher > 0 AND $r6pts < 125000)
+	if($uarcher > 0 AND $res[r13pts] < 125000)
 		{echo"<div align=center><font class=yellow>You must research archery before you can train archers.</font></div>"; include("include/S_RSET.php");die();
 		}
 	elseif($uwizard > 0 AND $class == Ranger)

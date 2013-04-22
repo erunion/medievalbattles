@@ -1,16 +1,7 @@
 <?php
 		include("include/igtop.php");
 
-	/*While($set_tally < 41)
-	{
-			
-			$count_mem = mysql($dbnam, "SELECT count(userid) FROM user WHERE setid='$set_tally'");
-			$c_mem = mysql_result($count_mem, "c_mem");
 
-			mysql_query("UPDATE settlement SET members = \"$c_mem\" WHERE setid='$set_tally'");
-
-			$set_tally = $set_tally + 1;
-	}*/
 	?>
 
 		<!-- BODY OF PAGE BEGINS HERE -->

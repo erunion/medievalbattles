@@ -1,13 +1,17 @@
+<table border=1 width=100% align=center bordercolor=#212121 cellspacing=0 cellpadding=0><tr><td>
+<table border=1 width=100% align=center bordercolor=#2a2929 cellspacing=0 cellpadding=0><tr><td>
+<table border=1 width=100% align=center bordercolor=#323131 cellspacing=0 cellpadding=0><tr><td>
+<table border=1 width=100% align=center bordercolor=#3a3838 cellspacing=0 cellpadding=0><tr><td>
 <TABLE border="0" bordercolor="#630000" bgcolor="#212121" width="200" align=left>
 	   <tr>
 	     <td class=top ><center><b>Manual</b></center></td>
 	   </tr>
        <tr>
-	     <td><ul>
+	     <td bgcolor=#404040><ul>
 		   <br>
 		   <li><a href="manual.php">Introduction</a>
 		   <li><a href="mrules.php">Rules</a>
-		   <li><a href="mclasses.php">Classes</a>
+		   <li><a href="mclasses.php">Races/Classes</a>
 		   <li><a href="mexploring.php">Exploring</a>
 	   	   <li><a href="mmilitary.php">Military</a>
 		   <li><a href="marmory.php">Armory</a>
@@ -33,3 +37,7 @@
 			<tr>
 				<td bgcolor="#630000"><center><a href="index.php">MB Main Page</a></center></td></tr>
 	 </TABLE>
+	 </table>
+	 </table>
+	 </table>
+	 </table>

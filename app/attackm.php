@@ -1,12 +1,10 @@
 <?php include("include/igtop.php");?>
 
-<? 	 if($attacksys == no){echo"<font class=yellow><div align=center>Sorry, attack system is under repair.</font></div>";die();} ?>
-
 <center><b class=reg>| <a href="attack.php"> -Land- </a> | <a href="attackr.php"> -Resource- </a> | <a href="attackm.php"> -Mountain- </a> | </b></center>
 	
 <center>
 
-<form type=post action="attack.php">
+<form type=post action="attackm.php">
  <b class=reg>Settlement:</b><input type="number" name="snum" size=3 maxlength=3>
   <input type="hidden" name="setchg" value="1">
   <input type="submit" value="Change">
@@ -46,7 +44,7 @@ else
 		elseif($empvalue == ns)
 			{echo"<div align=center><font class=yellow>You did not specify anyone to attack!</font><br><br></div>";include("include/attack/mdrop.php");include("include/attack/table.php");die();
 			}
-		elseif($uarcher > 0 AND $r6pts < 125000)
+		elseif($uarcher > 0 AND $res[r13pts] < 125000)
 			{echo"<div align=center><font class=yellow>You have to research archery.<br><br></font></div>";include("include/attack/ldrop.php");include("include/attack/table.php");die();
 			}
 		elseif($race == Giant AND $uwizard > 0)
@@ -63,21 +61,24 @@ else
 			
 					//for attacker
 						
-						$mtgain = $ATK_mts * .1;
+						$mtgain = $evu[mts] * .1;
 						$mtgain = round($mtgain);
 
-					$EMPs_setguild = mysql($dbnam, "SELECT setguild FROM settlement WHERE setid='$tsetid'");
+					
+					$EMPs_setguild = mysql($dbnam, "SELECT setguild FROM settlement WHERE setid='$evu[setid]'");
 					$E_Setguild = mysql_result($EMPs_setguild,"E_Setguild");
 							$YEMPs_setguild = mysql($dbnam, "SELECT setguild FROM settlement WHERE setid='$setid'");
 							$YE_Setguild = mysql_result($YEMPs_setguild,"YE_Setguild");
-
-	if($uwarrior == "" AND $uwizard == "" AND $upriest == "" AND $uarcher == "")
+	if($evu[mts] <= 0)
+		{echo"<div align=center><font class=yellow>$evu[ename] has $evu[mts] so there is no sense in battle.</font></div>";die();
+		}
+	elseif($uwarrior == "" AND $uwizard == "" AND $upriest == "" AND $uarcher == "")
 		{echo"<div align=center><font class=yellow>You did not send any troops into combat!</font></div><br><br>";include("include/attack/ldrop.php");include("include/attack/table.php");die();
 		}
 	elseif($E_Setguild == $YE_Setguild AND $setid != $tsetid AND $E_Setguild != None)
 		{echo"<div align=center><font class=yellow>You cannot attack someone that is in your guild.</font></div><br><br>";include("include/attack/ldrop.php");include("include/attack/table.php");die();
 		}
-	elseif($empireattacked === $ename)
+	elseif($evu[ename] === $ename)
 		{echo"<div align=center><font class=yellow>You cannot attack your ownself!</font></div><br><br>";include("include/attack/mdrop.php");include("include/attack/table.php");die();
 		}
 	elseif($warriors < $uwarrior OR $wizards < $uwizard OR $priests < $upriest OR $archers < $uarcher) 
@@ -86,91 +87,97 @@ else
 	elseif($uwarrior < 0 OR $uwizard < 0 OR $upriest < 0 OR $uarcher < 0)
 		{echo"<div align=center><font class=yellow>You cannot send negative or 0 units.</font></div><br><br>";include("include/attack/mdrop.php");include("include/attack/table.php");die();
 		}
-	elseif($yourtotalpower <= $theirtotalpower )
+	elseif($cdefense <= $evpower )
 		{
 	
 	
 			include("include/attack/calculations.php");
 			
 			mysql_query("INSERT INTO setnews (date, news, setid) 
-				VALUES	('$clock', \"<font class=yellow>$ename ($setid) failed to attack $empireattacked ($tsetid) for mountains</font>\", '$setid') ");
-			mysql_query("INSERT INTO guildnews (date, news, setid) 
-				VALUES	('$clock', \"<font class=yellow>$ename ($setid) failed to attack $empireattacked ($tsetid) for mountains</font>\", '$setid') ");
+				VALUES	('$clock', \"<font class=yellow>$ename ($setid) failed to attack $evu[ename] ($evu[setid]) for mountains</font>\", '$setid') ");
+			
+			if($gid[0] != "")
+			{
+			mysql_query("INSERT INTO guildnews (date, news, gid) 
+				VALUES	('$clock', \"<font class=yellow>$ename ($setid) failed to attack $evu[ename] ($evu[setid]) for mountains</font>\", '$gid[0]') ");
+			}
 
 			mysql_query("INSERT INTO setnews (date, news, setid) 
-				VALUES	('$clock', \"<font class=orange>$empireattacked ($tsetid) successfully defended their mountains against $ename ($setid)</font>\", '$tsetid') ");
-			mysql_query("INSERT INTO guildnews (date, news, setid) 
-				VALUES	('$clock', \"<font class=orange>$empireattacked ($tsetid) successfully defended their mountains against $ename ($setid)</font>\", '$tsetid') ");
-	
-							$newno = $e_nno + 1;
+				VALUES	('$clock', \"<font class=orange>$evu[ename] ($evu[setid]) successfully defended their mountains against $ename ($setid)</font>\", '$tsetid') ");
+			
+			if($tgid[0] != "")
+			{
+			mysql_query("INSERT INTO guildnews (date, news, gid) 
+				VALUES	('$clock', \"<font class=orange>$evu[ename] ($evu[setid]) successfully defended their mountains against $ename ($setid)</font>\", '$tgid[0]') ");
+			}
+							
 
-					mysql_query("UPDATE user SET nno =\"$newno\" WHERE userid='$empvalue'");
+					mysql_query("UPDATE user SET nno = nno + 1 WHERE userid='$empvalue'");
 
 						mysql_query("INSERT INTO empnews (date, news, yourid) 
 						VALUES	('$clock', \"<font class=yellow>We have successfully defended our empire against $ename ($setid)</font>\" , '$empvalue') ");
-			echo"<div align=center><font class=yellow>You have failed to attack $empireattacked!</font><br><br><font class=orange>$your_losses<br><br></font></div>";include("include/attack/mdrop.php");include("include/attack/table.php");
+			echo"<div align=center><font class=yellow>You have failed to attack $evu[ename]!</font><br><br><font class=orange>$your_losses<br><br></font></div>";include("include/attack/mdrop.php");include("include/attack/table.php");
 			die();
 	}
 	else
 		{
 					include("include/connect.php");
 					include("include/attack/calculations.php");
-					
+	
+	While($mgain > $mtally)
+	{
+		
+		if($evb[amts] > 0 AND $mgain > $mtally)
+			{
+				$evb[amts] = $evb[amts] - 1;
+				$mtally = $mtally + 1;
+			}
+		
+		if($evb[dgm] > 0 AND $mgain > $mtally AND $evb[amts] == 0)
+			{
+				$evb[dgm] = $evb[dgm] - 1;
+				$mtally = $mtally + 1;
+			}
+		if($evb[dim] > 0 AND $mgain > $mtally AND $evb[amts] == 0)
+			{
+				$evb[dim] = $evb[dim] - 1;
+				$mtally = $mtally + 1;
+			}
+		
+
+			if($evb[gm] > 0 AND $mgain > $mtally AND $evb[amts] == 0 AND $evb[dgm] == 0 AND $evb[dim] == 0)
+				{
+					$evb[gm] = $evb[gm] - 1;
+					$mtally = $mtally + 1;
+				}
+			if($evb[im] > 0 AND $mgain > $mtally AND $evb[amts] == 0 AND $evb[dgm] == 0 AND $evb[dim] == 0)
+				{
+					$evb[im] = $evb[im] - 1;
+					$mtally = $mtally + 1;
+				}
+		}
+				
     
-	While($mtgain > $temptally)
-  	{
-		If ($agm > 0 AND $mtgain > $temptally)
-          { 
-			$agm = $agm - 1;
-            $temptally = $temptally + 1;
-		  }
-          
-      if ($aimine > 0 AND $mtgain > $temptally)
-          {	
-			$aimine = $aimine - 1;
-            $temptally = $temptally + 1;
-		  }
-          
-      if ($attamts > 0 AND $mtgain > $temptally)
-		  {
-           $attamts = $attamts - 1;
-           $temptally = $temptally + 1;
-		  }
-      If($mtgain > $temptally AND $agm == 0 AND $aimine == 0)
-		{
-
-			If ($dagm > 0 AND $mtgain > $temptally)
-        		{ 
-					$dagm = $dagm - 1;
-           		 	$temptally = $temptally + 1;
-		  		}
-          
-     		 if ($daimine > 0 AND $mtgain > $temptally)
-          		{	
-					$daimine = $daimine - 1;
-            		$temptally = $temptally + 1;
-		  		}
-
-		   }
-	}	
-			
-
-
-
+											mysql_query("INSERT INTO setnews (date, news, setid) 
+													VALUES	('$clock', \"<font class=yellow>$ename ($setid) successfully attacked $evu[ename] ($evu[setid]) and gained $mtgain mountains</font>\", '$setid') ");
+											if($gid[0] != "")
+											{
+											mysql_query("INSERT INTO guildnews (date, news, gid) 
+													VALUES	('$clock', \"<font class=yellow>$ename ($setid) successfully attacked $evu[ename] ($evu[setid]) and gained $mtgain mountains</font>\", '$gid[0]') ");
+											}
 
 											mysql_query("INSERT INTO setnews (date, news, setid) 
-													VALUES	('$clock', \"<font class=yellow>$ename ($setid) successfully attacked $empireattacked ($tsetid) and gained $mtgain mountains</font>\", '$setid') ");
-											mysql_query("INSERT INTO guildnews (date, news, setid) 
-													VALUES	('$clock', \"<font class=yellow>$ename ($setid) successfully attacked $empireattacked ($tsetid) and gained $mtgain mountains</font>\", '$setid') ");
-											mysql_query("INSERT INTO setnews (date, news, setid) 
-													VALUES	('$clock', \"<font class=lg>$empireattacked ($tsetid) lost $mtgain mountains to $ename ($setid)</font>\", '$tsetid') ");
-											mysql_query("INSERT INTO guildnews (date, news, setid) 
-													VALUES	('$clock', \"<font class=lg>$empireattacked ($tsetid) lost $mtgain mountains to $ename ($setid)</font>\", '$tsetid') ");
-						
+													VALUES	('$clock', \"<font class=lg>$evu[ename] ($evu[setid]) lost $mtgain mountains to $ename ($setid)</font>\", '$tsetid') ");
+											
+											if($tgid[0] != "")
+											{
+											mysql_query("INSERT INTO guildnews (date, news, gid) 
+													VALUES	('$clock', \"<font class=lg>$evu[ename] ($evu[setid]) lost $mtgain mountains to $ename ($setid)</font>\", '$tgid[0]') ");
+											}
 
 
 						//FOR ATTACKEE
-							$tmtloss = $ATK_mts - $mtgain;
+							$tmtloss = $evu[mts] - $mtgain;
 							
 						//ATTACKERS
 							$A_A_Mts = $mts + $mtgain;
@@ -178,31 +185,23 @@ else
 		
 
 	  					
-		
-	  					mysql_query("UPDATE user SET mts =\"$A_A_Mts\" WHERE email='$email' AND pw='$pw'");
+						mysql_query("UPDATE user SET mts =\"$A_A_Mts\" WHERE email='$email' AND pw='$pw'");
 	  					mysql_query("UPDATE buildings SET amts =\"$A_AMTS\" WHERE email='$email' AND pw='$pw'");
       
 	
-	 					echo"<div align=center><font class=yellow>You have conquered $mtgain mountains from $empireattacked ($tsetid)!</font><br><br><font class=orange>$your_losses<br><br></font></div>";include("include/attack/mdrop.php");include("include/attack/table.php");
+	 					echo"<div align=center><font class=yellow>You have conquered $mtgain mountains from $evu[ename] ($evu[setid])!</font><br><br><font class=orange>$your_losses<br><br></font></div>";include("include/attack/mdrop.php");include("include/attack/table.php");
 	
 	
-						$new_exp_2 = $A_EXP2 + ($mtgain * $mtexpa);
-						mysql_query("UPDATE user SET exp2 =\"$new_exp_2\" WHERE email='$email' AND pw='$pw'");
+						mysql_query("UPDATE user SET exp2 = exp2 + ($mtgain * $mtexpa) WHERE email='$email' AND pw='$pw'");
       
 	 					mysql_query("UPDATE user SET mts =\"$tmtloss\" WHERE userid = '$empvalue'");
-	 					mysql_query("UPDATE buildings SET amts =\"$attamts\" WHERE userid = '$empvalue'");
-						mysql_query("UPDATE buildings SET gm =\"$agm\" WHERE userid = '$empvalue'");
-	 					mysql_query("UPDATE buildings SET im =\"$aimine\" WHERE userid = '$empvalue'");
-						mysql_query("UPDATE buildings SET dgm =\"$dagm\" WHERE userid = '$empvalue'");
-	 					mysql_query("UPDATE buildings SET dim =\"$daimine\" WHERE userid = '$empvalue'");
+	 					mysql_query("UPDATE buildings SET amts =\"$evb[amts]\" WHERE userid = '$empvalue'");
+						mysql_query("UPDATE buildings SET gm =\"$evb[gm]\" WHERE userid = '$empvalue'");
+	 					mysql_query("UPDATE buildings SET im =\"$evb[im]\" WHERE userid = '$empvalue'");
+						mysql_query("UPDATE buildings SET dgm =\"$evb[dgm]\" WHERE userid = '$empvalue'");
+	 					mysql_query("UPDATE buildings SET dim =\"$evb[dim]\" WHERE userid = '$empvalue'");
 
-						
-
-
-	
-											$newno = $e_nno + 1;
-
-						mysql_query("UPDATE user SET nno =\"$newno\" WHERE userid='$empvalue'");
+						mysql_query("UPDATE user SET nno = nno + 1 WHERE userid='$empvalue'");
 
 						mysql_query("INSERT INTO empnews (date, news, yourid) 
 						VALUES	('$clock', \"<font class=yellow>We have unsuccessfully defended our empire against $ename ($setid) and lost $mtgain mountains</font>\" , '$empvalue') ");

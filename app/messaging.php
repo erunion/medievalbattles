@@ -37,8 +37,6 @@ else
 
 				$empattacked = mysql($dbnam, "SELECT ename FROM user WHERE userid = \"$empvalue\"");	
 				$empireattacked = mysql_result($empattacked,"empireattacked");
-		
-	
 
 				$THE_MNO = mysql($dbnam, "SELECT mno FROM user WHERE userid = \"$empvalue\"");	
 				$T_MNO = mysql_result($THE_MNO,"T_MNO");
@@ -47,10 +45,9 @@ else
 				$ymid = mysql_result($yourmid,"ymid");
 
 				$ymid = $ymid + 1;
-	
-	 
 				$thenum = $T_MNO + 1;
-	  
+				$umessage = htmlspecialchars($umessage);  
+
 				mysql_query("UPDATE user SET mno =\"$thenum\" WHERE userid='$empvalue'");
 
 				mysql_query("INSERT INTO messages (origin, datesent, yourid, message, mid) 

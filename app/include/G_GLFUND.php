@@ -3,35 +3,35 @@ include("include/connect.php");
 $tablename = "user";
 
 // Determine Guild Name
-$setgname = mysql($dbnam, "SELECT setguild FROM settlement WHERE setid='$setid'");	
+$setgname = mysql_db_query($dbnam, "SELECT setguild FROM settlement WHERE setid = '$setid'");	
 $setguildname = mysql_result($setgname,"setguildname");
 
 // Extract Setno1
-$settlement1 = mysql($dbnam, "SELECT setno1 FROM guild WHERE gname='$setguildname'");
+$settlement1 = mysql_db_query($dbnam, "SELECT setno1 FROM guild WHERE gname = '$setguildname'");
 $set1 = mysql_result($settlement1,"set1");
 
 // Extract Setno2
-$settlement2 = mysql($dbnam, "SELECT setno2 FROM guild WHERE gname='$setguildname'");
+$settlement2 = mysql_db_query($dbnam, "SELECT setno2 FROM guild WHERE gname = '$setguildname'");
 $set2 = mysql_result($settlement2,"set2");
 
 // Extract Setno3
-$settlement3 = mysql($dbnam, "SELECT setno3 FROM guild WHERE gname='$setguildname'");
+$settlement3 = mysql_db_query($dbnam, "SELECT setno3 FROM guild WHERE gname = '$setguildname'");
 $set3 = mysql_result($settlement3,"set3");
 
 // Extract Setno4
-$settlement4 = mysql($dbnam, "SELECT setno4 FROM guild WHERE gname='$setguildname'");
+$settlement4 = mysql_db_query($dbnam, "SELECT setno4 FROM guild WHERE gname = '$setguildname'");
 $set4 = mysql_result($settlement4,"set4");
 
 // Extract Setno5
-$settlement5 = mysql($dbnam, "SELECT setno5 FROM guild WHERE gname='$setguildname'");
+$settlement5 = mysql_db_query($dbnam, "SELECT setno5 FROM guild WHERE gname = '$setguildname'");
 $set5 = mysql_result($settlement5,"set5");
 
 // Extract Guilds Gold
-$yguildgold = mysql($dbnam, "SELECT fgold FROM guild WHERE setno1='$set1' OR setno2='$set2' OR setno3='$set3' OR setno4='$set4' OR setno5='$set5'");
+$yguildgold = mysql_db_query($dbnam, "SELECT fgold FROM guild WHERE setno1 = '$set1' OR setno2='$set2' OR setno3='$set3' OR setno4='$set4' OR setno5='$set5'");
 $guildgold = mysql_result($yguildgold,"guildgold");
 
 // Extract Guilds Gold
-$yguildiron = mysql($dbnam, "SELECT firon FROM guild WHERE setno1='$set1' OR setno2='$set2' OR setno3='$set3' OR setno4='$set4' OR setno5='$set5'");	
+$yguildiron = mysql_db_query($dbnam, "SELECT firon FROM guild WHERE setno1 = '$set1' OR setno2='$set2' OR setno3='$set3' OR setno4='$set4' OR setno5='$set5'");	
 $guildiron = mysql_result($yguildiron,"guildiron");
 
 if ($guildgold > 0) {

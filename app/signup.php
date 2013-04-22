@@ -8,10 +8,12 @@
  <center><b class=2>* is a required field</b></center><br>
 		<table border=0 width=400 align=center>
 	 <tr>
+<!--
 <?php
 if(!IsSet($signup))
 {
-  ?><b class=3>*WAIT FOR THE PAGE TO LOAD*</b><br><br>
+  ?>
+--><b class=3>*WAIT FOR THE PAGE TO LOAD*</b><br><br>
 	  <form type="post" action="signup.php">
       <td><b class=2>*</b><b class=other>Email Address:</b></td>
 	  <td><input type="text" name="email"></td>
@@ -207,8 +209,8 @@ else
 	if($race == Giant)
 		{$wiz = 0; $pri = 0;}
 	if($class == Ranger)
-		{$r6pts = 125000;$wiz = 0;}
-	else{$r6pts = 0;}
+		{$r13pts = 125000;$wiz = 0;}
+	else{$r13pts = 0;}
 
 
 //exp values  
@@ -241,8 +243,8 @@ if($class == "Cleric")
 		mysql_query("INSERT INTO military (email, pw, civ, recruits, warriors, wizards, priests, maxciv, userid, warpower, warspeedw, cweapon, wizpower, wizspeeds, cspell, pripower, prispeedw, cstaff, cbow, archspeedw, archpower, wararmor, wizarmor, priarmor, wardef, wizdef, pridef, warspeeda, wizspeeda, prispeeda, archers) 
 			VALUES	('$email', '$pw', '$civ', '$recruits', '$war', '$wiz', '$pri', '$maxciv', '$newbuserid', '3', '6','Dagger', '4', '7', \"Magic Missile\", '2', '6', \"Quarterstaff\", 'None', '0', '0', \"Studded Leather\", 'Robe', 'Leather', '1', '1', '2', '0', '0', '1', '$arch') ");
 		
-		mysql_query("INSERT INTO research (email, pw, userid, r6pts) 
-			VALUES	('$email', '$pw', '$newbuserid', '$r6pts') ");
+		mysql_query("INSERT INTO research (email, pw, userid, r13pts) 
+			VALUES	('$email', '$pw', '$newbuserid', '$r13pts') ");
 		
 		mysql_query("INSERT INTO explore (email, pw, userid) 
 			VALUES	('$email', '$pw', '$newbuserid') ");

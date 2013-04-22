@@ -28,7 +28,7 @@ else
 	    include("include/connect.php");
 
 		mysql_query("DELETE FROM messages WHERE yourid='$userid'"); 
-		echo"<div align=center><font class=yellow>All of your messages have been deleted.</font></div>";include("include/S_VMESS.php");
+		echo"<div align=center><font class=yellow>All of your messages have been deleted.</font></div>";include("include/S_VMESS.php");die();
 
 }
 ?>

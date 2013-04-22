@@ -45,9 +45,9 @@ $msgsdb = "$setguild" . "msgs" . "$thesgid";
 // the tables which relate to where the information is stored. these should be the same as 
 
 $hostname = "localhost";
-$dbname = "medieval_mb";
+$dbname = "medieval";
 $username = "medieval";
-$passwrd = "pa724";
+$passwrd = "laserquest";
 // your database variables. these need to be changed for your system to make it work!
 
 $iconsfolder = "icons";

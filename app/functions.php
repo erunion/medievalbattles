@@ -1,21 +1,34 @@
 <?php
+			include("include/connect.php");
 			// CHECK TO SEE IF EMAIL EXISTS
 				$EMAIL_QUERY = ("SELECT email FROM user WHERE email=\"$email\" AND pw=\"$pw\"");
 				$EMAIL_RESULT = mysql_query($EMAIL_QUERY);
 				$E_Check = mysql_fetch_array($EMAIL_RESULT);
 
-if($login == 1 AND $pw != "" AND $email !="")
-{
- 
-include("include/connect.php");
+if($login == 1 AND $pw != "" AND $email !="")	 {
 
-
-	
-	$result10 = mysql($dbnam, "SELECT userid FROM user WHERE email = '$email' AND pw = '$pw'");
 	$uuserid = mysql($dbnam, "SELECT userid FROM user WHERE email = '$email' AND pw = '$pw'");
 	$userid = mysql_result($uuserid,"userid");	
 	
-	
+// select warrior weapons	
+$war_weapon_query = "SELECT * FROM military WHERE email='$email' AND pw='$pw'";
+$war_weapon_result = mysql_db_query($dbnam, $war_weapon_query);
+$warweapon = mysql_fetch_array($war_weapon_result);
+
+// select priest weapons	
+$pri_weapon_query = "SELECT * FROM military WHERE email='$email' AND pw='$pw'";
+$pri_weapon_result = mysql_db_query($dbnam, $pri_weapon_query);
+$priweapon = mysql_fetch_array($pri_weapon_result);
+
+// select archer weapons	
+$arch_weapon_query = "SELECT * FROM military WHERE email='$email' AND pw='$pw'";
+$arch_weapon_result = mysql_db_query($dbnam, $arch_weapon_query);
+$archweapon = mysql_fetch_array($arch_weapon_result);
+
+// select research items	
+$research_query = "SELECT * FROM research WHERE email='$email' AND pw= '$pw'";
+$res_query = mysql_db_query($dbnam, $research_query) or die("Error: " . mysql_error());
+$res = mysql_fetch_array($res_query);
 
 //USER	
 	$usetid = mysql($dbnam, "SELECT setid FROM user WHERE email = '$email' AND pw = '$pw'");
@@ -169,6 +182,7 @@ include("include/connect.php");
 	$rr5pts = mysql($dbnam, "SELECT r5pts FROM research WHERE email = '$email' AND pw = '$pw'");
 	$rr6pts = mysql($dbnam, "SELECT r6pts FROM research WHERE email = '$email' AND pw = '$pw'");
 	$rr7pts = mysql($dbnam, "SELECT r7pts FROM research WHERE email = '$email' AND pw = '$pw'");
+	$rr13pts = mysql($dbnam, "SELECT r13pts FROM research WHERE email = '$email' AND pw = '$pw'");
 
 //return
 	$rwar1 = mysql($dbnam, "SELECT war1 FROM return WHERE email = '$email' AND pw = '$pw'");
@@ -281,19 +295,7 @@ include("include/connect.php");
 	$thieves = mysql_result($mthieves,"thieves");
 	$explorers = mysql_result($mexplorers,"explorers");
 	$maxciv = mysql_result($mmaxciv,"maxciv");
-	$ssword = mysql_result($mssword,"ssword");
-	$lsword = mysql_result($mlsword,"lsword");
-	$axe = mysql_result($maxe,"axe");
-	$gaxe = mysql_result($mgaxe,"gaxe");
-	$club = mysql_result($mclub,"club");
-	$icesword = mysql_result($micesword,"icesword");
-	$mace = mysql_result($mmace,"mace");
-	$scepter = mysql_result($mscepter,"scepter");
-	$gs = mysql_result($mgs,"gs");
-	$bow1 = mysql_result($mbow1,"bow1");
-	$bow2 = mysql_result($mbow2,"bow2");
-	$bow3 = mysql_result($mbow3,"bow3");
-	$bow4 = mysql_result($mbow4,"bow4");
+	
 
 	$cweapon = mysql_result($mcweapon,"cweapon");
 	$cspell = mysql_result($mcspell,"cspell");
@@ -361,6 +363,7 @@ include("include/connect.php");
     $r5pts = mysql_result($rr5pts,"r5pts");
 	$r6pts = mysql_result($rr6pts,"r6pts");
 	$r7pts = mysql_result($rr7pts,"r7pts");
+	$r13pts = mysql_result($rr13pts,"r13pts");
 		
 //EXPLORE
 	$expland = mysql_result($eexpland,"expland");
@@ -434,8 +437,7 @@ include("include/connect.php");
 						$FLEETS_ = mysql($dbnam, "SELECT fleets FROM user WHERE userid='$INC_ID'");
 						$_FLEETS = mysql_result($FLEETS_,"_FLEETS");
 
-						$tickstatusss = mysql($dbnam, "SELECT tick FROM Game_Info");
-						$tickstatus = mysql_result($tickstatusss,"tickstatus");
+					
 
 //total units all together that are owned
 
@@ -461,14 +463,6 @@ include("include/connect.php");
 	$archerc = (($archers + $dbarch + $dbarch2 + $ARCH_1 + $ARCH_2 + $ARCH_3 + $ARCH_4) * .75) + 450;
 	$explorec = (($texplorers + $aexplorers + $dbexplorer) * .875) + 1000;
 	
-	if($race == Goblin)
-	{
-	 $warriorc = $warriorc * .5;
-	 $wizardc = $wizardc * .5;
-	 $priestc = $priestc * .5;
-	 $archerc = $archerc * .5;
-	}
-
 	$wizardc = round($wizardc);
 	$warriorc = round($warriorc);
 	$priestc = round($priestc);
@@ -527,7 +521,6 @@ if($race == Orc)
 	{$empmodifier = $empmodifier - .15;
 	}
 
-if($race == Giant){$empmodifier = $empmodifier + .25;}
 
 //attack calculations
 $tdefense = (($warriors * $warpower) + ($wizards * $wizpower) + ($priests * $pripower) + ($archers * $archpower) + ($wp * 15)) * $empmodifier;
@@ -535,29 +528,29 @@ $tdefense = round ($tdefense);
 			if($class == "Fighter")
 						{$goldpro1 = $gm * 300; $goldpro = $goldpro1 * .95;
 						}
-						elseif($r4pts >= 40000)
+						elseif($r4pts >= 100000)
 							{$goldpro1 = $gm * 300; $goldpro = $goldpro1 * 1.05;
 							}
 						elseif($class == Dwarf)
 							{$goldpro1 = $gm * 300; $goldpro = $goldpro1 * 1.2;
-							 if($r5pts >= 40000){$goldpro1 = $gm * 300; $goldpro = $goldpro1 * 1.3;}
+							 if($r5pts >= 100000){$goldpro1 = $gm * 300; $goldpro = $goldpro1 * 1.3;}
 							}
 					if($class == "Mage")
 						{$goldpro1 = $gm * 300; $goldpro = $goldpro1 * 1.1;
 						}
-						elseif($r4pts >= 40000)
+						elseif($r4pts >= 100000)
 							{$goldpro1 = $gm * 300; $goldpro = $goldpro1 * 1.2;
 							}
 					if($class == "Cleric")
 						{$goldpro = $gm * 300;
 						}
-						elseif($r4pts >= 40000)
+						elseif($r4pts >= 100000)
 							{$goldpro1 = $gm * 300; $goldpro = $goldpro1 * 1.1;
 							} 
 					if($class == "Ranger")
 						{$goldpro = $gm * 300;
 						}
-						elseif($r4pts >= 40000)
+						elseif($r4pts >= 100000)
 							{$goldpro1 = $gm * 300; $goldpro = $goldpro1 * 1.1;
 							} 
 
@@ -701,6 +694,7 @@ if($class == "Cleric")
 	$tdefense = number_format($tdefense);
 
 	$iron = number_format($iron);
+	$lumber = number_format($lumber);
 	$gp = number_format($gp);
 	$maxciv = number_format($maxciv);
 	$maxtrain = number_format($maxtrain);

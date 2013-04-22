@@ -1,46 +1,41 @@
 <?php include("include/igtop.php");?>
 
-  <table border=0 cellpadding=2 cellspacing=0 width="100%" valign="top">
+
+<?
+echo"
+  <table border=0 cellpadding=2 cellspacing=0 width=100% valign=top>
    <tr>
 	<td>
-	 <table border="0" bordercolor="#808080" align=center width="70%">
+	 <table border=0 bordercolor=\"#808080\" align=center width=70%>
 	  <tr><td colspan=7 class=main><b class=top>Main Menu</b></td>
-	  <tr><td colspan=7 class=main2>The empire of <b class=top><? echo"$ename ($setid)"; ?></td>
+	  <tr><td colspan=7 class=main2>The empire of <b class=top> $ename ($setid)</td>
 	  <tr>
-	   <td class=inner2><b class=reg>Class:</b > <? echo "$class"; ?></td>
-	   <td class=inner2><b class=reg>Civilians:</b> <? echo"$civ"; ?></td>
+	   <td class=inner2><b><font class=red>Class:</font></b> $class</td>
+	   <td class=inner2><b><font class=red>Civilians:</font></b> $civ</td>
 	  <tr>
-	   <td class=inner2><b class=reg>Experience:</b> <? echo"$exp"; ?></td>
-	   <td class=inner2><b class=reg>Iron:</b> <? echo"$iron"; ?></td>
+	   <td class=inner2><b><font class=red>Experience:</font></b> $exp</td>
+	   <td class=inner2><b><font class=red>Iron:</font></b> $iron</td>
 	  <tr>
-	   <td class=inner2><b class=reg>Land:</b> <? echo"$land"; ?></td>
-	   <td class=inner2><b class=reg>Mountains:</b> <? echo"$mts"; ?></td>	
+	   <td class=inner2><b><font class=red>Land:</font></b> $land</td>
+	   <td class=inner2><b><font class=red>Mountains:</font></b> $mts</td>	
 	  <tr>
-	   <td class=inner2><b class=reg>Gold Pieces:</b> <? echo"$gp"; ?></td>
-	   <td class=inner2><b class=reg>Food:</b> <? echo"$food"; ?></td>
-	<tr>
-		<? if($r6pts >= 125000)
+	   <td class=inner2><b><font class=red>Gold Pieces:</font></b> $gp</td>
+	   <td class=inner2><b><font class=red>Food:</font></b> $food</td>
+	<tr>";
+		 if($r6pts >= 125000)
 		{echo"
-			<td class=inner2><b class=reg>Lumber:</b> $lumber</td>
-			<td class=inner2><b class=reg>Empire Defense:</b> $tdefense</td>
+			<td class=inner2><b><font class=red>Lumber:</font></b> $lumber</td>
+			<td class=inner2><b><font class=red>Empire Defense:</font></b> $tdefense</td>
 				";
 		}
-		else{echo"
-			 <td class=inner2 colspan=2><b class=reg>Empire Defense:</b> $tdefense</td>
-			";
-			 }
+		else{echo" <td class=inner2 colspan=2><b><font class=red>Empire Defense:</font></b> $tdefense</td>";}
 		
-		?>
+?>
 	   
      </td>
 	</tr>
    </table>
-   
-	
-     <br><br>
-
-
- 		
+  <br><br>
 <? if ($pageid == 'news'){?>
 
 <? 	
@@ -94,11 +89,7 @@
         <td><?php display_db_table("user", $var);?></td>
 </table>
 </td></table>
-
-
-
 <? } ?>
-
 <!-- body ends here -->
 </TD>
 </TR>

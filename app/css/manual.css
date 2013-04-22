@@ -25,3 +25,8 @@ body    {background-color: "#000000"; color: "#bfbfbf" ;
         }
 
 b.important	{COLOR: yellow}
+td.main		{background-color: "#630000";text-align: center} <!-- empire, sector, guild etc -->
+td.inner	{background-color: "#404040";} <!-- main menu, explore, status, etc -->
+td.main2	{background-color: "#313131"; text-align: center}
+td.inner2	{background-color: "#404040"; text-align: center}
+font 		{ color:"#ffffff";font-family: "Tahoma";}

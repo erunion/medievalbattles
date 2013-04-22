@@ -183,6 +183,10 @@ elseif($gp < $donateg OR $iron < $donatei) {
 		$settlement5 = mysql($dbnam, "SELECT setno5 FROM guild WHERE gname='$setguildname'");
 		$set5 = mysql_result($settlement5,"set5");
 
+		// Extract Guilds Identification Number
+		$guildid = mysql($dbnam, "SELECT gid FROM guild WHERE setno1='$set1' OR setno2='$set2' OR setno3='$set3' OR setno4='$set4' OR setno5='$set5'");	
+		$gid = mysql_result($guildid,"gid");
+
 		// Extract Guilds Gold
 		$yourguildgold = mysql($dbnam, "SELECT fgold FROM guild WHERE setno1='$set1' OR setno2='$set2' OR setno3='$set3' OR setno4='$set4' OR setno5='$set5'");
 		$guildgold = mysql_result($yourguildgold,"guildgold");
@@ -219,7 +223,7 @@ elseif($gp < $donateg OR $iron < $donatei) {
 			$thenews = "<font class=green>$ename has donated $donateg gp and $donatei iron to the funds</font>";
 		}
 		
-		mysql_query("INSERT INTO guildnews (date, news, setid) VALUES ('$clock', \"$thenews\", '$setid') ");
+		mysql_query("INSERT INTO guildnews (date, news, setid, gid) VALUES ('$clock', \"$thenews\", '$setid', '$gid') ");
 			
 		echo "<br><div align=center><font class=yellow>You have successfully donated guild's fund.</font></div>";
 		include("include/G_DONATE.php");die();

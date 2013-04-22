@@ -1,33 +1,5 @@
-<HTML>
-<HEAD>
-<TITLE></TITLE>
-<link rel=stylesheet type="text/css" href="css/manual.css">
+<? include("include/mantop.php"); ?>
 
-</HEAD>
-<BODY BGCOLOR="#003139">
-
-<TABLE BORDER="0" BORDERCOLOR=RED width="100%">
- <TR>
-   <TD valign="top">
-	
-	<?php
-			include ("include/mannavbar.php");
-		?>
-		</td>  
-		
-	<td valign="top">    
-
-
-<!-- Right table begins here -->
-	 <table border="0" bordercolor="red" width="100%" align="center">
-		
-		<tr align="center" valign="top">
-		 	<td><font size="+5" color="#bfbfbf">Medieval Battles<br> Manual</font></td>
-	
-		<tr>
-		 	<td align="center"><hr color="red" width="50%"></td>
-        
-	
 <tr><td align="center">Buildings
 	<hr color="red" width="50%"></td>
 		<tr>
@@ -40,10 +12,10 @@ There are several buildings that can be built. There are 2 types of buildings: b
 	<ul>
 
 		<li><b class=other>Home</b>-Houses Civilians.  Each building houses up to 20 civilians.  
-		<li><b class=other>Barracks</b>-Provides adequate shelter for warriors, wizards and priests.  Each building will house up to 50 units.
+		<li><b class=other>Barracks</b>-Provides adequate shelter for warriors, wizards and priests.  Each building will house up to 50 units, unless you are of a Human race, they hold 35 per barrack.
 		<li><b class=other>Farm</b>-Increases food production to feed your civilians.  Each farm holds 50 food.
-		<li><b class=other>Wooden Platforms</b>-Wooden Platforms give 5 defense points. The more you build, the better your defense.
-		<li><b class=other>Lumber Mill</b>-If archer is researched, this building becomes available.  Each building gives you 2 lumber per tick.				
+		<li><b class=other>Wooden Platforms</b>-Wooden Platforms give 15 defense points. The more you build, the better your defense.
+		<li><b class=other>Lumber Mill</b>-If archery is researched, this building becomes available.  Each building gives you 2 lumber per tick.				
 		
 	</ul>
 	</ul>

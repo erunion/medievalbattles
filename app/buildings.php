@@ -16,7 +16,7 @@ else
 {
 	include("include/nexplode.php");
 
-	if($ulmill > 0 AND $r6pts < 125000)
+	if($ulmill > 0 AND $res[r13pts] < 125000)
 		{echo"<div align=center><font class=yellow>You have to research Archery before this building becomes available for construction.</font></div>";include("include/S_BUILD.php");die();
 		}
 	elseif($amts < $ugm + $uim) 
@@ -34,9 +34,7 @@ else
 	elseif($uwp > 0 AND $race == Orc)
 		{echo"<div align=center><font class=yellow>Being that you are an orc, you cannot construct the wooden platform.</font></div>";include("include/S_BUILD.php");die();
 		}
-		else 
-			{ 
-			
+		
 			include("include/connect.php");
 	
 			$gp = $gp -  (($bm_cost * ($ugm + $uim)) + ($b_cost * ($ufarm + $ubarrack + $uhome + $uwp + $ulmill)));
@@ -162,7 +160,7 @@ else
 			include("include/S_BUILD.php");
 			die();
 	
-			}
+			
 }
 ?>
 <!-- body ends here -->

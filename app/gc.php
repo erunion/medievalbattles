@@ -91,6 +91,9 @@ echo "  <br><br>
 		$result_id = mysql_query($query_string, $var);
 		while ($row = mysql_fetch_row($result_id))
 		    {
+				$row[0] = htmlspecialchars($row[0]);
+				$row[1] = htmlspecialchars($row[1]);
+				$row[2] = htmlspecialchars($row[2]);
 				print("<TR ALIGN=center VALIGN=TOP colspan=6>
 				   <td bgcolor=#404040><a href=gc.php?pageid=mgl&gid=$row[4]>$row[0]</a></td>
 				   <td bgcolor=#404040 align=left>$row[1]</td>
@@ -130,12 +133,17 @@ else
 			$GNAME_lower = strtolower($gname);
 			$SEL_G_lower = strtolower($namecheck[0]);
 			
-
-	if($gname == "")
+$gname_length = strlen($gname);
+	if($gname_length > 15)	{
+		echo "<div align=center><font class=yellow>Your guild name cannot be more than 15 characters!</font></div>";
+		include("include/S_GM.php");
+		die();
+	}
+	elseif($gname == "")
 		{echo"<div align=center><font class=yellow>You did not specify a guild name.</font></div>";include("include/S_GM.php");die();
 		}
 	elseif($cenamec[0] == $ename)
-		{echo"<div align=center><font class=yellow>You are allready in charge of a guild.</font></div>";include("include/S_GM.php");die();
+		{echo"<div align=center><font class=yellow>You are already in charge of a guild.</font></div>";include("include/S_GM.php");die();
 		}
 	elseif($GNAME_lower == $SEL_G_lower) 
 		{echo"<div align=center><font class=yellow>Someone is using that as their guild name allready.</font></div>";include("include/S_GM.php");die();
@@ -152,7 +160,8 @@ else
 						$M_gid = mysql($dbnam, "SELECT max(gid) FROM guild");	
 						$mgid = mysql_result($M_gid,"mgid");	
 		
-
+					$info = htmlspecialchars($info);
+					$gname = htmlspecialchars($gname);
 						$gid = $mgid + 1;
 		 				include("include/connect.php");
 		 				mysql_query("INSERT INTO guild (gname, epw, info, gid,datemade, cpw, owner) 

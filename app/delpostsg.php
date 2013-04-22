@@ -6,9 +6,9 @@ function callback($buffer) {
 }
 ob_start("callback");
 
-$thesetguild = mysql($dbnam, "SELECT setguild FROM settlement WHERE setid = '$setid'");	
+$thesetguild = mysql_db_query($dbnam, "SELECT setguild FROM settlement WHERE setid = '$setid'");	
 $setguild = mysql_result($thesetguild,"setguild");
-$setgid = mysql($dbnam, "SELECT gid FROM guild WHERE gname = '$setguild'");	
+$setgid = mysql_db_query($dbnam, "SELECT gid FROM guild WHERE gname = '$setguild'");	
 $thesgid = mysql_result($setgid,"thesgid");
 
 $setguild = ereg_replace(" ", "", "$setguild");
@@ -21,7 +21,7 @@ if ($delete)
 	include("include/connect.php");
 
 	//mysql_connect($hostname,$username,$passwrd) or die("No db connection");
-	@mysql_select_db(medieval_mb) or die( "Unable to select database");
+	@mysql_select_db(medieval) or die( "Unable to select database");
 
 	mysql_query("DELETE FROM $topicdb WHERE topicid='$postid'"); 
 	mysql_query("DELETE FROM $msgsdb WHERE topicid='$postid'"); 

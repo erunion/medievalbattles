@@ -1,122 +1,90 @@
-<?php
-		include("include/igtop-pref-del.php");
-	?>
- <!-- BODY OF PAGE BEGINS HERE -->
- <br><br><br>
+<? include("include/igtop-pref-del.php"); ?>
+
  
 <?php
-if(!IsSet($upemail))
+if(!IsSet($update))
 {
   ?> 
-	
-<? include("include/S_PE.php"); ?>
-
-
 <?php
 }
 else
 {
 
-	if($newemail == "")
-		{echo"<div align=center><font class=yellow>You did not enter in a new email.</font></div>";include("include/S_PE.php");include("include/S_PPW.php");include("include/S_PD.php");include("include/S_PAIM.php");include("include/S_PMSN.php");die();
-		}
-	elseif($newemail == "*")
-		{echo"<div align=center><font class=yellow>You cannot have that has your email.</font></div>";include("include/S_PE.php");include("include/S_PPW.php");include("include/S_PD.php");include("include/S_PAIM.php");include("include/S_PMSN.php");die();
-		}
 	
-
-		$Email_query = ("SELECT email FROM user WHERE email=\"$newemail\"");
+	
+		include("include/connect.php");
+		include("include/S_SINFOS.php");
+			
+		$cnewemail = strtolower($newemail);
+			
+		$Email_query = ("SELECT email FROM user WHERE email=\"$cnewemail\"");
 		$E_Result = mysql_query($Email_query);
 		$New_Email = mysql_fetch_array($E_Result);
 
-		if($New_Email[0] == $newemail)
-			{echo"<div align=center><font class=yellow>This email is allready in use.</font></div>";include("include/S_PE.php");include("include/S_PPW.php");include("include/S_PD.php");include("include/S_PAIM.php");include("include/S_PMSN.php");die();
+		$New_Email[0] = strtolower($New_Email[0]);
+
+		if($New_Email[0] == $cnewemail AND $newemail != $email)
+			{echo"<div align=center><font class=yellow>This email is allready in use.</font></div>";include("include/S_PREF.php");include("include/S_PD.php");die();
 			}
+		elseif($newemail == "")
+			{echo"<div align=center><font class=yellow>You must specify an email.</font></div>";include("include/S_PREF.php");include("include/S_PD.php");die();
+			}
+		elseif($upw == "")
+			{echo"<div align=center><font class=yellow>You must specify an email.</font></div>";include("include/S_PREF.php");include("include/S_PD.php");die();
+			}
+		
 		$newemail = htmlspecialchars($newemail);
-	
-		 include("include/connect.php");
-   		mysql_query("UPDATE user SET email = \"$newemail\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
+		mysql_query("UPDATE user SET email = \"$newemail\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
 		mysql_query("UPDATE buildings SET email = \"$newemail\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
  		mysql_query("UPDATE military SET email = \"$newemail\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
  		mysql_query("UPDATE research SET email = \"$newemail\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
  		mysql_query("UPDATE return SET email = \"$newemail\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
  		mysql_query("UPDATE explore SET email = \"$newemail\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
 	
+		session_unregister('email');
+		$email = $newemail;
+		session_register('email');
 
-			session_unregister('email');
-			$email = $newemail;
-			session_register('email');
+		$upw = htmlspecialchars($upw);
+	 		
+		mysql_query("UPDATE user SET pw = \"$upw\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
+		mysql_query("UPDATE buildings SET pw = \"$upw\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
+ 		mysql_query("UPDATE military SET pw = \"$upw\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
+ 		mysql_query("UPDATE research SET pw = \"$upw\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
+ 		mysql_query("UPDATE return SET pw = \"$upw\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
+ 		mysql_query("UPDATE explore SET pw = \"$upw\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
+	
+		session_unregister('pw');
+		$pw = $upw;
+		session_register('pw');
+			
+		mysql_query("UPDATE user SET aim = \"$newaim\" WHERE email='$email' AND pw='$pw'");
+		mysql_query("UPDATE user SET msn = \"$newmsn\" WHERE email='$email' AND pw='$pw'");
 		
-		echo"<div align=center><font class=yellow>Your email has been changed to $newemail.</font></div>";
-		include("include/S_PE.php");include("include/S_PPW.php");include("include/S_PD.php");include("include/S_PAIM.php");include("include/S_PMSN.php");
+		$pw = $upw;
+		$email = $newemail;
+		$msn = $newmsn;
+		$aim = $newaim;
+
+		echo"<div align=center><font class=yellow>Your settings have been updated.</font></div>";
+		include("include/S_PREF.php");include("include/S_PD.php");
 		die();
-		
-	
 }
 ?>
-
-<?php
-if(!IsSet($update))
-{
-  ?> 	
-			
-			<? include("include/S_PPW.php"); ?>
-
-
-<?php
-}
-else
-{
-
-
-	if($upw == "")
-		{echo"<div align=center><font class=yellow>You did not enter in a new password.</font><div>";include("include/S_PPW.php");include("include/S_PD.php");include("include/S_PAIM.php");include("include/S_PMSN.php");die();
-		}
-	elseif($upw == "*")
-		{echo"<div align=center><font class=yellow>You cannot choose that as your password.</font></div>";include("include/S_PPW.php");include("include/S_PD.php");include("include/S_PAIM.php");include("include/S_PMSN.php");die();
-		}
-		else
-			{
-			
-			$upw = htmlspecialchars($upw);
-	 		include("include/connect.php");
-			mysql_query("UPDATE user SET pw = \"$upw\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
-			mysql_query("UPDATE buildings SET pw = \"$upw\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
- 			mysql_query("UPDATE military SET pw = \"$upw\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
- 			mysql_query("UPDATE research SET pw = \"$upw\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
- 			mysql_query("UPDATE return SET pw = \"$upw\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
- 			mysql_query("UPDATE explore SET pw = \"$upw\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
-	
-			session_unregister('pw');
-			$pw = $upw;
-			   session_register('pw');
-
-			echo"<div align=center><font class=yellow>Your password has been changed to $upw.</font></div>";
-			include("include/S_PPW.php");include("include/S_PD.php");include("include/S_PAIM.php");include("include/S_PMSN.php");
-			die();
-	  
-	}	 
- }
-
-
-?>
-
-
-
 <?php
 if(!IsSet($delete))
 {
   ?> 
-	
-			<? include("include/S_PD.php"); ?>
-
 <?php
 }
 else
 {
-	if($pw != $dpw)
-	{echo"<div align=center><font class=yellow>That is not your password.</font><div>";include("include/S_PD.php");include("include/S_PAIM.php");include("include/S_PMSN.php");die();
-	}
+	if($dpw == "")
+		{echo"<div align=center><font class=yellow>In order to delete, you must specify a password.</font></div>";include("include/S_PREF.php");include("include/S_PD.php");
+		}
+	elseif($pw != $dpw)
+		{echo"<div align=center><font class=yellow>Incorrect password.</font><div>";include("include/S_PREF.php");include("include/S_PD.php");die();
+		}
 	else
 		{
 	 		include("include/connect.php");
@@ -286,69 +254,11 @@ else
 
 
 ?>
-<?php
-if(!IsSet($updateaim))
-{
-  ?> 
-	
-
-			<? include("include/S_PAIM.php"); ?>
-				
-
-<?php
-}
-else
-{
-
-if($newaim == "*")
-	{echo"<div align=center><font class=yellow>You cannot use that as your aim.</font></div>";include("include/S_PAIM.php");include("include/S_PMSN.php");die();
-	}
-	else
-		{
-		include("include/S_SINFOS.php");
-		mysql_query("UPDATE user SET aim = \"$newaim\" WHERE email='$email' AND pw='$pw'");
-	
-
-		echo"<div align=center><font class=yellow>Your AIM screen name has been changed to $newaim.</font></div>";
-		include("include/S_PAIM.php");include("include/S_PMSN.php");
-		die();
-	
-		}
-	 }
-?>
-
-<?php
-if(!IsSet($updatemsn))
-{
-  ?> 
-
-
-			<? include("include/S_PMSN.php"); ?>
-				
-
-<?php
-}
-else
-{
-		if($newmsn == "*")
-			{echo"<div align=center><font class=yellow>You cannot use that as your MSN.</font></div>"; include("include/S_PMSN.php");die();
-			}
-			else
-				{
-
-				include("include/S_SINFOS.php");
-				mysql_query("UPDATE user SET msn = \"$newmsn\" WHERE email='$email' AND pw='$pw'");
-				echo"<div align=center><font class=yellow>Your MSN screename has been changed to $newmsn.</font></div>"; 
-				include("include/S_PMSN.php");
-				die();
-
-				}
-	 
- }
-?>
-
-</table><!-- body ends here -->
- </TD>
+<? include("include/S_PREF.php"); ?>
+<br><br>
+<? include("include/S_PD.php"); ?>
+<!-- body ends here -->
+</TD>
 </TR>
 </TABLE>
 </BODY>

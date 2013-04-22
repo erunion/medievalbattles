@@ -31,7 +31,7 @@ echo "  <br><br>
 							$link = "<a href=\"messaging.php?value=$row[0]&snum=$snum&setchg=1\">$row[0]($snum)</a>";
 						}
 
-					
+					$row[2] = htmlspecialchars($row[2]);
 		    print("<TR ALIGN=center VALIGN=TOP colspan=6>
 				   <td bgcolor=#404040>$link</td>
 				  

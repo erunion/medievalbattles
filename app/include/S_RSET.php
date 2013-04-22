@@ -131,7 +131,7 @@ $recruits = number_format($recruits);
 		?>
 
 
-		<? if($r6pts >= 125000)
+		<? if($res[r13pts] >= 125000)
 		{echo"
 				<tr>
 				

@@ -46,7 +46,7 @@
 	";
 	}
 ?>
-<? if($r6pts >= 125000)
+<? if($res[r13pts] >= 125000)
 {echo"
 	<tr>
 	 <td class=num>5</td>

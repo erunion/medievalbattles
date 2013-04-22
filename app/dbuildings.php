@@ -16,7 +16,7 @@ else
 {
 	include("include/nexplode.php");
 
-	if($ulmill > 0 AND $r6pts < 125000)
+	if($ulmill > 0 AND $res[r13pts] < 125000)
 		{echo"<div align=center><font class=yellow>You have to research Archery before this building becomes available to demolish.</font></div>";include("include/S_BUILD.php");die();
 		}
 	elseif($gm < $ugm OR $im < $uim) 

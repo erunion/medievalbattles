@@ -38,11 +38,11 @@ include("functions.php");
 <table border=1 width=100% align=center bordercolor=#323131 cellspacing=0 cellpadding=0><tr><td>
    <table border="1" cellpadding="2" cellspacing="0" bgcolor="#336600" bordercolor="#3a3838" width="100%">
 	<tr>
-	 <td class=top width=20%><b class=rtop><font class=red>Gold Pieces: </font></b><? echo"$gp"; ?></font></td>
-	 <td class=top width=20%><b class=rtop><font class=red>Civilians: </font></b><? echo"$civ"; ?></font></td>
-	 <td class=top width=20%><b class=rtop><font class=red>Land: </font></b> <? echo"$land"; ?></font></td>
-	 <td class=top width=20%><b class=rtop><font class=red>Mountains: </font></b><? echo"$mts"; ?></font></td>
-	 <td class=top width=20%><b class=rtop><font class=red>Experience: </font></b><? echo"$exp"; ?></font></td>
+	 <td class=top width=20%><b class=rtop><font class=red>Gold Pieces: </font></b><? echo "$gp"; ?></font></td>
+	 <td class=top width=20%><b class=rtop><font class=red>Civilians: </font></b><? echo "$civ"; ?></font></td>
+	 <td class=top width=20%><b class=rtop><font class=red>Land: </font></b> <? echo "$land"; ?></font></td>
+	 <td class=top width=20%><b class=rtop><font class=red>Mountains: </font></b><? echo "$mts"; ?></font></td>
+	 <td class=top width=20%><b class=rtop><font class=red>Experience: </font></b><? echo "$exp"; ?></font></td>
 	</table></td></table></td></table></td></table>
 </TD>
 </TR>  
@@ -54,21 +54,25 @@ include("functions.php");
  </TD>
  <TD width="85%">
 
-<?   if($safemode > 0){echo"<div align=center><font class=blue><b>You are in Safe Mode for $safemode more ticks</b></font></div>";} 
+<?  
+// safe mode notice
+if($safemode > 0)	 {	echo"<div align=center><font class=blue><b>You are in Safe Mode for $safemode more ticks</b></font></div>";	 } 
 
-			?>
-
-<? $attacksys = yes; 
+// attack system up?
+$attacksys = yes; 
 			
-			$tickk = mysql($dbnam, "SELECT tick FROM Game_Info");
-			$tick = mysql_result($tickk,"tick");
+// tick info
+$tickk = mysql($dbnam, "SELECT tick FROM Game_Info");
+$tick = mysql_result($tickk,"tick");
 
-if($tick == yes){echo"<font class=yellow size=4px><center><br>You have to wait until the tick is over before you can access anything.</center>";die();}?>
+// are ticks running?
+if($tick == yes)	{	echo"<font class=yellow size=4px><center><br>You have to wait until the tick is over before you can access anything.</center>";	die();	 }
+?>
 
 
 <br><br>
 
-<?php 
+<?
 
 ob_end_flush();
 

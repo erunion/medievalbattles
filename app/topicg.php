@@ -27,9 +27,9 @@ if ($result1) {
 	// $thedate = gmdate("h:ia, D d, M" ,$datestamp);
 	echo "
 		<tr>
-			<td bgcolor=$color3 width=50%><b class=forum>$name</b></td>
-			<td bgcolor=$color3 width=200 nowrap><b class=forum>$datestamp</b></td>
-			<td bgcolor=$color3 width=50%><b class=forum>$topic</b></td>
+			<td bgcolor=$color3 nowrap align=left><b class=forum>$name</b></td>
+			<td bgcolor=$color3 nowrap align=right><b class=forum>$datestamp</b></td>
+			<td bgcolor=$color3 nowrap align=right><b class=forum>$topic</b></td>
 		</tr>
 		<tr>
 			<td bgcolor=$color2 valign=top colspan=3><strong class=black>$message<br><br><br></strong></td>
@@ -53,9 +53,9 @@ if ($result2) {
 		
 	echo "
 		<tr>
-			<td bgcolor=$color3 width=50%><b class=forum>$name</b></td>
-			<td bgcolor=$color3 width=200 nowrap><b class=forum>$datestamp</b></td>
-			<td bgcolor=$color3 width=50%><b class=forum>$topic</b></td>
+			<td bgcolor=$color3 nowrap align=left><b class=forum>$name</b></td>
+			<td bgcolor=$color3 nowrap align=right><b class=forum>$datestamp</b></td>
+			<td bgcolor=$color3 nowrap align=right><b class=forum>$topic</b></td>
 		</tr>
 		<tr>
 			<td bgcolor=$color2 valign=top colspan=3><small class=black>$message<br><br><br></small></td>

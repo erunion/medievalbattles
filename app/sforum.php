@@ -14,7 +14,7 @@ $numresults=mysql_query("SELECT topicid FROM setforums WHERE setid=$setid");
 $numrows=mysql_num_rows($numresults);
 $pages=intval($numrows/$limit);
 
-$query = "SELECT topicid, name, topic, replies, lastpost, lastposter FROM setforums WHERE setid = '$setid' ORDER by lastpost DESC";
+$query = "SELECT topicid, name, topic, replies, lastpost, lastposter FROM setforums WHERE setid='$setid' ORDER by topicid DESC";
 $result= mysql_query($query) or die("Could not run the database query!");
 
 if ($result) { 
@@ -29,12 +29,8 @@ if ($result) {
 					<td align=center><b class=forum>LAST POST</b></td>
 				</tr>
 	";										
-	while ($r = mysql_fetch_array($result)) {
-	
-	extract ($r);
-	//$lastpost = gmdate("d F H:i", $lastpost);	
-
-	
+	while ($r = mysql_fetch_array($result)) {	
+	extract ($r);	
 	
 	echo "
 		<tr bgcolor=$color2>

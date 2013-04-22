@@ -1,4 +1,8 @@
-<?php include("include/igtop.php");?>
+<? 
+include("include/igtop.php");
+echo "You must have typed in barter.php to get here. Barter isn't up though.  So stop cheating and play the game right.";
+die();
+?>
 
 <?php
 	if(!IsSet($barter))
@@ -329,12 +333,19 @@ else
 {
 
 		include("include/nexplode.php");
+		
+		$bquery = ("SELECT count(userid) FROM barter WHERE userid='$userid'");
+		$bresult = mysql_query($bquery);
+		$bcheck = mysql_fetch_array($bresult);
 
 		$cost = implode("", explode(",", $cost));
 		$amount = implode("", explode(",", $amount));
 
 		if($type == ns OR $gp == "" OR $amount == "")
 			{echo"<font class=yellow><div align=center>You must have something for each field</font></div><br><br>."; die();
+			}
+		elseif($bcheck[0] >= 4)
+			{echo"<font class=yellow><div align=center>You can only have 4 barters up at any given time.</div></font>";die();
 			}
 		elseif($type == Wizard AND $class == Ranger)
 			{echo"<font class=yellow><div align=center>Being that you are a ranger, you cannot put wizards up to barter.</font></div>";die();
@@ -416,8 +427,8 @@ else
 
 					$themaxbarterid = mysql($dbnam, "SELECT max(barterid) FROM barter");
 					$maxbid = mysql_result($themaxbarterid,"maxbid");
-									
 					$maxbid = $maxbid + 1;
+
 					 mysql_query("INSERT INTO barter (seller, cost, type, amount, barterid, userid, method) 
 						VALUES	(\"$ename\", '$cost', '$type', '$amount', '$maxbid', '$userid', '$method') ");
 					

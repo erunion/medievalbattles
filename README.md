@@ -1,6 +1,6 @@
-Medieval Battles (Beta 1)
+Medieval Battles (Beta 2)
 
-Originally ran September 2002
+Originally ran October 2002
 
 Copyright (C) 2004 Decoy Media
 
@@ -10,16 +10,15 @@ historical and educational purposes. If you plan on setting it up, you will need
 to edit a few files.
 
 - /include/connect.php
-- /ga/connect.php
-- /ga/index.php
-- /ga/gameconfig.php
+- /gameadmin.php
+- /gameconfig.php
 
-
-To set up the database, run beta1_db.sql. You will find this file in the /sql
-folder. Medieval Battles requires PHP and MySQL.
+The SQL for this version has been lost. If you wish to play Beta 2, you must
+fabricate the database from scratch. Or instead, download a different version.
+Medieval Battles requires PHP and MySQL.
 
 We are not offering any support on problems with this code, due to its age. If
-you need support though, go to the official  Medieval Battles Public Forums and
+you need support though, go to the official Medieval Battles Public Forums and
 make a request. We are sure some players will gladly be able to assist you.
 
 We also ask you that if you do run a game, let us know. We plan on setting up a

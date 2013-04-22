@@ -17,12 +17,19 @@ echo "
 		  <td class=\"main2\" width=\"20%\"><b class=\"reg\">Barter</b></td>
 ";
 
-		$query_string = "SELECT seller, type, amount, method, cost, barterid FROM barter";
+		$query_string = "SELECT seller, type, amount, method, cost, barterid,userid FROM barter ORDER BY type ASC";
 		$result_id = mysql_query($query_string, $var);
 		while ($row = mysql_fetch_row($result_id))
 		    {
-						$setid_sel = mysql($dbnam, "SELECT setid FROM user WHERE ename=\"$row[0]\"");
-						$s_sel = mysql_result($setid_sel,"s_sel");
+
+			$query = ("SELECT setid FROM user WHERE userid='$row[6]'");
+			$result = mysql_query($query);
+			$s_sel = mysql_fetch_array($result);
+			$s_sel = $s_sel[0];
+			if($s_sel == "")
+			{mysql_query("DELETE FROM barter WHERE userid='$row[6]'"); 
+			}
+
 			if($row[0] == "$ename")
 				{$endnow = "<br><a href=barter.php?end=true&bid=$row[5]>End</a>";}
 			else{$endnow = "";}

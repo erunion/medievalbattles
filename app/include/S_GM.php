@@ -5,6 +5,8 @@
 	
 	 <tr>
 	   <td class=main2 colspan=2>A SL will need the guild name and entry password to be apart of your guild.</td>
+	 <tr>
+	   <td class=main2 colspan=2>If you are making a guild, dont make it for the heck of it. Make sure you have a settlement or 2 to join before creating.</td>
 	  <tr>
 	   <td class=main2><b class=reg>Guild Name</b></td><td class=inner><center><input type="text" name=gname size=15 maxlength=15></center></td>
 	 <tr>

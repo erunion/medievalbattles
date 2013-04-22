@@ -28,7 +28,7 @@ if($race != Giant){
 }
 ?>
 
-<? if($r6pts >= 125000)
+<? if($res[r13pts] >= 125000)
 		{echo"
 				<tr>
 					<td class=inner2><b>Archer</b></td>

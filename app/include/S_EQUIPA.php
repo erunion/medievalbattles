@@ -57,7 +57,7 @@ echo"
 				   </td>";
 }
 ?>
-		<? if($r6pts >= 125000){echo"
+		<? if($res[r13pts] >= 125000){echo"
 			  <tr>
 				<td class=inner2><b>Archer</b></td>
 				<td class=inner2>$archarmor</td>
