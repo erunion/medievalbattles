@@ -1,0 +1,48 @@
+A:link { text-decoration: none; color:"#a1a1a1" }
+A:visited { text-decoration: none; color:"#a1a1a1" }
+A:hover { text-decoration: underline overline; color:"red" }
+
+
+
+
+font 		{ color:"#ffffff" }
+table 		{ font-size: 14px }
+
+body		{background-color: "#000000"; color: "#bfbfbf"}
+<!-- orig color is #003139 -->#003139
+body    {
+        scrollbar-face-color:#FF0000;
+        scrollbar-highlight-color:#000000;
+        scrollbar-3dlight-color:#000000;
+        scrollbar-darkshadow-color:#000000;
+        scrollbar-shadow-color:#000000;
+        scrollbar-track-color:#000000;
+        scrollbar-arrow-color:#000000;
+        }
+b		{ COLOR: #089494;}
+b.other		{ COLOR: silver; }
+
+hr.red		{color: red }
+	
+input		{background-color: #630000;border-color: #003139; color: #bfbfbf}
+select		{background-color: #630000;border-color: #003139; color: #bfbfbf}
+input.button	{font-family: Verdana; font-weight: none; color: #212121; background-color: #616161; border-color: #212121}
+input.button2   {font-family: verdana; font-weight: none; color:#089494; background-color: #630000; border-color: #089494}
+<!-- THESE ARE THE NAVBAR STYLES -->
+td.top		{background-color: "#000000"; text-align: center} <!-- gp, civilains land etc -->
+td.main		{background-color: "#630000";text-align: center} <!-- empire, sector, guild etc -->
+td.inner	{background-color: "#404040";} <!-- main menu, explore, status, etc -->
+
+td.clock	{background-color: "#003139"; color: "#bfbfbf"; text-align:center}
+table.outer     
+<!-- END OF NAVBAR STYLES -->
+
+<!-- THESE ARE THE TABLES IN THE IN-GAME PAGES -->
+td.main2	{background-color: "#212121"; text-align: center}
+td.inner2	{background-color: "#404040"; text-align: center}
+b.top		{color: #bfbfbf; font-style: bold}
+b.reg		{color: #a1a1a1}
+td.num		{text-align: center}
+b.black		{color: #000000}
+
+textarea		{background-color: #630000;border-color: #003139; color: #bfbfbf}

@@ -1,0 +1,16 @@
+a:hover { text-decoration:"underline overline"; color:"#999999" }
+a:hover { text-decoration:none; color:"#999999" }
+a:hover.ingame { text-decoration:"underline overline"; color:"#993300" }
+
+a:link { text-decoration:"none"; color:"#ffffff" }
+a:link { text-decoration:"none"; color:"#ffffff"}
+
+a:link.ingame { text-decoration:"none"; color:"#ffffff" }
+
+a:visited { text-decoration:"none"; color:"#ffffff" }
+a:visited.ingame { text-decoration:"none"; color:"#ffffff" }
+
+body { background:"#000000"; color:"#ffffff" }
+font { color:"#ffffff" }
+table { font-size: 14px }
+

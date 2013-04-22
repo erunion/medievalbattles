@@ -1,0 +1,29 @@
+	tr 	{ FONT-SIZE: 14px;}
+	td 	{ FONT-SIZE: 14px;}
+	td.main { FONT-SIZE: 14px;}
+	td.top  { BACKGROUND-COLOR: #630000; color: red}
+	p	{ COLOR: "#bfbfbf"}
+	tr	{ COLOR: #bfbfbf}
+	A:link		{ COLOR: #bfbfbf; }
+	A:link		{ COLOR: #bfbfbf; TEXT-DECORATION: none; }
+	A:visited	{ COLOR: #bfbfbf;}
+	A:visited	{ COLOR: #bfbfbf; TEXT-DECORATION: none;}
+	A:active	{ COLOR: #630000; }
+	A:active	{ COLOR: #630000; TEXT-DECORATION: none; }
+	A:hover		{ COLOR: red;}
+	A:hover		{ COLOR: red; TEXT-DECORATION: underline;font-size:12;}
+	b		{ COLOR: red;}
+	b.other		{ COLOR: #ff8429; }
+
+body    {
+        scrollbar-face-color:#FF0000;
+        scrollbar-highlight-color:#000000;
+        scrollbar-3dlight-color:#000000;
+        scrollbar-darkshadow-color:#000000;
+        scrollbar-shadow-color:#000000;
+        scrollbar-track-color:#000000;
+        scrollbar-arrow-color:#000000;
+        }
+body		{background-color: "#000000"}
+
+b.important	{COLOR: yellow}

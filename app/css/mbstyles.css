@@ -1,0 +1,44 @@
+A:link { text-decoration: none; color:"white" }
+A:visited { text-decoration: none; color:"white" }
+A:hover { text-decoration: underline overline; color:"red" }
+
+
+td.specsize		{font-size: 40px}
+
+font 		{ color:"#ffffff" }
+table 		{ font-size: 12px }
+
+body		{background-color: "#000000"; FONT-FAMILY: }
+
+body    {
+        scrollbar-face-color:#FF0000;
+        scrollbar-highlight-color:#000000;
+        scrollbar-3dlight-color:#000000;
+        scrollbar-darkshadow-color:#000000;
+        scrollbar-shadow-color:#000000;
+        scrollbar-track-color:#000000;
+        scrollbar-arrow-color:#000000;
+        }
+b		{ COLOR: #630000; font-size: 20px;}
+b.other		{ COLOR: #089494; font-size: 12px }
+
+hr.red		{color: red }
+	
+input		{background-color: #630000;border-color: #003139; color: #bfbfbf}
+select		{background-color: #630000;border-color: #003139; color: #bfbfbf}
+textarea	{background-color: #630000;border-color: #003139; color: #bfbfbf}
+input.button	{font-family: Verdana; font-weight: none; color:#089494; background-color: #003139; border-color: #089494}
+
+font	{font-family: Verdana;font-size: 12px}
+font.important		{color: yellow}
+hr.main			{color: #630000; width: 90%; }
+font.esize	{font-size: 18px; font-family: Impact}
+font.specsize		{font-size: 40px}
+
+b.black		{color: #000000}
+td.main2	{background-color: "#212121"; text-align: center}
+td.inner2	{background-color: "#404040"; text-align: center}
+td.main		{background-color: "#630000";text-align: center} <!-- empire, sector, guild etc -->
+b.reg		{color: #a1a1a1; font-size: 12px}
+b.center		{color: "#a1a1a1"; text-align: center}
+b.yellow		{color: "yellow"; text-align: center}
