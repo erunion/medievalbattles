@@ -1,20 +1,13 @@
-<?php
-		include("include/igtop.php");
-	?>
+<?php include("include/igtop.php");?>
 
-<!-- BODY OF PAGE BEGINS HERE -->
-<br><br>
-
-
-<?	// check votefor
-			$SN_query = ("SELECT setid FROM setnews WHERE setid='$setid'");
-			$SN_result = mysql_query($SN_query);
-			$SN_check = mysql_fetch_array($SN_result); 
-			if($SN_check[0] == "" OR $SN_check[0] == 0)
-				{echo"<div align=center>Your settlement does not have any news to display.</div>";die();}
-
-
+<?	
+	$SN_query = ("SELECT setid FROM setnews WHERE setid='$setid'");
+	$SN_result = mysql_query($SN_query);
+	$SN_check = mysql_fetch_array($SN_result); 
+		if($SN_check[0] == "" OR $SN_check[0] == 0)
+			{echo"<div align=center><font class=yellow>Your settlement does not have any news to display.</font></div>";die();}
 ?>	   
+
 <div align=center>		
 	<font class=red>Empire Joining/Deleting</font><br>
 	<font class=green>Donating/Receiving from Funds</font><br>
@@ -30,9 +23,6 @@
 	$tablename = user;
 	function display_db_table($tablename, $var)
 	{	
-
-			
-		
 			Global $setid;
 
 			$query_string = "SELECT date, news FROM setnews  WHERE setid='$setid' ORDER BY date DESC";
@@ -42,7 +32,7 @@
 			 
 			while ($row = mysql_fetch_row($result_id))
 		
-		{
+			{
 				print("<TR ALIGN=center VALIGN=TOP>");
 				for ($column_num = 0;
 				$column_num < $column_count;
@@ -50,7 +40,7 @@
 		
 					print("<TD bgcolor=#404040 align=left>$row[$column_num]</TD>\n");
 				print("</TR>\n");
-		}
+			}
 		
 		print("</TABLE>\n");
 	}
@@ -59,19 +49,17 @@
 	
 
 		
-		<table border=0 bordercolor="#404040" width="95%" align=center cellspacing=1>
+	<table border=0 bordercolor="#404040" width="95%" align=center cellspacing=1>
 	  <tr>
-	    <td colspan=4 class=main><b class=reg>News for settlement <? echo"$setid"; ?></b></td>
+	    <td colspan=4 class=main><b class=reg>News for Settlement <? echo"$setid"; ?></b></td>
 	  <tr align=left>
 		<td class=main2 width="20%" align=left><b class=reg>Date/Time</b></td>
 		<td class=main2 align=left><b class=reg width="80%">News</b></td>
 		
 	  <?php display_db_table("user", $var);?>
-	
 
-
-   <!-- body ends here -->
- </TD>
+<!-- body ends here -->
+</TD>
 </TR>
 </TABLE>
 </BODY>

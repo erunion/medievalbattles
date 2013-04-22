@@ -12,6 +12,7 @@
 		Medieval Battles<br>
 		4135 Leechburg Rd<br>
 		Lower Burrell, Pensylvania &nbsp; &nbsp;15068<br>
+		USA<br>
 		<br>
 		Thank You,<br>
 		Medieval Battles Admins

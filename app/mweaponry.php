@@ -44,63 +44,63 @@ Below are the avilable weapons that can be built. A weapon with a speed factor h
 			
 	<ul><li><b class=other>Dagger</b>- 1 handed weapon.	
 		<br>Speed Factor: 6
-		<br>Damage:3
+		<br>Power:3
 		<br>Only usable by warriors
 
 		<br><br>
 	<li><b class=other>Short Sword</b>- 1 handed weapon.	
 		<br>Speed Factor: 7
-		<br>Damage:6
+		<br>Power:6
 		<br>Only usable by warriors
 
 		<br><br>
 	<li><b class=other>Long Sword</b>- 1 handed weapon.	
-		<br>Speed Factor: 8 
-		<br>Damage:9
+		<br>Speed Factor: 11
+		<br>Power: 4
 		<br>Only usable by warriors
 
 		<br><br>
 	<li><b class=other>Axe</b>-1 handed weapon.		
 		<br>Speed Factor: 9 
-		<br>Damage: 12
+		<br>Power: 12
 		<br>Only usable by warriors
 
 		<br><br>
 <li><b class=other>Great Axe</b>- 2 handed weapon.	
 		<br>Speed Factor: 14
-		<br>Damage:20
+		<br>Power:20
 		<br>Only usable by warriors
 
 		<br><br>
 <li><b class=other>Ice Sword</b>- 2 handed weapon.	
 		<br>Speed Factor: 18
-		<br>Damage:25
+		<br>Power:25
 		<br>Only usable by warriors
 		
 		<br><br>
 <li><b class=other>Quarter Staff</b>- 2 handed weapon.	
 		<br>Speed Factor: 6
-		<br>Damage: 2
+		<br>Power: 2
 		<br>Only usable by priests
 		
 		<br><br>
 <li><b class=other>Spiked Club</b>- 1 handed weapon.	
 		<br>Speed Factor: 6
-		<br>Damage: 6
+		<br>Power: 6
 		<br>Only usable by priests
 		
  		
 		<br><br>
 <li><b class=other>Mace</b>- 1 handed weapon.	
 		<br>Speed Factor: 8
-		<br>Damage: 9
+		<br>Power: 9
 		<br>Only usable by priests
 
 		
 		<br><br>
 <li><b class=other>Grand Scepter</b>- 1 handed weapon.	
 		<br>Speed Factor: 9
-		<br>Damage: 15
+		<br>Power: 15
 		<br>Only usable by priests
 	
 

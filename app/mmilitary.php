@@ -33,7 +33,7 @@
 		<tr>
 		 <td>   <!-- This is where the main part of the page goes -->
 			<br><br><blockquote>  
-At the military page, you are able to: recruit Civilians, train Recruits into Warriors, Wizards or Priests, build new weapons and armor, equip Warriors/Wizards with Weapons/magic and Priests with weapons.
+At the military page, you are able to: recruit Civilians; Train Recruits into Warriors, Wizards, Priests and Archers(if you have researched them); build new weapons and armor; equip Warriors/Wizards/Archers with Weapons/Magic and Priests with Weapons/Armor.
 <br><br>
 	<ul>
 	<li><b>Recruit Civilians</b>-Civilians by themselves do not do much, but you can train them to learn more advanced techniques. 

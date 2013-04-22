@@ -1,48 +1,14 @@
-<?
- 
-
-	 	
-	While($max_land < $aland AND $lcost < $gp)
-		{
-			$max_land = $max_land + 1;
-			$lcost = $max_land * $b_cost;
-		}
-		
-	While($max_mt < $amts AND $gp > $tmcost)
-		{
-			
-			$max_mt = $max_mt + 1;
-			$tmcost = $max_mt * $bm_cost;
-		}
-		
-	
-			
-		
-		if($lcost > $gp)
-			{$max_land = $max_land -1;}
-		
-		if($tmcost > $gp)
-			{$max_mt = $max_mt - 1;}
-
-		if($aland == 0 OR $gp == 0 OR $bcost > $gp)
-				{$max_land = 0 ;}
-
-		if($amts == 0 OR $gp == 0 OR $bmcost > $gp)
-			{$max_mt = 0;}
-		
-?>
-
 <form type=get action="buildings.php">
 <table border=0 cellpadding=2 cellspacing=0 width="100%" valign="top">
  <tr>
   <td><br>
-   <table border="1" bordercolor="#000000" align=center width="80%">
+   <table border="1" bordercolor="#000000" align=center width="80%" cellpadding=0 cellspacing=0>
 	<tr>
 	 <td colspan=7 class=main><b class=top>Land</b></td>
 	<tr>
 	 <td colspan=7 class=main2>It costs <?php echo"$b_cost"; ?> gp to construct a building<br><? echo"You have $aland free land to build on"; ?></td>
 	<tr><form method=get action="buildings.php">
-	 <td class=main2><b class=reg>#</b></td>
+	 <td class=main2><b class=reg></b></td>
 	 <td class=main2><b class=reg>Building Type</b></td>
 	 <td class=main2><b class=reg>Owned</b></td>
 	 <td class=main2><b class=reg>Developing</b></td>
@@ -69,13 +35,17 @@
 	 <td class=inner2><? echo"$dfarm"; ?></td>
 	 <td class=inner2><?php echo"$max_land"; ?></td>
 	 <td class=inner2><input type="number" name="ufarm" size=5></td>
+<? if($race != Orc){echo"	
 	<tr>
 	 <td class=num>4</td>
 	 <td class=inner2>Wooden Platform</td>
-	 <td class=inner2><?php echo"$wp"; ?></td>
-	 <td class=inner2><? echo"$dwp"; ?></td>
-	 <td class=inner2><?php echo"$max_land"; ?></td>
-	 <td class=inner2><input type="number" name="uwp" size=5></td>
+	 <td class=inner2>$wp</td>
+	 <td class=inner2>$dwp</td>
+	 <td class=inner2>$max_land</td>
+	 <td class=inner2><input type=number name=uwp size=5></td>
+	";
+	}
+?>
 <? if($r6pts >= 125000)
 {echo"
 	<tr>
@@ -91,13 +61,13 @@
    </table>
 <br><br>
 <form type=get action="buildings.php">
-   <table border="1" bordercolor="#000000" align=center width="80%">
+   <table border="1" bordercolor="#000000" align=center width="80%" cellpadding=0 cellspacing=0>
 	<tr>
 	 <td colspan=7 class=main><b class=top>Mountains</b></td>
 	<tr>
 	 <td colspan=7 class=main2>It costs <?php  echo"$bm_cost"; ?> gp to construct a mine<br><? echo"You have $amts free mines to build on"; ?></td>
 	<tr><form method=get action="script.url">
-	 <td class=main2><b class=reg>#</b></td>
+	 <td class=main2><b class=reg></b></td>
 	 <td class=main2><b class=reg>Mine Type</b></td>
 	 <td class=main2><b class=reg>Owned</b></td>
 	 <td class=main2><b class=reg>Developing</b></td>

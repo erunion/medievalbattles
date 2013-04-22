@@ -21,6 +21,8 @@ session_register('pw');
 
 // connect to db
  include("include/connect.php");
+// clock for last login date
+include("include/clock.php");
 
 $uename = mysql($dbnam, "SELECT ename FROM user WHERE email = '$email' AND pw = '$pw'");
 $ename = mysql_result($uename,"ename");
@@ -43,6 +45,7 @@ function gethostname()
 include("include/connect.php");
 $ipaddress = gethostname(); 
 mysql_query("UPDATE user SET ip = \"$ipaddress\" WHERE ename = \"$ename\"");
+mysql_query("UPDATE user SET lastlogin = \"$clock\" WHERE ename = \"$ename\"");
 mysql_query("UPDATE user SET online = \"1\" WHERE ename = \"$ename\"");
 			$O_line_mem = mysql($dbnam, "SELECT count(online) FROM user WHERE online='1'");
 			$onlineusers = mysql_result($O_line_mem,"onlineusers");

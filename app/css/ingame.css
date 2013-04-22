@@ -2,9 +2,12 @@ A:link { text-decoration: none; color:"#a1a1a1" }
 A:visited { text-decoration: none; color:"#a1a1a1" }
 A:hover { text-decoration: none; color:"red" }
 
-font.orange {color: #ff8429;}
+font.brown {color: brown;}
+font.black {color: #000000;}
+font.grey {color: #bfbfbf;}
+font.orange {color: #CC6600;}
 font.blue {color: #00a5c6}
-font.red {color: #d60000}
+font.red {color: #FF3333}
 font.green {color: green}
 font.yellow {color: yellow}
 font.lg {color: #9c7bbd}

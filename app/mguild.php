@@ -37,6 +37,8 @@ The Settlement Leader can choose a guild to enter if they know the guild name an
   	<br><br>
 		<ul>
 			<li><b>Guild Management</b>-In the Guild Management page, you can change various settings concerning the guild you are the Guild Leader of. You can change the joining password, change the guild info, remove settlements from the guild, and delete the guild itself. The Guild Management page is on the Main Page. <b class=other>Note:</b>There can only be 5 settlements in each guild at max
+			<li><b>Guild Fund</b>-The Guild Fund is located on the Guild Members page. From here you can donate gold or iron to the Guild Fund. When you are in need, you can ask your Guild Leader for some resources and he may kindly donate them to you via the Guild Management page.
+			<li><b>Guild Members</b>-The Guild Members page shows all of the empires in your guild. The Guild Fund is located on this page.
 
 	</ul>
 

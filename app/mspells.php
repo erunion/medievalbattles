@@ -37,26 +37,32 @@
 	 
 
 
-	
+
 	<ul><li><b class=other>Magic Missile</b>-This spell sends a blankent of ice at the enemy.
-		<br>Casting Time: 7
-		<br>Damage: 4
+		<br>Speed: 11
+		<br>Power: 3
 		</ul></ul>
 <br><br>
 	<ul><li><b class=other>Fireball</b>-A firey ball shoots from the castors hands and is launched towards the target.
-		<br>Casting Time:9	
-		<br>Damage: 15
+		<br>Speed: 13	
+		<br>Power: 7
 		</ul></ul>
 <br><br>		
 	<ul><li><b class=other>Ice Storm</b>-Hail stones pound down on the target from the sky.
-		<br>Casting Time: 8 
-		<br>Damage: 10  
+		<br>Speed: 16
+		<br>Power: 10
 		</ul></ul>
 
 <br><br>
 	<ul><li><b class=other>Cloud Kill</b>-The cloud of poisonous gas is cast upon the enemy.
-		<br>Casting Time: 15 	
-		<br>Damage: 25
+		<br>Speed: 19
+		<br>Power: 14
+		</ul></ul>	
+
+<br><br>
+	<ul><li><b class=other>Lightning Bolt</b>-A great lightning bolt emerges from the sky and strikes its target.
+		<br>Speed: 22
+		<br>Power: 17
 		</ul></ul>	
 		</blockquote>
 			

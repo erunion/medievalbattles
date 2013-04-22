@@ -39,8 +39,8 @@ $msgsdb = "setmsgs" . "$setid";
 
 
 $hostname = "localhost";
-$dbname = "medievalbattles_com";
-$username = "ziccarelli";
+$dbname = "medieval_mb";
+$username = "medieval";
 $passwrd = "pa724";
 // your database variables. these need to be changed for your system to make it work!
 

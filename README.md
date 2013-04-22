@@ -1,15 +1,30 @@
-Medieval Battles (Alpha 2)
+Medieval Battles (Beta 1)
 
-Originally ran August 2002
+Originally ran September 2002
 
 Copyright (C) 2004 Decoy Media
 
-This code is very old, and not maintained.
+This code is old, embarassing, buggy and not maintained. We can not say for sure
+that it will run well, if at all. This source is being released solely for
+historical and educational purposes. If you plan on setting it up, you will need
+to edit a few files.
 
-We can not say for sure that it will run well, if at all. It is released only
-for historical and educational purposes. To run it you will have to edit
-conenct.php for you own server, and run alpha2_db.sql on your database. Requires
-PHP/MySQL.
+- /include/connect.php
+- /ga/connect.php
+- /ga/index.php
+- /ga/gameconfig.php
+
+
+To set up the database, run beta1_db.sql. You will find this file in the /sql
+folder. Medieval Battles requires PHP and MySQL.
+
+We are not offering any support on problems with this code, due to its age. If
+you need support though, go to the official  Medieval Battles Public Forums and
+make a request. We are sure some players will gladly be able to assist you.
+
+We also ask you that if you do run a game, let us know. We plan on setting up a
+repository with the "Classic" games that are being run. Can't beat free
+publicity, eh?
 
 This program is free software; you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
@@ -18,8 +33,7 @@ version.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY
 WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
 this program; if not, write to the Free Software Foundation, Inc., 59 Temple

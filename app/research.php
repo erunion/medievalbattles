@@ -1,8 +1,6 @@
-<?php
-		include("include/igtop.php");
-	?>
- 		<!-- BODY OF PAGE BEGINS HERE -->
-		<br><br><center> <b class=reg> | <a href="cresearch.php"> -Cancel Scientists- </a> | </b></center><br>
+<?php include("include/igtop.php");?>
+		
+<center> <b class=reg> | <a href="cresearch.php"> -Cancel Scientists- </a> | </b></center><br>
 		
 <?php
 	if(!IsSet($first))
@@ -15,23 +13,35 @@
 }
 else
 {
-		if($ascientists < $ur1 + $ur2 + $ur3 + $ur4 + $ur5 + $ur6)
+		include("include/nexplode.php");
+
+		if($ascientists < $ur1 + $ur2 + $ur3 + $ur4 + $ur5 + $ur6 + $ur7)
 			{echo"<div align=center><font class=yellow>You do not have that many scientists.</font></div>"; include("include/S_RES.php");die();
 			}
-		elseif($ur1 < 0 OR $ur2 < 0 OR $ur3 < 0 OR $ur4 < 0 OR $ur5 < 0 OR $ur6 < 0)
+		elseif($ur1 < 0 OR $ur2 < 0 OR $ur3 < 0 OR $ur4 < 0 OR $ur5 < 0 OR $ur6 < 0 OR $ur7 < 0)
 			{echo"<div align=center><font class=yellow>You cannot send negative or 0 scientists.</font></div>"; include("include/S_RES.php");die();
 			}
-		else{
+		elseif($ur3 > 0 AND $race == Giant)
+			{echo"<div align=center><font class=yellow>You cannot research these items being that you are a Giant.</font></div>";include("include/S_RES.php");die();
+			}
+		elseif($ur1 > 0  AND $race == Giant)
+			{echo"<div align=center><font class=yellow>You cannot research these items being that you are a Giant.</font></div>";include("include/S_RES.php");die();
+			}
+		elseif($ur2 > 0 AND $race == Giant)
+			{echo"<div align=center><font class=yellow>You cannot research these items being that you are a Giant.</font></div>";include("include/S_RES.php");die();
+			}
+			else{
 	 
 	 
-			$ascientists = $ascientists - ($ur1 + $ur2 + $ur3 + $ur4 + $ur5 + $ur6);
-	 		$scientists = $scientists - ($ur1 + $ur2 + $ur3 + $ur4 + $ur5 + $ur6);
+			$ascientists = $ascientists - ($ur1 + $ur2 + $ur3 + $ur4 + $ur5 + $ur6 + $ur7);
+	 		$scientists = $scientists - ($ur1 + $ur2 + $ur3 + $ur4 + $ur5 + $ur6 + $ur7);
 	 		$r1 = $r1 + $ur1;
 	 		$r2 = $r2 + $ur2;
      		$r3 = $r3 + $ur3;
 	 		$r4 = $r4 + $ur4;
      		$r5 = $r5 + $ur5;
 			$r6 = $r6 + $ur6;
+			$r7 = $r7 + $ur7;
 
 	 		include("include/connect.php");
 		
@@ -43,17 +53,17 @@ else
       		mysql_query("UPDATE research SET r4 =\"$r4\" WHERE email='$email' AND pw='$pw'");
       		mysql_query("UPDATE research SET r5 =\"$r5\" WHERE email='$email' AND pw='$pw'");
 			mysql_query("UPDATE research SET r6 =\"$r6\" WHERE email='$email' AND pw='$pw'");
+			mysql_query("UPDATE research SET r7 =\"$r7\" WHERE email='$email' AND pw='$pw'");
 
 			echo"<div align=center><font class=yellow>You have successfully sent your scientist(s) to research.</font></div>";
 			include("include/S_RES.php");
 			
 			die();
 	 
-			 }
+			}
  }
 ?>
-
-		<!-- body ends here -->
+<!-- body ends here -->
 </TD>
 </TR>
 </TABLE>

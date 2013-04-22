@@ -20,7 +20,7 @@
 	//print date("T");
 
 	$bleh = time();
-	$test = print date("d F H:i:s");
+	//$test = print date("d F H:i:s");
 	
 	$clock = date("d F H:i:s");
 

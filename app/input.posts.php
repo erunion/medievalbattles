@@ -38,6 +38,12 @@ if ($addtopic) {
 	$result = mysql_query("INSERT INTO setforums (setid, name, topic, replies, message, datestamp) 
 			VALUES ('$setid', '$ename', '$topic', '$replies', '$message', \"$datestamp\")");
 
+	$query4 = "UPDATE setforums SET lastpost=\"$clock\" WHERE topic='$topic' AND setid='$setid'" ;
+	$result4 = mysql_query($query4);
+
+	$query6 = "UPDATE setforums SET lastposter=\"$ename\" WHERE topic='$topic' AND setid='$setid'" ;
+	$result6 = mysql_query($query6);
+
 	//echo mysql_errno().": ".mysql_error()."<BR>";
 	header ("Location: sforum.php"); 
 }
@@ -51,8 +57,11 @@ elseif ($addreply) {
 	$result1 = mysql_query($query1);
 	$lastid = mysql_insert_id();	
 
-	$query2 = "UPDATE setforums SET lastpost='$clock' WHERE topicid='$topicid' AND setid='$setid'" ;
+	$query2 = "UPDATE setforums SET lastpost=\"$clock\" WHERE topicid='$topicid' AND setid='$setid'" ;
 	$result2 = mysql_query($query2);
+
+	$query5 = "UPDATE setforums SET lastposter=\"$ename\" WHERE topicid='$topicid' AND setid='$setid'" ;
+	$result5 = mysql_query($query5);
 
 	$query3 = "UPDATE setforums SET replies=replies+1 WHERE topicid='$topicid' AND setid='$setid'";
 	$result3 = mysql_query($query3);

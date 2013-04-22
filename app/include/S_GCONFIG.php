@@ -9,7 +9,7 @@
 	 <tr>
 	   <td class=main2><b class=reg>New Entry Password</b></td><td class=inner><center><input type="text" name="nepw" size=15></center></td>
 	 <tr>
-	   <td class=main2><b class=reg>Guild Info</b></td><td class=inner><center><textarea name=info rows=6 cols=20 wrap><? echo"$ginfo"; ?></textarea></center></td>
+	   <td class=main2><b class=reg>Guild Info</b></td><td class=inner><center><textarea name=info rows=6 cols=40 wrap><? echo"$ginfo"; ?></textarea></center></td>
 	 </table>
 	 <br>
 	<center><input class=button type=submit name=change value=Change></center>

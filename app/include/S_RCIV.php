@@ -1,19 +1,20 @@
 <form type=get action="military.php">
+
 <?
 
-	While($civtally < $maxciv AND $gp > $civcost)
-			{
-				
-				$civcost = $civtally * 150;
-				$civtally = $civtally + 1;
-				$max_civ = $civtally;
-			}
-	if($civcost > $gp)
-		{$max_civ = $max_civ - 1;}
-	if($max_civ == "")
-		{$max_civ = 0;}
+$gp = implode("", explode(",", $gp));
+$maxciv = implode("", explode(",", $maxciv));
+
+	$max_civ = ($gp / 150);  if($max_civ > $maxciv){$max_civ = $maxciv;}
 	$max_civ = floor($max_civ);
-?>
+
+	if($maxciv == 0 OR $gp == 0)
+		{$max_civ = 0;}
+
+$gp = number_format($gp);
+$maxciv = number_format($maxciv);
+
+		?>
 
 			<table border="0" bordercolor="#808080" align=center width="50%">
  			  <tr>

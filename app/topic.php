@@ -18,6 +18,7 @@ if ($result1) {
 			<td valign=top> </td>
 			<td valign=top align=center><a href=\"sforum.php\" name=\"top\" class=\"black-small\">Return to Settlement Forums</a></td>
 			<td valign=top align=right> <br><br></td>
+			<td>&nbsp;</td>
 		</tr>";
 	include("include/clock.php");
 									
@@ -28,19 +29,21 @@ if ($result1) {
 	echo "
 		<tr>
 			<td bgcolor=$color3 width=50%><b class=forum>$name</b></td>
-			<td bgcolor=$color3 width=200 nowrap><b class=forum>$thedate</b></td>
+			<td bgcolor=$color3 width=200 nowrap><b class=forum>$datestamp</b></td>
 			<td bgcolor=$color3 width=50%><b class=forum>$topic</b></td>
+			<td bgcolor=$color3></td>
 		</tr>
 		<tr>
 			<td bgcolor=$color2 valign=top colspan=3><strong class=black>$message<br><br><br></strong></td>
 		</tr>
 		";
 		} 
+
 	echo "</table>";
 	mysql_free_result($result1);	
 	}
 
-$query2 = "SELECT messageid, name, topic, message, datestamp FROM setforumsmsgs WHERE topicid='$topicid' AND setid='$setid' ORDER BY datestamp";
+$query2 = "SELECT messageid, name, topic, message, datestamp FROM setforumsmsgs WHERE topicid='$topicid' AND setid='$setid' ORDER BY datestamp DESC";
 $result2 = mysql_query($query2) or die("Could not execute the query!");
 
 if ($result2) { 
@@ -48,13 +51,17 @@ if ($result2) {
 		";
 	while ($r2 = mysql_fetch_array($result2)) {
 	extract ($r2);
+	
 	//$thedate = gmdate("h:ia, D d, M" ,$datestamp);
 	$thedate = $clock;	
+	
+		
 	echo "
 		<tr>
 			<td bgcolor=$color3 width=50%><b class=forum>$name</b></td>
-			<td bgcolor=$color3 width=200 nowrap><b class=forum>$thedate</b></td>
+			<td bgcolor=$color3 width=200 nowrap><b class=forum>$datestamp</b></td>
 			<td bgcolor=$color3 width=50%><b class=forum>$topic</b></td>
+			<td bgcolor=$color3 width=30>&nbsp;</td>
 		</tr>
 		<tr>
 			<td bgcolor=$color2 valign=top colspan=3><small class=black>$message<br><br><br></small></td>
@@ -64,6 +71,7 @@ if ($result2) {
 		</tr>
 		";
 		} 
+
 	echo "
 		</table><br><br> \n";	
 	mysql_free_result($result2);

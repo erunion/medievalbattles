@@ -10,7 +10,7 @@
 		<li><b class=other>Gaming Name:</b> <font>Spiritual Death, Storm Giant or RockyLou</font><br>
  		<li><b class=other>Age:</b> <font>16</font><br>
  		<li><b class=other>Hobbies:</b> <font>Working Out, Games, Going Out, Fishing, Boxing, ATVing</font><br>
- 		<li><b class=other>Email:</b> <a href=mailto:rockylou@null><font>rockylou@null</font></a>
+ 		<li><b class=other>Email:</b> <a href=mailto:rockylou@medievalbattles.com><font>rockylou@medievalbattles.com</font></a>
 	</ul>
 	</blockquote>
 	<br>

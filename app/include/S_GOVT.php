@@ -14,13 +14,14 @@ echo "
 		  <td class=\"main2\" width=><b class=\"reg\">Empire Name</b></td>
 		  <td class=\"main2\" width=><b class=\"reg\">AIM</b></td>
 		  <td class=\"main2\" width=><b class=\"reg\">MSN</b></td>
+		  <td class=\"main2\" width=><b class=\"reg\">Last Logged In</b></td>
 		  <td class=\"main2\" width=><b class=\"reg\">Votes Received</b></td>
 		  <td class=\"main2\" width=><b class=\"reg\">Voting For</b></td>
 		
 ";
 
 
-		$query_string = "SELECT ename, aim, msn, vote, votefor, sl FROM user WHERE setid='$setid'";
+		$query_string = "SELECT ename, aim, msn, lastlogin, vote, votefor, sl, userid FROM user WHERE setid='$setid' ORDER BY userid ASC";
 		$result_id = mysql_query($query_string, $var);
 		while ($row = mysql_fetch_row($result_id))
 		    {
@@ -63,6 +64,7 @@ echo "
 				<td bgcolor=$color>$row[2]</td>
 				<td bgcolor=$color>$row[3]</td>
 				<td bgcolor=$color>$row[4]</td>
+				<td bgcolor=$color>$row[5]</td>
 				\n");
 		    }
 

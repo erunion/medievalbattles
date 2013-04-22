@@ -1,10 +1,7 @@
-<?php
-		include("include/igtop.php");
-	?>
- 		<!-- BODY OF PAGE BEGINS HERE -->
-		<br><br><br>
+<?php include("include/igtop.php");?>
+ 	
+<center> <b class=reg> | <a href="cexplore.php"> -Cancel Explorers- </a> | </b></center><br>
 
-			<center> <b class=reg> | <a href="cexplore.php"> -Cancel Explorers- </a> | </b></center><br>
 <?php
 	if(!IsSet($explore))
 {
@@ -16,6 +13,8 @@
 }
 else
 {
+	include("include/nexplode.php");
+
 	if($exploreland < 0 OR $exploremt < 0)
 		{echo"<div align=center><font class=yellow>You can not send negative or 0 explorers.</font></div>"; include("include/S_EXPLORE.php");die();
 		}
@@ -41,8 +40,6 @@ else
       		}
 }
 ?>	
-
-
 <!-- body ends here -->
 </TD>
 </TR>

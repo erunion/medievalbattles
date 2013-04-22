@@ -1,11 +1,6 @@
-<?php
-		include("include/igtop.php");
-	?>
- <!-- BODY OF PAGE BEGINS HERE -->
- <br><br><br>
-	  
-	    
-		<center> <b class=reg> | <a href="equip.php"> -Equip- </a> | <a href="wconstruct.php"> -Construct Weapon- </a> | <a href="aconstruct.php"> -Construct Armor- </a> | </b></center><br>
+<?php include("include/igtop.php");?>
+
+<center> <b class=reg> | <a href="equip.php"> -Equip- </a> | <a href="wconstruct.php"> -Construct Weapon- </a> | <a href="aconstruct.php"> -Construct Armor- </a> | </b></center><br>
 
 	
 <?php
@@ -20,34 +15,38 @@
 else
 {
 		
-		
+		include("include/nexplode.php");
+
 		if($uwarrior == ns AND $uwizard == ns AND $upriest == ns AND $uarcher == ns)
 			{echo"<div align=center><font class=yellow>You did not specify anything to equip.</font></div>";include("include/S_EQUIPO.php"); include("include/S_EQUIPA.php");die();
 			}
-		elseif($uwarrior != "Short Sword" AND $uwarrior != "Long Sword" AND $uwarrior != "Axe" AND $uwarrior != "Great Axe" AND $uwarrior != "Ice Sword"  AND $uwarrior != ns AND $uwarrior != "Dagger")
+		elseif($uwarrior != "Short Sword" AND $uwarrior != "Long Sword" AND $uwarrior != "Axe" AND $uwarrior != "Great Axe" AND $uwarrior != "Ice Sword"  AND $uwarrior != ns AND $uwarrior != "Dagger" AND $uwarrior != "")
 			{echo"<div align=center><font class=yellow>Invalid item.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
 			}
-		elseif($uwizard != "Magic Missile" AND $uwizard != "Ice Storm" AND $uwizard != "Fireball" AND $uwizard != "Cloud Kill" AND $uwizard != ns)
+		elseif($uwizard != "Magic Missile" AND $uwizard != "Ice Storm" AND $uwizard != "Fireball" AND $uwizard != "Cloud Kill" AND $uwizard !=  "Lightning Bolt"  AND $uwizard != ns AND $uwizard != "")
 			{echo"<div align=center><font class=yellow>Invalid item.</font></div>"; include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
 			}
-		elseif($upriest != "Spiked Club" AND $upriest != ns AND $upriest != "Quarterstaff" AND $upriest != "Mace" AND $upriest != "Grand Scepter")
+		elseif($upriest != "Spiked Club" AND $upriest != ns AND $upriest != "Quarterstaff" AND $upriest != "Mace" AND $upriest != "Grand Scepter" AND $upriest != "" AND $upriest != "Scepter")
 			{echo"<div align=center><font class=yellow>Invalid item.</font></div>"; include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
 			}
-		elseif($uarcher != "Bow" AND $uarcher != "Short Bow" AND $uarcher != "Long Bow" AND $uarcher != "Medieval War Bow" AND $uarcher != ns AND $uarcher != "")
+		elseif($uarcher != "Bow" AND $uarcher != "Short Bow" AND $uarcher != "Long Bow" AND $uarcher != "Medieval War Bow" AND $uarcher != ns AND $uarcher != "" AND $uarcher != "Acid Bow")
 			{echo"<div align=center><font class=yellow>Invalid item.</font></div>";include("include/S_EQUIPO.php"); include("include/S_EQUIPA.php");die();
 			}
 		else
 			{
 
 
-				if($uwizard == "Fireball" AND r1pts >= 10000)
+				if($uwizard == "Fireball" AND $r1pts < 50000)
 					{echo"<div align=center><font class=yellow>You have to research Fireball first to equip it.</div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
 					}
-				if($uwizard == "Ice Storm" AND r1pts >= 40000)
+				if($uwizard == "Ice Storm" AND $r2pts < 200000)
 					{echo"<div align=center><font class=yellow>You have to research Ice Storm first to equip it.</div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
 					}
-				if($uwizard == "Cloud Kill" AND r1pts >= 100000)
+				if($uwizard == "Cloud Kill" AND $r3pts < 500000)
 					{echo"<div align=center><font class=yellow>You have to research Cloud Kill first to equip it.</div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
+					}
+				if($uwizard == "Lightning Bolt" AND $r7pts < 800000)
+					{echo"<div align=center><font class=yellow>You have to research Lightning Bolt first to equip it.</div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
 					}
 				if($uarcher == "Bow"  AND $r6pts < 125000)
 					{echo"<div align=center><font class=yellow>You must research archery before you can do this.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
@@ -61,55 +60,66 @@ else
 				if($uarcher == "Medieval War Bow" AND $r6pts < 125000)
 					{echo"<div align=center><font class=yellow>You must research archery before you can do this.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
 					}
-				
+				if($uarcher == "Acid Bow" AND $r6pts < 125000)
+					{echo"<div align=center><font class=yellow>You must research archery before you can do this.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
+					}
+				if($uwizard != ""  AND $race == Giant)
+					{echo"<div align=center><font class=yellow>You cannot equip wizards being that you are a Giant.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
+					}
+				if($upriest != "" AND $race == Giant)
+					{echo"<div align=center><font class=yellow>You cannot equip priests being that you are a Giant.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();
+					}
+				if($race == Giant AND $uwizard != "")
+					{echo"<div align=center><font class=yellow>You cannot equip wizards with spells.</div></font";include("include/S_EQUIPA.php");die();
+					}
+				if($class == Ranger AND $uwizard != "")
+					{echo"<div align=center><font class=yellow>You cannot equip wizards with spells.</div></font";include("include/S_EQUIPA.php");die();
+					}
 				
 				include("include/connect.php");
 
-			if($uwarrior != ns)
+			if($uwarrior != ns AND $uwarrior != "")
 			  {	
 
 				if($uwarrior == "Dagger")
 					{
-							$wspeed = 6;
-							$wpower = 3;
+							$wspeed = 8;
+							$wpower = 2;
 							$w_c_name = 1;
 					}
 				if($uwarrior == "Short Sword")
 						{
-							$wspeed = 7;
-							$wpower = 6;
+							$wspeed = 10;
+							$wpower = 3;
 							$w_c_name = $ssword;
 						}
 				if($uwarrior == "Long Sword")
 						{
-							$wspeed = 8;
-							$wpower = 9;
+							$wspeed = 11;
+							$wpower = 4;
 							$w_c_name = $lsword;
 						}
 				if($uwarrior == "Axe")
 						{
-							$wspeed = 9;
-							$wpower = 12;
+							$wspeed = 15;
+							$wpower = 7;
 							$w_c_name = $axe;
 						}
 				if($uwarrior == "Great Axe")
 						{
-							$wspeed = 14;
-							$wpower = 20;
+							$wspeed = 17;
+							$wpower = 10;
 							$w_c_name = $gaxe;
 						}
 				if($uwarrior == "Ice Sword")
 						{
-							$wspeed = 18;
-							$wpower = 25;
+							$wspeed = 20;
+							$wpower = 15;
 							$w_c_name = $icesword;
 						}
 			
 				
-					
-					
-
-							if($w_c_name < 1)
+						if($w_c_name != 1)
 								{echo"<div align=center><font class=yellow>You need to construct $uwarrior first before you use it.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();}
 					
 						$warspeedw = $wspeed;
@@ -126,42 +136,41 @@ else
 
 
 
-			if($uwizard != ns)
+			if($uwizard != ns AND $uwizard != "")
 			  {
 			
 				if($uwizard == "Magic Missile")
 						{
-							$wspeed = 7;
-							$wpower = 4;
-						
-						}
-				if($uwizard == "Ice Storm")
-						{
-							$wspeed = 8;
-							$wpower = 10;
+							$wspeed = 11;
+							$wpower = 3;
 						
 						}
 				if($uwizard == "Fireball")
 						{
-							$wspeed = 9;
-							$wpower = 15;
+							$wspeed = 13;
+							$wpower = 7;
+						
+						}
+				if($uwizard == "Ice Storm")
+						{
+							$wspeed = 16;
+							$wpower = 10;
 						
 						}
 				if($uwizard == "Cloud Kill")
 						{
-							$wspeed = 15;
-							$wpower = 25;
+							$wspeed = 19;
+							$wpower = 14;
+						
+						}
+				if($uwizard == "Lightning Bolt")
+						{
+							$wspeed = 22;
+							$wpower = 17;
 						
 						}
 
-						if($uwizard == "Fireball" AND $r1pts < 10000)
-							{echo"<div align=center><font class=yellow>You have to research Fireball before you use it.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();}
-							
-						if($uwizard == "Ice Storm" AND $r2pts < 40000)
-							{echo"<div align=center><font class=yellow>You have to research Ice Storm before you use it.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();}
-						
-						if($uwizard == "Cloud Kill" AND $r3pts < 100000)
-							{echo"<div align=center><font class=yellow>You have to research Cloud Kill before you use it.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();}
+					
 						$wizpower = $wpower;
 						$wizspeeds = $wspeed;
 						$cspell = $uwizard;
@@ -175,35 +184,41 @@ else
 
 				
 
-				if($upriest != ns)
+				if($upriest != ns AND $upriest != "")
 			 	  {
 						
 					if($upriest == "Quarterstaff")
 						{
-							$wspeed = 6;
+							$wspeed = 9;
 							$wpower = 2;
 							$w_pc_name = 1;
 						}
 					if($upriest == "Spiked Club")
 						{
-							$wspeed = 6;
+							$wspeed = 11;
 							$wpower = 6;
 							$w_pc_name = $club;
 						}
 					if($upriest == "Mace")
 						{
-							$wspeed = 8;
-							$wpower = 9;
+							$wspeed = 13;
+							$wpower = 8;
 							$w_pc_name = $mace;
+						}
+					if($upriest == "Scepter")
+					    {
+							$wspeed = 15;
+							$wpower = 11;
+							$w_pc_name = $scepter;
 						}
 					if($upriest == "Grand Scepter")
 						{
-							$wspeed = 9;
-							$wpower = 15;
+							$wspeed = 20;
+							$wpower = 14;
 							$w_pc_name = $gs;
 						}
 
-								if($w_pc_name < 1)
+								if($w_pc_name != 1)
 									{echo"<div align=center><font class=yellow>You must construct $upriest first.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();}
 		
 						$pripower = $wpower;
@@ -216,36 +231,42 @@ else
 
 				  }
 
-			if($uarcher != ns)
+			if($uarcher != ns AND $uarcher != "")
 			 	  {		
 						
 					if($uarcher == "Bow")
 						{
-							$wspeeda = 5;
+							$wspeeda = 8;
 							$wpowera = 2;
 							$A_name = 1;
 						}
 					if($uarcher == "Short Bow")
 						{
-							$wspeeda = 6;
-							$wpowera = 7;
+							$wspeeda = 10;
+							$wpowera = 4;
 							$A_name = $bow1;
 						}
 					if($uarcher == "Long Bow")
 						{
-							$wspeeda = 7;
-							$wpowera = 14;
-							$A_name = $bow3;
+							$wspeeda = 13;
+							$wpowera = 6;
+							$A_name = $bow2;
+						}
+					if($uarcher == "Acid Bow")
+						{
+							$wspeeda = 16;
+							$wpowera = 9;
+							$A_name = $bow4;
 						}
 					if($uarcher == "Medieval War Bow")
 						{
-							$wspeeda = 8;
-							$wpowera = 22;
+							$wspeeda = 18;
+							$wpowera = 13;
 							$A_name = $bow3;
 						}
 
-								if($A_name < 1)
-									{echo"<div align=center><font class=yellow>$A_name You must construct $uarcher first.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();}
+								if($A_name != 1 AND $uarcher != "")
+									{echo"<div align=center><font class=yellow>You must construct $uarcher first.</font></div>";include("include/S_EQUIPO.php");include("include/S_EQUIPA.php");die();}
 		
 						$archpower = $wpowera;
 						$archspeedw = $wspeeda;
@@ -276,28 +297,41 @@ else
 }
 else
 {
+		include("include/nexplode.php");
+
 		if($uwararmor == ns AND $uwizarmor == ns AND $upriarmor == ns AND $uarcharmor == ns)
 			{echo"<div align=center><font class=yellow>You did not specify any armor to equip.</font></div>"; include("include/S_EQUIPA.php");die();
 			}
-		elseif($uwararmor != "Studded Leather" AND $uwararmor != "Chain Shirt" AND $uwararmor != "Chain Mail" AND $uwararmor != "Breast Plate" AND $uwararmor != "Medieval Armor" AND $uwararmor != ns)
-			{echo"<div align=center><font class=yellow>Invalid item.</font></div>"; include("include/S_EQUIPA.php");die();}
-		elseif($uarcharmor != "Studded Leather" AND $uarcharmor != "Chain Shirt" AND $uarcharmor != "Chain Mail" AND $uarcharmor != "Breast Plate" AND $uwararmor != "Medieval Armor" AND $uarcharmor != ns AND $uarcharmor != "")
-			{echo"<div align=center><font class=yellow>Invalid item.</font></div>"; include("include/S_EQUIPA.php");die();}
-		elseif($uwizarmor != "Robe" AND $uwizarmor != ns)
+		elseif($uwararmor != "Studded Leather" AND $uwararmor != "Chain Shirt" AND $uwararmor != "Chain Mail" AND $uwararmor != "Breast Plate" AND $uwararmor != "Medieval Armor" AND $uwararmor != ns AND $uwararmor != "")
 			{echo"<div align=center><font class=yellow>Invalid item.</font></div>"; include("include/S_EQUIPA.php");die();
 			}
-		elseif($upriarmor != "Leather" AND $upriarmor != ns)
-			{echo"<div align=center>Invalid item.</font></div>";include("include/S_EQUIPA.php");die();
+		elseif($uarcharmor != "Studded Leather" AND $uarcharmor != "Chain Shirt" AND $uarcharmor != "Chain Mail" AND $uarcharmor != "Breast Plate" AND $uarcharmor != "Medieval Armor" AND $uarcharmor != ns AND $uarcharmor != "")
+			{echo"<div align=center><font class=yellow>Invalid item.</font></div>"; include("include/S_EQUIPA.php");die();
+			}
+		elseif($uwizarmor != "Robe" AND $uwizarmor != "Mythril Armor" AND $uwizarmor != ns AND $uwizarmor != "" AND $uwizarmor != "Travellers Robe" AND $uwizarmor != "Magicians Robe")
+			{echo"<div align=center><font class=yellow>Invalid item.</font></div>"; include("include/S_EQUIPA.php");die();
+			}
+		elseif($upriarmor != "Leather" AND $upriarmor != ns and $upriarmor != "Golden Armor" AND $upriarmor != "Blessed Armor" AND $upriarmor != "")
+			{echo"<div align=center><font class=yellow>Invalid item.</font></div>";include("include/S_EQUIPA.php");die();
 			}
 		elseif($uarcharmor != "" AND $r6pts < 125000)
-			{echo"<div align=center>You must research archery first before you can equip your archers.</font></div>";include("include/S_EQUIPA.php");die();
+			{echo"<div align=center><font class=yellow>You must research archery first before you can equip your archers.</font></div>";include("include/S_EQUIPA.php");die();
+			}
+		elseif($uwizarmor != ""  AND $race == Giant)
+			{echo"<div align=center><font class=yellow>You cannot equip wizards being that you are a Giant.</font></div>";include("include/S_EQUIPA.php");die();
+			}
+		elseif($upriarmor !=  "" AND $race == Giant)
+			{echo"<div align=center><font class=yellow>You cannot equip priests being that you are a Giant.</font></div>";include("include/S_EQUIPA.php");die();
+			}
+		elseif($class == Ranger AND $uwizarmor != "")
+			{echo"<div align=center><font class=yellow>You cannot equip wizards.</div></font>";include("include/S_EQUIPA.php");die();
 			}
 		else
 			{
 			
 				  include("include/connect.php");
 
-			if($uwararmor != ns)
+			if($uwararmor != ns AND $uwararmor != "")
 				{
 						if($uwararmor == "Studded Leather")
 							{
@@ -336,10 +370,7 @@ else
 							}
 
 						
-						
-
-
-							if($A_NAME < 1)
+							if($A_NAME != 1)
 								{echo"<div align=center><font class=yellow>Invalid item.</font></div>"; include("include/S_EQUIPA.php");die();}
 
 							$wardef = $mod;
@@ -352,15 +383,38 @@ else
 					}
 
 				
-				if($uwizarmor != ns)
+				if($uwizarmor != ns AND $uwizarmor != "")
 					{
 
 						if($uwizarmor == "Robe")
 							{
 								$aspeed = 0;
 								$mod = 1;
+								$W_NAME = 1;
 							
 							}
+						if($uwizarmor == "Travellers Robe")
+							{
+								$aspeed = 1;
+								$mod = 3;
+								$W_NAME = $tr;
+							
+							}
+						if($uwizarmor == "Magicians Robe")
+							{
+								$aspeed = 2;
+								$mod = 5;
+								$W_NAME = $mr;
+							}
+						if($uwizarmor == "Mythril Armor")
+							{
+								$aspeed = 3;
+								$mod = 8;
+								$W_NAME = $ma;
+							}
+					
+								if($W_NAME != 1)
+									{echo"<div align=center><font class=yellow>Invalid item.</font></div>"; include("include/S_EQUIPA.php");die();}
 
 								$wizdef = $mod;
 								$wizspeeda = $aspeed;
@@ -372,15 +426,31 @@ else
 
 					}
 
-				if($upriarmor != ns)
+				if($upriarmor != ns AND $upriarmor != "")
 					{
 
 						if($upriarmor == "Leather")
 							{
 								$aspeed = 1;
 								$mod = 2;
-							
+								$P_name = 1;
 							}
+						if($upriarmor == "Golden Armor")
+							{
+								$aspeed = 3;
+								$mod = 4;
+								$P_name = $ga;
+							}
+						if($upriarmor == "Blessed Armor")
+							{
+								$aspeed = 5;
+								$mod = 6;
+								$P_name = 1;
+							}
+						
+								if($P_name != 1)
+									{echo"<div align=center><font class=yellow>Invalid item.</font></div>"; include("include/S_EQUIPA.php");die();}
+
 									$pridef = $mod;
 									$prispeeda = $aspeed;
 									$priarmor = $upriarmor;
@@ -390,8 +460,8 @@ else
 								    mysql_query("UPDATE military SET prispeeda =\"$prispeeda\" WHERE email='$email' AND pw='$pw'");
 							}
 				
-					if($uarcharmor != ns)
-				{
+				if($uarcharmor != ns AND $uarcharmor != "")
+					{
 						if($uarcharmor == "Studded Leather")
 							{
 								$aspeed = 0;
@@ -413,7 +483,7 @@ else
 								$A_NAME = $cm;
 			
 							}
-						if($uwararmor == "Breast Plate")
+						if($uarcharmor == "Breast Plate")
 							{
 								$aspeed = 3;
 								$mod = 6;
@@ -428,11 +498,7 @@ else
 			
 							}
 
-						
-						
-
-
-							if($A_NAME < 1)
+							if($A_NAME != 1)
 								{echo"<div align=center><font class=yellow>Invalid item.</font></div>"; include("include/S_EQUIPA.php");die();}
 
 							$archdef = $mod;
@@ -444,20 +510,13 @@ else
 				 			 mysql_query("UPDATE military SET archspeeda =\"$aspeed\" WHERE email='$email' AND pw='$pw'");
 					}
 
-
-
 							echo"<div align=center><font class=yellow>Your troops have been equipped with what you specified.</font></div>";
 							include("include/S_EQUIPA.php");		
 							die();
-
-	
-
-			
-	 }
+		}
    }
 ?>
 <!-- body ends here -->	
-</table>
 </TD>
 </TR>
 </TABLE>

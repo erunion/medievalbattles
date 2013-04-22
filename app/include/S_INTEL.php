@@ -60,14 +60,14 @@ echo "
 
 
 </center>
-<table border="1" bordercolor="#000000" align=center width="60%">
+<table border="1" bordercolor="#000000" align=center width="40%" cellpadding=0 cellspacing=0>
 	<tr>
 		<td class=main colspan=2><b class=reg>Itelligence</b></td>
 	<tr>
 		<td class=main2 colspan=2>Here, you can gather information on an empire.<br>
 		You have <? echo"$thieves thieves"; ?> available.</td>
 	<tr>
-		<td class=inner2>Thieves:</td><td class=inner2><input type="number" name="send" size=4></td>
+		<td class=inner2>Thieves:</td><td class=inner2><input type="number" name="send" size=10></td>
 	
 
 	<tr>

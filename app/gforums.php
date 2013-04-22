@@ -9,7 +9,7 @@
 
 
 			if($setguild == None)
-				{echo"<div align=center>Your settlement is currently not in a Guild.</div>";
+				{echo"<div align=center><font class=yellow>Your settlement is currently not in a Guild.</font></div>";
 					die();
 				}
 
@@ -19,8 +19,7 @@
 <?
 
 include("commong.php");
-mysql_connect($hostname,$username,$passwrd) or die("Couldnt connect to the database");
-@mysql_select_db(medievalbattles_com) or die("Unable to select database");
+include("include/connect.php");
 
 if (empty($offset))  {  $offset=0;  }
 
@@ -28,7 +27,7 @@ $numresults=mysql_query("SELECT topicid FROM $topicdb");
 $numrows=mysql_num_rows($numresults);
 $pages=intval($numrows/$limit);
 
-$query = "SELECT topicid, name, topic, replies, lastpost FROM $topicdb ORDER by lastpost DESC limit $offset,$limit";
+$query = "SELECT topicid, name, topic, replies, lastpost, lastposter FROM $topicdb ORDER by lastpost DESC limit $offset,$limit";
 $result= mysql_query($query) or die("Could not run the database query!");
 
 if ($result) { 
@@ -38,6 +37,7 @@ if ($result) {
 				<tr bgcolor=$color1>
 					<td align=center><b class=forum>TOPIC</b></td>
 					<td align=center><b class=forum>STARTED BY</b></td>
+					<td align=center><b class=forum>POSTED LAST</b></td>
 					<td align=center><b class=forum>REPLIES</b></td>
 					<td align=center><b class=forum>LAST POST</b></td>
 				</tr>
@@ -45,11 +45,12 @@ if ($result) {
 	while ($r = mysql_fetch_array($result)) {
 	
 	extract ($r);
-	$lastpost = gmdate("h:ia, D d" ,$lastpost);	
+	//$lastpost = gmdate("h:ia, D d" ,$lastpost);	
 	echo "
 		<tr bgcolor=$color2>
 			<td valign=top><strong class=black-small>&nbsp;&nbsp; <a href=topicg.php?topicid=$topicid>$topic</a></strong></td>			
 			<td valign=top><strong class=black-small>&nbsp; $name</strong></td>
+			<td valign=top><strong class=black-small>&nbsp; $lastposter</strong></td>
 			<td valign=top width=\"61\" align=center><strong class=black-small>&nbsp; $replies</strong></td>
 			<td valign=top width=\"125\">&nbsp;<nobr><small class=black-small>$lastpost</small></nobr></td>
 		</tr>

@@ -1,7 +1,5 @@
 <?
-		@mysql_connect (localhost, ursenbach, pa724);
-		mysql_select_db(medievalbattles_com) or die(darnit);
-		$dbnam = "medievalbattles_com";
+	include("include/connect.php");
 
 	session_register('login');
 	session_register('email');
@@ -21,7 +19,7 @@ function gethostname() {
 
 
 $hostaddress = gethostname(); 		
-$datestamp = (time()) + (0);
+$datestamp = date("d F H:i");
 // make changes to the "0" if the time on your machine is any different to your own area??? add values by seconds, so add 3600 if its 1 hour behind.
 
 
@@ -41,14 +39,14 @@ $tablewidth= "80%";
 		$setgid = mysql($dbnam, "SELECT gid FROM guild WHERE gname = '$setguild'");	
 		$thesgid = mysql_result($setgid,"thesgid");
 
-
+$setguild = ereg_replace(" ", "", "$setguild");
 $topicdb = "$setguild" . "main" . "$thesgid";
 $msgsdb = "$setguild" . "msgs" . "$thesgid";
 // the tables which relate to where the information is stored. these should be the same as 
 
 $hostname = "localhost";
-$dbname = "medievalbattles_com";
-$username = "ursenbach";
+$dbname = "medieval_mb";
+$username = "medieval";
 $passwrd = "pa724";
 // your database variables. these need to be changed for your system to make it work!
 

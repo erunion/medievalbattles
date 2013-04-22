@@ -1,5 +1,6 @@
 <form type=post action="messaging.php">
 <center>
+
 <?php
 
 	

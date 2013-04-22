@@ -39,7 +39,7 @@ echo "
 ";
 
 
-			$query_string = "SELECT ename, mts, land, exp FROM user ORDER BY exp DESC LIMIT 0,20";
+		$query_string = "SELECT ename, mts, land, exp FROM user ORDER BY exp DESC LIMIT 0,20";
 		$result_id = mysql_query($query_string, $var);
 		while ($row = mysql_fetch_row($result_id))
 		    {

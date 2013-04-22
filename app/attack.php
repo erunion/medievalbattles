@@ -1,318 +1,455 @@
-<?	 include("include/header_game.php");	?>
+<?php include("include/igtop.php");?>
 
-<center>
-<form type="post" action="attack.php">
-<b class="reg">Settlement:</b><input type="number" name="snum" size="3" maxlength="3">
-<input type="hidden" name="setchg" value="1">
-<input type="submit" value="Change">
-</form>
+<? 	 if($attacksys == no){echo"<font class=yellow><div align=center>Sorry, attack system is under repair.</font></div>";die();} ?>
 
-<?
-if(!IsSet($attack))	{
-	include("attack_include.php");
-} else {
-	// First thing is first, does the user have an available general?
-	$maxgenerals = 4;
-	if ($maxgenerals - countgenerals($cuid) < 1) {
-		echo "<center>You do not have any available generals to attack with.</center>";
-		include("include/footer_game.php");
-		exit();
-	};
-
-	// Did they choose an empire to attack?
-	if (!$attackee || $attackee == '' || $attackee == 'nodata') {
-		echo "<center>You did not choose an empire to attack.</center>";
-		include("include/footer_game.php");
-		exit();
-	};
-
-	$attackpower = 0;
-	$defensepower = 0;
-	$arr = get_defined_vars();
-
-	// Get list of returning military
-	$query = "SELECT t.data1, sum(t.data2) AS data2 FROM tick t WHERE t.type = 'troop' AND t.user_id = '$cuid' GROUP BY t.data1";
-	$result = mysql_db_query($cdbname, $query, $connection) or die("Error getting returning military: [" . mysql_error() . "]");
-	while ($myrow = mysql_fetch_array($result)) {
-		$data1 = $myrow["data1"];
-		$data2 = $myrow["data2"];
-		$returningmilitary["attack"][$data1] = $data2;
-	};
-
-	// Get list of attackee's returning military
-	$query = "SELECT t.data1, sum(t.data2) AS data2 FROM tick t WHERE t.type = 'troop' AND t.user_id = '$attackee' GROUP BY t.data1";
-	$result = mysql_db_query($cdbname, $query, $connection) or die("Error getting attackees defending military: [" . mysql_error() . "]");
-	while ($myrow = mysql_fetch_array($result)) {
-		$data1 = $myrow["data1"];
-		$data2 = $myrow["data2"];
-		$returningmilitary["defend"][$data1] = $data2;
-	};
-
-	// Get Race Information
-	$ri_query = "SELECT id, atk, spd, def FROM races";
-	$ri_result = mysql_db_query($cdbname, $ri_query, $connection) or die("Error retrieving race information: [" . mysql_error() . "]");
-	while ($ri_row = mysql_fetch_array($ri_result)) 
-	{
-		$race_id   = $ri_row["id"];
-		$race_atk_value = $ri_row["atk"];
-		$race_spd_value = $ri_row["spd"];
-		$race_def_value = $ri_row["def"];
-		$race_atk[$race_id] = $race_atk_value;
-		$race_spd[$race_id] = $race_spd_value;
-		$race_def[$race_id] = $race_def_value;
-	};
-
-	// Get Class Information
-	$ci_query = "SELECT id, atk, spd, def FROM classes";
-	$ci_result = mysql_db_query($cdbname, $ci_query, $connection) or die("Error retrieving class information: [" . mysql_error() . "]");
-	while ($ci_row = mysql_fetch_array($ci_result)) 
-	{
-		$class_id   = $ci_row["id"];
-		$class_atk_value = $ci_row["atk"];
-		$class_spd_value = $ci_row["spd"];
-		$class_def_value = $ci_row["def"];
-		$class_atk[$class_id] = $class_atk_value;
-		$class_spd[$class_id] = $class_spd_value;
-		$class_def[$class_id] = $class_def_value;
-	};
-
-	// Get all of user's troops
-
-	$query = "SELECT rt.name, rt.race_id AS raceid, rt.id AS rtid, rt.atk, rt.wep_class, ut.id AS utid, ut.amount FROM race_troop rt LEFT JOIN user_troop ut ON rt.id = ut.troop_id WHERE ut.user_id = '$cuid' AND rt.race_id = '$race'";
-	$result = mysql_db_query($cdbname, $query, $connection) or die("Error!: [" . mysql_error() . "]");
-	while ($myrow = mysql_fetch_array($result)) 
-	{
-		$troop_id = $myrow["rtid"];
-		$ut_id = $myrow["utid"];
-		$troop_race_req = $myrow["raceid"];			
-		$troop_name = $myrow["name"];
-		$troop_atk_power = $myrow["atk"];
-		$troop_weapon_class = $myrow["wep_class"];
-		$troop_owned = $myrow["amount"];
+<center><b class=reg>| <a href="attack.php"> -Land- </a> | <a href="attackr.php"> -Resource- </a> | <a href="attackm.php"> -Mountain- </a> | </b></center>
 	
-		$attacker_troops[$troop_id] = $troop_owned - $returning_military["attack"][$troop_id];
-		echo "<br>You have $attacker_troops[$troop_id] of $troop_name ($troop_id) available. ($troop_owned total)";
+<center>
 
-		// Get troop's equipped weapon
-		$tew_query = "SELECT uw.weapon_id, uw.equipped, w.id AS wid, w.class AS wclass, w.atk AS watk FROM user_weapon uw LEFT JOIN weapon w ON uw.weapon_id = w.id WHERE uw.user_id = '$cuid' AND w.class = '$troop_weapon_class' AND uw.equipped = 'y'";
-		$tew_result = mysql_db_query($cdbname, $tew_query, $connection) or die("Error!: [" . mysql_error() . "]");
-		$tew_myrow = mysql_fetch_array($tew_result);
-		$attacker_weapon_power[$troop_id] = $tew_myrow["watk"];
-		echo "Their weapon power seems to be $attacker_weapon_power[$troop_id]<br>";
-	};
+<form type=post action="attack.php">
+ <b class=reg>Settlement:</b><input type="number" name="snum" size=3 maxlength=3>
+  <input type="hidden" name="setchg" value="1">
+  <input type="submit" value="Change">
+ </form>
+</center>
+<br>
+<br>
 
-	// Start attacking
-	for ($x = 1; $x < 100; $x++) {
-		if (!empty($arr[$x])) {
-			if ($arr[$x] < 1) {
-				echo "<div align=center><font class=yellow>You can not send less than 1 unit.</font></div>";
-				include("include/footer_game.php");
-				die();
-			} else if ($attacktype == "") {
-				echo "<div align=center><font class=yellow>You must select an attack type.</font></div>";
-				include("include/footer_game.php");
-				die();
-			} else if ($attacker_troops[$x] < 1) {
-				echo "<div align=center><font class=yellow>You do not have that many troops to send.</font></div>";
-				include("include/footer_game.php");
-				die();
-			};
 
-			$attackpower = $attackpower + ($arr[$x] * ($troop_atk_power + $weapon_atk));
-		};
-	};
 
-	// Calculate Attack Power
-	$attackpower = $attackpower + ($race_atk[$race] * $class_atk[$class]);
+<?php
+	if(!IsSet($attack))
+{
+  ?> 
 
-	echo "<br>race atk: $race_atk[$race]";
-	echo "<br>class atk: $class_atk[$class]";
-	echo "<br>Total Attack Power is $attackpower<br><br>";
-	echo "attack info over<hr>";
+			<? include("include/attack/ldrop.php"); ?>
+			<? include("include/attack/table.php"); ?>
 
-	// Get information on attackee
-	$gai_query = "SELECT * FROM users WHERE id = '$attackee'";
-	$gai_result = mysql_db_query($cdbname, $gai_query, $connection) or die("Error!: [" . mysql_error() . "]");
-	$gai_myrow = mysql_fetch_array($gai_result);
-		$attackee_race = $gai_myrow["race"];
-		$attackee_class = $gai_myrow["class"];
-		$attackee_land = $gai_myrow["land"];
-		$attackee_land_buildings = $gai_myrow["land_buildings"];
-		$attackee_mtn = $gai_myrow["land"];
-		$attackee_mtn_buildings = $gai_myrow["land_buildings"];
-		$attackee_gold = $gai_myrow["gold"];
-		$attackee_iron = $gai_myrow["iron"];
-		$attackee_lumber = $gai_myrow["lumber"];
-		$attackee_civilians = $gai_myrow["civilians"];
-		$attackee_food = $gai_myrow["food"];
-		$attackee_experience = $gai_myrow["exp"];
 
-	// Get list of their defending military
-	$theirdefmil_query = "SELECT rt.name, rt.race_id AS raceid, rt.id AS rtid, rt.def, rt.wep_class, ut.id AS utid, ut.amount FROM race_troop rt LEFT JOIN user_troop ut ON rt.id = ut.troop_id WHERE ut.user_id = '$attackee' AND rt.race_id = '$attackee_race'";
-	$theirdefmil_result = mysql_db_query($cdbname, $theirdefmil_query, $connection) or die("Error!: [" . mysql_error() . "]");
-	while ($theirdefmil_myrow = mysql_fetch_array($theirdefmil_result)) 
-	{
-		$attackee_troop_id = $theirdefmil_myrow["rtid"];
-		$attackee_ut_id = $theirdefmil_myrow["utid"];
-		$attackee_troop_race_req = $theirdefmil_myrow["raceid"];			
-		$attackee_troop_name = $theirdefmil_myrow["name"];
-		$attackee_troop_def_power = $theirdefmil_myrow["def"];
-		$attackee_troop_armor_class = $theirdefmil_myrow["wep_armor"];
-		$attackee_troop_owned = $theirdefmil_myrow["amount"] - $returningmilitary["defend"][$attackee_troop_id];
-
-		// Get their troop's equipped weapon
-		$atew_query = "SELECT uw.armor_id, uw.equipped, w.id AS wid, w.class AS wclass, w.def AS wdef FROM user_armor uw LEFT JOIN armor w ON uw.armor_id = w.id WHERE uw.user_id = '$attackee' AND w.class = '$attackee_troop_armor_class' AND uw.equipped = 'y'";
-		$atew_result = mysql_db_query($cdbname, $atew_query, $connection) or die("Error!: [" . mysql_error() . "]");
-		$atew_myrow = mysql_fetch_array($atew_result);
-			$attackee_armor_def = $atew_myrow["wdef"];
-			if ($attackee_armor_def == 0)	{	
-				$attackee_armor_def = 1;
-			};
+<?php
+}
+else
+{  	
+		include("include/nexplode.php");
 		
-		$deftroop[$attackee_troop_id] = $attackee_troop_owned - $returning_military[$attackee_troop_id];
-		echo "<br>The defender seems to have $deftroop[$attackee_troop_id] $attackee_troop_name ($attacke_troop_id) available. ($attackee_troop_owned total)<br>Their armor defence seems to be $attackee_armor_def<br>";
-		$defensepower = $defensepower + ($deftroop[$attackee_troop_id] * ($attackee_troop_def_power + $attackee_armor_def));
-	};
-
-	// Calculate Defense Power
-	$defensepower = $defensepower + ($race_def[$attackee_race] * $class_def[$attackee_class]);
-	echo "<br><br>Total Defense Power is $defensepower<br>";
-
-	$difference = abs($attackpower - $defensepower);
-
-	if ($attackpower > $defensepower)	{
-		// Attack Success
-		$success = 1;
-		$youdiv = 200;
-		$themdiv = 100;
-		 echo "<b>win</b>";
-	} else {
-		// Attack Failure
-		$youdiv = 100;
-		$themdiv = 200;
-		echo "<b>lose</b>";
-	};
-
-	// Remove Troops
-	// Remove Your Troops
-	$maxreturntime = 0;
-	for ($x = 1; $x < 100; $x++) {
-		if ($arr[$x]) {
-			$toreturn = floor($arr[$x] - ($difference / $youdiv)); // How many return
-			$totaltosubtract = $arr[$x] - $toreturn;
-			// You lost $totaltosubtract X (give name) // need to notify user of lost troops
-			$rt_query = "UPDATE user_troop SET amount = amount - '$totaltosubtract' WHERE user_id = '$cuid' AND troop_id = '$x'";
-			$rt_result = mysql_db_query($cdbname, $rt_query, $connection) or die("Error!: [" . mysql_error() . "]");
-
-			// Calculate this troop's return time
-			$urt_query = "SELECT rt FROM race_troop WHERE id = '$x'";
-			$urt_result = mysql_db_query($cdbname, $urt_query, $connection) or die("Error!: [" . mysql_error() . "]");
-			$urt_myrow = mysql_fetch_array($urt_result);
-				$troop_return_time = $urt_myrow["rt"];
-
-			$returntime = $troop_return_time + $race_spd[$race] + $class_spd[$class];
-			echo "	<hr>		$returntime = $troop_return_time + $race_spd[$race] + $class_spd[$class];<hr>";
-			echo "return time: [$returntime]<br>race spd: [$race_spd[$race]]<br>class spd: [$class_spd[$class]]<br>troop return time: [$troop_return_time]";
-
-			if ($returntime > $maxreturntime) {$maxreturntime = $returntime;}; // For return time of general
-
-			// Add these troops to return
-			$r_query = "INSERT INTO tick (id, user_id, data1, data2, type, time) values ('', '$cuid', '$x', '$toreturn', 'troop', '$returntime')";
-			$r_result = mysql_db_query($cdbname, $r_query, $connection) or die("Error adding troops to return: [" . mysql_error() . "]");
-		};
-	};
-
-	// Add general to return
-	$gr_query = "INSERT INTO tick (id, user_id, data1, data2, type, time) values ('', '$cuid', '', '', 'general', '$maxreturntime')";
-	$gr_result = mysql_db_query($cdbname, $gr_query, $connection) or die("Error adding general to return: [" . mysql_error() . "]");
-
-	// Remove Their Troops
-	for ($x = 1; $x < 100; $x++) {
-		if ($deftroop[$x]) {
-			$newamount = floor($deftroop[$x] - ($difference / $themdiv));
-			// Are we notifying enemy troop loss? enemy just lost ($difference / $themdiv) troops
-			$rt_query = "UPDATE user_troop SET amount = '$newamount' WHERE user_id = '$attackee' AND troop_id = '$x'";
-			$rt_result = mysql_db_query($cdbname, $rt_query, $connection) or die("Error updating enemy troops: [" . mysql_error() . "]");
-		};
-	};
-
-	// If success, give land or mtn or resources
-	if ($success) {
-		$winning_percentage = 0;
+		$uwarrior = implode("", explode(",", $uwarrior));
+		$uwizard = implode("", explode(",", $uwizard));
+		$upriest = implode("", explode(",", $upriest));
+		$uarcher = implode("", explode(",", $uarcher));
 		
-		// No-Bash Incentive
-//		if ($exp <= "20000")	{
-//			$winning_percentage = .05;
-//		} else if (0($exp) < $attackee_exp <= .05($exp)) {
-//			$winning_percentage = 
-//		}
+		if($safemode > 0)
+			{echo"<div align=center><font class=yellow>You cannot attack while in safe mode.<br><br></font></div>";include("include/attack/mdrop.php");include("include/attack/table.php");die();
+			}
+		elseif($fleets == 0)
+			{echo"<div align=center><font class=yellow>You do not have any generals available.<br><br></font></div>";include("include/attack/ldrop.php");include("include/attack/table.php");die();
+			}
+		elseif($empvalue == ns)
+			{echo"<div align=center><font class=yellow>You did not specify anyone to attack!<br><br></font></div>";include("include/attack/ldrop.php");include("include/attack/table.php");die();
+			}
+		elseif($uarcher > 0 AND $r6pts < 125000)
+			{echo"<div align=center><font class=yellow>You have to research archery.<br><br></font></div>";include("include/attack/ldrop.php");include("include/attack/table.php");die();
+			}
+		elseif($race == Giant AND $uwizard > 0)
+			{echo"<div align=center><font class=yellow>Being that you are a Giant, you cannot attack with wizards.</div></font>";include("include/attack/ldrop.php");include("include/attack/table.php");die();
+			}
+		elseif($race == Giant AND $upriest > 0)
+			{echo"<div align=center><font class=yellow>Being that you are a Giant, you cannot attack with  priests.</div></font>";include("include/attack/ldrop.php");include("include/attack/table.php");die();
+			}
+		elseif($class == Ranger AND $uwizard > 0)
+			{echo"<div align=center><font class=yellow>Being that you are a Ranger, you cannot attack with wizards.</div></font>";include("include/attack/ldrop.php");include("include/attack/table.php");die();
+			}
+	
+					//INCLUDE OFF, DEF VALUES AND ENAME, LAND, ALAND
+						include("include/connect.php");
+						include("include/attack/defANDoff.php");
+ 						 
 		
-		// Give winnings
-		if ($attacktype == "land")	{
-			$get_land = floor($attackee_land * .1);
+					//for attacker
+						if($atkempire >= 200)
+							{$landgain = $atkempire * .1;$landgain = round($landgain);}
+						elseif($atkempire < 200 AND $atkempire >=10)
+							{$landgain = 10;}
+						else
+							{$landgain = $atkempire;$landgain = round($landgain);}
+					
+							$EMPs_setguild = mysql($dbnam, "SELECT setguild FROM settlement WHERE setid='$tsetid'");
+							$E_Setguild = mysql_result($EMPs_setguild,"E_Setguild");
 
-			// Get list of attackee's land buildings already built
-			$alb_query = "SELECT b.name, b.cost, b.id AS bid, b.type, ub.id AS ubid, ub.amount FROM buildings b LEFT JOIN user_buildings ub ON b.id = ub.building_id WHERE ub.user_id = '$attackee' AND b.type = 'land' AND ub.amount > 0";
-			$alb_result = mysql_db_query($cdbname, $alb_query, $connection) or die("Error!: [" . mysql_error() . "]");
-			$d_buildings_total = 1;
-			while ($alb_myrow = mysql_fetch_array($alb_result)) 
+							$YEMPs_setguild = mysql($dbnam, "SELECT setguild FROM settlement WHERE setid='$setid'");
+							$YE_Setguild = mysql_result($YEMPs_setguild,"YE_Setguild");
+
+	if($uwarrior == "" AND $uwizard == "" AND $upriest == "" AND $uarcher == "")
+		{echo"<div align=center><font class=yellow>You did not send any troops into combat!</font></div><br><br>";include("include/attack/ldrop.php");include("include/attack/table.php");die();
+		}
+	elseif($E_Setguild == $YE_Setguild AND $setid != $tsetid AND $E_Setguild != None)
+		{echo"<div align=center><font class=yellow>You cannot attack someone that is in your guild.</font></div><br><br>";include("include/attack/ldrop.php");include("include/attack/table.php");die();
+		}
+	elseif($empireattacked === $ename)
+		{echo"<div align=center><font class=yellow>You cannot attack your ownself!</font></div><br><br>";include("include/attack/ldrop.php");include("include/attack/table.php");die();
+		}
+	elseif($warriors < $uwarrior OR $wizards < $uwizard OR $priests < $upriest OR $archers < $uarcher) 
+		{print"<div align=center><font class=yellow>You cannot send that many units into combat.</font></div><br><br>";	include("include/attack/ldrop.php");include("include/attack/table.php");die();
+		}
+	elseif($uwarrior < 0 OR $uwizard < 0 OR $upriest < 0 OR $uarcher < 0)
+		{echo"<div align=center><font class=yellow>You cannot send negative or 0 units.</font></div><br><br>";include("include/attack/ldrop.php");include("include/attack/table.php");die();
+		}
+	elseif($yourtotalpower <= $theirtotalpower )
+		{
+	
+					include("include/attack/calculations.php");
+
+					mysql_query("INSERT INTO setnews (date, news, setid) 
+						VALUES	('$clock', \"<font class=yellow>$ename ($setid) failed to attack $empireattacked ($tsetid) for land</font>\", '$setid') ");
+					mysql_query("INSERT INTO guildnews (date, news, setid) 
+						VALUES	('$clock', \"<font class=yellow>$ename ($setid) failed to attack $empireattacked ($tsetid) for land</font>\", '$setid') ");
+
+					mysql_query("INSERT INTO setnews (date, news, setid) 
+						VALUES	('$clock', \"<font class=orange>$empireattacked ($tsetid) successfully defended their land against $ename ($setid)</font>\", '$tsetid') ");
+					mysql_query("INSERT INTO guild news (date, news, setid) 
+						VALUES	('$clock', \"<font class=orange>$empireattacked ($tsetid) successfully defended their land against $ename ($setid)</font>\", '$tsetid') ");
+
+						
+					$newno = $e_nno + 1;
+
+					mysql_query("UPDATE user SET nno =\"$newno\" WHERE userid='$empvalue'");
+
+					mysql_query("INSERT INTO empnews (date, news, yourid) 
+						VALUES	('$clock', \"<font class=yellow>We have successfully defended our empire against $ename ($setid)</font>\" , '$empvalue') ");
+					
+					echo"<div align=center><font class=yellow>You have failed to attack $empireattacked($tsetid)!</font><br><br><font class=orange>$your_losses<br><br></font></div>";include("include/attack/ldrop.php");include("include/attack/table.php");
+					die();
+		}
+		else
 			{
-				$kill_buildings[$kill_buildings_total]["bid"] = $alb_myrow["bid"];
-				$kill_buildings[$kill_buildings_total]["amount"] = $alb_myrow["amount"];
-				$kill_buildings[$kill_buildings_total]["type"] = "land";
-				$kill_buildings_total = $kill_buildings_total + 1;
-			};
-			$free_land = getfreeland($attackee);
+			
 
-			if ($free_land > 0) {
-				$kill_buildings[$kill_buildings_total]["amount"] = $free_land;
-				$kill_buildings[$kill_buildings_total]["type"] = "freeland";
-			};
+	include("include/connect.php");
+	include("include/attack/calculations.php");
 
-			$total_buildings_to_kill = $get_land;
-			$total_buildings_left_to_kill = $get_land;
+								
 
-			while($total_buildings_left_to_kill > 0) {
-				for ($j = 1; $j <= $kill_buildings_total; $j++) {
-					if ($kill_buildings[$j]["amount"] > 0 && $total_buildings_left_to_kill > 0) {
-						$kill_buildings[$j]["amount"] = $kill_buildings[$j]["amount"] - 1;
-						$total_buildings_left_to_kill = $total_buildings_left_to_kill - 1;
-					};
-				};
-			};
+	While($landgain > $temptally)
+  	{
+		If ($ahome > 0 AND $landgain > $temptally)
+          { 
+			$ahome = $ahome - 1;
+            $temptally = $temptally + 1;
+		  }
+          
+      if ($abarrack > 0 AND $landgain > $temptally)
+          {	
+			$abarrack = $abarrack - 1;
+            $temptally = $temptally + 1;
+		  }
+          
+      if ($afarm > 0 AND $landgain > $temptally)
+		  {
+           $afarm = $afarm - 1;
+           $temptally = $temptally + 1;
+		  }
+           
+      if ($awp > 0 AND $landgain > $temptally)
+		  {
+           $awp = $awp - 1;
+           $temptally = $temptally + 1;
+ 		  }
+       if($almill > 0 AND $landgain > $temptally)
+		  {
+		   $almill = $almill - 1;
+		   $temptally = $temptallly + 1;
+		  }
+	  if ($attaland > 0 AND $landgain > $temptally)
+		  {
+           $attaland = $attaland - 1;
+           $temptally = $temptally + 1;
+		  }
+	  	if($landgain > $temptally AND $ahome == 0 AND $abarrack == 0 AND $afarm == 0 AND $alab == 0 AND $attaland == 0)
+		  	{
+					If ($dahome > 0 AND $landgain > $temptally)
+          				{ 
+							$dahome = $dahome - 1;
+            				$temptally = $temptally + 1;
+		  				}
+          
+     				 if ($dabarrack > 0 AND $landgain > $temptally)
+          				{	
+							$dabarrack = $dabarrack - 1;
+            				$temptally = $temptally + 1;
+		  				}
+          
+      				if ($dafarm > 0 AND $landgain > $temptally)
+		  				{
+           					$dafarm = $dafarm - 1;
+           					$temptally = $temptally + 1;
+		  				}
+           
+      				if ($dawp > 0 AND $landgain > $temptally)
+		  				{
+           					$dawp = $dawp - 1;
+           					$temptally = $temptally + 1;
+ 		  				}
+					if($dalmill > 0 AND $landgain > $temptally)
+						{
+							$dalmill = $dalmill - 1;
+							$temptally = $temptally + 1;
+						}
 
-			// KILL! KILL! KILL!
-			for ($i = 1; $i <= $d_buildings_total; $i++) {
-				$b_amount = $kill_buildings[$i]["amount"];
-				$b_id = $kill_buildings[$i]["bid"];
-				if ($kill_buildings[$i]["type"] == "land") {
-					$kill_buildings_query = "UPDATE user_buildings SET amount = '$b_amount' WHERE user_id = '$attackee' AND building_id = '$b_id'";
-					mysql_db_query($cdbname, $kill_buildings_query, $connection) or die("Error!: [" . mysql_error() . "]");
-				} else {
-					$lose_freeland = ($free_land - $b_amount);
-				};
-			};
+           			
 
-			$lose_buildings = $get_land - $lose_freeland;			
-			$kill_land_query = "UPDATE users SET land_buildings = land_buildings - '$lose_buildings' WHERE id = '$attackee'";
-			mysql_db_query($cdbname, $kill_land_query, $connection) or die("Error!: [" . mysql_error() . "]");
+		  	}
+       	
+	}
 
-			// Update attackers land
-			$update_land_query = "UPDATE users SET land = land + '$get_land' WHERE id = '$cuid'";
-			mysql_db_query($cdbname, $update_land_query, $connection) or die("Error!: [" . mysql_error() . "]");
+								//for attackee
+									$ATD_land = $atkempire - $landgain;  
+									$NEW_land = $land + $landgain;
+									$NEW_aland = $aland + $landgain;
 
-			// Update attackees land
-			$update_land_query = "UPDATE users SET land = land - '$get_land' WHERE id = '$attackee'";
-			mysql_db_query($cdbname, $update_land_query, $connection) or die("Error!: [" . mysql_error() . "]");
+	  					
+	  						
+      
+	 								if($landgain >= 10 AND $ATD_land != 0)
+										{
 
-		} else if ($attacktype == "mountain")	{
-		} else if ($attacktype == "resource")	{
-		};
+												mysql_query("INSERT INTO setnews (date, news, setid) 
+													VALUES	('$clock', \"<font class=yellow>$ename ($setid) successfully attacked $empireattacked ($tsetid) and gained $landgain land</font>\", '$setid') ");
 
-	};
+												mysql_query("INSERT INTO guildnews (date, news, setid) 
+													VALUES	('$clock', \"<font class=yellow>$ename ($setid) successfully attacked $empireattacked ($tsetid) and gained $landgain land</font>\", '$setid') ");
+												mysql_query("INSERT INTO setnews (date, news, setid) 
+													VALUES	('$clock', \"<font class=lg>$empireattacked ($tsetid) lost $landgain land to $ename ($setid)</font>\", '$tsetid') ");
+												mysql_query("INSERT INTO guildnews (date, news, setid) 
+													VALUES	('$clock', \"<font class=lg>$empireattacked ($tsetid) lost $landgain land to $ename ($setid)</font>\", '$tsetid') ");
+										}
+									if($ATD_land == 0)
+											{
+												
+												mysql_query("INSERT INTO setnews (date, news, setid) 
+													VALUES	('$clock', \"<font class=yellow>$ename ($setid) gained $landgain land and destroyed $empireattacked ($tsetid) <i>Medieval style</i></font>\", '$setid') ");
+												mysql_query("INSERT INTO guildnews (date, news, setid) 
+													VALUES	('$clock', \"<font class=yellow>$ename ($setid) gained $landgain land and destroyed $empireattacked ($tsetid) <i>Medieval style</i></font>\", '$setid') ");
+
+												mysql_query("INSERT INTO setnews (date, news, setid) 
+													VALUES	('$clock', \"<font class=lg>$empireattacked ($tsetid) was destroyed by $ename ($setid) <i>Medieval style</i></font>\", '$tsetid') ");
+												mysql_query("INSERT INTO guildnews (date, news, setid) 
+													VALUES	('$clock', \"<font class=lg>$empireattacked ($tsetid) was destroyed by $ename ($setid) <i>Medieval style</i></font>\", '$tsetid') ");
+											}
+
+										$new_exp_2 = $A_EXP2 + ($landgain * $landexpa);
+										mysql_query("UPDATE user SET exp2 =\"$new_exp_2\" WHERE email='$email' AND pw='$pw'");
+
+										mysql_query("UPDATE user SET land =\"$NEW_land\" WHERE email='$email' AND pw='$pw'");
+	  									mysql_query("UPDATE buildings SET aland =\"$NEW_aland\" WHERE email='$email' AND pw='$pw'");
+										
+	  									mysql_query("UPDATE user SET land =\"$ATD_land\" WHERE userid = '$empvalue'");
+	 									mysql_query("UPDATE buildings SET home =\"$ahome\" WHERE userid = '$empvalue'");
+	 									mysql_query("UPDATE buildings SET barrack =\"$abarrack\" WHERE userid = '$empvalue'");
+	 									mysql_query("UPDATE buildings SET wp =\"$awp\" WHERE userid = '$empvalue'");
+	 									mysql_query("UPDATE buildings SET farm =\"$afarm\" WHERE userid = '$empvalue'");
+										mysql_query("UPDATE buildings SET lmill =\"$almill\" WHERE userid='$empvalue'");
+										mysql_query("UPDATE buildings SET aland =\"$attaland\" WHERE userid = '$empvalue'");
+
+										mysql_query("UPDATE buildings SET dhome =\"$dahome\" WHERE userid = '$empvalue'");
+	 									mysql_query("UPDATE buildings SET dbarrack =\"$dabarrack\" WHERE userid = '$empvalue'");
+	 									mysql_query("UPDATE buildings SET dwp =\"$dawp\" WHERE userid = '$empvalue'");
+	 									mysql_query("UPDATE buildings SET dfarm =\"$dafarm\" WHERE userid = '$empvalue'");
+										mysql_query("UPDATE buildings SET dlmill = \"$dalmill\" WHERE userid ='$empvalue'");
+									
+									
+									if($landgain >= 10 AND $ATD_land != 0)
+										{echo"<div align=center><font class=yellow>You have conquered $landgain land from $empireattacked($tsetid)!</font><br><br><font class=orange>$your_losses<br><br></font>";
+					
+											$newno = $e_nno + 1;
+
+											mysql_query("UPDATE user SET nno =\"$newno\" WHERE userid='$empvalue'");				
+											mysql_query("INSERT INTO empnews (date, news, yourid) 
+												VALUES	('$clock', \"<font class=yellow>We have unsuccessfully defended our empire against $ename ($setid) and lost $landgain land</font>\" , '$empvalue') ");
+													include("include/attack/ldrop.php");include("include/attack/table.php");
+										}
+									if($ATD_land == 0)
+										{echo"<div align=center><font class=yellow>You have gained $landgain land and destroyed $empireattacked($tsetid) Medieval Style!</font><br><br><font class=orange>$your_losses<br><br></font>";
+											$newno = $e_nno + 1;
+
+											mysql_query("UPDATE user SET nno =\"$newno\" WHERE userid='$empvalue'");					
+											mysql_query("INSERT INTO empnews (date, news, yourid) 
+												VALUES	('$clock', \"<font class=yellow>We have unsuccessfully defended our land agaisnt $ename ($setid) and we have been destroyed</font>\" , '$empvalue') ");
+					
+										include("include/attack/ldrop.php");include("include/attack/table.php");
+										}
+									
+									if($ATD_land == 0)
+									{
 
 
-};
 
-include("include/footer_game.php");	
+			include("include/connect.php");
+			
+			$no_members = mysql($dbnam, "SELECT members FROM settlement WHERE setid ='$tsetid'");
+			$mem_no = mysql_result($no_members,"mem_no");
+
+			$newmem = $mem_no - 1;
+			mysql_query("UPDATE settlement SET members = \"$newmem\" WHERE setid='$tsetid'");
+
+
+
+
+			$Their_Email = mysql($dbnam, "SELECT email FROM user WHERE userid=\"$empvalue\"");
+			$T_Email = mysql_result($Their_Email,"T_Email");
+
+
+			$subject = "Account destroyed";
+			$body = "You have been destroyed by $ename.  If there is any spots open, you are welcome to signup again.";
+
+			$from = "From: support@medievalbattles.com\r\nbcc: phb@sendhost\r\nContent-type: text/plain\r\nX-mailer: PHP/" . phpversion();
+			$mailsend = mail("$T_Email","$subject","$body","$from");
+			print("$mailsend");
+
+			// check votefor
+			$V_query = ("SELECT votefor FROM user WHERE userid=\"$empvalue\"");
+			$V_result = mysql_query($V_query);
+			$V_check = mysql_fetch_array($V_result);
+		if($V_check[0] != None AND $V_check[0] != $empireattacked)
+			{
+				$Votedfor_emp = mysql($dbnam, "SELECT vote FROM user WHERE ename=\"$VF_emp\"");
+				$VF_emp = mysql_result($Votedfor_emp,"VF_emp");
+				
+				$newvote = $VF_emp - 1;
+				mysql_query("UPDATE user SET vote = \"$newvote\" WHERE ename=\"$empireattacked\"");
+			}
+
+
+
+
+
+			// check user
+				$gquery = ("SELECT owner FROM guild WHERE owner=\"$empireattacked\"");
+				$gresult = mysql_query($gquery);
+				$guildcheck = mysql_fetch_array($gresult);
+ if($guildcheck[0] == $empireattacked) 
+	{
+		//SELECT GUILD NAME	
+			$GuildName = mysql($dbnam, "SELECT gname FROM guild WHERE owner=\"$empireattacked\"");
+			$GN = mysql_result($GuildName,"GN");
+
+		//SELECT GUILD ID	
+			$GuildID = mysql($dbnam, "SELECT gid FROM guild WHERE owner=\"$empireattacked\"");
+			$GIDD = mysql_result($GuildID,"GIDD");
+	// check setno1
+				$gquery1 = ("SELECT setno1 FROM guild WHERE owner=\"$ename\"");
+				$gresult1 = mysql_query($gquery1);
+				$guildcheck1 = mysql_fetch_array($gresult1);
+		// check setno2
+				$gquery2 = ("SELECT setno2 FROM guild WHERE owner=\"$ename\"");
+				$gresult2 = mysql_query($gquery2);
+				$guildcheck2 = mysql_fetch_array($gresult2);
+		// check setno3
+				$gquery3 = ("SELECT setno3 FROM guild WHERE owner=\"$ename\"");
+				$gresult3 = mysql_query($gquery3);
+				$guildcheck3 = mysql_fetch_array($gresult3);
+		// check setno4
+				$gquery4 = ("SELECT setno4 FROM guild WHERE owner=\"$ename\"");
+				$gresult4 = mysql_query($gquery4);
+				$guildcheck4 = mysql_fetch_array($gresult4);
+		// check setno5
+				$gquery5 = ("SELECT setno5 FROM guild WHERE owner=\"$ename\"");
+				$gresult5 = mysql_query($gquery5);
+				$guildcheck5 = mysql_fetch_array($gresult5);
+		
+					if($guildcheck1[0] > 0)
+						{
+							//SELECT SETGUILD	
+								$their_ID = mysql($dbnam, "SELECT setno1 FROM guild WHERE owner=\"$ename\"");
+								$theirID = mysql_result($their_ID,"theirID");
+							//SELECT SETGUILD	
+								$SET_GUILD = mysql($dbnam, "SELECT setguild FROM settlement WHERE setno1='$theirID'");
+								$S_GUILD = mysql_result($SET_GUILD,"S_GUILD");
+						
+							mysql_query("UPDATE settlement SET setguild = \"None\" WHERE setid='$theirID'");
+							mysql_query("UPDATE settlement SET gsetno = \"0\" WHERE setid='$theirID'");
+						}
+					if($guildcheck2[0] > 0)
+						{
+							//SELECT SETGUILD	
+								$their_ID = mysql($dbnam, "SELECT setno2 FROM guild WHERE owner=\"$ename\"");
+								$theirID = mysql_result($their_ID,"theirID");
+							//SELECT SETGUILD	
+								$SET_GUILD = mysql($dbnam, "SELECT setguild FROM settlement WHERE setno2='$theirID'");
+								$S_GUILD = mysql_result($SET_GUILD,"S_GUILD");
+						
+							mysql_query("UPDATE settlement SET setguild = \"None\" WHERE setid='$theirID'");
+							mysql_query("UPDATE settlement SET gsetno = \"0\" WHERE setid='$theirID'");
+						}
+					if($guildcheck3[0] > 0)
+						{
+
+							//SELECT SETGUILD	
+								$their_ID = mysql($dbnam, "SELECT setno3 FROM guild WHERE owner=\"$ename\"");
+								$theirID = mysql_result($their_ID,"theirID");
+							//SELECT SETGUILD	
+								$SET_GUILD = mysql($dbnam, "SELECT setguild FROM settlement WHERE setno3='$theirID'");
+								$S_GUILD = mysql_result($SET_GUILD,"S_GUILD");
+						
+							mysql_query("UPDATE settlement SET setguild = \"None\" WHERE setid='$theirID'");
+							mysql_query("UPDATE settlement SET gsetno = \"0\" WHERE setid='$theirID'");
+						}
+					if($guildcheck4[0] > 0)
+						{
+
+							//SELECT SETGUILD	
+								$their_ID = mysql($dbnam, "SELECT setno4 FROM guild WHERE owner=\"$ename\"");
+								$theirID = mysql_result($their_ID,"theirID");
+							//SELECT SETGUILD	
+								$SET_GUILD = mysql($dbnam, "SELECT setguild FROM settlement WHERE setno4='$theirID'");
+								$S_GUILD = mysql_result($SET_GUILD,"S_GUILD");
+						
+							mysql_query("UPDATE settlement SET setguild = \"None\" WHERE setid='$theirID'");
+							mysql_query("UPDATE settlement SET gsetno = \"0\" WHERE setid='$theirID'");
+						}
+					if($guildcheck5[0] > 0)
+						{
+
+							//SELECT SETGUILD	
+								$their_ID = mysql($dbnam, "SELECT setno5 FROM guild WHERE owner=\"$ename\"");
+								$theirID = mysql_result($their_ID,"theirID");
+							//SELECT SETGUILD	
+								$SET_GUILD = mysql($dbnam, "SELECT setguild FROM settlement WHERE setno5='$theirID'");
+								$S_GUILD = mysql_result($SET_GUILD,"S_GUILD");
+						
+							mysql_query("UPDATE settlement SET setguild = \"None\" WHERE setid='$theirID'");
+							mysql_query("UPDATE settlement SET gsetno = \"0\" WHERE setid='$theirID'");
+						}
+
+						$tblname = "$GN" . "main" ."$GIDD";
+						$tblname2 = "$GN" . "msgs" . "$GIDD";	
+
+						mysql_query("DELETE FROM guild WHERE owner=\"$empireattacked\"");
+						mysql_query("DROP TABLE $tblname");
+						mysql_query("DROP TABLE $tblname2");
+			
+	
+						}
+								//SELECT email, pw	
+								$T_EMAIL = mysql($dbnam, "SELECT email FROM user WHERE ename=\"$empireattacked\"");
+								$temail = mysql_result($T_EMAIL,"temail");
+
+								mysql_query("DELETE FROM user WHERE email='$temail'"); 
+								mysql_query("DELETE FROM military WHERE email='$temail'");
+								mysql_query("DELETE FROM buildings WHERE email='$temail'");
+								mysql_query("DELETE FROM research WHERE email='$temail'");
+								mysql_query("DELETE FROM return WHERE email='$temail'");
+								mysql_query("DELETE FROM explore WHERE email='$temail'");
+								mysql_query("UPDATE user SET votefor = \"None\" WHERE votefor=\"$empireattacked\"");
+
+				 }
+	  
+		}
+}
+
+
 ?>	
+<!-- body ends here -->
+</TD>
+</TR>
+</TABLE>
+</BODY>
+</HTML>

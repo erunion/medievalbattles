@@ -28,6 +28,7 @@ include("functions.php");
 <!-- THIS IS OUTER TABLE -->
 <table class=outer border="0" cellpadding="1" cellspacing="0"  width="100%">
  <TR>
+
   <TD valign="top" colspan="2">
    <table border="0" width="100%" cellpadding=0 cellspacing=0>
 	<tr>
@@ -53,4 +54,3 @@ include("functions.php");
 	?>
  </TD>
  <TD width="85%">
-<font class=yellow size=5px><center>Testing Mode</CENTER></FONT>

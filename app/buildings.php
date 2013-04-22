@@ -1,9 +1,5 @@
-<?php
-		include("include/igtop.php");
-	?>
+<?php include("include/igtop.php");?>
 
-<!-- BODY OF PAGE BEGINS HERE -->
-<br>
 <center><b class=reg>| <a href="dbuildings.php"> -Demolish- </a> | </b></center><br>
 	
 	
@@ -18,6 +14,8 @@
 }
 else
 {
+	include("include/nexplode.php");
+
 	if($ulmill > 0 AND $r6pts < 125000)
 		{echo"<div align=center><font class=yellow>You have to research Archery before this building becomes available for construction.</font></div>";include("include/S_BUILD.php");die();
 		}
@@ -30,12 +28,16 @@ else
 	elseif($aland < $uhome + $ubarrack + $ufarm + $uwp)
 		{echo"<div align=center><font class=yellow>You do not have enough available land to build on.</font></div>";include("include/S_BUILD.php");die();
 		}
-	elseif ($gp < ($bm_cost * ($ugm + $uim)) + ($b_cost * ($ufarm + $ubarrack + $uhome + $uwp + $ulmill)))
+	elseif($gp < ($bm_cost * ($ugm + $uim)) + ($b_cost * ($ufarm + $ubarrack + $uhome + $uwp + $ulmill)))
 		{echo"<div align=center><font class=yellow>You do not have enough gold to carry out your orders.</font></div>";include("include/S_BUILD.php");die();
 		} 
+	elseif($uwp > 0 AND $race == Orc)
+		{echo"<div align=center><font class=yellow>Being that you are an orc, you cannot construct the wooden platform.</font></div>";include("include/S_BUILD.php");die();
+		}
 		else 
 			{ 
-				include("include/connect.php");
+			
+			include("include/connect.php");
 	
 			$gp = $gp -  (($bm_cost * ($ugm + $uim)) + ($b_cost * ($ufarm + $ubarrack + $uhome + $uwp + $ulmill)));
 	 		$gp =round($gp);
@@ -45,10 +47,6 @@ else
 
 			$forexp2 = $exp2 + (($uhome + $ubarrack + $ufarm + $uwp + $ulmill) * $landexp) + (($ugm + $uim) * $mtexp); 
 	
-	
-	 		
-		
-			
 			$dhome = $dhome + $uhome;
 			$dbarrack = $dbarrack + $ubarrack;
 			$dfarm = $dfarm + $ufarm;
@@ -56,7 +54,8 @@ else
 			$dlmill = $dlmill + $ulmill;
 			$dgm = $dgm + $ugm;
 			$dim = $dim + $uim;
-				
+			$max_land = $max_land - ($uhome + $ubarrack + $ufarm + $ulmill + $uwp);
+			$max_mt = $max_mt - ($ugm + $uim);
 
 	 		mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");
 	  		mysql_query("UPDATE user SET exp2 =\"$forexp2\" WHERE email='$email' AND pw='$pw'");  
@@ -165,11 +164,7 @@ else
 	
 			}
 }
-
-
 ?>
-
-
 <!-- body ends here -->
 </TD>
 </TR>

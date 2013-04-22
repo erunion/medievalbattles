@@ -39,12 +39,6 @@
 
 <ul>	
 
-
-
-
-
-
-
 <li><b>Studded Leather</b>-  Speed Modifier: 0 <br>Armor Modifier: 1
 	<br>*Warriors and archers have this armor ready to equip
 		

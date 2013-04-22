@@ -54,7 +54,7 @@ echo "
 		";
 
 
-$query_string = "SELECT userid, ename FROM user WHERE setid = '$setid'";
+$query_string = "SELECT userid, ename FROM user WHERE setid = '$setid' ORDER BY userid ASC";
 $result_id = mysql_query($query_string, $var);
 while ($row = mysql_fetch_row($result_id))
     {
@@ -271,30 +271,12 @@ else
 
 
 
-<?php
-if (!IsSet($change))
-{
-?>	
-
 		<? include("include/S_GOVT.php"); ?>
-
-<?
-}
-else
-{
-
-}
-			
-?>
 
 
 <!-- body ends here -->	
-</table>
 </TD>
 </TR>
 </TABLE>
 </BODY>
 </HTML>
-
-
-

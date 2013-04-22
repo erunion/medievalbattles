@@ -1,9 +1,11 @@
 <?
 echo "Starting tick";
-	@mysql_connect (localhost);
-mysql_select_db(database) or die(darnit);
-$dbnam = database;
-$var = @mysql_connect(localhost);
+	@mysql_connect (localhost, ursenbach, pa724);
+mysql_select_db(medievalbattles_com) or die(darnit);
+$dbnam = medievalbattles_com;
+$var = @mysql_connect(localhost, ursenbach, pa724);
+
+		mysql_query("UPDATE Game_Info SET tick = \"yes\"");
 
 		$max_userid = mysql($dbnam, "SELECT max(userid) FROM user"); 
 		$max_UID = mysql_result($max_userid, "max_UID");
@@ -32,6 +34,9 @@ While($INC_ID < $ID_PLUS_1)
 			$MAX_CIVILIANS = mysql($dbnam, "SELECT maxciv FROM military WHERE userid='$INC_ID'");
 			$MAX_CIV = mysql_result($MAX_CIVILIANS, "MAX_CIV");
 
+			$up_race = mysql($dbnam, "SELECT race FROM user WHERE userid='$INC_ID'");
+			$U_RACE = mysql_result($up_race, "U_RACE");
+
 			$UP_GP = mysql($dbnam, "SELECT gp FROM user WHERE userid='$INC_ID'");
 			$upgp = mysql_result($UP_GP, "upgp");
 						
@@ -44,6 +49,8 @@ While($INC_ID < $ID_PLUS_1)
 			$updatelumber = mysql($dbnam, "SELECT lumber FROM user WHERE userid='$INC_ID'"); 
 			$uplumber = mysql_result($updatelumber, "uplumber");
 	
+			$S_mode = mysql($dbnam, "SELECT safemode FROM user WHERE userid='$INC_ID'"); 
+			$Safe_Mode = mysql_result($S_mode, "Safe_Mode");
 
 			$updateciv = mysql($dbnam, "SELECT civ FROM military WHERE userid='$INC_ID'");
 			$upciv = mysql_result($updateciv,"upciv");
@@ -181,7 +188,8 @@ While($INC_ID < $ID_PLUS_1)
 			$DBUPDATE_SCIENTISTS = mysql($dbnam, "SELECT dbscientist FROM military WHERE userid='$INC_ID'");
 			$DBUP_scientist = mysql_result($DBUPDATE_SCIENTISTS,"DBUP_scientist");
 						
-			
+			$r5pts_r = mysql($dbnam, "SELECT r5pts FROM research WHERE userid='$INC_ID'");
+			$r5points = mysql_result($r5pts_r,"r5points");
 
 			$updateeexpland = mysql($dbnam, "SELECT expland FROM explore WHERE userid='$INC_ID'");
 			$updateeexpmt = mysql($dbnam, "SELECT expmt FROM explore WHERE userid='$INC_ID'");
@@ -210,10 +218,10 @@ While($INC_ID < $ID_PLUS_1)
 				{$goldpro = (($_g * 300) * 1.05) + $upgp;
 				}
 			if($E_CLASS == Mage)
-				{$goldpro = (($_g * 300) * 1.05) + $upgp; 
+				{$goldpro = (($_g * 300) * 1.1) + $upgp; 
 				}
 			elseif($R_r4pts >= 40000)
-				{$goldpro = (($_g * 300)  * 1.15) + $upgp; 
+				{$goldpro = (($_g * 300)  * 1.2) + $upgp; 
 				}
 			if($E_CLASS == Cleric)
 				{$goldpro = $_g * 300 + $upgp;
@@ -229,33 +237,65 @@ While($INC_ID < $ID_PLUS_1)
 //## maxciv, foodpro, ironpro,new exp calculations
 //##
 //#########################################
+			if($Safe_Mode > 0)
+				{$Safe_Mode = $Safe_Mode - 1; mysql_query("UPDATE user SET safemode = \"$Safe_Mode\" WHERE userid='$INC_ID'");
+				}
+			
 
-			$NEW_MAX_CIV = $MAX_CIV + (.015 * $upciv);
-			$NEW_MAX_CIV = round($NEW_MAX_CIV);
-
+			$NEW_MAX_CIV = $MAX_CIV + (.01 * $upciv);
 			$lumberpro = ($_lm * 2) + $uplumber;
-			$lumberpro = round($lumberpro);
+			if($E_class == Ranger)
+				{$lumberpro = ($_lm * 2.1) + $uplumber;}
 
 			$foodpro = ($_f * .5) + $upfood;
-			$foodpro = round($foodpro);
-
 			$ironpro = ($_i * 1.945) + $upiron;
-			$ironpro = round($ironpro);
+			  if($r5points >= 40000)
+				{$ironpro = ($_i * 2.045) + $upiron;}
+			  
+			  if($U_RACE == Dwarf)
+				{
+					$ironpro = ($_i * 2.095) + $upiron;
+					if($r5points >= 40000)
+						{$ironpro = ($_i * 2.195);}
+				}
 
-			$civpro = ($_h * .325) + $upciv;
-			$civpro = round($civpro);
 
+
+			$civpro = ($_h * .265) + $upciv;
 			$civexp = ($_h * .265) * 5;
-			$civexp = round($civexp);
-								
-				if($upciv > $upfood * 2)
-					{$civpro = $uphome * 20;
+		
+				if($U_RACE == Giant)
+					{$foodpro = ($_f * .6) + $upfood;
 					}
-				if($upfarm * 50 < $upfood)
-					{$foodpro = $upfarm * 50;
+				if($U_RACE == Elf)
+					{
+					 $civexp = ($_h * .165) * 5;
+					 $civpro = ($_h * .165) + $civpro;
 					}
+				if($U_RACE == Orc)
+					{$civpro = ($_h * .425);$civexp = ($_h * .425);}
+				if($upfood > $_f * 50)
+					{$foodpro = $upfood * .97;
+					}
+			
+				if($upciv > $_h * 20)
+					{$civpro = $upciv * .97;
+					}
+				if($upciv > $upfood)
+					{$civpro = $upciv * .97;
+					}
+
 				if($E_class == "Cleric")
 					{$civexp = $civexp * 1.05;}
+
+				
+
+			$NEW_MAX_CIV = round($NEW_MAX_CIV);
+			$lumberpro = round($lumberpro);
+			$foodpro = round($foodpro);
+			$ironpro = round($ironpro);
+			$civpro = round($civpro);
+			$civexp = round($civexp);
 
 			mysql_query("UPDATE military SET maxciv = \"$NEW_MAX_CIV\" WHERE userid='$INC_ID'");
 			mysql_query("UPDATE user SET gp = \"$goldpro\" WHERE userid='$INC_ID'");
@@ -411,24 +451,28 @@ While($INC_ID < $ID_PLUS_1)
 			$updaterr4 = mysql($dbnam, "SELECT r4 FROM research WHERE userid='$INC_ID'");
 			$updaterr5 = mysql($dbnam, "SELECT r5 FROM research WHERE userid='$INC_ID'");
 			$updaterr6 = mysql($dbnam, "SELECT r6 FROM research WHERE userid='$INC_ID'");
+			$updaterr7 = mysql($dbnam, "SELECT r7 FROM research WHERE userid='$INC_ID'");
 				$upr1 = mysql_result($updaterr1,"upr1");
 				$upr2 = mysql_result($updaterr2,"upr2");
 				$upr3 = mysql_result($updaterr3,"upr3");
 				$upr4 = mysql_result($updaterr4,"upr4");
 				$upr5 = mysql_result($updaterr5,"upr5");
 				$upr6 = mysql_result($updaterr6,"upr6");
+				$upr7 = mysql_result($updaterr7,"upr7");
 			$updaterr1points = mysql($dbnam, "SELECT r1pts FROM research WHERE userid='$INC_ID'");
 			$updaterr2points = mysql($dbnam, "SELECT r2pts FROM research WHERE userid='$INC_ID'");
 			$updaterr3points = mysql($dbnam, "SELECT r3pts FROM research WHERE userid='$INC_ID'");
 			$updaterr4points = mysql($dbnam, "SELECT r4pts FROM research WHERE userid='$INC_ID'");
 			$updaterr5points = mysql($dbnam, "SELECT r5pts FROM research WHERE userid='$INC_ID'");
 			$updaterr6points = mysql($dbnam, "SELECT r6pts FROM research WHERE userid='$INC_ID'");
+			$updaterr7points = mysql($dbnam, "SELECT r7pts FROM research WHERE userid='$INC_ID'");
 				$upr1pts = mysql_result($updaterr1points,"upr1pts");
 				$upr2pts = mysql_result($updaterr2points,"upr2pts");
 				$upr3pts = mysql_result($updaterr3points,"upr3pts");
 				$upr4pts = mysql_result($updaterr4points,"upr4pts");
    				$upr5pts = mysql_result($updaterr5points,"upr5pts");
 				$upr6pts = mysql_result($updaterr6points,"upr6pts");
+				$upr7pts = mysql_result($updaterr7points,"upr7pts");
 
 			$firstpoints = $upr1pts + ($upr1 * 1);
 			$secondpoints = $upr2pts + ($upr2 * 1);
@@ -436,6 +480,7 @@ While($INC_ID < $ID_PLUS_1)
 			$fourthpoints = $upr4pts + ($upr4 * 1);
 			$fifthpoints = $upr5pts + ($upr5 * 1);
 			$sixthpoints = $upr6pts + ($upr6 * 1);
+			$seventhpoints = $upr7pts + ($upr7 * 1);
 
 			if($firstpoints > 10000)
 				{$firstpoints = 10000;}
@@ -449,6 +494,8 @@ While($INC_ID < $ID_PLUS_1)
 				{$fifthpoints = 40000;}
 			if($sixthpoints > 125000)
 				{$sixthpoints = 125000;}
+			if($seventhpoints > 150000)
+				{$seventhpoints = 150000;}
 
 				mysql_query("UPDATE research SET r1pts = \"$firstpoints\" WHERE userid='$INC_ID'");
 				mysql_query("UPDATE research SET r2pts = \"$secondpoints\" WHERE userid='$INC_ID'");
@@ -456,6 +503,7 @@ While($INC_ID < $ID_PLUS_1)
 				mysql_query("UPDATE research SET r4pts = \"$fourthpoints\" WHERE userid='$INC_ID'");
 				mysql_query("UPDATE research SET r5pts = \"$fifthpoints\" WHERE userid='$INC_ID'");
 				mysql_query("UPDATE research SET r6pts = \"$sixthpoints\" WHERE userid='$INC_ID'");
+				mysql_query("UPDATE research SET r7pts = \"$seventhpoints\" WHERE userid='$INC_ID'");
 
 //#########################################
 //##
@@ -464,10 +512,17 @@ While($INC_ID < $ID_PLUS_1)
 //#########################################
 
 			$form1 = $upexpland * .02;
-			$form1 = floor($form1);
 			$form2 = $upexpmt * .02;
+			
+			if($U_RACE == Human)
+				{$form1 = $upexpland * .025	; $form2 = $upexpmt * .025;}
+			if($E_class == Ranger)
+				{$form1 = $upexpland/45; $form2 = $uexpmt/45;}
+			if($E_class == Ranger AND $U_RACE == Human)
+				{$form1 = $upexpland/35; $form2 = $upexpmt/35;}
+			$form1 = floor($form1);
 			$form2 = floor($form2);
-						
+
 			$newland = $upland + $form1;
 			$newmt = $upmts + $form2;
 			$new_aland = $A_LAND + $form1;
@@ -480,131 +535,4 @@ While($INC_ID < $ID_PLUS_1)
 
 //#########################################
 //##
-//##	new troops (thieves, scien, explor, wars, wiz, pris, archs
-//##
-//#########################################
-
-			$NEW_thieves = $UP_thief + $DBUP_thief;
-			$NEW_scientists = $UP_explorer + $DBUP_explorer;
-			$NEW_explorers = $UP_scientist + $DBUP_scientist;
-
-				mysql_query("UPDATE military SET thieves = \"$NEW_thieves\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET explorers = \"$NEW_scientists\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET scientists = \"$NEW_explorers\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET dbthief = \"0\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET dbexplorer = \"0\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET dbscientist = \"0\" WHERE userid='$INC_ID'");   
-
-			if($UP_dbwar > 0 OR $UP_dbwiz > 0 OR $UP_dbpri > 0 OR $UP_dbarch > 0)
-				{
-				$warriors_UP = $UP_WAR + $UP_dbwar;
-				$wizards_UP = $UP_WIZ  + $UP_dbwiz;
-				$priests_UP = $UP_PRI + $UP_dbpri;
-				$archers_UP = $UP_ARCH + $UP_dbarch;
-
-				mysql_query("UPDATE military SET warriors = \"$warriors_UP\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET wizards = \"$wizards_UP\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET priests = \"$priests_UP\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET archers = \"$archers_UP\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET dbwar = \"0\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET dbwiz = \"0\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET dbpri = \"0\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET dbarch = \"0\" WHERE userid='$INC_ID'");
-				}
-			if($UP_dbwar2 > 0 OR $UP_dbwiz2 > 0 OR $UP_dbpri2 > 0 OR $UP_dbarch2 > 0 AND $UP_dbwar == 0 AND $UP_dbwiz == 0 AND $UP_dbpri == 0 AND $UP_dbarch == 0)
-				{
-				mysql_query("UPDATE military SET dbwar = \"$UP_dbwar2\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET dbwiz = \"$UP_dbwiz2\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET dbpri = \"$UP_dbpri2\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET dbarch = \"$UP_dbarch2\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET dbwar2 = \"0\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET dbwiz2 = \"0\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET dbpri2 = \"0\" WHERE userid='$INC_ID'");
-				mysql_query("UPDATE military SET dbarch2 = \"0\" WHERE userid='$INC_ID'");
-				} 
-
-
-
-				}
-
-
-				$INC_ID = $INC_ID + 1;		
-		
-	}		
-		
-
-
-
-
-
-
-		While($SET_INC < 41)
-  			{
-
-				$SET_STRENGTH = mysql($dbnam, "SELECT sum(exp) FROM user WHERE setid = '$SET_INC'");	
-				$S_STRENGTH = mysql_result($SET_STRENGTH,"S_STRENGTH");	
-
-				mysql_query("UPDATE settlement SET setstrength = \"$S_STRENGTH\" WHERE setid='$SET_INC'");
-				$SET_INC = $SET_INC + 1;
-			} 	
-	
-
-
-				$MAX_GUILDID = mysql($dbnam, "SELECT max(gid) FROM guild");	
-				$MAX_GID = mysql_result($MAX_GUILDID,"MAX_GID");
-
-		$GUILD_INC = 1;
-
-		While($GUILD_INC < $MAX_GID + 1)
-  			{
-
-				
-
-
-			
-		
-					// CHECK TO SEE IF GID IS THERE
-				$G_Query = ("SELECT gid FROM guild WHERE gid=\"$GUILD_INC\"");
-				$G_Result = mysql_query($G_Query);
-				$G_Check = mysql_fetch_array($G_Result);
-
-				if($G_Check[0] == $GUILD_INC)
-			 	 {
-						$SEL_SETNO1 = mysql($dbnam, "SELECT setno1 FROM guild WHERE gid='$GUILD_INC'");	
-						$SEL_S1 = mysql_result($SEL_SETNO1,"SEL_S1");
-						$SEL_SETNO2 = mysql($dbnam, "SELECT setno2 FROM guild WHERE gid='$GUILD_INC'");	
-						$SEL_S2 = mysql_result($SEL_SETNO2,"SEL_S2");
-						$SEL_SETNO3 = mysql($dbnam, "SELECT setno3 FROM guild WHERE gid='$GUILD_INC'");	
-						$SEL_S3 = mysql_result($SEL_SETNO3,"SEL_S3");
-						$SEL_SETNO4 = mysql($dbnam, "SELECT setno4 FROM guild WHERE gid='$GUILD_INC'");	
-						$SEL_S4 = mysql_result($SEL_SETNO4,"SEL_S4");
-						$SEL_SETNO5 = mysql($dbnam, "SELECT setno5 FROM guild WHERE gid='$GUILD_INC'");	
-						$SEL_S5 = mysql_result($SEL_SETNO5,"SEL_S5");
-
-						$SEL_SETNO1S = mysql($dbnam, "SELECT sum(exp) FROM user WHERE setid='$SEL_S1'");	
-						$SEL_S1S = mysql_result($SEL_SETNO1S,"SEL_S1S");
-						$SEL_SETNO2S = mysql($dbnam, "SELECT sum(exp) FROM user WHERE setid='$SEL_S2'");	
-						$SEL_S2S = mysql_result($SEL_SETNO2S,"SEL_S2S");
-						$SEL_SETNO3S = mysql($dbnam, "SELECT sum(exp) FROM user WHERE setid='$SEL_S3'");	
-						$SEL_S3S = mysql_result($SEL_SETNO3S,"SEL_S3S");
-						$SEL_SETNO4S = mysql($dbnam, "SELECT sum(exp) FROM user WHERE setid='$SEL_S4'");	
-						$SEL_S4S = mysql_result($SEL_SETNO4S,"SEL_S4S");
-						$SEL_SETNO5S = mysql($dbnam, "SELECT sum(exp) FROM user WHERE setid='$SEL_S5'");	
-						$SEL_S5S = mysql_result($SEL_SETNO5S,"SEL_S5S");
-
-						$GUILD_STRENGTH = $SEL_S1S + $SEL_S2S + $SEL_S3S + $SEL_S4S + $SEL_S5S;
-
-						mysql_query("UPDATE guild SET strength = \"$GUILD_STRENGTH\" WHERE gid='$GUILD_INC'");
-			
-						
-			
-					}
-				
-				$GUILD_INC = $GUILD_INC + 1;
-					
-			}   
-
-			mysql_query("UPDATE user SET exp = \"10000\" WHERE exp <= 10000");
-
-			echo "Database has been updated!";
-?>
+//##	new troops (thieves, scien, explor, wars, wiz, pris, 

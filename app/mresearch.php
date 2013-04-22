@@ -47,12 +47,14 @@ There are many different topics that you can research. However, each race is lim
 				<li><b class=other>Fireball:</b> You can equip your wizards with this spell once researched
 				<li><b class=other>Ice Storm:</b> You can equip your wizards with this spell once researched
 				<li><b class=other>Cloud Kill:</b> You can equip your wizards with this spell once researched
+				<li><b class=other>Lightning Bolt:</b> You can equip your wizards with this spell once researched
 			</ul>
 	
 		<li><b>Empire Benefits</b></ul>
 			<ul>
 				<li><b class=other>Advanced Gold Mining:</b> With this researched, you gain a 10% increase to your gold mining. 
 				<li><b class=other>Advanced Iron Mining:</b> With this researched, you gain a 10% increase to your iron mining. 
+				<li><b class=other>Archery:</b> Allows you to train Archers and build Lumber Mills. 
 
 			 </ul>
 

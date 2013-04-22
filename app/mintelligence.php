@@ -35,7 +35,7 @@
 			<br><br><blockquote>  
 			
 
-In order to successfully spy on another empire, you need to send more Thieves than the person you are spying on has. You will then recieve their info on how much Gold Pieces, Iron, Civilians, Warriors, Wizards and Priests they have. You will lose Thieves each time and there is no return time for them.  If you fail, you will lose more Thieves. The empire being thieved does not lose any Thieves though.
+In order to successfully spy on another empire, you need to send more Thieves than the person you are spying on has. You will then recieve their info on how much Gold Pieces, Iron, Civilians, Warriors, Wizards Priests, Archers they have. You will lose Thieves each time and there is no return time for them.  If you fail, you will lose more Thieves. The empire being thieved does not lose any Thieves though.
 
   	</ul>
 		</blockquote>

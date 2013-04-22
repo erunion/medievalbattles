@@ -6,7 +6,7 @@
 <?
 include("commong.php");
 
-mysql_connect($hostname,$username,$passwrd) OR DIE("Couldnt connect to the database");
+@mysql_connect($hostname,$username,$passwrd) OR DIE("Couldnt connect to the database");
 @mysql_select_db($dbname) or die("Unable to select database");
 
 $query1 = "SELECT name, topic, message, datestamp FROM $topicdb WHERE topicid='$topicid'";
@@ -23,11 +23,12 @@ if ($result1) {
 										
 	while ($r1 = mysql_fetch_array($result1)) {
 	extract ($r1);
-	$thedate = gmdate("h:ia, D d, M" ,$datestamp);
+	$thedate = $clock;
+	// $thedate = gmdate("h:ia, D d, M" ,$datestamp);
 	echo "
 		<tr>
 			<td bgcolor=$color3 width=50%><b class=forum>$name</b></td>
-			<td bgcolor=$color3 width=200 nowrap><b class=forum>$thedate</b></td>
+			<td bgcolor=$color3 width=200 nowrap><b class=forum>$datestamp</b></td>
 			<td bgcolor=$color3 width=50%><b class=forum>$topic</b></td>
 		</tr>
 		<tr>
@@ -47,12 +48,13 @@ if ($result2) {
 		";
 	while ($r2 = mysql_fetch_array($result2)) {
 	extract ($r2);
-	$thedate = gmdate("h:ia, D d, M" ,$datestamp);
+	$thedate = $clock;
+	// $thedate = gmdate("h:ia, D d, M" ,$datestamp);
 		
 	echo "
 		<tr>
 			<td bgcolor=$color3 width=50%><b class=forum>$name</b></td>
-			<td bgcolor=$color3 width=200 nowrap><b class=forum>$thedate</b></td>
+			<td bgcolor=$color3 width=200 nowrap><b class=forum>$datestamp</b></td>
 			<td bgcolor=$color3 width=50%><b class=forum>$topic</b></td>
 		</tr>
 		<tr>
@@ -76,6 +78,24 @@ MYSQL_CLOSE();
 	<tr>
 		<td valign=top bgcolor=<? echo $color1; ?> align=center colspan=4><strong class=white>Post a Reply</strong></td>
 	</tr>
+<?php
+
+// Is visitor a GL?
+include("include/connect.php");
+$gquery = ("SELECT owner FROM guild WHERE owner=\"$ename\"");
+$gresult = mysql_query($gquery);
+$gnamecheck = mysql_fetch_array($gresult);
+			
+if($gnamecheck[0] == $ename) {
+echo "
+	<tr>
+		<td align=left colspan=2><strong class=black>Post As Real Name?:</strong> <input type=\"radio\" name=\"realname\" value=\"1\"></td>
+		<td width=\"50%\" colspan=2>&nbsp;</td>
+	</tr>";
+}
+else {
+}
+?>
 	<tr>
 		<td align=right><strong class=black>Topic:&nbsp;</strong></td>  <td><input type="text" name="topic" maxlength=40 class="black-normal" value="<? echo $topic; ?>"></td>	
 		<td align=right>&nbsp;</td>

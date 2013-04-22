@@ -23,9 +23,15 @@ else
 	elseif($newemail == "*")
 		{echo"<div align=center><font class=yellow>You cannot have that has your email.</font></div>";include("include/S_PE.php");include("include/S_PPW.php");include("include/S_PD.php");include("include/S_PAIM.php");include("include/S_PMSN.php");die();
 		}
-		else
-		{
+	
 
+		$Email_query = ("SELECT email FROM user WHERE email=\"$newemail\"");
+		$E_Result = mysql_query($Email_query);
+		$New_Email = mysql_fetch_array($E_Result);
+
+		if($New_Email[0] == $newemail)
+			{echo"<div align=center><font class=yellow>This email is allready in use.</font></div>";include("include/S_PE.php");include("include/S_PPW.php");include("include/S_PD.php");include("include/S_PAIM.php");include("include/S_PMSN.php");die();
+			}
 		$newemail = htmlspecialchars($newemail);
 	
 		 include("include/connect.php");
@@ -39,13 +45,13 @@ else
 
 			session_unregister('email');
 			$email = $newemail;
-			  session_register('email');
+			session_register('email');
 		
 		echo"<div align=center><font class=yellow>Your email has been changed to $newemail.</font></div>";
 		include("include/S_PE.php");include("include/S_PPW.php");include("include/S_PD.php");include("include/S_PAIM.php");include("include/S_PMSN.php");
 		die();
 		
-	}
+	
 }
 ?>
 

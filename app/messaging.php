@@ -1,6 +1,6 @@
 <?php
 		include("include/igtop.php");
-	?>
+?>
  <!-- BODY OF PAGE BEGINS HERE -->
 <br><br>
 
@@ -11,9 +11,6 @@
 <input type="submit" value="Change">
 </form>
 <br><br>
-
-
-
 
 <?php
 	if(!IsSet($sendmessage))
@@ -28,8 +25,8 @@ else
 {
 	
 	if($empvalue == ns) 
-	{echo"<div align=center><font class=yellow>You did not select an empire to message.</font></div>"; include("include/S_MESS.php"); die();
-	}
+		{echo"<div align=center><font class=yellow>You did not select an empire to message.</font></div>"; include("include/S_MESS.php"); die();
+		}
 	elseif($umessage === "")
 		{ echo"<div align=center><font class=yellow>You did not type anything to send.</font></div>";include("include/S_MESS.php"); die();
 		}
@@ -69,7 +66,6 @@ else
 
 
 ?>
-
 <!-- body ends here -->
 </TD>
 </TR>

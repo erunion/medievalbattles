@@ -3,7 +3,7 @@
 <table border=0 cellpadding=2 cellspacing=0 width="100%" valign="top">
  <tr>
   <td>
-	<table border="1" bordercolor="#000000" align=center width="80%">
+	<table border="1" bordercolor="#000000" align=center width="80%" cellpadding=0 cellspacing=0>
 	 <tr>
 	  <td colspan=7 class=main><b class=top>Land</b></td>
      <tr>
@@ -28,11 +28,15 @@
 	  <td class=inner2>Farm</td>
 	  <td class=inner2><?php echo"$farm"; ?></td>
 	  <td class=inner2><input type="number" name="ufarm" size=5></td>
+<? if($race != Orc){echo"
 	 <tr>
 	  <td class=num>4</td>
 	  <td class=inner2>Wooden Platform</td>
-	  <td class=inner2><?php echo"$wp"; ?></td>
-	  <td class=inner2><input type="number" name="uwp" size=5></td>
+	  <td class=inner2>$wp</td>
+	  <td class=inner2><input type=number name=uwp size=5></td>
+";
+}
+?>
 <? if($r6pts >= 125000)
 {echo"
 	 <tr>
@@ -47,7 +51,7 @@
  </table>
 <br><br>
 
-    <table border="1" bordercolor="#000000" align=center width="80%">
+    <table border="1" bordercolor="#000000" align=center width="80%" cellpadding=0 cellspacing=0>
 	 <tr>
 	  <td colspan=7 class=main><b class=top>Mountains</b></td>
 	 <tr>

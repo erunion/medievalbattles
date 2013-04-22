@@ -1,219 +1,223 @@
-<?php
-		include("include/igtop.php");
-	?>
- <!-- BODY OF PAGE BEGINS HERE -->
-	<br><br>
-        
-		<center>
-		 <b class=reg></a> | <a href="equip.php"> -Equip- </a> | <a href="wconstruct.php"> -Construct Weapon- </a> | <a href="aconstruct.php"> -Construct Armor- </a></b>
-		</center>
-		<br><br>
+<?php include("include/igtop.php");?>
+
+<center>
+ <b class=reg></a> | <a href="equip.php"> -Equip- </a> | <a href="wconstruct.php"> -Construct Weapon- </a> | <a href="aconstruct.php"> -Construct Armor- </a> |</b>
+  </center>
+  <br>
+  <br>
  
+
+
 <?php
 	if(!IsSet($update))
 {
  ?>
 		 
-			<? include("include/S_WSS.php"); ?>
-
 <?php
 }
 else
 {    
+		include("include/nexplode.php");
+
 		if($ssword >= 1)
-			{echo"<div align=center><font class yellow>You have allready constructed this weapon.</font></div>";include("include/S_WSS.php");include("include/S_WLS.php");include("include/S_WAXE.php");include("include/S_WGAXE.php");include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
+			{echo"<div align=center><font class yellow>You have allready constructed this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
 			}
 		elseif($gp < 50000)
-			{echo"<div align=center><font class=yellow>You do not have enough gold.</font></div>";include("include/S_WSS.php");include("include/S_WLS.php");include("include/S_WAXE.php");include("include/S_WGAXE.php");include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
+			{echo"<div align=center><font class=yellow>You do not have enough gold.<br><br></font></div>";include("include/S_WEP.php");die();
 			}
 		elseif($iron < 5000) 
-			{echo"<div align=center><font class=yellow>You do not have enough iron.</font></div>";include("include/S_WSS.php");include("include/S_WLS.php");include("include/S_WAXE.php");include("include/S_WGAXE.php");include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
+			{echo"<div align=center><font class=yellow>You do not have enough iron.<br><br></font></div>";include("include/S_WEP.php");die();
 			}
-			else 
-				{ 
-
+					include("include/connect.php");
 					$iron = $iron - 5000;
 					$gp = $gp - 50000;
-				    $exp2 = $exp2 + 3000;
+				    $exp2 = $exp2 + 5000;
 					if($class == "Cleric")
-					{$exp2 = $exp2 + (3000 * 1.05);}
-					$ssword = $ssword + 1;
+						{$exp2 = $exp2 + (10000 * 1.05);}
+					$ssword = 9;
 	 
-		 			include("include/connect.php");
-	  				mysql_query("UPDATE user SET iron =\"$iron\" WHERE email='$email' AND pw='$pw'"); 
+		 			mysql_query("UPDATE user SET iron =\"$iron\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	 				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE military SET ssword = \"$ssword\" WHERE email='$email' AND pw='$pw'");
 					
-					echo"<div align=center><font class=yellow>You have successfully constructed Short Swords for your army.</font></div>";
-					include("include/S_WSS.php");include("include/S_WLS.php");include("include/S_WAXE.php");include("include/S_WGAXE.php");include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}
+					echo"<div align=center><font class=yellow>Short Swords are now under construction.<br><br></font></div>";
+					include("include/S_WEP.php");
 					die();
-	 			}
 }
 ?>
-
 <?php
 	if(!IsSet($update2))
 {
  ?>
 			
-			<? include("include/S_WLS.php"); ?>
-
 <?php
 }
 else
 {
+		include("include/nexplode.php");
+
 		if($lsword >=1)
-			{echo"<div align=center><font class=yellow>You allready constructed this weapon.</font></div>";include("include/S_WLS.php");include("include/S_WAXE.php");include("include/S_WGAXE.php");include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
+			{echo"<div align=center><font class=yellow>You allready constructed this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
 			}
-		elseif($gp < 75000)
-			{echo"<div align=center><font class=yellow>You do not have enough gold.</font></div>";include("include/S_WLS.php");include("include/S_WAXE.php");include("include/S_WGAXE.php");include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
+		elseif($gp < 350000)
+			{echo"<div align=center><font class=yellow>You do not have enough gold.<br><br></font></div>";include("include/S_WEP.php");die();
 			}
 		elseif($iron < 10000) 
-			{echo"<div align=center><font class=yellow>You do not have enough iron.</font></div>";include("include/S_WLS.php");include("include/S_WAXE.php");include("include/S_WGAXE.php");include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
-			} 
-			else 
-				{ 
-
-					$iron = $iron - 10000;
-					$gp = $gp - 75000;
-				    $exp2 = $exp2 + 7000;
-					if($class == "Cleric")
-					{$exp2 = $exp2 + (5000 * 1.05);}
-					$lsword = $lsword + 1;
-	 
+			{echo"<div align=center><font class=yellow>You do not have enough iron.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($ssword < 1)
+			{echo"<div align=center><font class=yellow>You must first construct short swords before you can construct long swords.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
 					include("include/connect.php");
-	  				mysql_query("UPDATE user SET iron =\"$iron\" WHERE email='$email' AND pw='$pw'"); 
+					$iron = $iron - 10000;
+					$gp = $gp - 350000;
+				    $exp2 = $exp2 + 15000;
+					if($class == "Cleric")
+						{$exp2 = $exp2 + (15000 * 1.05);}
+					$lsword = 11;
+	 
+					mysql_query("UPDATE user SET iron =\"$iron\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET exp2=\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET lsword =\"$lsword\" WHERE email='$email' AND pw='$pw'");
 			
-					echo"<div align=center><font class=yellow>You have successfully constructed Long Swords for your army.</font></div>";
-					include("include/S_WLS.php");include("include/S_WAXE.php");include("include/S_WGAXE.php");include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}
+					echo"<div align=center><font class=yellow>Long Swords are now under construction.<br><br></font></div>";
+					include("include/S_WEP.php");
 					die();
-	  			}
 }
 ?>
-
 
 <?php
 	if(!IsSet($update3))
 {
  ?>
 				
-				<? include("include/S_WAXE.php"); ?>
-
 <?php
 }
 else
 {
-		if($axe >= 1)
-			{echo"<div align=center><font class=yellow>You have allready constructed this weapon.</font></div>";include("include/S_WAXE.php");include("include/S_WGAXE.php");include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
-			}
-		elseif($gp < 275000)
-			{echo"<div align=center><font class=yellow>You do not have enough gold.</font></div>";include("include/S_WAXE.php");include("include/S_WGAXE.php");include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
-			}
-		elseif($iron < 30000) 
-			{echo"<div align=center><font class=yellow>You do not have enough iron.</font></div>";include("include/S_WAXE.php");include("include/S_WGAXE.php");include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
-			} 
-			else 
-				{ 
+		include("include/nexplode.php");
 
-					$iron = $iron - 30000;
-					$gp = $gp - 275000;
-				    $exp2 = $exp2 + 25000;
-					if($class == "Cleric")
-					{$exp2 = $exp2 + (10000 * 1.05);}
-				
-					$axe = $axe + 1;
-	 
+		if($axe >= 1)
+			{echo"<div align=center><font class=yellow>You have allready constructed this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($gp < 500000)
+			{echo"<div align=center><font class=yellow>You do not have enough gold.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($iron < 50000) 
+			{echo"<div align=center><font class=yellow>You do not have enough iron.<br><br></font></div>";include("include/S_WEP.php");die();
+			} 
+	elseif($ssword < 1)
+			{echo"<div align=center><font class=yellow>You must first construct short swords before you can construct axes.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+	elseif($lsword < 1)
+			{echo"<div align=center><font class=yellow>You must first construct long swords before you can construct axes.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
 					include("include/connect.php");
-	  				mysql_query("UPDATE user SET iron =\"$iron\" WHERE email='$email' AND pw='$pw'"); 
+					$iron = $iron - 50000;
+					$gp = $gp - 500000;
+				    $exp2 = $exp2 + 30000;
+					if($class == "Cleric")
+						{$exp2 = $exp2 + (30000 * 1.05);}
+					$axe = 34;
+	 
+					mysql_query("UPDATE user SET iron =\"$iron\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET axe =\"$axe\" WHERE email='$email' AND pw='$pw'");
 
-					echo"<div align=center><font class=yellow>You have successfully constructed Axe's for your army.</font></div>";
-					include("include/S_WAXE.php");include("include/S_WGAXE.php");include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}
+					echo"<div align=center><font class=yellow>Axes are now under construction.<br><br></font></div>";
+					include("include/S_WEP.php");
 	  				die();
-				}
 }
 ?>
-
-
-
- <?php
+<?php
 	if(!IsSet($update5))
 {
  ?>
 					
-				<? include("include/S_WGAXE.php"); ?>
-
 <?php
 }
 else
 {
-		if($gaxe >= 1)
-			{echo"<div align=center><font class=yellow>You have allready constructed this weapon.</font></div>";include("include/S_WGAXE.php");include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}
-			}
-		elseif($gp < 750000)
-			{echo"<div align=center><font class=yellow>You do not have enough gold.</font></div>";include("include/S_WGAXE.php");include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
-			}
-		elseif ($iron < 50000) 
-			{echo"<div align=center><font class=yellow>You do not have enough iron.</font></div>";include("include/S_WGAXE.php");include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
-			} 
-			else 
-				{ 
+		include("include/nexplode.php");
 
-					$iron = $iron - 50000;
-					$gp = $gp - 750000;
-				    $exp2 = $exp2 + 45000;
-					if($class == "Cleric")
-					{$exp2 = $exp2 + (25000 * 1.05);}
-					$gaxe = $gaxe + 1;
-	 
+		if($gaxe >= 1)
+			{echo"<div align=center><font class=yellow>You have allready constructed this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($gp < 1500000)
+			{echo"<div align=center><font class=yellow>You do not have enough gold.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif ($iron < 75000) 
+			{echo"<div align=center><font class=yellow>You do not have enough iron.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($ssword < 1)
+			{echo"<div align=center><font class=yellow>You must first construct short swords before you can construct great axes.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($lsword < 1)
+			{echo"<div align=center><font class=yellow>You must first construct long swords before you can construct great axes.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($axe < 1)
+			{echo"<div align=center><font class=yellow>You must first construct axes before you can construct great axes.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
 					include("include/connect.php");
-	  				mysql_query("UPDATE user SET iron =\"$iron\" WHERE email='$email' AND pw='$pw'"); 
+					$iron = $iron - 75000;
+					$gp = $gp - 1500000;
+				    $exp2 = $exp2 + 50000;
+					if($class == "Cleric")
+					{$exp2 = $exp2 + (50000 * 1.05);}
+					$gaxe = 34;
+	 
+					mysql_query("UPDATE user SET iron =\"$iron\" WHERE email='$email' AND pw='$pw'"); 
 	 				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET gaxe =\"$gaxe\" WHERE email='$email' AND pw='$pw'");
 
-					echo"<div align=center><font class=yellow>You have successfully constructed Great Axe's for your army.</font></div>";
-					include("include/S_WGAXE.php");include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}
+					echo"<div align=center><font class=yellow>Great Axes are now under construction.<br><br></font></div>";
+					include("include/S_WEP.php");
 					die();
-	  			}
 }
 ?>
-
- <?php
+<?php
 	if(!IsSet($update6))
 {
  ?>
 					
-					<? include("include/S_WIS.php"); ?>
-
 <?php
 }
 else
 {
-		if($icesword >= 1)
-			{echo"<div align=center><font class=yellow>You have allready constructed this weapon.</font></div>";include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
-			}
-		elseif($gp < 2000000)
-			{echo"<div align=center><font class=yellow>You do not have enough gold.</font></div>";include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
-			}
-		elseif ($iron < 100000) 
-			{echo"<div align=center><font class=yellow>You do not have enough iron.</font></div>";include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
-			} 
-			else 
-				{ 
+		include("include/nexplode.php");
 
+		if($icesword >= 1)
+			{echo"<div align=center><font class=yellow>You have allready constructed this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($gp < 5000000)
+			{echo"<div align=center><font class=yellow>You do not have enough gold.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($iron < 100000) 
+			{echo"<div align=center><font class=yellow>You do not have enough iron.<br><br></font></div>";include("include/S_WEP.php");die();
+			} 
+		elseif($class != Fighter)
+			{echo"<div align=center><font class=yellow>Only fighters can construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($ssword < 1)
+			{echo"<div align=center><font class=yellow>You must first construct short swords before you can construct ice swords.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($lsword < 1)
+			{echo"<div align=center><font class=yellow>You must first construct long swords before you can construct ice swords.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($axe < 1)
+			{echo"<div align=center><font class=yellow>You must first construct axes before you can construct ice swords.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($gaxe < 1)
+			{echo"<div align=center><font class=yellow>You must first construct great axes before you can construct ice swords.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
 					$iron = $iron - 100000;
-					$gp = $gp - 2000000;
-				    $exp2 = $exp2 + 100000;
-					if($class == "Cleric")
-					{$exp2 = $exp2 + (35000 * 1.05);}
-					$icesword = $icesword + 1;
+					$gp = $gp - 5000000;
+				    $exp2 = $exp2 + 80000;
+					$icesword = 48;
 	 
 					include("include/connect.php");
 	  				mysql_query("UPDATE user SET iron =\"$iron\" WHERE email='$email' AND pw='$pw'"); 
@@ -221,54 +225,51 @@ else
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET icesword =\"$icesword\" WHERE email='$email' AND pw='$pw'");
 
-					echo"<div align=center><font class=yellow>You have successfully constructed Ice Sword's for your army.</font></div>";
-					include("include/S_WIS.php");include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}
+					echo"<div align=center><font class=yellow>Ice Swords are now under construction.<br><br></font></div>";
+					include("include/S_WEP.php");
 					die();
-	  			}
 }
 ?>
- 
-
 <?php
 	if(!IsSet($update4))
 {
  ?>
 				
-				<? include("include/S_WCLUB.php"); ?>
-
 <?php
 }
 else
 {
+		include("include/nexplode.php");
+
 		if($club >= 1)
-			{echo"<div align=center><font class=yellow>You have allready constructed this weapon.</font></div>";include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
+			{echo"<div align=center><font class=yellow>You have allready constructed this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
 			}
 		elseif($gp < 150000)
-			{echo"<div align=center><font class=yellow>You do not have enough gold.</font></div>";include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
+			{echo"<div align=center><font class=yellow>You do not have enough gold.<br><br></font></div>";include("include/S_WEP.php");die();
 			}
 		elseif ($iron < 8000) 
-			{echo"<div align=center><font class=yellow>You do not have enough iron.</font></div>";include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
+			{echo"<div align=center><font class=yellow>You do not have enough iron.<br><br></font></div>";include("include/S_WEP.php");die();
 			} 
-			else 
-				{ 
-
+		elseif ($race == Giant) 
+			{echo"<div align=center><font class=yellow>You are a Giant, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			} 
+					include("include/connect.php");		
 					$iron = $iron - 8000;
 					$gp = $gp - 150000;
 				    $exp2 = $exp2 + 15000;
 					if($class == "Cleric")
-					{$exp2 == $exp2 + (15000 * 1.05);}
-					$club = $club + 1;
+						{$exp2 == $exp2 + (15000 * 1.05);}
+					$club = 6;
 	 
-					include("include/connect.php");
-	  				mysql_query("UPDATE user SET iron =\"$iron\" WHERE email='$email' AND pw='$pw'"); 
+					mysql_query("UPDATE user SET iron =\"$iron\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET club =\"$club\" WHERE email='$email' AND pw='$pw'");
 
-					echo"<div align=center><font class=yellow>You have successfully constructed Club's for your army.</font></div>";
-					include("include/S_WCLUB.php");include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}
+					echo"<div align=center><font class=yellow>Clubs are now under construction.<br><br></font></div>";
+					include("include/S_WEP.php");
 					die();
-	  			}
+	  			
 }
 ?>
 <?php
@@ -276,41 +277,90 @@ else
 {
  ?>
 					
-					<? include("include/S_WMACE.php"); ?>
-
 <?php
 }
 else
 {
-		if($mace >= 1)
-			{echo"<div align=center><font class=yellow>You have allready constructed this weapon.</font></div>";include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
-			}
-		elseif($gp < 200000)
-			{echo"<div align=center><font class=yellow>You do not have enough gold.</font></div>";include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
-			}
-		elseif ($iron < 15000) 
-			{echo"<div align=center><font class=yellow>You do not have enough iron.</font></div>";include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
-			} 
-			else 
-				{ 
+		include("include/nexplode.php");
 
-					$iron = $iron - 15000;
-					$gp = $gp - 200000;
-				    $exp2 = $exp2 + 15000;
-					if($class == "Cleric")
-					{$exp2 = $exp2 + (15000 * 1.05);}
-					$mace = $mace + 1;
-	 
+		if($mace >= 1)
+			{echo"<div align=center><font class=yellow>You have allready constructed this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($gp < 400000)
+			{echo"<div align=center><font class=yellow>You do not have enough gold.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif ($iron < 25000) 
+			{echo"<div align=center><font class=yellow>You do not have enough iron.<br><br></font></div>";include("include/S_WEP.php");die();
+			} 
+		elseif ($race == Giant) 
+			{echo"<div align=center><font class=yellow>You are a Giant, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif ($club < 1) 
+			{echo"<div align=center><font class=yellow>You must first construct clubs before you can construct maces.<br><br></font></div>";include("include/S_WEP.php");die();
+			}	
 					include("include/connect.php");
-	  				mysql_query("UPDATE user SET iron =\"$iron\" WHERE email='$email' AND pw='$pw'"); 
+					$iron = $iron - 25000;
+					$gp = $gp - 400000;
+				    $exp2 = $exp2 + 25000;
+					if($class == "Cleric")
+					{$exp2 = $exp2 + (25000 * 1.05);}
+					$mace = 8;
+	 
+					mysql_query("UPDATE user SET iron =\"$iron\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET mace =\"$mace\" WHERE email='$email' AND pw='$pw'");
 
-					echo"<div align=center><font class=yellow>You have successfully constructed Mace's for your army.</font></div>";
-					include("include/S_WMACE.php");include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}
+					echo"<div align=center><font class=yellow>Maces are now under construction.<br><br></font></div>";
+					include("include/S_WEP.php");
 					die();
-	  			}
+}
+?>
+<?php
+	if(!IsSet($update13))
+{
+ ?>
+					
+<?php
+}
+else
+{
+		include("include/nexplode.php");
+
+		if($scepter >= 1)
+			{echo"<div align=center><font class=yellow>You have allready constructed this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($gp < 1000000)
+			{echo"<div align=center><font class=yellow>You do not have enough gold.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif ($iron < 45000) 
+			{echo"<div align=center><font class=yellow>You do not have enough iron.<br><br></font></div>";include("include/S_WEP.php");die();
+			} 
+		elseif ($race == Giant) 
+			{echo"<div align=center><font class=yellow>You are a Giant, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif ($club < 1) 
+			{echo"<div align=center><font class=yellow>You must first construct clubs before you can construct scepters.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif ($mace < 1) 
+			{echo"<div align=center><font class=yellow>You must first construct maces before you can construct scepters.<br><br></font></div>";include("include/S_WEP.php");die();
+			}	
+					include("include/connect.php");
+					$iron = $iron - 45000;
+					$gp = $gp - 1000000;
+				    $exp2 = $exp2 + 45000;
+					if($class == "Cleric")
+						{$exp2 = $exp2 + (45000 * 1.05);}
+					$scepter = 18;
+	 
+					mysql_query("UPDATE user SET iron =\"$iron\" WHERE email='$email' AND pw='$pw'"); 
+	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
+	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
+	  				mysql_query("UPDATE military SET scepter =\"$scepter\" WHERE email='$email' AND pw='$pw'");
+
+					echo"<div align=center><font class=yellow>Scepters are now under construction.<br><br></font></div>";
+					include("include/S_WEP.php");
+					die();
 }
 ?>
  <?php
@@ -318,41 +368,50 @@ else
 {
  ?>
 					
-					<? include("include/S_WGS.php"); ?>
-
 <?php
 }
 else
 {
-		if($gs >= 1)
-			{echo"<div align=center><font class=yellow>You have allready constructed that weapon.</font></div>";include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
-			}
-		elseif($gp < 350000)
-			{echo"<div align=center><font class=yellow>You do not have enough gold.</font></div>";include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
-			}
-		elseif ($iron < 30000) 
-			{echo"<div align=center><font class=yellow>You do not have enough iron.</font></div>";include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die(); 
-			} 
-			else 
-				{ 
+		include("include/nexplode.php");
 
-					$iron = $iron - 30000;
-					$gp = $gp - 350000;
-				    $exp2 = $exp2 + 25000;
-					if($class == "Cleric")
-					{$exp2 = $exp2 + (25000 * 1.05);}
-					$gs = $gs + 1;
-	 
+		if($gs >= 1)
+			{echo"<div align=center><font class=yellow>You have allready constructed that weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($gp < 3000000)
+			{echo"<div align=center><font class=yellow>You do not have enough gold.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($iron < 85000) 
+			{echo"<div align=center><font class=yellow>You do not have enough iron.<br><br></font></div>";include("include/S_WEP.php");die();
+			} 
+		elseif($class != Cleric)
+			{echo"<div align=center><font class=yellow>Only clerics can construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif ($race == Giant) 
+			{echo"<div align=center><font class=yellow>You are a Giant, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif ($club < 1) 
+			{echo"<div align=center><font class=yellow>You must first construct clubs before you can construct maces.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif ($mace < 1) 
+			{echo"<div align=center><font class=yellow>You must first construct maces before you can construct scepters.<br><br></font></div>";include("include/S_WEP.php");die();
+			}	
+		elseif ($scepter < 1) 
+			{echo"<div align=center><font class=yellow>You must first construct scepters before you can construct grand scepters.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
 					include("include/connect.php");
-	  				mysql_query("UPDATE user SET iron =\"$iron\" WHERE email='$email' AND pw='$pw'"); 
+					$iron = $iron - 85000;
+					$gp = $gp - 3000000;
+				    $exp2 = $exp2 + 70000;
+					$gs = 30;
+	 
+					mysql_query("UPDATE user SET iron =\"$iron\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET gs =\"$gs\" WHERE email='$email' AND pw='$pw'");
 
-					echo"<div align=center><font class=yellow>You have successfully constructed Grand Scepters for your army.</font></div>";
-					include("include/S_WGS.php");if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}
+					echo"<div align=center><font class=yellow>Grand Scepters are now under construction.<br><br></font></div>";
+					include("include/S_WEP.php");
 					die();
-	  			}
 }
 ?>
 <?php
@@ -360,41 +419,40 @@ else
 {
  ?>
 					
-					<? if($r6pts >= 125000){include("include/S_WB1.php");} ?>
-
 <?php
 }
 else
 {
+		include("include/nexplode.php");
+
 		if($bow1 >= 1)
-			{echo"<div align=center><font class=yellow>You have allready constructed that weapon.</font></div>";if($r6pts >= 125000){include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");}die();
+			{echo"<div align=center><font class=yellow>You have allready constructed that weapon.<br><br></font></div>";include("include/S_WEP.php");die();
 			}
 		elseif($gp < 100000)
-			{echo"<div align=center><font class=yellow>You do not have enough gold.</font></div>";include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");die();
+			{echo"<div align=center><font class=yellow>You do not have enough gold.<br><br></font></div>";include("include/S_WEP.php");die();
 			}
 		elseif ($lumber < 10000) 
-			{echo"<div align=center><font class=yellow>You do not have enough lumber.</font></div>";include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");die(); 
+			{echo"<div align=center><font class=yellow>You do not have enough lumber.<br><br></font></div>";include("include/S_WEP.php");die(); 
 			} 
-			else 
-				{ 
-
+		elseif ($r6pts < 125000) 
+			{echo"<div align=center><font class=yellow>You must research archery before you can construct any weapons.<br><br></font></div>";include("include/S_WEP.php");die(); 
+			}
+					include("include/connect.php");
 					$lumber = $lumber - 10000;
 					$gp = $gp - 100000;
-				    $exp2 = $exp2 + 15000;
+				    $exp2 = $exp2 + 20000;
 					if($class == "Cleric")
-					{$exp2 = $exp2 + (15000 * 1.05);}
-					$bow1 = $bow1 + 1;
+						{$exp2 = $exp2 + (20000 * 1.05);}
+					$bow1 = 8;
 	 
-					include("include/connect.php");
-	  				mysql_query("UPDATE user SET lumber =\"$lumber\" WHERE email='$email' AND pw='$pw'"); 
+					mysql_query("UPDATE user SET lumber =\"$lumber\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET bow1 =\"$bow1\" WHERE email='$email' AND pw='$pw'");
 
-					echo"<div align=center><font class=yellow>You have successfully constructed Short Bows for your army.</font></div>";
-					include("include/S_WB1.php");include("include/S_WB2.php");include("include/S_WB3.php");
+					echo"<div align=center><font class=yellow>Short Bows are now under construction.<br><br></font></div>";
+					include("include/S_WEP.php");
 					die();
-	  			}
 }
 ?>
 <?php
@@ -402,41 +460,93 @@ else
 {
  ?>
 					
-					<? if($r6pts >= 125000){include("include/S_WB2.php");} ?>
+					
 
 <?php
 }
 else
 {
-		if($bow2 >=1)
-			{echo"<div align=center><font class=yellow>You have allready constructed that weapon.</font></div>";if($r6pts >= 125000){include("include/S_WB2.php");include("include/S_WB3.php");}die();
-			}
-		elseif($gp < 25000)
-			{echo"<div align=center><font class=yellow>You do not have enough gold.</font></div>";include("include/S_WB2.php");include("include/S_WB3.php");die();
-			}
-		elseif ($lumber < 25000) 
-			{echo"<div align=center><font class=yellow>You do not have enough lumber.</font></div>";include("include/S_WB2.php");include("include/S_WB3.php");die(); 
-			} 
-			else 
-				{ 
+		include("include/nexplode.php");
 
-					$lumber = $lumber - 25000;
-					$gp = $gp - 250000;
-				    $exp2 = $exp2 + 25000;
-					if($class == "Cleric")
-					{$exp2 = $exp2 + (25000 * 1.05);}
-					$bow2 = $bow2 + 1;
-	 
+		if($bow2 >=1)
+			{echo"<div align=center><font class=yellow>You have allready constructed that weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($gp < 500000)
+			{echo"<div align=center><font class=yellow>You do not have enough gold.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif ($lumber < 35000) 
+			{echo"<div align=center><font class=yellow>You do not have enough lumber.<br><br></font></div>";include("include/S_WEP.php"); die();
+			} 
+		elseif ($r6pts < 125000) 
+			{echo"<div align=center><font class=yellow>You must research archery before you can construct any weapons.<br><br></font></div>";include("include/S_WEP.php");die(); 
+			}
+		elseif ($bow1 < 1) 
+			{echo"<div align=center><font class=yellow>You must construct short bows before constructing long bows.<br><br></font></div>";include("include/S_WEP.php");die(); 
+			}
 					include("include/connect.php");
+					$lumber = $lumber - 30000;
+					$gp = $gp - 500000;
+				    $exp2 = $exp2 + 35000;
+					if($class == "Cleric")
+						{$exp2 = $exp2 + (35000 * 1.05);}
+					$bow2 = 15;
+	 
+					
 	  				mysql_query("UPDATE user SET lumber =\"$lumber\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET bow2 =\"$bow2\" WHERE email='$email' AND pw='$pw'");
 
-					echo"<div align=center><font class=yellow>You have successfully constructed Long Bows for your army.</font></div>";
-					include("include/S_WB2.php");include("include/S_WB3.php");
+					echo"<div align=center><font class=yellow>Long Bows are now under construction.<br><br></font></div>";
+					include("include/S_WEP.php");
 					die();
-	  			}
+}
+?>
+<?php
+	if(!IsSet($update12))
+{
+ ?>
+					
+<?php
+}
+else
+{
+		include("include/nexplode.php");
+
+		if($bow4 >= 1)
+			{echo"<div align=center><font class=yellow>You have allready constructed that weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($gp < 1000000)
+			{echo"<div align=center><font class=yellow>You do not have enough gold.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif ($lumber < 55000) 
+			{echo"<div align=center><font class=yellow>You do not have enough lumber.<br><br></font></div>";include("include/S_WEP.php");die();
+			} 
+		elseif ($r6pts < 125000) 
+			{echo"<div align=center><font class=yellow>You must research archery before you can construct any weapons.<br><br></font></div>";include("include/S_WEP.php");die(); 
+			}
+		elseif ($bow1 < 1) 
+			{echo"<div align=center><font class=yellow>You must construct short bows before constructing acid bows.<br><br></font></div>";include("include/S_WEP.php");die(); 
+			}
+		elseif ($bow2 < 1) 
+			{echo"<div align=center><font class=yellow>You must construct long bows before constructing acid bows.<br><br></font></div>";include("include/S_WEP.php");die(); 
+			}
+					include("include/connect.php");
+					$lumber = $lumber - 55000;
+					$gp = $gp - 1000000;
+				    $exp2 = $exp2 + 50000;
+					if($class == "Cleric")
+						{$exp2 = $exp2 + (50000 * 1.05);}
+					$bow4 = 20;
+	 
+	  				mysql_query("UPDATE user SET lumber =\"$lumber\" WHERE email='$email' AND pw='$pw'"); 
+	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
+	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
+	  				mysql_query("UPDATE military SET bow4 =\"$bow4\" WHERE email='$email' AND pw='$pw'");
+
+					echo"<div align=center><font class=yellow>Acid Bows are now under construction.<br><br></font></div>";
+					include("include/S_WEP.php");
+					die();
 }
 ?>
 <?php
@@ -444,45 +554,51 @@ else
 {
  ?>
 					
-					<? if($r6pts >= 125000){include("include/S_WB3.php");} ?>
-
 <?php
 }
 else
 {
-		if($bow3 >= 1)
-			{echo"<div align=center><font class=yellow>You have allready constructed that weapon.</font></div>";if($r6pts >= 125000){include("include/S_WB3.php");}die();
-			}
-		elseif($gp < 750000)
-			{echo"<div align=center><font class=yellow>You do not have enough gold.</font></div>";include("include/S_WB3.php");die();
-			}
-		elseif ($lumber < 65000) 
-			{echo"<div align=center><font class=yellow>You do not have enough lumber.</font></div>";include("include/S_WB3.php");die(); 
-			} 
-			else 
-				{ 
+		include("include/nexplode.php");
 
-					$lumber = $lumber - 65000;
-					$gp = $gp - 750000;
-				    $exp2 = $exp2 + 45000;
-					if($class == "Cleric")
-					{$exp2 = $exp2 + (45000 * 1.05);}
-					$bow3 = $bow2 + 1;
-	 
+		if($bow3 >= 1)
+			{echo"<div align=center><font class=yellow>You have allready constructed that weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif($gp < 3000000)
+			{echo"<div align=center><font class=yellow>You do not have enough gold.<br><br></font></div>";include("include/S_WEP.php");die();
+			}
+		elseif ($lumber < 75000) 
+			{echo"<div align=center><font class=yellow>You do not have enough lumber.<br><br></font></div>";include("include/S_WEP.php");die();
+			} 
+		elseif ($r6pts < 125000) 
+			{echo"<div align=center><font class=yellow>You must research archery before you can construct any weapons.<br><br></font></div>";include("include/S_WEP.php");die(); 
+			}
+		elseif ($bow1 < 1) 
+			{echo"<div align=center><font class=yellow>You must construct short bows before constructing medieval war bows.<br><br></font></div>";include("include/S_WEP.php");die(); 
+			}
+		elseif ($bow2 < 1) 
+			{echo"<div align=center><font class=yellow>You must construct long bows before constructing medieval war bows.<br><br></font></div>";include("include/S_WEP.php");die(); 
+			}
+		elseif ($bow4 < 1) 
+			{echo"<div align=center><font class=yellow>You must construct acid bows before constructing medieval war bows.<br><br></font></div>";include("include/S_WEP.php");die(); 
+			}
 					include("include/connect.php");
+					$lumber = $lumber - 75000;
+					$gp = $gp - 3000000;
+				    $exp2 = $exp2 + 75000;
+					$bow3 = 28;
+	 
 	  				mysql_query("UPDATE user SET lumber =\"$lumber\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET bow3 =\"$bow3\" WHERE email='$email' AND pw='$pw'");
 
-					echo"<div align=center><font class=yellow>You have successfully constructed Medieval War Bows for your army.</font></div>";
-					include("include/S_WB3.php");
+					echo"<div align=center><font class=yellow>Medieval War Bows are now under construction.<br><br></font></div>";
+					include("include/S_WEP.php");
 					die();
-	  			}
 }
 ?>
+<? include("include/S_WEP.php"); ?>
 <!-- body ends here -->
-</form>
 </TD>
 </TR>
 </TABLE>

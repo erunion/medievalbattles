@@ -28,11 +28,9 @@
 	   <td>   
 <!-- This is where the main part of the page goes -->
 			<br><br><blockquote>
-			Welcome to the Medieval Battles manual. Before you play this 
-			game, it is recommended that you read this manual. It might 
-			change your mind on how you are going to play the game.<br><br>
+			Welcome to the Medieval Battles manual. Before you play this game, it is recommended that you read this manual. It might change your mind on how you are going to play the game.<br><br>
 
-			There will most likely be some bugs in the game, so help us find them, and work with us as we correct them. The alpha will be very simple because we think it's best to start out simple. Compared to games to come, the alpha is the easiest. You can expect alot more from Medieval Battles in future games...
+			There are most likely some bugs in the game. So aid us in finding them. We hope you enjoy Medieval Battles.
 			</blockquote>
 			
            </td>

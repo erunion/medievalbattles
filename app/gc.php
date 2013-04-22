@@ -1,9 +1,5 @@
+<?php include("include/igtop.php");?>
 <?php
-		include("include/igtop.php");
-	?>
-<!-- BODY OF PAGE BEGINS HERE -->
-<br><center><font class=yellow size=3px><b>Only 5 settlements per guild</b></font></h1></center>
-	<?php
 	if(!IsSet($sendmessage))
 {
   ?> 					  
@@ -13,7 +9,7 @@
 else
 {
 	
-	if($umessage === "")
+	if($umessage == "")
 		{ echo"<div align=center><font class=yellow>You did not type anything to send.</font></div>";include("include/S_MESS.php"); die();
 		}
 		else
@@ -61,16 +57,17 @@ else
 <? if ($pageid == 'mgl'){?>
 		<? session_register('gid'); ?>
 
-		<form type=post action=gc.php>
+		 <form type=post action=gc.php>
 		 <table border="0" bordercolor="silver" width="80%"  align=center>
-		  <tr>
-		   <td align=center><textarea name="umessage" rows=15 cols=50 wrap></textarea>
-	 	    </table>
+		   <tr>
+		    <td align=center><textarea name="umessage" rows=15 cols=50 wrap></textarea>
+	 	  </table>
 			      <center><input type="submit" name="sendmessage" value="Send Message" class=button></center>
 				  <input type="hidden" name="sendmessage" value="1">
 
  <? die(); ?>
 <? } ?>
+
 <?php
  			session_unregister('gid');
 
@@ -80,6 +77,8 @@ echo "  <br><br>
 		<table border=0 width=90% align=center cellpadding=5>
 		<tr>
 	      <td class=main colspan=4><b class=reg>Current Guilds</b></td>
+		<tr>
+		  <td class=main2 colspan=4><font class=yellow size=2px><b>Only 5 settlements per guild</b></font></td>
 		<tr>
 		  <td class=main2 width=\"20%\"><b class=reg>Name</b></td>
 		  <td class=main2 width=\"60%\"><b class=reg>Info</b></td>
@@ -158,26 +157,21 @@ else
 		 				include("include/connect.php");
 		 				mysql_query("INSERT INTO guild (gname, epw, info, gid,datemade, cpw, owner) 
 							VALUES	(\"$gname\", '$epw', \"$info\", '$gid','$clock','$cpw',\"$ename\") ");
-		
+						
+						$gname = ereg_replace(" ", "", "$gname");
+
 						$tblname = "$gname" . "main" . "$gid";
 						$tblname2 = "$gname" . "msgs" . "$gid";
 
-						mysql_query("CREATE TABLE  $tblname (topicid smallint(6) not null unique auto_increment, name varchar(30) null, host varchar(50) null, topic varchar(60) null, lastpost int(11) default 0 null, replies smallint(6) default 0 null, message text null, datestamp int(11) default 0 null);");			
-						mysql_query("CREATE TABLE  $tblname2 (messageid smallint(6) not null unique auto_increment, name varchar(30) null, host varchar(50) null, topic varchar(60) null, topicid smallint(6) null, message text null, datestamp int(11) default 0 null);");
+						mysql_query("CREATE TABLE  $tblname (topicid smallint(6) not null unique auto_increment, name varchar(30) null, host varchar(50) null, topic varchar(60) null, lastpost varchar(20) default 0 null, lastposter varchar(255) default 0 null, replies smallint(6) default 0 null, message text null, datestamp varchar(20) default 0 null);");			
+						mysql_query("CREATE TABLE  $tblname2 (messageid smallint(6) not null unique auto_increment, name varchar(30) null, host varchar(50) null, topic varchar(60) null, topicid smallint(6) null, message text null, datestamp varchar(20) default 0 null);");
 		
 						echo"<div align=center><font class=yellow><b>$gname has been successfully created!</b></font></div>";
 						include("include/S_GM.php");
 						die();
-			
 			}
 }
-
-
 ?>
-
-		
-
-
 <!-- body ends here -->
 </TD>
 </TR>

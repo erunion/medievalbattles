@@ -25,7 +25,7 @@
  <table class=navbar border="1" cellpadding="2" cellspacing="0" width="100%" valign="top" bordercolor="#000000">
 	
 		<tr><td class=main2>	<?php
-						echo"<font class=orange>";	include ("include/clock.php"); echo"<br></font>";
+						echo"<font class=orange>";	include ("include/clock.php"); echo"$clock<br></font>";
 ?>
 						
 
@@ -54,20 +54,40 @@
 		<td class=main><b><font class=orange>Empire</b></td>
 			<tr><td class=inner><? echo"$maintitle"; ?></td></tr>
 		    <tr><td class=inner><li><a href="explore.php">Explore</a></td></tr>
-			<tr><td class=inner><li><a href="military.php">Military</a><a href="equip.php">(E)</a><a href="aconstruct.php">(A)</a><a href="wconstruct.php">(W)</a></td></tr>
+			<tr><td class=inner><li><a href="military.php">Military</a><a href="equip.php">(E)</a><a href="wconstruct.php">(W)</a><a href="aconstruct.php">(A)</a></td></tr>
 			<tr><td class=inner><li><a href="research.php">Research</a></td></tr>
 			<tr><td class=inner><li><a href="buildings.php">Buildings</a></td></tr>
 			<tr><td class=inner><li><a href="status.php?pageid=production">Status</a></td></tr>
 
 		<td class=main><b class=other><font class=orange>Settlement</b></td>
 			<tr><td class=inner><li><a href="settlement.php">View Settlements</a></td></tr>
-			<tr><td class=inner><li><a href="sforum.php">Forums</a></td></tr>
+<?php 
+if($sl == yes){
+	echo"<tr><td class=inner><li><a href=\"sl-forum.php\">Forums</a></td></tr>";
+}
+else{
+	echo"<tr><td class=inner><li><a href=\"sforum.php\">Forums</a></td></tr>";
+}
+?>
 			<tr><td class=inner><li><a href="snews.php">News</a></td></tr>
 			<tr><td class=inner><li><a href="govt.php">Government</a><a href="donate.php">(D)</a></td></tr>
 		<td class=main><b class=other><font class=orange>Guild</a></td>
 			<tr><td class=inner><li><a href="gc.php">Guild Center</a></td></tr>
-			<tr><td class=inner><li><a href="gforums.php">Forums</a></td></tr>
-			
+<?php
+// CHECK TO SEE IF A GL
+$G_query = ("SELECT owner FROM guild WHERE owner=\"$ename\"");
+$G_result = mysql_query($G_query);
+$G_namecheck = mysql_fetch_array($G_result);
+
+if($G_namecheck[0] == $ename)	{
+	echo"<tr><td class=inner><li><a href=\"gl-forum.php\">Forums</a></td></tr>";
+}
+else {
+	echo"<tr><td class=inner><li><a href=\"gforums.php\">Forums</a></td></tr>";
+}
+?>
+			<tr><td class=inner><li><a href="gnews.php">News</a></td></tr>
+			<tr><td class=inner><li><a href="gmembers.php">Members</a></td></tr>		
 		<td class=main><b class=other><font class=orange>War</b></td>
 			<tr><td class=inner><li><a href="attack.php">Attack</a><a href="attackr.php">(R)</a><a href="attackm.php">(M)</a></td></tr>
 			<tr><td class=inner><li><a href="intel.php">Intelligence</a></td></tr>
@@ -90,7 +110,7 @@
 				?>
 			<tr><td class=inner><li><a href="scores.php">Score Board</a></td></tr>
 			<tr><td class=inner><li><a href="preferences.php">Preferences</a></td></tr>
-			<tr><td class=inner><li><a href="chat/chat1.html">IRC</a></td></tr>
+			<tr><td class=inner><li><a href="chat/chat1.html" target=newwindow>IRC</a></td></tr>
 			<tr><td class=inner><li><a href="manual.php" target=newwindow>Manual</a></td></tr>
 			<tr><td class=inner><li><a href="logout.php">Logout</a></td></tr>
 		</ul>

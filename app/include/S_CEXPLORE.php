@@ -1,5 +1,5 @@
 <form method=get action="cexplore.php">
-<table border="0" bordercolor="#808080" align=center width="80%">
+<table border="0" bordercolor="#808080" align=center width="40%">
  <tr><td colspan=5 class=main><b class=top>Cancel Explorers</b></td>
  <tr>
    <td class=main2><b class=reg>Type</b></td>

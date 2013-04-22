@@ -6,7 +6,7 @@
 
 					
  	
-			include("connect.php");
+			include("include/connect.php");
 
 			$numberplayers = mysql($dbnam, "SELECT count(ename) FROM user");
 			$noplayers = mysql_result($numberplayers,"noplayers");
@@ -23,9 +23,10 @@
 			$tclerics = mysql_result($totcleric,"tclerics");
 			$totmage = mysql($dbnam, "SELECT count(class) FROM user WHERE class='Mage'");
 			$tmages = mysql_result($totmage,"tmages");
-			
+			$totrangers = mysql($dbnam, "SELECT count(class) FROM user WHERE class='Ranger'");
+			$trangers = mysql_result($totrangers,"trangers");
 
-					$leftspots = 200 - $noplayers;
+					$leftspots = 400 - $noplayers;
 		?>
 
 	<table border=0 width="100%" bgcolor="#000000" cellspacing=0>
@@ -36,11 +37,11 @@
 		<tr>
 		  <td align=center background="images/border.gif"><b class=3>Game</b></td>
 		<tr>
-		  <td align=center bgcolor="#5D0101"><b class=reg>Alpha II</b></td>
+		  <td align=center bgcolor="#5D0101"><b class=reg>Beta 1</b></td>
 		<tr>
 		  <td align=center background="images/border.gif"><b class=3>Player Limit</b></td>
 		<tr>
-		  <td align=center bgcolor="#5D0101"><b class=reg>200</b></td>
+		  <td align=center bgcolor="#5D0101"><b class=reg>400</b></td>
 		<tr>
 		  <td align=center background="images/border.gif"><b class=3>Signed-Up</b></td>
 		<tr>
@@ -62,6 +63,10 @@
 		<tr>
 		  <td align=center bgcolor="#5D0101"><b class=reg><? echo"$tfighters"; ?></b></td>
 		<tr>
+		  <td align=center background="images/border.gif"><b class=3>Ranger</b></td>
+		<tr>
+		  <td align=center bgcolor="#5D0101"><b class=reg><? echo"$trangers"; ?></b></td>
+		<tr>
 		  <td align=center background="images/border.gif"><b class=3>Clerics</b></td>
 		<tr>
 		  <td align=center bgcolor="#5D0101"><b class=reg><? echo"$tclerics"; ?></b></td>
@@ -72,7 +77,7 @@
 		<tr>
 		  <td align=center background="images/border.gif"><b class=3>Server Time</b></td>
 		<tr>
-		  <td align=center bgcolor="#5D0101"><b class=reg><? include("include/clock.php"); ?></b></td>
+		  <td align=center bgcolor="#5D0101"><b class=reg><? include("include/clock.php");echo"$clock"; ?></b></td>
 	</table>
 	<br><br><center><a href="donations.php"><img src="images/donate.gif" border=0></a></center>
       

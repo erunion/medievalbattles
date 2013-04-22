@@ -6,6 +6,17 @@
 
 		<table border="0">
 <ul>
+	<tr><td><li><b class=reg>August 30, 2002:</b>
+		<td>Scientists and Thieves added to Barter<br>
+		    guild News added<br>
+			Some bugs fixed</td>
+	<tr><td><li><b class=reg>August 29, 2002:</b>
+		<td>Server back up<br>
+		    Delete function added in Settlement Forums<br>
+			Guild Members page added<br>
+			Various bugs/typos fixed</td>
+	<tr><td><li><b class=reg>August 20, 2002:</b>
+		<td>Server goes down</td>
 	<tr><td><li><b class=reg>July 25, 2002:</b>
 		<td>IRC Applet has been added so you can chat with other players</td>
 	<tr><td><li><b class=reg>July 14, 2002:</b>
