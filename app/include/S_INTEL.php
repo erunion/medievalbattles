@@ -40,7 +40,6 @@ echo "
 	    <option selected value=ns>-Select an Empire-</option>
 		";
 
-/* Download list of Presidents */
 $query_string = "SELECT userid, ename FROM user WHERE setid = '$csnum'";
 $result_id = mysql_query($query_string, $var);
 while ($row = mysql_fetch_row($result_id))
@@ -62,7 +61,7 @@ echo "
 </center>
 <table border="1" bordercolor="#000000" align=center width="40%" cellpadding=0 cellspacing=0>
 	<tr>
-		<td class=main colspan=2><b class=reg>Itelligence</b></td>
+		<td class=main colspan=2><b class=reg>Intelligence</b></td>
 	<tr>
 		<td class=main2 colspan=2>Here, you can gather information on an empire.<br>
 		You have <? echo"$thieves thieves"; ?> available.</td>

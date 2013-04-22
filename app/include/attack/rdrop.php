@@ -6,7 +6,10 @@
 
 	if($setchg == 1)
 	{
-		if($snum > 40 OR $snum <= 0)
+		$maxset0 = mysql_db_query($dbnam, "SELECT max(setid) AS maxset FROM settlement");
+		$maxset = mysql_result($maxset0,"maxset");
+
+		if($snum > $maxset OR $snum <= 0)
 		{echo"<font class=yellow><div align=center>Settlement $snum does not exist.</font></div><br><br>";die();}
 			  
 			  include("include/connect.php");

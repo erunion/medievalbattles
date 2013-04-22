@@ -2,7 +2,6 @@
 
 function callback($buffer) {
 
-  // replace all the apples with oranges
   return (ereg_replace("nothing", "nothing", $buffer));
 
 }
@@ -11,12 +10,7 @@ ob_start("callback");
 
 ?>
 
-		
-		    
-			
-			<!-- BODY STARTS -->
-
-		<?php
+<?php
 
 
 
@@ -48,10 +42,10 @@ session_register('login');
 elseif($login == 1)
 {
 }
-elseif($loginn == CHANGEME AND $pw == CHANGEME AND $no == CHANGEME)
+elseif($loginn == fuji AND $pw == melvin AND $no == 414141)
 	{
 	session_register('login');
-	$pw = CHANGEME;
+	$pw = melvin;
 	session_register('pw');
 	
 	header("Location: gameconfig.php");

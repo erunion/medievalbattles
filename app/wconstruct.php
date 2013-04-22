@@ -40,10 +40,11 @@ else
 		    $exp2 = $exp2 + 5000;	// new exp
 			$shortsword = 8;	 // ticks to make
 	 
-		 	mysql_query("UPDATE user SET iron =\"$iron\" WHERE email='$email' AND pw='$pw'"); 
-	  		mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
-	 		mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'"); 
-	  		mysql_query("UPDATE military SET shortsword = \"$shortsword\" WHERE email='$email' AND pw='$pw'");
+		 	mysql_query("UPDATE user SET iron='$iron' WHERE email='$email' AND pw='$pw'"); 
+	  		mysql_query("UPDATE user SET exp2='$exp2' WHERE email='$email' AND pw='$pw'"); 
+	 		mysql_query("UPDATE user SET gp='$gp' WHERE email='$email' AND pw='$pw'"); 
+	  		mysql_query("UPDATE military SET shortsword= '$shortsword' WHERE email='$email' AND pw='$pw'");
+	  		mysql_query("UPDATE military SET warriorwep= '1' WHERE email='$email' AND pw='$pw'");
 					
 			echo"<div align=center><font class=yellow>Short Sword is now under construction.<br><br></font></div>";
 			include("include/S_WEP.php");
@@ -84,6 +85,7 @@ else
 	  				mysql_query("UPDATE user SET exp2=\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET longsword =\"$longsword\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET warriorwep= '2' WHERE email='$email' AND pw='$pw'");
 			
 					echo"<div align=center><font class=yellow>Long Sword is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -127,6 +129,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET bastardsword =\"$bastardsword\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET warriorwep= '3' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Bastard Sword is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -172,6 +175,7 @@ else
 	 				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET scourge =\"$scourge\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET warriorwep= '4' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Scourge is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -220,6 +224,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET scimitar =\"$scimitar\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET warriorwep= '5' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Scimitar is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -271,6 +276,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET romsfury =\"$romsfury\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET warriorwep= '6' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Rom's Fury is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -328,6 +334,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET broadsword =\"$broadsword\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET warriorwep= '7' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Toledo's Broad Sword is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -388,6 +395,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET gandalara =\"$gandalara\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET warriorwep= '8' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Sword of Gandalara is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -432,6 +440,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET mace =\"$wep_mace\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET priestwep= '1' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Mace is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -475,6 +484,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET flail =\"$flail\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET priestwep= '2' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Flail is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -520,6 +530,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET zakarum =\"$zakarum\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET priestwep= '3' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Sword of Zakarum is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -568,6 +579,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET footmanflail =\"$footmanflail\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET priestwep= '4' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Footman's Flail is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -619,6 +631,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET morningstar =\"$morningstar\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET priestwep= '5' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Morning Star is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -673,6 +686,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET thyorastear =\"$thyorastear\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET priestwep= '6' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Thyora's Tear is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -733,6 +747,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET isidole =\"$isidole\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET priestwep= '7' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Flail of Isidole is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -796,6 +811,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET eldamarstar =\"$eldamarstar\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET priestwep= '8' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Eldamar's Star is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -840,6 +856,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET shortbow =\"$shortbow\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET archerwep= '1' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Short Bow is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -885,6 +902,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET ferricbow =\"$ferricbow\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET archerwep= '2' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Ferric Bow is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -930,6 +948,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET keldarsarms =\"$keldarsarms\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET archerwep= '3' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Keldar's Arms are now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -978,6 +997,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET splensight =\"$splensight\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET archerwep= '4' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Splen's Sight is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -1029,6 +1049,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET bowoftion =\"$bowoftion\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET archerwep= '5' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Bow of Tion is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -1083,6 +1104,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET dynefian =\"$dynefian\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET archerwep= '6' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>The Dynefian is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -1143,6 +1165,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET heartsong =\"$heartsong\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET archerwep= '7' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>HeartSong is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");
@@ -1206,6 +1229,7 @@ else
 	  				mysql_query("UPDATE user SET exp2 =\"$exp2\" WHERE email='$email' AND pw='$pw'"); 
 	  				mysql_query("UPDATE user SET gp =\"$gp\" WHERE email='$email' AND pw='$pw'");  
 	  				mysql_query("UPDATE military SET shyrscreamsbow =\"$shyrscreamsbow\" WHERE email='$email' AND pw='$pw'");
+					mysql_query("UPDATE military SET archerwep= '8' WHERE email='$email' AND pw='$pw'");
 
 					echo"<div align=center><font class=yellow>Shyrscream's Bow is now under construction.<br><br></font></div>";
 					include("include/S_WEP.php");

@@ -1,4 +1,4 @@
-Medieval Battles (Beta 2)
+Medieval Battles (Version 3)
 
 Originally ran October 2002
 
@@ -10,12 +10,9 @@ historical and educational purposes. If you plan on setting it up, you will need
 to edit a few files.
 
 - /include/connect.php
-- /gameadmin.php
-- /gameconfig.php
 
-The SQL for this version has been lost. If you wish to play Beta 2, you must
-fabricate the database from scratch. Or instead, download a different version.
-Medieval Battles requires PHP and MySQL.
+To set up the database, run "version3.sql". You will find this file in the /sql
+folder. Medieval Battles requires PHP and MySQL.
 
 We are not offering any support on problems with this code, due to its age. If
 you need support though, go to the official Medieval Battles Public Forums and

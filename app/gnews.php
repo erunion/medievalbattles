@@ -1,18 +1,10 @@
-<?php include("include/igtop.php");?>
-<? echo"<font class=yellow><div align=center>Guild news is under repair.</div></font>";die(); ?>
- <?
-	$thesetguild = mysql($dbnam, "SELECT setguild FROM settlement WHERE setid = '$setid'");	
-	$setguild = mysql_result($thesetguild,"setguild");
+<?php 
+include("include/igtop.php");
 
-
-			if($setguild == None)
-				{echo"<div align=center><font class=yellow>Your settlement is currently not in a Guild.</font></div>";
-					die();
-				}
-			$Guild_id = ("SELECT gid FROM guild WHERE setno1=$setid OR setno2=$setid OR setno3=$setid OR setno4=$setid OR setno5=$setid");
-			$G_id = mysql_query($Guild_id);
-			$gid = mysql_fetch_array($G_id);
-			
+if($empireguild == None)	{
+	echo "<div align=center><font class=yellow>You must be the member of a guild to view this page.</font></div>";
+	die();
+}
 ?>
   
 
@@ -26,57 +18,32 @@
 
 <?php
 
-// Determine Guild Name
-$setgname = mysql($dbnam, "SELECT setguild FROM settlement WHERE setid='$setid'");	
-$setguildname = mysql_result($setgname,"setguildname");
+//	determine guild id
+$guild_id_query = mysql_db_query($dbnam, "SELECT gid FROM guild WHERE gname='$empireguild'");
+	$guild_id = mysql_fetch_array($guild_id_query);
 
-// Extract Setno1
-$settlement1 = mysql($dbnam, "SELECT setno1 FROM guild WHERE gname='$setguildname'");
-$set1 = mysql_result($settlement1,"set1");
-
-// Extract Setno2
-$settlement2 = mysql($dbnam, "SELECT setno2 FROM guild WHERE gname='$setguildname'");
-$set2 = mysql_result($settlement2,"set2");
-
-// Extract Setno3
-$settlement3 = mysql($dbnam, "SELECT setno3 FROM guild WHERE gname='$setguildname'");
-$set3 = mysql_result($settlement3,"set3");
-
-// Extract Setno4
-$settlement4 = mysql($dbnam, "SELECT setno4 FROM guild WHERE gname='$setguildname'");
-$set4 = mysql_result($settlement4,"set4");
-
-// Extract Setno5
-$settlement5 = mysql($dbnam, "SELECT setno5 FROM guild WHERE gname='$setguildname'");
-$set5 = mysql_result($settlement5,"set5");
-
-// Display All News in Guild
+// display all news in said guild
 echo "  
 <br><br>
-	<table border=0 bordercolor=\"#404040\" width=\"95%\" align=center cellspacing=1 cellpadding = 0>
-	  <tr>
-	    <td colspan=4 class=main><b class=reg>News for $setguildname</b></td>
-	  <tr align=left>
-		<td class=main2 width=\"20%\" align=left><b class=reg>Date/Time</b></td>
-		<td class=main2 align=left><b class=reg width=\"80%\">News</b></td>
-";
-			
-$query_string = "SELECT date, news, gnid FROM guildnews WHERE gid='$gid[0]' ORDER BY date DESC";
+<table border=0 bordercolor=#404040 width=95% align=center cellspacing=1 cellpadding = 0>
+	<tr>
+		<td colspan=4 class=main><b class=reg>News for $setguildname</b></td>
+	<tr align=left>
+		<td class=main2 width=20% align=left><b class=reg>Date/Time</b></td>
+		<td class=main2 align=left><b class=reg width=80%>News</b></td>";
+
+$query_string = "SELECT date, news, gnid FROM guildnews WHERE gid='$guild_id[gid]' ORDER BY date DESC LIMIT 0, 60";
 $result_id = mysql_query($query_string, $var);
-while ($row = mysql_fetch_row($result_id))
-    {
-
+while ($row = mysql_fetch_row($result_id))	{
 	$num = $num + 1;
-		
-    print("<TR ALIGN=center VALIGN=TOP colspan=6>
-	   <td bgcolor=404040 align=left>$row[0]</td>
-	   <td bgcolor=404040 align=left>$row[1]</td>\n");
-    }
+echo "
+	<tr align=center valign=top colspan=6>
+		<td bgcolor=404040 align=left>$row[0]</td>
+		<td bgcolor=404040 align=left>$row[1]</td>\n";
+}
 ?>
-
-<!-- body ends here -->
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+</td>
+</tr>
+</table>
+</body>
+</html>

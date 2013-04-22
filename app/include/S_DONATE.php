@@ -12,9 +12,9 @@
 			$youriron = mysql_result($yyouriron,"youriron");
 echo"Your settlement has $yourgold gp and $youriron iron in the funds"; ?></td>
 	<tr>
-		<td class=inner2>Gold:</td><td class=inner2><input type="number" name="donateg" size=4></td>
+		<td class=inner2>Gold:</td><td class=inner2><input type="number" name="donateg" size=10></td>
 	<tr>
-		<td class=inner2>Iron:</td><td class=inner2><input type="number" name="donatei" size=4></td>
+		<td class=inner2>Iron:</td><td class=inner2><input type="number" name="donatei" size=10></td>
 
 	<tr>
 		<td class=inner2 colspan=2><input type="submit" name="donate" value="Donate" class=button></td>

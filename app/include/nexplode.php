@@ -31,9 +31,11 @@ $dbpri2 = implode("", explode(",", $dbpri2));
 $dbarch = implode("", explode(",", $dbarch));
 $dbarch2 = implode("", explode(",", $dbarch2));
 $explorers = implode("", explode(",", $explorers));
+$dogs = implode("", explode(",", $dogs));
 $thieves = implode("", explode(",", $thieves));
 $scientists = implode("", explode(",", $scientists));
 $dbexplorer = implode("", explode(",", $dbexplorer));
+$dbdog = implode("", explode(",", $dbdog));
 $dbthief = implode("", explode(",", $dbthief));
 $dbscientist = implode("", explode(",", $dbscientist));
 $ascientist = implode("", explode(",", $ascientists));
@@ -50,6 +52,7 @@ $uwizard = implode("", explode(",", $uwizard));
 $upriest = implode("", explode(",", $upriest));
 $uarcher = implode("", explode(",", $uarcher));
 $uexplorer = implode("", explode(",", $uexplorer));
+$udog = implode("", explode(",", $udog));
 $uthief = implode("", explode(",", $uthief));
 $uscientist = implode("", explode(",", $uscientist));
 $urecruit = implode("", explode(",", $urecruit));
@@ -61,6 +64,7 @@ $explorec = implode("", explode(",", $explorec));
 
 //buildings
 $home = implode("", explode(",", $home));
+$kennel = implode("", explode(",", $kennel));
 $barrack = implode("", explode(",", $barrack));
 $farm = implode("", explode(",", $farm));
 $wp = implode("", explode(",", $wp));
@@ -68,6 +72,7 @@ $lmill =  implode("", explode(",", $lmill));
 $gm = implode("", explode(",", $gm));
 $im = implode("", explode(",", $im));
 $dhome = implode("", explode(",", $dhome));
+$dkennel = implode("", explode(",", $dkennel));
 $dbarrack = implode("", explode(",", $dbarrack));
 $dfarm = implode("", explode(",", $dfarm));
 $dwp = implode("", explode(",", $dwp));
@@ -76,6 +81,7 @@ $dgm = implode("", explode(",", $dgm));
 $dim = implode("", explode(",", $dim));
 
 $uhome = implode("", explode(",", $uhome));
+$ukennel = implode("", explode(",", $ukennel));
 $ubarrack = implode("", explode(",", $ubarrack));
 $ufarm = implode("", explode(",", $ufarm));
 $uwp = implode("", explode(",", $uwp));
@@ -106,6 +112,12 @@ $ur4 = implode("", explode(",", $ur4));
 $ur5 = implode("", explode(",", $ur5));
 $ur6 = implode("", explode(",", $ur6));
 $ur7 = implode("", explode(",", $ur7));
+$ur8 = implode("", explode(",", $ur8));
+$ur9 = implode("", explode(",", $ur9));
+$ur10 = implode("", explode(",", $ur10));
+$ur11 = implode("", explode(",", $ur11));
+$ur12 = implode("", explode(",", $ur12));
+$ur13 = implode("", explode(",", $ur13));
 $ascientists = implode("", explode(",", $ascientists));
 
 //explore

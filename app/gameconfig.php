@@ -1,69 +1,51 @@
 <?php
+function callback($buffer) {
+
+  return (ereg_replace("nothing", "nothing", $buffer));
+
+}
+
+ob_start("callback");
+
+/*
 session_register('pw');
 session_register('login');
 
-if($pw == CHANGEME)
-{
-	
-
+if($pw == melvin)	 {
 
 }
-else
-{
-header("Location: index.php");
-	 exit;
+else	{
+	header("Location: index.php");
+	exit;
 }
-?>
-<?
-	include("include/connect.php");
-
-				$ONLINE_NO1 = mysql($dbnam, "SELECT count(online) FROM user WHERE online='1'");	
-				$OLINE1 = mysql_result($ONLINE_NO1,"OLINE1");
-				if($OLINE1 == "")
-					{$OLINE1 = 0;}
-
-echo"There are currently <b>$OLINE1</b> users online.";
+*/
 ?>
 
 <?php
-if(!IsSet($deletem))
-	{
-?>
-		
-	<form type="post" action="gameconfig.php">
-	<table border=1 bordercolor=#ffffff align=center bgcolor=#630000 cellpadding=0 cellspacing=0> 
-		<tr>
-		  <td bgcolor=#404040 colspan=2><font color=#ffffff><b>You can delete all of the messages on the message table</b></font></td>
-		<tr>
-			<td><font color="#ffffff">DELETE all messages</font></td>
-			<td><center><input type="submit" name="deletem" value="DELETE"></center></td>
-				<input type="hidden" name="deletem" value="1"></td>
-			
-	
+if($deletem)	{
+	session_register('pw');
+	session_register('login');
 
+	include("include/connect.php");
+
+	mysql_query("DELETE FROM messages"); 
+	echo "<center>All of the messages have been deleted.<br><a href=gameconfig.php>Return</a></center>";
+}
+else	{	
+?>
+
+<form type="post" action="gameconfig.php">
+<table border=1 bordercolor=#ffffff align=center bgcolor=#630000 cellpadding=0 cellspacing=0> 
+	<tr>
+		<td bgcolor=#404040 colspan=3><font color=#ffffff><b>You can delete all of the messages on the message table</b></font></td>
+	<tr>
+		<td><font color="#ffffff">DELETE all messages</font></td>
+		<td><center><input type="submit" name="deletem" value="DELETE"></center></td>
 </table>
 </form>
 
-
-
-	<?php
-		}
-		else
-		{	
-		session_register('pw');
-		session_register('login');
-
-			include("include/connect.php");
-
-			mysql_query("DELETE FROM messages"); 
-			echo"<center>All of the messages have been deleted.<br>
-				<a href=http://www.medievalbattles.com/gameconfig.php>Return</a></center>";
-		}
-?>
-
-
-
 <?php
+}
 if(!IsSet($deleten))
 	{
 ?>
@@ -574,3 +556,9 @@ echo "
 		echo "</table>"; 
 
 ?>
+
+<?php
+
+ob_end_flush();
+
+?>	

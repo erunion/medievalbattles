@@ -25,13 +25,12 @@ include("functions.php");
 </HEAD>
 
 <BODY>
-<!-- THIS IS OUTER TABLE -->
 <table class=outer border="0" cellpadding="1" cellspacing="0"  width="100%">
  <TR>
   <TD valign="top" colspan="2">
    <table border="0" width="100%" cellpadding=0 cellspacing=0>
 	<tr>
-	 <td><center><img src="images/igtop.gif"></center></td>
+	<!--	<td><center><img src="images/igtop.gif"></center></td>	-->
  
 </TD><table border=1 width=100% align=center bordercolor=#212121 cellspacing=0 cellpadding=0><tr><td>
 <table border=1 width=100% align=center bordercolor=#2a2929 cellspacing=0 cellpadding=0><tr><td>
@@ -62,7 +61,7 @@ if($safemode > 0)	 {	echo"<div align=center><font class=blue><b>You are in Safe 
 $attacksys = yes; 
 			
 // tick info
-$tickk = mysql($dbnam, "SELECT tick FROM Game_Info");
+$tickk = mysql_db_query($dbnam, "SELECT tick FROM game_info");
 $tick = mysql_result($tickk,"tick");
 
 // are ticks running?

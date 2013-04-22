@@ -1,146 +1,142 @@
-<?php include("include/igtop.php");?>
+<?
+include("include/igtop.php");
 
-<?php if($sl == no){echo"<center><b class=yellow>You are not a SL!</b>";die();}else{}?>
-
-<?php
-		//SELECT GUILD CURRENTLY IN
-		$thesetguild = mysql($dbnam, "SELECT setguild FROM settlement WHERE setid = '$setid'");	
-		$setguild = mysql_result($thesetguild,"setguild");
-		echo"<center><b class=red>Guild:</b>$setguild</center>";
-?>
-
-<?php if($setguild != None){echo"<br><center><a href=\"slg.php\">Click here to leave your guild<br><br></a></center>";}else{}?>
-
-
-<?php
-	if(!IsSet($update))
-{
-  ?> 
-	
-		<? include("include/S_SINFO.php"); ?>
-
-<?php
+if($sl == no)	{
+	echo"<center><b class=yellow>You are not a SL!</b>";
+	die();
 }
-else
-{
+else	{
+}
+
+if(!IsSet($update))	{
+	include("include/S_SINFO.php");
+}
+else	{
 	
 	include("include/S_SINFOS.php");
 
-	mysql_query("UPDATE settlement SET setpic =\"$theseturl\" WHERE setid='$setid'");
-	mysql_query("UPDATE settlement SET setname =\"$thesetname\" WHERE  setid='$setid'");
-	mysql_query("UPDATE settlement SET nap =\"$thenap\" WHERE  setid='$setid'");
+	mysql_query("UPDATE settlement SET setpic ='$theseturl' WHERE setid='$setid'");
+	mysql_query("UPDATE settlement SET setname ='$thesetname' WHERE  setid='$setid'");
+	mysql_query("UPDATE settlement SET nap ='$thenap' WHERE  setid='$setid'");
+	mysql_query("UPDATE settlement SET setnotice ='$thesetnotice' WHERE  setid='$setid'");
 
-	echo"<div align=center>Your settlement information has been updated.</div>";
-	include("include/S_SINFO.php");include("include/S_SFUND.php");include("include/S_SJG.php");
+	echo "<div align=center>Your settlement information has been updated.</div>";
+	include("include/S_SINFO.php");
+	include("include/S_SFUND.php");
+	include("include/S_SJG.php");
 	die();
 
 }
-?>					
-<?php
-	if(!IsSet($donate))
-{
-  ?> 			
-
-			<? include("include/S_SFUND.php"); ?>
-			
-<?php
+/*
+if(!IsSet($donate))	{
+	include("include/S_SFUND.php");
 }
-else
-{
-		include("include/connect.php");
-		include("include/nexplode.php");
-
-		$goldd = strip_tags($goldd);
-		$irond = strip_tags($irond);
-		
-			$yyourgold = mysql($dbnam, "SELECT fgold FROM settlement WHERE setid = '$setid'");	
-			$yourgold = mysql_result($yyourgold,"yourgold");
-
-			$yyouriron = mysql($dbnam, "SELECT firon FROM settlement WHERE setid = '$setid'");	
-			$youriron = mysql_result($yyouriron,"youriron");
-
-		if($empvalue == ns)
-			{echo"<div align=center>You did not choose someone to donate to.</div>";include("include/S_SFUND.php"); include("include/S_SJG.php");die();
-			}
-		elseif($goldd == "" AND $irond == "")
-			{echo"<div align=center>You did not choose to donate anything from the funds.</div>";include("include/S_SFUND.php"); include("include/S_SJG.php");die();
-			}
-		elseif($goldd > $yourgold)
-			{echo"<div align=center>You cannot donate that much gold.</div>";include("include/S_SFUND.php"); include("include/S_SJG.php");die();
-			}
-		elseif($irond > $youriron)
-			{echo"<div align=center>You cannot donate that much iron.</div>";include("include/S_SFUND.php"); include("include/S_SJG.php");die();
-			}
-		elseif($goldd < 0 OR $irond < 0)
-			{echo"<div align=center>You cannot donate negative of something.</div>";include("include/S_SFUND.php"); include("include/S_SJG.php");die();
-			}
-			else
-				{
-		
-				//EMPIRE NAME DONATED TO
-					$empattacked = mysql($dbnam, "SELECT ename FROM user WHERE userid = '$empvalue'");	
-					$empireattacked = mysql_result($empattacked,"empireattacked");
-				//EMPS setid
-					$EMPIRE_ID = mysql($dbnam, "SELECT setid FROM user WHERE userid = '$empvalue' AND ename=\"$empireattacked\"");	
-					$EMP_ID = mysql_result($EMPIRE_ID,"EMP_ID");
-				
-				if($EMP_ID != $setid)
-					{echo"<div align=center>This empire is not in your settlement.</div>";include("include/S_SFUND.php"); include("include/S_SJG.php");die();}
-				elseif($irond == "" OR $irond <= 0)
-					{
-					$thenews = "<font class=green><b>$empireattacked</b> has received $goldd gp from the fund</font>";
-					}	
-				elseif($goldd == "" OR $goldd <= 0)
-					{$thenews = "<font class=green><b>$empireattacked</b> has received $irond iron from the fund</font>";
-					}
-				elseif($goldd > 0 AND $irond > 0)
-					{$thenews = "<font class=green><b>$empireattacked</b> has received $goldd gp and $irond iron from the funds</font>";
-					}
-					
-					mysql_query("INSERT INTO setnews (date, news, setid) 
-						VALUES	('$clock', \"$thenews\", '$setid') ");
+else	{
 	
-					$empiregold = mysql($dbnam, "SELECT gp FROM user WHERE userid = '$empvalue'");	
-					$empgold = mysql_result($empiregold,"empgold");	
-		
-					$empireiron = mysql($dbnam, "SELECT iron FROM user WHERE userid = '$empvalue'");
-					$empiron = mysql_result($empireiron,"empiron");
-		
-					$empiredonated = mysql($dbnam, "SELECT ename FROM user WHERE userid = '$empvalue'");
-					$empd = mysql_result($empiredonated,"empd");
+	include("include/connect.php");
+	include("include/nexplode.php");
 
-					//settlement  gold and iron being donated
-					$newgold = $yourgold - $goldd;
-					$newiron = $youriron - $irond;
+	$goldd = strip_tags($goldd);
+	$irond = strip_tags($irond);
+		
+	$yyourgold = mysql_db_query($dbnam, "SELECT fgold FROM settlement WHERE setid = '$setid'");	
+	$yourgold = mysql_result($yyourgold,"yourgold");
+
+	$yyouriron = mysql_db_query($dbnam, "SELECT firon FROM settlement WHERE setid = '$setid'");	
+	$youriron = mysql_result($yyouriron,"youriron");
+
+	if($empvalue == ns)	{
+		echo "<div align=center>You did not choose someone to donate to.</div>";
+		include("include/S_SFUND.php");
+		include("include/S_SJG.php");
+		die();
+	}
+	elseif($goldd == "" AND $irond == "")	{
+		echo "<div align=center>You did not choose to donate anything from the funds.</div>";
+		include("include/S_SFUND.php");
+		include("include/S_SJG.php");
+		die();
+	}
+	elseif($goldd > $yourgold)	{
+		echo "<div align=center>You cannot donate that much gold.</div>";
+		include("include/S_SFUND.php"); 
+		include("include/S_SJG.php");
+		die();
+	}
+	elseif($irond > $youriron)	{
+		echo "<div align=center>You cannot donate that much iron.</div>";
+		include("include/S_SFUND.php"); 
+		include("include/S_SJG.php");
+		die();
+	}
+	elseif($goldd < 0 OR $irond < 0)	{
+		echo "<div align=center>You cannot donate negative of something.</div>";
+		include("include/S_SFUND.php"); 
+		include("include/S_SJG.php");
+		die();
+	}
+	else	{
+		
+		//EMPIRE NAME DONATED TO
+			$empattacked = mysql($dbnam, "SELECT ename FROM user WHERE userid = '$empvalue'");	
+			$empireattacked = mysql_result($empattacked,"empireattacked");
+		//EMPS setid
+			$EMPIRE_ID = mysql($dbnam, "SELECT setid FROM user WHERE userid = '$empvalue' AND ename=\"$empireattacked\"");	
+			$EMP_ID = mysql_result($EMPIRE_ID,"EMP_ID");
+				
+		if($EMP_ID != $setid)	{
+			echo"<div align=center>This empire is not in your settlement.</div>";
+			include("include/S_SFUND.php"); 
+			include("include/S_SJG.php");
+			die();
+		}
+		elseif($irond == "" OR $irond <= 0)	{
+			$thenews = "<font class=green><b>$empireattacked</b> has received $goldd gp from the fund</font>";
+		}	
+		elseif($goldd == "" OR $goldd <= 0)	{
+			$thenews = "<font class=green><b>$empireattacked</b> has received $irond iron from the fund</font>";
+		}
+		elseif($goldd > 0 AND $irond > 0)	{
+			$thenews = "<font class=green><b>$empireattacked</b> has received $goldd gp and $irond iron from the funds</font>";
+		}
+					
+		mysql_query("INSERT INTO setnews (date, news, setid) VALUES	('$clock', '$thenews', '$setid') ");
+	
+		$empiregold = mysql_db_query($dbnam, "SELECT gp FROM user WHERE userid = '$empvalue'");	
+		$empgold = mysql_result($empiregold,"empgold");	
+		
+		$empireiron = mysql_db_query($dbnam, "SELECT iron FROM user WHERE userid = '$empvalue'");
+		$empiron = mysql_result($empireiron,"empiron");
+		
+		$empiredonated = mysql_db_query($dbnam, "SELECT ename FROM user WHERE userid = '$empvalue'");
+		$empd = mysql_result($empiredonated,"empd");
+
+		//settlement  gold and iron being donated
+			$newgold = $yourgold - $goldd;
+			$newiron = $youriron - $irond;
 			
-					mysql_query("UPDATE settlement SET fgold =\"$newgold\" WHERE setid='$setid'");
-					mysql_query("UPDATE settlement SET firon =\"$newiron\" WHERE  setid='$setid'");
+			mysql_query("UPDATE settlement SET fgold ='$newgold' WHERE setid='$setid'");
+			mysql_query("UPDATE settlement SET firon ='$newiron' WHERE  setid='$setid'");
+		//selected empire new gold and iron
+			$yournewgold = $empgold + $goldd;
+			$yournewiron = $empiron + $irond;
 
-					//selected empire new gold and iron
-					$yournewgold = $empgold + $goldd;
-					$yournewiron = $empiron + $irond;
-
-					mysql_query("UPDATE user SET gp =\"$yournewgold\" WHERE userid='$empvalue'");
-					mysql_query("UPDATE user SET iron =\"$yournewiron\" WHERE  userid='$empvalue'"); 
+			mysql_query("UPDATE user SET gp ='$yournewgold' WHERE userid='$empvalue'");
+			mysql_query("UPDATE user SET iron ='$yournewiron' WHERE  userid='$empvalue'"); 
 			
-					echo"<div align=center>The empire has recieved what you have donated.</div>";
-					include("include/S_SFUND.php"); include("include/S_SJG.php");
-					die();
+	echo"<div align=center>The empire has recieved what you have donated.</div>";
+	include("include/S_SFUND.php"); 
+	include("include/S_SJG.php");
+	die();
 
-					}	
+	}	
 }
-?>	
-<?php
-	if(!IsSet($enter))
-{
-  ?> 		
-		
-		<? include("include/S_SJG.php"); ?>
-
-<?php
+*/
+/*
+if(!IsSet($enter))	{
+	include("include/S_SJG.php");
 }
-else
-{
+else	{
 	$zguild = strip_tags($zguild);
 	$zpw = strip_tags($zpw);
 
@@ -245,8 +241,9 @@ else
 								die();
 							}
 			}
+	*/
 ?>
-<!-- body ends here -->
+
 </TD>
 </TR>
 </TABLE>

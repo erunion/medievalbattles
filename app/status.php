@@ -9,23 +9,13 @@ if ($pageid == 'production')	{
 	$food = implode("", explode(",", $food));
 	$home = implode("", explode(",", $home));
 
-	if($civ  > $food)	{
-		$civstatus = "dieing, you need more food, so build more farms.";
-	}
-	elseif($civ > $home * 20)	{
-		$civstatus = "dieing, you need more homes.";
-	}
-	elseif($civ > $home * 20 AND $civ > $food)	{
-		$civstatus = "dieing, you need more homes and farms.";
-	}
-	else	{
-		$civstatus = "doing well.";
-	}
+	if($civ  > $food)	{	$civstatus = "dieing, you need more food, so build more farms.";	}
+	elseif($civ > $home * 20)	{	$civstatus = "dieing, you need more homes.";	}
+	elseif($civ > $home * 20 AND $civ > $food)	{	$civstatus = "dieing, you need more homes and farms.";	}
+	else	{	$civstatus = "doing well.";	}
 		
 	$bnum = 50;
-	if($race == Human)	{
-		$bnum = 35;
-	}
+	if($race == Human)	{	$bnum = 35;	}
 
 	$barrack = implode("", explode(",", $barrack));
 	$dbwar = implode("", explode(",", $dbwar));
@@ -42,10 +32,12 @@ if ($pageid == 'production')	{
 	$tarchers = implode("", explode(",", $tarchers));
 
 	if($barrack * $bnum >= $totalunits = ($twarriors + $twizards + $tpriests + $tarchers + $dbwar2 + $dbwar + $dbwiz2 + $dbwiz + $dbpri2 + $dbpri + $dbarch2 + $dbarch))	{
-		$spaceleft = ($barrack * $bnum) - $totalunits; $barrackstatus = "You have enough space in your barracks to hold $spaceleft more units.";
+		$spaceleft = ($barrack * $bnum) - $totalunits; 
+		$barrackstatus = "You have enough space in your barracks to hold $spaceleft more units.";
 	}
 	else	{
-		$spaceleft = $totalunits - ($barrack * $bnum); $barrackstatus = "Your barracks are crowded with $spaceleft extra units.  You must construct more barracks.";
+		$spaceleft = $totalunits - ($barrack * $bnum); 
+		$barrackstatus = "Your barracks are crowded with $spaceleft extra units.  You must construct more barracks.";
 	}
 	echo "<br><font class=orange><div align=center>Your civilians are $civstatus<br></font></div>";
 	echo "<font class=orange><div align=center>$barrackstatus<br><br></div></font>";
@@ -57,19 +49,22 @@ if ($pageid == 'production')	{
 				  <td class=main2><b class=top>Type</b><td class=main2><b class=top>Per Tick</b>
 				<tr>
 					<td class=inner><b class=reg>Iron Production</b></td>
-					<td class=inner2><? echo"$imhourly"; ?></td>
+					<td class=inner2><? echo "$imhourly"; ?></td>
 				<tr>
 					<td class=inner><b class=reg>Gold Production</b></td>
-					<td class=inner2><? echo"$gmhourly"; ?></td>
+					<td class=inner2><? echo "$gmhourly"; ?></td>
 				<tr>
 					<td class=inner><b class=reg>New Civilians </b></td>
-					<td class=inner2><? echo"$civhourly"; ?></td>
+					<td class=inner2><? echo "$civhourly"; ?></td>
 				<tr>
 					<td class=inner><b class=reg>New Recruits </b></td>
-					<td class=inner2><? echo"$rechourly"; ?></td>
+					<td class=inner2><? echo "$rechourly"; ?></td>
+				<tr>
+					<td class=inner><b class=reg>New Puppies </b></td>
+					<td class=inner2><? $newpuppies = $kennel * .25;	echo "$newpuppies"; ?></td>
 				<tr>
 					<td class=inner><b class=reg>Food Production</b></td>
-					<td class=inner2><? echo"$foodhourly"; ?></td>
+					<td class=inner2><? echo "$foodhourly"; ?></td>
 		<? 
 			if($res[r13pts] >= 125000)	 {
 				echo "
@@ -85,7 +80,7 @@ if ($pageid == 'production')	{
 if ($pageid == 'building')	 {
 ?>
 
-		<table border="0" bordercolor="#808080" width="60%" align=center>
+		<table border="0" bordercolor="#808080" width="65%" align=center>
 			
 				<tr>
 				  <td class=main colspan=9><b class=reg>Building Creation Status</b></td>
@@ -94,16 +89,18 @@ if ($pageid == 'building')	 {
 				  <td class=main2 colspan=9>The first number is how many are being built and the number in "()" is how many hours is left until it is built.</td>
 				
 				<tr align=center>
-					<td class=main2><b class=reg>Home</b></td>
-					<td class=main2><b class=reg>Barrack</b></td>
-					<td class=main2><b class=reg>Farm</b></td>
-					<? if($race!= Orc)	{	echo "<td class=main2><b class=reg>Wooden Platform</b></td>";	}	?>
-					<td class=main2><b class=reg>Gold Mine</b></td>
-					<td class=main2><b class=reg>Iron Mine</b></td>
+					<td class=main2><b class=reg>Homes</b></td>
+					<td class=main2><b class=reg>Kennels</b></td>
+					<td class=main2><b class=reg>Barracks</b></td>
+					<td class=main2><b class=reg>Farms</b></td>
+					<? if($race != Orc)	{	echo "<td class=main2><b class=reg>Wooden Platform</b></td>";	}	?>
+					<td class=main2><b class=reg>Gold Mines</b></td>
+					<td class=main2><b class=reg>Iron Mines</b></td>
 					<? if($res[r13pts] >= 125000)	 {	echo "<td class=main2><b class=reg>Lumber Mill</td>";	}	?>
 
 				<tr align=center>	
 					<td class=inner2><? echo"$dhome ($Hhrs)"; ?></td>	
+					<td class=inner2><? echo"$dkennel ($Khrs)"; ?></td>	
 					<td class=inner2><? echo"$dbarrack ($Bhrs)"; ?></td>
 					<td class=inner2><? echo"$dfarm ($Fhrs)"; ?></td>
 					<? if($race != Orc)	{	echo "<td class=inner2>$dwp ($Whrs)</td>";	}	?>
@@ -162,6 +159,9 @@ if ($pageid == 'training')	 {
 	  <tr>
 		<td class=inner2><b class=reg>Explorer</b></td>
 		<td class=inner2 colspan=2><? echo"$dbexplorer"; ?></td>
+	  <tr>
+		<td class=inner2><b class=reg>Rottweiler</b></td>
+		<td class=inner2 colspan=2><? echo"$dbdog"; ?></td>
 	</table>
 <? 
 	}
@@ -289,7 +289,6 @@ echo"
 </table>
 
 <? } ?>
-<!-- body ends here -->
 </TD>
 </TR>
 </TABLE>

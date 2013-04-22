@@ -1,10 +1,8 @@
 <?
 
-@mysql_connect (localhost, user, password);
-mysql_select_db(database) or die(deadATconnect);
-$dbnam = "database";
-$var = @mysql_connect(localhost, user, password) or die();
-
-
+mysql_connect (localhost, root, password);
+mysql_select_db(medieval) or die(deadATconnect);
+$dbnam = "medieval";
+$var = @mysql_connect(localhost, root, password) or die();
 
 ?>

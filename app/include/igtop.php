@@ -5,9 +5,7 @@ session_register('email');
 session_register('pw');
 
 function callback($buffer) {
-
-  return (ereg_replace("nothing", "nothing", $buffer));
-
+	return (ereg_replace("nothing", "nothing", $buffer));
 }
 
 ob_start("callback");
@@ -16,23 +14,19 @@ include("include/connect.php");
 include("functions.php");
 
 ?>
-<HTML>
-<HEAD> 
-<TITLE>Medieval Battles</TITLE>
+<html>
+<head> 
+<title>Medieval Battles</title>
 	<link rel=stylesheet type="text/css" href="css/ingame.css">
 	<script language="JavaScript" src="fade.js"></script>
+</head>
 
-</HEAD>
-
-<BODY>
-<!-- THIS IS OUTER TABLE -->
+<body>
 <table class=outer border="0" cellpadding="1" cellspacing="0"  width="100%">
  <TR>
   <TD valign="top" colspan="2">
    <table border="0" width="100%" cellpadding=0 cellspacing=0>
 	<tr>
-	 <td><center><img src="images/igtop.gif"></center></td>
- 
 </TD><table border=1 width=100% align=center bordercolor=#212121 cellspacing=0 cellpadding=0><tr><td>
 <table border=1 width=100% align=center bordercolor=#2a2929 cellspacing=0 cellpadding=0><tr><td>
 <table border=1 width=100% align=center bordercolor=#323131 cellspacing=0 cellpadding=0><tr><td>
@@ -55,6 +49,9 @@ include("functions.php");
  <TD width="85%">
 
 <?  
+// ticker start notice
+//echo"<div align=center><font class=blue><b>Ticker will start January 10 @ 7am PST</b></font></div>";	
+
 // safe mode notice
 if($safemode > 0)	 {	echo"<div align=center><font class=blue><b>You are in Safe Mode for $safemode more ticks</b></font></div>";	 } 
 
@@ -62,17 +59,15 @@ if($safemode > 0)	 {	echo"<div align=center><font class=blue><b>You are in Safe 
 $attacksys = yes; 
 			
 // tick info
-$tickk = mysql($dbnam, "SELECT tick FROM Game_Info");
-$tick = mysql_result($tickk,"tick");
+$tickk = mysql_db_query($dbnam, "SELECT tick FROM game_info");
+	$tick = mysql_result($tickk,"tick");
 
 // are ticks running?
-if($tick == yes)	{	echo"<font class=yellow size=4px><center><br>You have to wait until the tick is over before you can access anything.</center>";	die();	 }
-?>
-
-
-<br><br>
-
-<?
+if($tick == yes)	{	
+	echo"<font class=yellow size=4px><center><br>You have to wait until the tick is over before you can access anything.</center>";	
+	die();
+}
+echo "<br><br>";
 
 ob_end_flush();
 

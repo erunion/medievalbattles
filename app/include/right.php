@@ -27,6 +27,10 @@
 			$trangers = mysql_result($totrangers,"trangers");
 
 					$leftspots = 400 - $noplayers;
+
+		$maxset0 = mysql_db_query($dbnam, "SELECT max(setid) AS maxset FROM settlement");
+		$maxset = mysql_result($maxset0,"maxset");
+		$maxusers = $maxset * 10;
 		?>
 
 	<table border=0 width="100%" bgcolor="#000000" cellspacing=0>
@@ -41,7 +45,7 @@
 		<tr>
 		  <td align=center background="images/border.gif"><b class=3>Player Limit</b></td>
 		<tr>
-		  <td align=center bgcolor="#5D0101"><b class=reg>400</b></td>
+		  <td align=center bgcolor="#5D0101"><b class=reg><? echo"$maxusers";?></b></td>
 		<tr>
 		  <td align=center background="images/border.gif"><b class=3>Signed-Up</b></td>
 		<tr>

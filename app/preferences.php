@@ -46,6 +46,7 @@ else
 		session_register('email');
 
 		$upw = htmlspecialchars($upw);
+		$upw = md5($upw);
 	 		
 		mysql_query("UPDATE user SET pw = \"$upw\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
 		mysql_query("UPDATE buildings SET pw = \"$upw\" WHERE email='$email' AND pw='$pw'") or die(mysql_error('Error'));
