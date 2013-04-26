@@ -17,7 +17,7 @@ echo"
 		<td class=inner2><input type=number name=uwarrior size=8></td>";
 
 if($race != Giant)	{
-	if($class != Ranger)	{
+	if($class != Ranger AND $class != Insurrectionist)	{
 		echo"
 	<tr>
 		<td class=inner2><b>Wizard</b></td>
@@ -25,12 +25,14 @@ if($race != Giant)	{
 		<td class=inner2>$wizards</td>
 		<td class=inner2><input type=number name=uwizard size=8></td>";
 	}
+	if($race != Demon)	{
 	echo"
 	<tr>
 		<td class=inner2><b>Priest</b></td>
 		<td class=inner2>$pripower</td>
 		<td class=inner2>$priests</td>
 		<td class=inner2><input type=number name=upriest size=8></td>";
+	}
 }
 if($res[r13pts] >= 125000)	 {
 	echo"
@@ -39,6 +41,24 @@ if($res[r13pts] >= 125000)	 {
 		<td class=inner2>$archpower</td>
 		<td class=inner2>$archers</b></td>
 		<td class=inner2><input type=number name=uarcher size=8></td>";
+}
+if($race != Giant)	{
+	if($res[r17pts] >= 125000)	 {
+		echo"
+	<tr>
+		<td class=inner2><b>Golem</b></td>
+		<td class=inner2>38</td>
+		<td class=inner2>$golem</b></td>
+		<td class=inner2><input type=number name=ugolem size=8></td>";
+	}
+	if($res[r18pts] >= 125000)	 {
+		echo"
+	<tr>
+		<td class=inner2><b>Iron Golem</b></td>
+		<td class=inner2>50</td>
+		<td class=inner2>$irongolem</b></td>
+		<td class=inner2><input type=number name=uirongolem size=8></td>";
+	}
 }
 ?>
 </table>

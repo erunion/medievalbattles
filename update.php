@@ -1,8 +1,8 @@
 <?
-include("app/include/connect.php");
-include("app/include/clock.php");
-//include("include/connect.php");
-//include("include/clock.php");
+//include("www/include/connect.php");
+//include("www/include/clock.php");
+include("include/connect.php");
+include("include/clock.php");
 
 	mysql_query("UPDATE game_info SET tick='yes'");
 	$max_userid = mysql_db_query($dbnam, "SELECT max(userid) FROM user");
@@ -33,7 +33,7 @@ While($INC_ID < $max_UID + 1)	{
 			$result5 = mysql_db_query($dbnam, $query5) or die("Error in query! " . mysql_error());
 			$explore = mysql_fetch_array($result5);
 
-			$query6 = "SELECT * FROM return WHERE userid='$INC_ID'";
+			$query6 = "SELECT * FROM returntbl WHERE userid='$INC_ID'";
 			$result6 = mysql_db_query($dbnam, $query6) or die("Error in query! " . mysql_error());
 			$ret = mysql_fetch_array($result6);
 
@@ -41,18 +41,18 @@ While($INC_ID < $max_UID + 1)	{
 				$mt_gain = 0;
 				$exp_num = .9;
 				$foodmod = .5;
-				$gpmod   = 1;
+				$gpmod = 1;
 				$ironmod = 1.945;
 				$lumbmod = 2;
-				$civmod  = .265;
-				$base    = $build[home];
-				$civ     = $mil[civ];
-				$food    = $user[food];
-				$fbase   = $build[farm];
+				$civmod  = .26;
+				$base = $build[home];
+				$civ = $mil[civ];
+				$food = $user[food];
+				$fbase = $build[farm];
 				$civexp = 0;
-######################
-##	update recruits, resources
-######################
+##################
+### Update Recruits & Resources
+##################
 			switch($user['class'])	{
 				case "Fighter";
 				$gpmod = .95;
@@ -65,8 +65,20 @@ While($INC_ID < $max_UID + 1)	{
 				case"Ranger";
 				$lumbmod = $lumbmod + .1;
 				break;
+
+				case"Savant";
+				$gpmod = 1.5;
+				break;
+
+				case"Insurrectionist";
+				$gpmod = .90;
+				break;
 			}
 			switch($user[race])	{
+				case"Angel";
+				$civmod = $civmod + .10;
+				break;
+
 				case"Human";
 				$exp_num = .8;
 				break;
@@ -76,12 +88,24 @@ While($INC_ID < $max_UID + 1)	{
 				$ironmod = $ironmod + .15;
 				break;
 
-				case"Orc";
-				$civmod = $civmod + .425;
+				case"Demon";
+				$gpmod = $gpmod + .5;
+				$ironmod = $ironmod + .5;
+				$civmod = $civmod - .10;
+				break;
+
+				case"Elf";
+				$civmod = $civmod - .15;
 				break;
 
 				case"Giant";
 				$foodmod = $foodmod + .1;
+				break;
+
+				case"Night Elf";
+				$foodmod = $foodmod + .25;
+				$lumbmod = $lumbmod + .1;
+				$civmod = $civmod - .25;
 				break;
 			}
 			switch($res[r11pts])	 {
@@ -94,17 +118,20 @@ While($INC_ID < $max_UID + 1)	{
 				$ironmod = $ironmod + .1;
 				break;
 			}
+			switch($res[r15pts])	 {
+				case"100000";
+				$foodmod = $foodmod + 2;
+				break;
+			}
 
 			if($mil[civ] > $build[home] * 20)	{
 				$base = $mil[civ];
 				$civmod = .97;
-				$civ = 0;
 			}
 
 			if($mil[civ] > $user[food])	{
 				$base = $mil[civ];
 				$civmod = .97;
-				$civ = 0;
 			}
 
 			if($user[food] > $build[farm] * 50)	{
@@ -113,16 +140,15 @@ While($INC_ID < $max_UID + 1)	{
 				$food = 0;
 			}
 
-			mysql_query("UPDATE military SET maxciv = round($mil[maxciv] + (.007 * $mil[civ])), civ=round($base * $civmod + $civ) WHERE userid='$INC_ID'");
-			mysql_query("UPDATE user SET gp = round(($build[gm] * 300) * $gpmod + $user[gp]), iron = round($build[im] * $ironmod + $user[iron]), food = round($foodmod * $fbase + $food), lumber = round($build[lmill] * $lumbmod + $user[lumber]), exp = round(exp + exp2 + $civexp) WHERE userid='$INC_ID'");
-###############
-##	explore system
-###############
+			mysql_query("UPDATE military SET maxciv = round($mil[maxciv] + (.007 * $mil[civ])), civ=round($base * $civmod) WHERE userid='$INC_ID'");
+			mysql_query("UPDATE user SET gp = round(($build[gm] * 300) * $gpmod + $user[gp]), iron = round($build[im] * $ironmod + $user[iron]), food = round($foodmod * $fbase + $food), lumber = round($build[lmill] * $lumbmod + $user[lumber]) WHERE userid='$INC_ID'");
+##################
+### Update Land & Mountains
+##################
 			$max_land = round($user[land] * $exp_num);
 			$max_mts  = round($user[mts] *  $exp_num);
 			$per_land = floor($max_land / 20);
 			$per_mt	  = floor($max_land / 20);
-
 
 			if($explore[expland] != 0)	{	$land_gain = $explore[expland] / $per_land;	}
 			if($explore[expmt] != 0)	 {	$mt_gain = $explore[expmt] / $per_mt;	}
@@ -135,34 +161,41 @@ While($INC_ID < $max_UID + 1)	{
 
 			mysql_query("UPDATE buildings SET aland = aland + $land_gain, amts = amts + $mt_gain WHERE userid='$INC_ID'");
 			mysql_query("UPDATE user SET land = land + $land_gain, mts = mts + $mt_gain WHERE userid='$INC_ID'");
-###############
-##	return troops
-###############
+##################
+### Return Parties
+##################
 			if($ret[time1] == 1)	{
-				mysql_query("UPDATE military SET warriors = warriors + $ret[war1], wizards = wizards + $ret[wiz1],priests = priests + $ret[pri1],archers = archers + $ret[arch1]  WHERE userid='$INC_ID'");
+				mysql_query("UPDATE military SET warriors = warriors + $ret[war1], wizards = wizards + $ret[wiz1], priests = priests + $ret[pri1], archers = archers + $ret[arch1], golem = golem + $ret[golem1], irongolem = irongolem + $ret[irongolem1]  WHERE userid='$INC_ID'");
 				mysql_query("UPDATE user SET fleets = fleets + 1 WHERE userid='$INC_ID'");
 			}
 			if($ret[time2] == 1)	 {
-				mysql_query("UPDATE military SET warriors = warriors + $ret[war2], wizards = wizards + $ret[wiz2], priests = priests + $ret[pri2],archers = archers + $ret[arch2] WHERE userid='$INC_ID'");
+				mysql_query("UPDATE military SET warriors = warriors + $ret[war2], wizards = wizards + $ret[wiz2], priests = priests + $ret[pri2], archers = archers + $ret[arch2], golem = golem + $ret[golem2], irongolem = irongolem + $ret[irongolem2] WHERE userid='$INC_ID'");
 				mysql_query("UPDATE user SET fleets = fleets + 1 WHERE userid='$INC_ID'");
 			}
 			if($ret[time3] == 1)	{
-				mysql_query("UPDATE military SET warriors = warriors + $ret[war3], wizards = wizards + $ret[wiz3], priests = priests + $ret[pri3], archers = archers + $ret[arch3] WHERE userid='$INC_ID'");
+				mysql_query("UPDATE military SET warriors = warriors + $ret[war3], wizards = wizards + $ret[wiz3], priests = priests + $ret[pri3], archers = archers + $ret[arch3], golem = golem + $ret[golem3], irongolem = irongolem + $ret[irongolem3] WHERE userid='$INC_ID'");
 				mysql_query("UPDATE user SET fleets = fleets + 1 WHERE userid='$INC_ID'");
 			}
 			if($ret[time4] == 1)	{
-				mysql_query("UPDATE military SET warriors = warriors + $ret[war4],wizards = wizards + $ret[wiz4],priests = priests + $ret[pri4],archers = archers + $ret[arch4] WHERE userid='$INC_ID'");
+				mysql_query("UPDATE military SET warriors = warriors + $ret[war4], wizards = wizards + $ret[wiz4], priests = priests + $ret[pri4], archers = archers + $ret[arch4], golem = golem + $ret[golem4], irongolem = irongolem + $ret[irongolem4] WHERE userid='$INC_ID'");
 				mysql_query("UPDATE user SET fleets = fleets + 1 WHERE userid='$INC_ID'");
 			}
-###############
-##	ASS
-###############
+##################
+### Research Updater
+##################
+	if($user['class'] == 'Savant')	{	$research_mod = 1.10;	}
+	elseif($user['class'] == 'Warlock')	{	$research_mod = .75;	}
+	else	{	$research_mod = 1;	}
+
+	mysql_query("UPDATE research SET r1pts = r1pts + (r1 * $research_mod), r2pts = r2pts + (r2 * $research_mod), r3pts = r3pts + (r3 * $research_mod), r4pts = r4pts + (r4 * $research_mod), r5pts = r5pts + (r5 * $research_mod), r6pts = r6pts + (r6 * $research_mod), r7pts = r7pts + (r7 * $research_mod), r8pts = r8pts + (r8 * $research_mod), r9pts = r9pts + (r9 * $research_mod), r10pts = r10pts + (r10 * $research_mod), r11pts = r11pts + (r11 * $research_mod), r12pts = r12pts + (r12 * $research_mod), r13pts = r13pts + (r13 * $research_mod), r14pts = r14pts + (r14 * $research_mod), r15pts= r15pts + (r15 * $research_mod), r16pts= r16pts + (r16 * $research_mod), r17pts= r17pts + (r17 * $research_mod), r18pts= r18pts + (r18 * $research_mod) WHERE userid='$INC_ID'");
+##################
+### Activation System (ASS)
+##################
 	mysql_query("UPDATE emailvalidate SET clock= clock - 1 WHERE clock > 0 AND userid ='$INC_ID'");
 
 	if($validate[clock] == 1 AND $validate[check] == 1)	 {
 		mysql_query("INSERT INTO setnews (date, news, setid) 	VALUES	('$clock', '<font class=red>$user[ename] has been deleted for inactivity.</font>', '$user[setid]') ");
 
-		//	send them an email
 		$email = $user[email];
 		$subject = "Your Medieval Battles Account Deleted";
 		$body = "
@@ -173,25 +206,23 @@ This email is automated. Your reply will not be recieved.";
 		$from = "From: account_deleted@medievalbattles.com\r\nbcc: phb@sendhost\r\nContent-type: text/plain\r\nX-mailer: PHP/" . phpversion();
 		$mailsend = mail("$email", "$subject", "$body", "$from");
 
-		//	remove them from the database
 		mysql_query("DELETE FROM user WHERE email='$user[email]' AND pw='$user[pw]'");
 		mysql_query("DELETE FROM military WHERE email='$user[email]' AND pw='$user[pw]'");
 		mysql_query("DELETE FROM buildings WHERE email='$user[email]' AND pw='$user[pw]'");
 		mysql_query("DELETE FROM research WHERE email='$user[email]' AND pw='$user[pw]'");
-		mysql_query("DELETE FROM return WHERE email='$user[email]' AND pw='$user[pw]'");
+		mysql_query("DELETE FROM returntbl WHERE email='$user[email]' AND pw='$user[pw]'");
 		mysql_query("DELETE FROM explore WHERE email='$user[email]' AND pw='$user[pw]'");
 		mysql_query("DELETE FROM emailvalidate WHERE userid='$INC_ID'");
 		mysql_query("UPDATE user SET votefor='None' WHERE votefor='$user[ename]'");
 	}
-###############
-##	AIDS
-###############
+##################
+### Automatic Inactive Deletion System (AIDS)
+##################
 	mysql_query("UPDATE user SET countdown= countdown - 1 WHERE userid ='$INC_ID'");
 
 	if($user[countdown] == 1)	 {
 		mysql_query("INSERT INTO setnews (date, news, setid) 	VALUES	('$clock', '<font class=red>$user[ename] has been deleted for inactivity.</font>', '$user[setid]') ");
 
-		//	send them an email
 		$email = $user[email];
 		$subject = "Your Medieval Battles Account Deleted";
 		$body = "
@@ -202,23 +233,22 @@ This email is automated. Your reply will not be recieved.";
 		$from = "From: account_deleted@medievalbattles.com\r\nbcc: phb@sendhost\r\nContent-type: text/plain\r\nX-mailer: PHP/" . phpversion();
 		$mailsend = mail("$email", "$subject", "$body", "$from");
 
-		//	remove them from the database
 		mysql_query("DELETE FROM user WHERE email='$user[email]' AND pw='$user[pw]'");
 		mysql_query("DELETE FROM military WHERE email='$user[email]' AND pw='$user[pw]'");
 		mysql_query("DELETE FROM buildings WHERE email='$user[email]' AND pw='$user[pw]'");
 		mysql_query("DELETE FROM research WHERE email='$user[email]' AND pw='$user[pw]'");
-		mysql_query("DELETE FROM return WHERE email='$user[email]' AND pw='$user[pw]'");
+		mysql_query("DELETE FROM returntbl WHERE email='$user[email]' AND pw='$user[pw]'");
 		mysql_query("DELETE FROM explore WHERE email='$user[email]' AND pw='$user[pw]'");
 		mysql_query("DELETE FROM emailvalidate WHERE userid='$INC_ID'");
 		mysql_query("UPDATE user SET votefor='None' WHERE votefor='$user[ename]'");
 	}
-###############
-##	LMRC
-###############
-	$built_land_rc = $build['home'] + $build['kennel'] + $build['barrack'] + $build['farm'] + $build['wp'] + $build['lmill'];
+##################
+### Land & Mountain Recalculator (LMRC)
+##################
+	$built_land_rc = $build['home'] + $build['barrack'] + $build['farm'] + $build['wp'] + $build['lmill'];
 	$built_mtn_rc = $build['gm'] + $build['im'];
 
-	$constructing_land_rc = $build['dhome'] + $build['dkennel'] + $build['dbarrack'] + $build['dfarm'] + $build['dwp'] + $build['dlmill'];
+	$constructing_land_rc = $build['dhome'] + $build['dbarrack'] + $build['dfarm'] + $build['dwp'] + $build['dlmill'];
 	$constructing_mtn_rc = $build['dgm'] + $build['dim'];
 
 	$land_rc = $built_land_rc + $constructing_land_rc + $build['aland'];
@@ -226,9 +256,9 @@ This email is automated. Your reply will not be recieved.";
 
 	mysql_query("UPDATE user SET land='$land_rc' WHERE userid='$INC_ID'");
 	mysql_query("UPDATE user SET mts='$mtn_rc' WHERE userid='$INC_ID'");
-###############
-##	XPRC
-###############
+##################
+### Experience Recalculator (XPRC)
+##################
 	//	calculate all units
 	$warrior_exp = (($mil[warriors] + $ret[war1] + $ret[war2] + $ret[war3] + $ret[war4]) * 23);
 	$wizard_exp = (($mil[wizards] + $ret[wiz1] + $ret[wiz2] + $ret[wiz3] + $ret[wiz4]) * 20);
@@ -242,8 +272,10 @@ This email is automated. Your reply will not be recieved.";
 	$suicide_exp = $mil[suicide] * 28;
 	$catapult_exp = $mil[catapult] * 33;
 	$recruits_exp = $mil[recruits] * 5;
+	$golem_exp = $mil[golem] * 30;
+	$irongolem_exp = $mil[irongolem] * 35;
 
-	$xprc_units = $warrior_exp + $wizard_exp + $priest_exp + $archer_exp + $thief_exp + $explorer_exp + $dog_exp + $scientist_exp + $land_exp + $mountain_exp + $suicide_exp + $catapult_exp + $recruits_exp;
+	$xprc_units = $warrior_exp + $wizard_exp + $priest_exp + $archer_exp + $thief_exp + $explorer_exp + $dog_exp + $scientist_exp + $land_exp + $mountain_exp + $suicide_exp + $catapult_exp + $recruits_exp + $golem_exp + $irongolem_exp;
 
 	//	calculate all weapons
 	if($mil[warriorwep] == 0)	{	$warrior_weapon = 0;	}	// dagger
@@ -300,28 +332,26 @@ This email is automated. Your reply will not be recieved.";
 
 	$INC_ID = $INC_ID + 1;
 }
-###############
-##	BTC
-###############
-		mysql_query("UPDATE user SET barterclock= barterclock - 1 WHERE barterclock > 0");
-#####################
-##	clear exp2 column
-#####################
-	mysql_query("UPDATE user SET exp2 = 0,online = 0");
-#####################
-##	update return times
-#####################
-	mysql_query("UPDATE return SET war1 =0,wiz1=0,pri1=0,arch1=0 WHERE time1 = 1");
-	mysql_query("UPDATE return SET war2 =0,wiz2=0,pri2=0,arch2=0 WHERE time2 = 1");
-	mysql_query("UPDATE return SET war3 =0,wiz3=0,pri3=0,arch3=0 WHERE time3 = 1");
-	mysql_query("UPDATE return SET war4 =0,wiz4=0,pri4=0,arch4=0 WHERE time4 = 1");
-	mysql_query("UPDATE return SET time1 = time1 - 1 WHERE time1 > 0");
-	mysql_query("UPDATE return SET time2 = time2 - 1 WHERE time2 > 0");
-	mysql_query("UPDATE return SET time3 = time3 - 1 WHERE time3 > 0");
-	mysql_query("UPDATE return SET time4 = time4 - 1 WHERE time4 > 0");
-#####################
-##	update buildings
-#####################
+##################
+### Misc.
+##################
+	mysql_query("UPDATE user SET barterclock= barterclock - 1 WHERE barterclock > 0");
+	mysql_query("UPDATE user SET online = 0");
+	mysql_query("UPDATE user SET safemode = safemode - 1 WHERE safemode > 0");
+##################
+### Update Return Times
+##################
+	mysql_query("UPDATE returntbl SET war1 =0, wiz1=0, pri1=0, arch1=0, golem1=0, irongolem1=0 WHERE time1 = 1");
+	mysql_query("UPDATE returntbl SET war2 =0, wiz2=0, pri2=0, arch2=0, golem2=0, irongolem2=0 WHERE time2 = 1");
+	mysql_query("UPDATE returntbl SET war3 =0, wiz3=0, pri3=0, arch3=0, golem3=0, irongolem3=0 WHERE time3 = 1");
+	mysql_query("UPDATE returntbl SET war4 =0, wiz4=0, pri4=0, arch4=0, golem4=0, irongolem4=0 WHERE time4 = 1");
+	mysql_query("UPDATE returntbl SET time1 = time1 - 1 WHERE time1 > 0");
+	mysql_query("UPDATE returntbl SET time2 = time2 - 1 WHERE time2 > 0");
+	mysql_query("UPDATE returntbl SET time3 = time3 - 1 WHERE time3 > 0");
+	mysql_query("UPDATE returntbl SET time4 = time4 - 1 WHERE time4 > 0");
+##################
+### Update Building Construction
+##################
 	mysql_query("UPDATE buildings SET home    = home      + round(dhome / Hhrs)    WHERE Hhrs > 0");
 	mysql_query("UPDATE buildings SET barrack = barrack   + round(dbarrack / Bhrs) WHERE Bhrs > 0");
 	mysql_query("UPDATE buildings SET farm    = farm      + round(dfarm / Fhrs)    WHERE Fhrs > 0");
@@ -343,9 +373,9 @@ This email is automated. Your reply will not be recieved.";
 	mysql_query("UPDATE buildings SET Lhrs = Lhrs - 1 WHERE Lhrs > 0");
 	mysql_query("UPDATE buildings SET Ghrs = Ghrs - 1 WHERE Ghrs > 0");
 	mysql_query("UPDATE buildings SET Ihrs = Ihrs - 1 WHERE Ihrs > 0");
-####################
-##	update weapon building
-####################
+##################
+### Update Weapon Construction
+##################
 // warrior weapons
 	mysql_query("UPDATE military SET shortsword = shortsword - 1 WHERE 	shortsword > 1");
 	mysql_query("UPDATE military SET longsword = longsword - 1 WHERE  longsword > 1");
@@ -373,9 +403,9 @@ This email is automated. Your reply will not be recieved.";
 	mysql_query("UPDATE military SET dynefian = dynefian - 1 WHERE dynefian > 1");
 	mysql_query("UPDATE military SET heartsong = heartsong - 1 WHERE heartsong > 1");
 	mysql_query("UPDATE military SET shyrscreamsbow = shyrscreamsbow - 1 WHERE shyrscreamsbow > 1");
-###################
-##	update armor building
-###################
+##################
+### Update Armor Construction
+##################
 	mysql_query("UPDATE military SET cs = cs - 1 WHERE cs > 1");
 	mysql_query("UPDATE military SET cm = cm - 1 WHERE cm > 1");
 	mysql_query("UPDATE military SET bp = bp - 1 WHERE bp > 1");
@@ -385,32 +415,33 @@ This email is automated. Your reply will not be recieved.";
 	mysql_query("UPDATE military SET ba = ba - 1 WHERE ba > 1");
 	mysql_query("UPDATE military SET tr = tr - 1 WHERE tr > 1");
 	mysql_query("UPDATE military SET mr = mr - 1 WHERE mr > 1");
-#####################
-##	update units/safe mode
-#####################
-	mysql_query("UPDATE military SET thieves = thieves + dbthief, explorers = explorers + dbexplorer, scientists = scientists + dbscientist, dbthief = 0, dbexplorer = 0, dbscientist = 0, warriors = warriors + dbwar, wizards = wizards + dbwiz, priests = priests + dbpri, archers = archers + dbarch, dbwar = 0, dbwiz = 0, dbarch = 0, dbwar = dbwar2, dbwiz = dbwiz2, dbpri = dbpri2, dbarch = dbarch2, dbwar2 = 0, dbwiz2 = 0, dbpri2 = 0, dbarch2 = 0, catapult = catapult + dbcatapult, dbcatapult = dbcatapult2, dbcatapult2 = dbcatapult3, dbcatapult3 = 0, suicide = suicide + dbsuicide, dbsuicide = dbsuicide2, dbsuicide2 = dbsuicide3, dbsuicide3 = 0");
-	mysql_query("UPDATE user SET safemode = safemode - 1 WHERE safemode > 0");
-#####################
-##	update research
-#####################
-	mysql_query("UPDATE research SET r1pts = r1pts + r1, r2pts = r2pts + r2, r3pts = r3pts + r3, r4pts = r4pts + r4, r5pts = r5pts + r5, r6pts = r6pts + r6, r7pts = r7pts + r7, r8pts = r8pts + r8, r9pts = r9pts + r9, r10pts = r10pts + r10, r11pts = r11pts + r11, r12pts = r12pts + r12, r13pts = r13pts + r13, r14pts = r14pts + r14");
-	mysql_query("UPDATE research SET r1pts = 50000 WHERE r1pts > 50000");
-	mysql_query("UPDATE research SET r2pts = 100000 WHERE r2pts > 100000");
-	mysql_query("UPDATE research SET r3pts = 200000 WHERE r3pts > 200000");
-	mysql_query("UPDATE research SET r4pts = 300000 WHERE r4pts > 300000");
-	mysql_query("UPDATE research SET r5pts = 400000 WHERE r5pts > 400000");
-	mysql_query("UPDATE research SET r6pts = 500000 WHERE r6pts > 500000");
-	mysql_query("UPDATE research SET r7pts = 600000 WHERE r7pts > 600000");
-	mysql_query("UPDATE research SET r8pts = 700000 WHERE r8pts > 700000");
-	mysql_query("UPDATE research SET r9pts = 800000 WHERE r9pts > 800000");
-	mysql_query("UPDATE research SET r10pts = 900000 WHERE r10pts > 900000");
-	mysql_query("UPDATE research SET r11pts = 100000 WHERE r11pts > 100000");
-	mysql_query("UPDATE research SET r12pts = 100000 WHERE r12pts > 100000");
-	mysql_query("UPDATE research SET r13pts = 125000 WHERE r13pts > 125000");
-	mysql_query("UPDATE research SET r14pts = 125000 WHERE r14pts > 125000");
-#####################
-##	update messages, news
-#####################
+##################
+### Create Units
+##################
+	mysql_query("UPDATE military SET thieves = thieves + dbthief, explorers = explorers + dbexplorer, sages = sages + dbsage, dbthief = 0, dbexplorer = 0, dbsage = 0, warriors = warriors + dbwar, wizards = wizards + dbwiz, priests = priests + dbpri, archers = archers + dbarch, dbwar = 0, dbwiz = 0, dbarch = 0, dbwar = dbwar2, dbwiz = dbwiz2, dbpri = dbpri2, dbarch = dbarch2, dbwar2 = 0, dbwiz2 = 0, dbpri2 = 0, dbarch2 = 0, catapult = catapult + dbcatapult, dbcatapult = dbcatapult2, dbcatapult2 = dbcatapult3, dbcatapult3 = 0, suicide = suicide + dbsuicide, dbsuicide = dbsuicide2, dbsuicide2 = dbsuicide3, dbsuicide3 = 0");
+	mysql_query("UPDATE military SET golem = golem + dbgolem, irongolem = irongolem + dbirongolem, dbgolem = 0, dbirongolem = 0");
+##################
+### Update Research
+##################
+	mysql_query("UPDATE research SET r1pts = 50000 WHERE r1pts > 50000");	// fireball
+	mysql_query("UPDATE research SET r2pts = 100000 WHERE r2pts > 100000");	// ice storm
+	mysql_query("UPDATE research SET r3pts = 200000 WHERE r3pts > 200000");	// wall of fire
+	mysql_query("UPDATE research SET r4pts = 300000 WHERE r4pts > 300000");	// wall of ice
+	mysql_query("UPDATE research SET r5pts = 400000 WHERE r5pts > 400000");	// chain lightning
+	mysql_query("UPDATE research SET r6pts = 500000 WHERE r6pts > 500000");	// gust of wind
+	mysql_query("UPDATE research SET r7pts = 600000 WHERE r7pts > 600000");	// flaming sphere
+	mysql_query("UPDATE research SET r8pts = 700000 WHERE r8pts > 700000");	// cloud kill
+	mysql_query("UPDATE research SET r9pts = 800000 WHERE r9pts > 800000");	// lighting bolt
+	mysql_query("UPDATE research SET r10pts = 900000 WHERE r10pts > 900000");	// meteor swarm
+	mysql_query("UPDATE research SET r11pts = 100000 WHERE r11pts > 100000");	// adv gold mining
+	mysql_query("UPDATE research SET r12pts = 100000 WHERE r12pts > 100000");	// adv iron mining
+	mysql_query("UPDATE research SET r13pts = 125000 WHERE r13pts > 125000");	// archery
+	mysql_query("UPDATE research SET r14pts = 125000 WHERE r14pts > 125000");	// pyrotechnics
+	mysql_query("UPDATE research SET r15pts = 100000 WHERE r15pts > 100000");	// adv farming
+	mysql_query("UPDATE research SET r16pts = 100000 WHERE r16pts > 100000");	// adv construction
+##################
+### Update Messages
+##################
 	mysql_query("UPDATE messages SET age = age + 1");
 	mysql_query("UPDATE setnews SET age = age + 1");
 	mysql_query("UPDATE guildnews SET age = age + 1");
@@ -441,11 +472,11 @@ This email is automated. Your reply will not be recieved.";
 		$GUILD_INC = $GUILD_INC + 1;
 	}
 
-echo "Sending an email to the admin informing him of the tick.<BR>";
+echo "Sending email to Mako informing him of the tick.<BR>";
 
 $message = "Tick successfully completed [" . date('r') . "]";
-$subject = "MB Tick completed";
-$email = "my@email.com";
+$subject = "Tick completed";
+$email = "mako@medievalbattles.com";
 
 mail("$email", "$subject", $message,
 "From: MB_Tick\r\n"
@@ -453,6 +484,4 @@ mail("$email", "$subject", $message,
 ."X-Mailer: PHP/" . phpversion());
 
 echo "Email sent.<BR>";
-
-
 ?>

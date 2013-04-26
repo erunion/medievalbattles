@@ -11,24 +11,23 @@ if($setid != $settlement_check[setid])	{
 	die();
 }
 
-$result1 = mysql_query("SELECT name, topic, message, datestamp FROM setforums WHERE topicid='$topicid' AND setid='$setid'") or die("Error!". mysql_error());
+$result1 = mysql_query("SELECT name, topic, message, lastpost FROM setforums WHERE topicid='$topicid' AND setid='$setid'") or die("Error!". mysql_error());
 
 if ($result1) { 
 echo"
-	<table border=0 class=f align=center cellspacing=1 cellpadding=1 width=$tablewidth>";
+	<table border=0 class=f align=center cellspacing=1 cellpadding=1 width=95%>";
 									
 	while ($r1 = mysql_fetch_array($result1)) {
 	extract ($r1);
 
 echo "
 		<tr>
-			<td bgcolor=$color3 width=30% align=left><b class=forum>$name</b></td>
-			<td bgcolor=$color3 width=200 align=center><b class=forum>$datestamp</b></td>
-			<td bgcolor=$color3 width=30% align=right><b class=forum>$topic</b></td>
+			<td bgcolor=$color3 width=15% align=left><b class=forum>$name</b></td>
+			<td bgcolor=$color3 width=80% align=left><b class=forum>$topic</b></td>
 			<td bgcolor=$color3></td>
 		</tr>
 		<tr>
-			<td bgcolor=$color2 valign=top colspan=4><strong class=black>$message<br><br></strong></td>
+			<td bgcolor=$color2 valign=top colspan=4><pre>$lastpost</pre>$message<br><br></td>
 		</tr>";
 	} 
 
@@ -42,20 +41,19 @@ $result2 = mysql_query($query2) or die("Could not execute the query!");
 
 if ($result2) { 
 echo	"
-	<table border=0 class=f width=$tablewidth align=center cellspacing=1 cellpadding=1>";
+	<table border=0 class=f width=95% align=center cellspacing=1 cellpadding=1>";
 	
 	while ($r2 = mysql_fetch_array($result2)) {
 	extract ($r2);
 	
 	echo "
 		<tr>
-			<td bgcolor=$color3 width=30% align=left><b class=forum>$name</b></td>
-			<td bgcolor=$color3 width=200 align=center><b class=forum>$datestamp</b></td>
-			<td bgcolor=$color3 width=30% align=right><b class=forum>$topic</b></td>
+			<td bgcolor=$color3 width=15% align=left><b class=forum>$name</b></td>
+			<td bgcolor=$color3 width=80% align=left><b class=forum>$topic</b></td>
 			<td bgcolor=$color3><strong class=white><a href=sl-delposts.php?delpost=true&mid=$messageid&tid=$topicid><font size=-2> &nbsp; Delete</a></strong></td>
 		</tr>
 		<tr>
-			<td bgcolor=$color2 valign=top colspan=4><small class=black>$message<br><br></small></td>
+			<td bgcolor=$color2 valign=top colspan=4><pre>$datestamp</pre>$message<br><br></td>
 		</tr>";
 	} 
 

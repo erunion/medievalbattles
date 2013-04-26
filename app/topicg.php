@@ -11,22 +11,21 @@ if($empireguild != $guild_check[guildname])	{
 	die();
 }
 
-$result1 = mysql_query("SELECT name, topic, message, datestamp FROM guildthreads WHERE topicid='$topicid'") or die("Error!" . mysql_error());
+$result1 = mysql_query("SELECT name, topic, message, lastpost FROM guildthreads WHERE topicid='$topicid'") or die("Error!" . mysql_error());
 
 if ($result1) { 
 	echo"
-	<table border=0 class=f align=center cellspacing=1 cellpadding=1 width=$tablewidth>";
+	<table border=0 class=f align=center cellspacing=1 cellpadding=1 width=95%>";
 										
 	while ($r1 = mysql_fetch_array($result1)) {
 	extract ($r1);
 	echo "
 		<tr>
-			<td bgcolor=$color3 width=30% align=left><b class=forum>$name</b></td>
-			<td bgcolor=$color3 width=200 align=right><b class=forum>$datestamp</b></td>
-			<td bgcolor=$color3 width=30% align=right><b class=forum>$topic</b></td>
+			<td bgcolor=$color3 align=left width=15%><b class=forum>$name</b></td>
+			<td bgcolor=$color3 align=left wuidth=85%><b class=forum>$topic</b></td>
 		</tr>
 		<tr>
-			<td bgcolor=$color2 valign=top colspan=3><strong class=black>$message<br><br><br></strong></td>
+			<td bgcolor=$color2 valign=top colspan=3><pre>$lastpost</pre>$message<br><br></td>
 		</tr>	";
 	} 
 echo "
@@ -39,19 +38,18 @@ $result2 = mysql_query($query2) or die(mysql_error());
 
 if ($result2) { 
 echo "
-	<table border=0 class=f width=$tablewidth align=center cellspacing=1 cellpadding=1>";
+	<table border=0 class=f width=95% align=center cellspacing=1 cellpadding=1>";
 	
 	while ($r2 = mysql_fetch_array($result2)) {
 	extract ($r2);
 		
 echo "
 		<tr>
-			<td bgcolor=$color3 width=30% align=left><b class=forum>$name</b></td>
-			<td bgcolor=$color3 width=200 align=right><b class=forum>$datestamp</b></td>
-			<td bgcolor=$color3 width=30% align=right><b class=forum>$topic</b></td>
+			<td bgcolor=$color3 width=15% align=left><b class=forum>$name</b></td>
+			<td bgcolor=$color3 width=85% align=left><b class=forum>$topic</b></td>
 		</tr>
 		<tr>
-			<td bgcolor=$color2 valign=top colspan=3><small class=black>$message<br><br><br></small></td>
+			<td bgcolor=$color2 valign=top colspan=3><pre>$datestamp</pre>$message<br><br></td>
 		</tr>
 		<tr>
 			<td></td>

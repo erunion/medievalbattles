@@ -131,26 +131,35 @@ else	{
 		}
 		if($race == Giant AND $uwizard != "")	{
 			echo"<div align=center><font class=yellow>You cannot equip Wizards with spells.</div></font";
+			include("include/S_EQUIPO.php");
 			include("include/S_EQUIPA.php");
 			die();
 		}
 		if($class == Ranger AND $uwizard != "")	{
 			echo"<div align=center><font class=yellow>You cannot equip Wizards with spells.</div></font";
+			include("include/S_EQUIPO.php");
 			include("include/S_EQUIPA.php");
 			die();
 		}
-				
+
 	// warrior weapon stats
 		if($uwarrior != ns AND $uwarrior != "")	{	
-			if($uwarrior == "Dagger")	{	$wspeed = 6;	$wpower = 2;	}
-			if($uwarrior == "Short Sword")	{	$wspeed = 8;	$wpower = 4;	}
-			if($uwarrior == "Long Sword")	 {	$wspeed = 9;	$wpower = 6;	}
-			if($uwarrior == "Bastard Sword")	{	$wspeed = 11;	 $wpower = 8;	 }
-			if($uwarrior == "Scourge")	{	$wspeed = 13;	 $wpower = 10;	}
-			if($uwarrior == "Scimitar")	{	$wspeed = 14;	 $wpower = 12;	}
-			if($uwarrior == "Rom\'s Fury")	{	$wspeed = 16;	 $wpower = 14;	}
-			if($uwarrior == "Toledo\'s Broad Sword")	{	$wspeed = 17;	 $wpower = 16;	}
-			if($uwarrior == "Sword of Gandalara")	{	$wspeed = 20;	 $wpower = 18;	}
+			if($uwarrior == "Dagger")	{	$wspeed = 6;	$wpower = 2;	$warwep_name = 1;}
+			if($uwarrior == "Short Sword")	{	$wspeed = 8;	$wpower = 4;	$warwep_name = $warweapon[shortsword];}
+			if($uwarrior == "Long Sword")	 {	$wspeed = 9;	$wpower = 6;	$warwep_name = $warweapon[longsowrd];}
+			if($uwarrior == "Bastard Sword")	{	$wspeed = 11;	 $wpower = 8;		$warwep_name = $warweapon[bastardsowrd];}
+			if($uwarrior == "Scourge")	{	$wspeed = 13;	 $wpower = 10;	$warwep_name = $warweapon[scourge];}
+			if($uwarrior == "Scimitar")	{	$wspeed = 14;	 $wpower = 12;	$warwep_name = $warweapon[scimitar];}
+			if($uwarrior == "Rom\'s Fury")	{	$wspeed = 16;	 $wpower = 14;	$warwep_name = $warweapon[romsfury];}
+			if($uwarrior == "Toledo\'s Broad Sword")	{	$wspeed = 17;	 $wpower = 16;	$warwep_name = $warweapon[broadsword];}
+			if($uwarrior == "Sword of Gandalara")	{	$wspeed = 20;	 $wpower = 18;	$warwep_name = $warweapon[gandalara];}
+
+			if($warwep_name != 1)	{
+				echo"<div align=center><font class=yellow>$uwarrior has not been created yet.</font></div>"; 
+				include("include/S_EQUIPO.php");
+				include("include/S_EQUIPA.php");
+				die();
+			}		
 		
 			$warspeedw = $wspeed;
 			$warpower = $wpower;
@@ -184,15 +193,22 @@ else	{
 
 	// priest weapon stats
 		if($upriest != ns AND $upriest != "")	 {
-			if($upriest == "Quarterstaff")	{	$wspeed = 4;	$wpower = 2;	}
-			if($upriest == "Mace")	{	$wspeed = 5;	$wpower = 4;	}
-			if($upriest == "Flail")	{	$wspeed = 7;	$wpower = 5;	}
-			if($upriest == "Scepter of Zakarum")	{	$wspeed = 8;	$wpower = 6;	}
-			if($upriest == "Footman\'s Flail")	{	$wspeed = 9;	$wpower = 8;	}
-			if($upriest == "Morning Star")	{	$wspeed = 12;	 $wpower = 10;	}
-			if($upriest == "Thyora\'s Tear")	{	$wspeed = 14;	 $wpower = 13;	}
-			if($upriest == "Flail of Isidole")	{	$wspeed = 15;	 $wpower = 14;	}
-			if($upriest == "Eldamar\'s Star")	{	$wspeed = 18;	 $wpower = 15;	}
+			if($upriest == "Quarterstaff")	{	$wspeed = 4;	$wpower = 2;	$priwep_name = 1;}
+			if($upriest == "Mace")	{	$wspeed = 5;	$wpower = 4;	$priwep_name = $priweapon[mace];}
+			if($upriest == "Flail")	{	$wspeed = 7;	$wpower = 5;	$priwep_name = $priweapon[flail];}
+			if($upriest == "Scepter of Zakarum")	{	$wspeed = 8;	$priwep_name = $priweapon[zakarum];}
+			if($upriest == "Footman\'s Flail")	{	$wspeed = 9;	$wpower = 8;	$priwep_name = $priweapon[footmanflail];}
+			if($upriest == "Morning Star")	{	$wspeed = 12;	 $wpower = 10;	$priwep_name = $priweapon[morningstar];}
+			if($upriest == "Thyora\'s Tear")	{	$wspeed = 14;	 $wpower = 13;	$priwep_name = $priweapon[thyorastear];}
+			if($upriest == "Flail of Isidole")	{	$wspeed = 15;	 $wpower = 14;	$priwep_name = $priweapon[isidole];}
+			if($upriest == "Eldamar\'s Star")	{	$wspeed = 18;	 $wpower = 15;	$priwep_name = $priweapon[eldamarstar];}
+
+			if($priwep_name != 1)	{
+				echo"<div align=center><font class=yellow>$upriest has not been created yet</font></div>"; 
+				include("include/S_EQUIPO.php");
+				include("include/S_EQUIPA.php");
+				die();
+			}				
 
 			$pripower = $wpower;
 			$prispeedw = $wspeed;
@@ -204,15 +220,22 @@ else	{
 
 	// archer weapon stats
 		if($uarcher != ns AND $uarcher != "")	{		
-			if($uarcher == "Bow")	{	$wspeeda = 4;	 $wpowera = 2;	}
-			if($uarcher == "Short Bow")	{	$wspeeda = 6;	 $wpowera = 5;	}
-			if($uarcher == "Ferric Bow")	 {	$wspeeda = 8;	 $wpowera = 7;	}
-			if($uarcher == "Keldar\'s Arms")	 {	$wspeeda = 9;	 $wpowera = 8;	}
-			if($uarcher == "Splen\'s Sight")	 {	$wspeeda = 11;	$wpowera = 10;	}
-			if($uarcher == "Bow of Tion")	 {	$wspeeda = 13;	$wpowera = 12;	}
-			if($uarcher == "The Dynefian")	 {	$wspeeda = 14;	$wpowera = 14;	}
-			if($uarcher == "HeartSong")	 {	$wspeeda = 15;	$wpowera = 15;	}
-			if($uarcher == "Shyrscream\'s Bow")	 {	$wspeeda = 16;	$wpowera = 16;	}
+			if($uarcher == "Bow")	{	$wspeeda = 4;	 $wpowera = 2;	$archwep_name = 1;}
+			if($uarcher == "Short Bow")	{	$wspeeda = 6;	 $wpowera = 5;	$archwep_name = $archweapon[shortbow];}
+			if($uarcher == "Ferric Bow")	 {	$wspeeda = 8;	 $wpowera = 7;	$archwep_name = $archweapon[longbow];}
+			if($uarcher == "Keldar\'s Arms")	 {	$wspeeda = 9;	 $wpowera = 8;	$archwep_name = $archweapon[keldarsarms];}
+			if($uarcher == "Splen\'s Sight")	 {	$wspeeda = 11;	$wpowera = 10;	$archwep_name = $archweapon[splensight];}
+			if($uarcher == "Bow of Tion")	 {	$wspeeda = 13;	$wpowera = 12;	$archwep_name = $archweapon[bowoftion];}
+			if($uarcher == "The Dynefian")	 {	$wspeeda = 14;	$wpowera = 14;	$archwep_name = $archweapon[dynefian];}
+			if($uarcher == "HeartSong")	 {	$wspeeda = 15;	$wpowera = 15;	$archwep_name = $archweapon[heartsong];}
+			if($uarcher == "Shyrscream\'s Bow")	 {	$wspeeda = 16;	$wpowera = 16;	$archwep_name = $archweapon[shyrscreamsbow];}
+
+			if($archwep_name != 1)	{
+				echo"<div align=center><font class=yellow>$uarcher has not been created yet</font></div>"; 
+				include("include/S_EQUIPO.php");
+				include("include/S_EQUIPA.php");
+				die();
+			}		
 
 			$archpower = $wpowera;
 			$archspeedw = $wspeeda;
@@ -278,7 +301,7 @@ else	{
 			if($uwararmor == "Medieval Armor")	{	$aspeed = 5;	$mod = 9;	$A_NAME = $armor[fp];	}
 		
 				if($A_NAME != 1)	{
-					echo"<div align=center><font class=yellow>Invalid item.</font></div>"; 
+					echo"<div align=center><font class=yellow>$uwararmor has not been created yet</font></div>"; 
 					include("include/S_EQUIPA.php");
 					die();
 				}
@@ -299,7 +322,7 @@ else	{
 			if($uwizarmor == "Mythril Armor")	 {	$aspeed = 3;	$mod = 8;	$W_NAME = $armor[ma];	 }
 			
 				if($W_NAME != 1)	 {
-					echo"<div align=center><font class=yellow>Invalid item.</font></div>"; 
+					echo"<div align=center><font class=yellow>$uwizarmor has not been created yet</font></div>"; 
 					include("include/S_EQUIPA.php");
 					die();
 				}
@@ -319,7 +342,7 @@ else	{
 			if($upriarmor == "Blessed Armor")	 {	$aspeed = 5;	$mod = 6;	$P_name = $armor[ba];	}
 		
 				if($P_name != 1)	{
-					echo"<div align=center><font class=yellow>Invalid item.</font></div>";
+					echo"<div align=center><font class=yellow>$upriarmor has not been created yet</font></div>"; 
 					include("include/S_EQUIPA.php");
 					die();
 				}
@@ -341,7 +364,7 @@ else	{
 			if($uarcharmor == "Medieval Armor")	{	$aspeed = 5;	$mod = 9;	$A_NAME = $armor[fp];	}
 		
 				if($A_NAME != 1)	{
-					echo"<div align=center><font class=yellow>Invalid item.</font></div>"; 
+					echo"<div align=center><font class=yellow>$uarcharmor has not been created yet</font></div>"; 
 					include("include/S_EQUIPA.php");
 					die();
 				}

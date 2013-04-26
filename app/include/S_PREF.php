@@ -1,13 +1,10 @@
 <form method=post action="preferences.php">
-<table border="0" bordercolor="#000000" align=center width="40%">
+<table border="0" bordercolor="#000000" align=center width="50%">
 	<tr>
 		<td class=main colspan=2><b>Update Preferences</b></td>
     <tr>
 		<td class=main2><b>Email:</b></td>
 		<td class=inner2><input type="text" name="newemail" maxlength=50 value="<? echo "$email"; ?>"></td>
-	<tr>
-		<td class=main2><b>Password:</b></td>
-		<td class=inner2><input type="password" name="upw" maxlength=15></td>
 	<tr>
 		<td class=main2><b>AIM:</b></td>
 		<td class=inner2><input type="text" name="newaim" maxlength=20 value="<? echo "$aim"; ?>"></td>

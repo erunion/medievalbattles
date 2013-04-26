@@ -9,7 +9,7 @@ font.orange {color: #CC6600;}
 font.blue {color: #00a5c6}
 font.red {color: #FF3333}
 font.green {color: green}
-font.yellow {color: yellow}
+font.yellow {color: yellow; font-weight:bold;}
 font.lg {color: #9c7bbd}
 font 		{ color:#ffffff;font-family: Tahoma;}
 table 		{ font-size: 12px;font-family: Tahoma; }
@@ -40,6 +40,7 @@ input.button2   {font-family: verdana; font-weight: none; color:#089494; backgro
 td.top		{background-color: #000000; text-align: center} <!-- gp, civilains land etc -->
 td.main		{background-color: #630000;text-align: center} <!-- empire, sector, guild etc -->
 td.inner	{background-color: #404040;} <!-- main menu, explore, status, etc -->
+td.navbartxt	{background-color: #404040; text-align: center} <!-- main menu -->
 
 td.clock	{background-color: #003139; color: #bfbfbf; text-align:center}
 table.outer     
@@ -48,6 +49,7 @@ table.outer
 <!-- THESE ARE THE TABLES IN THE IN-GAME PAGES -->
 td.main2	{background-color: #313131; text-align: center}
 td.inner2	{background-color: #404040; text-align: center}
+td.slglnotice	{background-color: #404040; text-align: left}
 b.top		{color: #bfbfbf; font-style: bold;font-family: Tahoma;}
 b.reg		{color: #a1a1a1;font-family: Tahoma;}
 td.num		{text-align: center}

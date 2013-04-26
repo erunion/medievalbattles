@@ -13,12 +13,13 @@ ob_start("callback");
 
 include("functions.php");
 
+//$version_query = mysql_db_query($dbnam, "SELECT version FROM game_info") or die(mysql_error());
+//	$version = mysql_result($version_query, "version");
 ?>
 <html>
 <head> 
-<title>Medieval Battles</title>
+<title>Medieval Battles .:::. v6: Kupo Remix Edition</title>
 	<link rel=stylesheet type="text/css" href="css/ingame.css">
-	<script language="JavaScript" src="fade.js"></script>
 </head>
 
 <body>
@@ -41,15 +42,16 @@ include("functions.php");
 </TD>
 </TR>  
 <TR valign="top">
- <TD width="15%">
+ <TD width="19%">
 	<?php
 		include("include/ignavbar.php");
 	?>
  </TD>
  <TD width="85%">
 
-<?  
+<div align=center><font class=yellow size=2px>There are going to be bugs obviously as this is deprecated code. If you come across a bug, go ahead and report it to <a href="mailto:support@decoymedia.com?subject=v6+Bug">support@decoymedia.com</a> and we'll see what we can do to fix it. Don't get your hopes up, however.</font></div><br>
 
+<?  
 // safe mode notice
 if($safemode > 0)	{	
 	echo"<div align=center><font class=blue><b>You are in Safe Mode for $safemode more ticks</b></font></div>";	 
@@ -64,14 +66,11 @@ if($tick == yes)		{
 }
 
 //	is their account activated?
-if($validate_checker == 1)	{
+if($validate_checker != 2)	{
 	echo"<div align=center><font class=yellow size=4px><br>You must activate your account.</font></div>";	
 	echo"<div align=center><font class=yellow size=2px><a href=activate_code.php>Resend activation code.</a></font></div>";	
 	die();
 }
 
 echo "<br><br>";
-
-ob_end_flush();
-
 ?>	

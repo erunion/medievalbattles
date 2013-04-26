@@ -1,8 +1,9 @@
 <?
 include("include/igtop.php");
+
 echo "
 <center>
-<b class=reg>| <a href=attack.php> -Land- </a> | <a href=attackr.php> -Resource- </a> | <a href=attackm.php> -Mountain- </a> | </b>
+<b>[&nbsp;<a href=attack.php>Land</a>&nbsp;]&nbsp;&nbsp;[&nbsp;<a href=attackr.php>Resource</a>&nbsp;]&nbsp;&nbsp;[&nbsp;<a href=attackm.php>Mountain</a>&nbsp;]</b>
 	
 <form type=post action=attack.php>
  <b class=reg>Settlement:</b><input type=number name=snum size=3 maxlength=3>
@@ -42,8 +43,20 @@ else	{
 		include("include/attack/table.php");
 		die();
 	}
-	elseif($uarcher > 0 && $res[r13pts] < 125000)	{
-		echo"<div align=center><font class=yellow>You have to research archery.<br><br></font></div>";
+	elseif(($uarcher > 0) AND ($res[r13pts] < 125000))	{
+		echo"<div align=center><font class=yellow>You have to research Archery.<br><br></font></div>";
+		include("include/attack/ldrop.php");
+		include("include/attack/table.php");
+		die();
+	}
+	elseif(($ugolem > 0) AND ($res[r17pts] < 125000))	{
+		echo"<div align=center><font class=yellow>You have to research Animation.<br><br></font></div>";
+		include("include/attack/ldrop.php");
+		include("include/attack/table.php");
+		die();
+	}
+	elseif(($uirongolem > 0) AND ($res[r18pts] < 125000))	{
+		echo"<div align=center><font class=yellow>You have to research Advanced Animation.<br><br></font></div>";
 		include("include/attack/ldrop.php");
 		include("include/attack/table.php");
 		die();
@@ -55,7 +68,13 @@ else	{
 		die();
 	}
 	elseif($race == Giant AND $upriest > 0)	{
-		echo"<div align=center><font class=yellow>Being that you are a Giant, you cannot attack with  priests.</div></font>";
+		echo"<div align=center><font class=yellow>Being that you are a Giant, you cannot attack with priests.</div></font>";
+		include("include/attack/ldrop.php");
+		include("include/attack/table.php");
+		die();
+	}
+	elseif($race == Demon AND $upriest > 0)	{
+		echo"<div align=center><font class=yellow>Being that you are a Giant, you cannot attack with priests.</div></font>";
 		include("include/attack/ldrop.php");
 		include("include/attack/table.php");
 		die();
@@ -68,7 +87,6 @@ else	{
 	}
 	
 	//	include off, def values and ename, land, aland
-	include("include/connect.php");
 	include("include/attack/defANDoff.php");
  						 
 	//	for attacker
@@ -79,8 +97,8 @@ else	{
 	$EMPs_guild_query = mysql_db_query($dbnam, "SELECT guild FROM user WHERE userid='$evu[userid]'");
 		$EMPs_guild = mysql_result($EMPs_guild_query,"EMPs_guild");
 
-	if($uwarrior == "" AND $uwizard == "" AND $upriest == "" AND $uarcher == "")	{
-		echo"<div align=center><font class=yellow>You did not send any troops into combat!</font></div><br><br>";
+	if($uwarrior == "" AND $uwizard == "" AND $upriest == "" AND $uarcher == "" AND $ugolem == "" AND $uirongolem = "")	{
+		echo"<div align=center><font class=yellow>You did not send anything into combat!</font></div><br><br>";
 		include("include/attack/ldrop.php");
 		include("include/attack/table.php");
 		die();
@@ -97,13 +115,13 @@ else	{
 		include("include/attack/table.php");
 		die();
 	}
-	elseif($warriors < $uwarrior OR $wizards < $uwizard OR $priests < $upriest OR $archers < $uarcher)	{
+	elseif($warriors < $uwarrior OR $wizards < $uwizard OR $priests < $upriest OR $archers < $uarcher OR $golem < $ugolem OR $irongolem < $uirongolem)	{
 		print"<div align=center><font class=yellow>You cannot send that many units into combat.</font></div><br><br>";	
 		include("include/attack/ldrop.php");
 		include("include/attack/table.php");
 		die();
 	}
-	elseif($uwarrior < 0 OR $uwizard < 0 OR $upriest < 0 OR $uarcher < 0)	{
+	elseif($uwarrior < 0 OR $uwizard < 0 OR $upriest < 0 OR $uarcher < 0 OR $ugolem < 0 OR $uirongolem < 0)	{
 		echo"<div align=center><font class=yellow>You cannot send negative or 0 units.</font></div><br><br>";
 		include("include/attack/ldrop.php");
 		include("include/attack/table.php");
@@ -144,7 +162,6 @@ else	{
 		die();
 	}
 	else	{
-		include("include/connect.php");
 		include("include/attack/calculations.php");
 		
 		$lgain = $landgain;						
@@ -284,7 +301,7 @@ else	{
 		mysql_query("DELETE FROM militaryWHERE userid='$empvalue'");
 		mysql_query("DELETE FROM buildings WHERE userid='$empvalue'");
 		mysql_query("DELETE FROM research WHERE userid='$empvalue'");
-		mysql_query("DELETE FROM return WHERE userid='$empvalue'");
+		mysql_query("DELETE FROM returntbl WHERE userid='$empvalue'");
 		mysql_query("DELETE FROM explore WHERE userid='$empvalue'"); 
 		mysql_query("UPDATE user SET votefor='None' WHERE votefor='$evu[ename]'");
 	}

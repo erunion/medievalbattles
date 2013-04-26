@@ -6,7 +6,7 @@ if(!IsSet($userinfo))	{
 	echo "<form type=post action=get_user_info.php>
 		<table border=1 bordercolor=#000000 align=center cellpadding=0 cellspacing=0>
 			<tr>
-				<td colspan=2><font color=#ffffff><b>User Information</b></font></td>
+				<td colspan=2><b>User Information</b></td>
 			<tr>
 				<td><input type=\"text\" name=\"empre\" maxlength=\"50\"></td>
 				<td><input type=\"submit\" name=\"userinfo\" value=\"Get Their Info\"></td>
@@ -27,7 +27,7 @@ else	{
 	$result2 = mysql_query("SELECT * FROM buildings WHERE userid='$evu[userid]'");
 		$evb = mysql_fetch_array($result2);
 
-	$result3 = mysql_query("SELECT * FROM return WHERE userid='$evu[userid]'");
+	$result3 = mysql_query("SELECT * FROM returntbl WHERE userid='$evu[userid]'");
 		$evr = mysql_fetch_array($result3);
 
 	$result4 = mysql_query("SELECT * FROM research WHERE userid='$evu[userid]'");
@@ -39,11 +39,11 @@ else	{
 echo"
 		<table border=1 bordercolor=#000000 align=center cellpadding=0 cellspacing=0 width=80%>
 			<tr>
-				<td class=main align=center><b>User Info</b></td>
-				<td class=main><b>Military Info</b></td>
+				<td align=center><b>User Info</b></td>
+				<td><b>Military Info</b></td>
 			</tr>
 			<tr>
-				<td class=inner2>
+				<td>
 					Empire Name: $evu[ename]<br>
 					Email: $evu[email]<br>
 					Password: $evu[pw]<br>
@@ -57,7 +57,7 @@ echo"
 					AIM: $evu[aim]<br>
 					MSN: $evu[msn]<br>
 				</td>
-				<td class=inner2>
+				<td>
 					Generals: $evu[fleets]<br>
 						<hr width=10%>
 					Warriors: $evm[warriors]<br>
@@ -82,8 +82,8 @@ echo"
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
-				<td class=main align=center><b>Buildings Info</b></td>
-				<td class=main><b>Return Info</b></td>
+				<td align=center><b>Buildings Info</b></td>
+				<td><b>Return Info</b></td>
 			</tr>
 			<tr>
 				<td class=inner2>
@@ -97,7 +97,7 @@ echo"
 					Gold Mines: $evb[gm]<br>
 					Iron Mines: $evb[im]<br>
 				</td>
-				<td class=inner2>
+				<td>
 					Warriors (party 1): $evr[war1]<br>
 					Priests (party 1): $evr[pri1]<br>
 					Wizards (party 1): $evr[wiz1]<br>
@@ -124,15 +124,15 @@ echo"
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
-				<td class=main align=center><b>Explore Info</b></td>
-				<td class=main><b>Research Info</b></td>
+				<tdalign=center><b>Explore Info</b></td>
+				<td ><b>Research Info</b></td>
 			</tr>
 			<tr>
-				<td class=inner2>
+				<td>
 					Explorers on Land: $eve[expland]<br>
 					Explorers on Mountains: $eve[expmt]<br>
 				</td>
-				<td class=inner2>
+				<td>
 					r1: $evres[r1]&nbsp; &nbsp; &nbsp; r1pts: $evres[r1pts]<br>
 					r2: $evres[r2]&nbsp; &nbsp; &nbsp; r2pts: $evres[r2pts]<br>
 					r3: $evres[r3]&nbsp; &nbsp; &nbsp; r3pts: $evres[r3pts]<br>

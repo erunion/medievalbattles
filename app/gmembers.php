@@ -8,7 +8,7 @@ if($empireguild == None)	{
 }
 // leave the guild?
 if(!IsSet($leave))	{
-	echo "<div align=center><a href=gmembers.php?leave=true>Leave $empireguild</a>";
+	echo "<div align=center><b>[ <a href=gmembers.php?leave=true>Leave: $empireguild</a> ]</b>";
 }
 else	{	
 	
@@ -34,16 +34,16 @@ else	{
 //	display all empires in your guild
 echo "
 <br><br>
-<table border=1 bordercolor=#000000 align=center width=80% cellpadding=0 cellspacing=0>
+<table border='1' bordercolor='#000000' align='center' width='80%' cellpadding='0' cellspacing='0'>
 	<tr>
-		<td class=main colspan=10><b class=reg>$empireguild Members</b></td>
+		<td class='main' colspan='10'><b class=reg>Members of $empireguild</b></td>
 	<tr>
-		<td class=main2 width=><b class=reg></b></td>
-		<td class=main2 width=><b class=reg>Empire Name</b></td>
-		<td class=main2 width=><b class=reg>AIM</b></td>
-		<td class=main2 width=><b class=reg>MSN</b></td>
-		<td class=main2 width=><b class=reg>Experience</b></td>
-		<td class=main2 width=><b class=reg>Last Login</b></td>";
+		<td class='main2'><b class='reg'></b></td>
+		<td class='main2'><b class='reg'>Empire Name</b></td>
+		<td class='main2'><b class='reg'>AIM</b></td>
+		<td class='main2'><b class='reg'>MSN</b></td>
+		<td class='main2'><b class='reg'>Experience</b></td>
+		<td class='main2'><b class='reg'>Last Login</b></td>";
 
 $query_string = "SELECT ename, aim, msn, exp, userid, lastlogin FROM user WHERE guild='$empireguild' ORDER BY exp DESC";
 $result_id = mysql_query($query_string, $var);
@@ -62,16 +62,24 @@ while ($row = mysql_fetch_row($result_id))	{
 	$num = $num + 1;
 		
     echo "
-	<tr align=center valign=top colspan=6>
+	<tr align='center' valign='top' colspan='6'>
 		<td bgcolor=000000>$num</td>
-		<td bgcolor=404040><a href=messaging.php?value=$their_name&snum=$t_setid&setchg=1>$row[0]($t_setid)</a>$O_line</td>
-		<td bgcolor=404040>$row[1]</td>
-		<td bgcolor=404040>$row[2]</td>
-		<td bgcolor=404040>$row[3]</td>
-		<td bgcolor=404040>$row[5]</td>\n";
+		<td class='inner2'><a href=messaging.php?value=$their_name&snum=$t_setid&setchg=1>$row[0]($t_setid)</a>$O_line</td>
+		<td class='inner2'>$row[1]</td>
+		<td class='inner2'>$row[2]</td>
+		<td class='inner2'>$row[3]</td>
+		<td class='inner2'>$row[5]</td>\n";
 }
-?>
+
+$guild_strength_query = mysql_db_query($dbnam, "SELECT sum(exp) FROM user WHERE guild='$empireguild'");
+	$guild_strength_total = mysql_result($guild_strength_query, "guild_strength_total");
+	$guild_strength_total = number_format($guild_strength_total);
+
+echo "
 </table>
+<br><br>
+<div align=center><b><font class=red>Guild Strength:</font></b> $guild_strength_total</div>";
+?>
 </td>
 </tr>
 </table>

@@ -23,17 +23,17 @@ $result= mysql_query($query) or die("Error in query! " . mysql_error());
 
 if ($result) { 
 echo "
-	<table border=0 width=$tablewidth align=center cellspacing=0 cellpadding=0>
+	<table border=0 width=95% align=center cellspacing=0 cellpadding=0>
 		<tr>
 			<td bgcolor=$color1>
 				<table border=0 width=100% cellspacing=1 cellpadding=0>
 					<tr bgcolor=$color1>
-						<td align=center><b class=forum>TOPIC</b></td>
-						<td align=center><b class=forum>STARTED BY</b></td>
-						<td align=center><b class=forum>POSTED LAST</b></td>
-						<td align=center><b class=forum>REPLIES</strong></td>
-						<td align=center><b class=forum>LAST POST</strong></td>
-						<td align=center><b class=forum>DELETE</strong></td>
+						<td align=center><b class=forum>Topic</b></td>
+						<td align=center><b class=forum>Posts</strong></td>
+						<td align=center><b class=forum>Orgin</b></td>
+						<td align=center><b class=forum>Last Post by</b></td>
+						<td align=center><b class=forum>Last Post</strong></td>
+						<td align=center><b class=forum>Delete</strong></td>
 					</tr>";									
 	while ($r = mysql_fetch_array($result)) {
 	extract ($r);
@@ -43,11 +43,11 @@ echo "
 	
 echo "
 					<tr bgcolor=$color2>
-						<td valign=top><strong class=black-small>&nbsp;&nbsp; <a href=topicg.php?topicid=$topicid>$topic</a></strong></td>			
-						<td valign=top><strong class=black-small>&nbsp; $name</strong></td>
-						<td valign=top><strong class=black-small>&nbsp; $lastposter</strong></td>
-						<td valign=top width=61 align=center><strong class=black-small>&nbsp; $topic_replies</strong></td>
-						<td valign=top width=125>&nbsp;<nobr><small class=black-small>$lastpost</small></nobr></td>
+						<td valign=top><strong class=black-small><a href=topicg.php?topicid=$topicid>$topic</a></strong></td>	
+						<td valign=top align=center>$topic_replies</td>		
+						<td valign=top align=center><strong class=black-small>$name</strong></td>
+						<td valign=top align=center><strong class=black-small>$lastposter</strong></td>
+						<td valign=top align=center>$lastpost</td>
 						<td valign=top align=center><strong class=black-small><a href=gl-delposts.php?delete=true&tid=$topicid><font size=-2>Delete</a></strong></td>
 					</tr>";			
 	} 
@@ -65,18 +65,17 @@ MYSQL_CLOSE();
 
 <form action="gl-inputposts.php" method="post" name="post">
 	
-<table class=f border=0 width=<? echo $tablewidth; ?> cellpadding=0 cellspacing=0 bgcolor="<? echo $color2; ?>" align="center">
+<table class=f border=0 width="60%" cellpadding=0 cellspacing=0 bgcolor="<? echo $color2; ?>" align="center">
 	<tr>
-		<td valign=top bgcolor="<? echo $color1; ?>" align=center colspan=4><strong class=white>Post a Thread</strong></td>
+		<td valign=top bgcolor="<? echo $color1; ?>" align=center colspan=4><strong class=white>Post a New Thread</strong></td>
 	</tr>
 	<tr>
-		<td align=right><strong class=black>Topic:</strong></td>  
+		<td><strong class=black>Topic:</strong></td>  
 		<td><input type="text" name="topic" maxlength=40 class=black-normal></td>
-		<td colspan=2 width="50%">&nbsp;</td>
 	</tr>
 	<tr>
-		<td valign=top align=right><strong class=black>Message: </strong></td> 
-		<td colspan=3><textarea name="message" cols=60 rows=6 wrap="physical"></textarea></td>
+		<td valign=top><strong class=black>Message: </strong></td> 
+		<td><textarea name="message" cols=40 rows=10 wrap="physical"></textarea></td>
 	</tr>
 	<tr>
 		<td colspan=4 align=center><input type="submit" name="addtopic" value="Post this message"></td>

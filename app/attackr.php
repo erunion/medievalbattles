@@ -3,7 +3,7 @@ include("include/igtop.php");
 
 echo "
 <center>
-<b class=reg>| <a href=attack.php> -Land- </a> | <a href=attackr.php> -Resource- </a> | <a href=attackm.php> -Mountain- </a> | </b>
+<b>[&nbsp;<a href=attack.php>Land</a>&nbsp;]&nbsp;&nbsp;[&nbsp;<a href=attackr.php>Resource</a>&nbsp;]&nbsp;&nbsp;[&nbsp;<a href=attackm.php>Mountain</a>&nbsp;]</b>
 	
 <form type=post action=attackr.php>
  <b class=reg>Settlement:</b><input type=number name=snum size=3 maxlength=3>
@@ -58,6 +58,12 @@ else	{
 	}
 	elseif($race == Giant AND $upriest > 0)	{
 		echo"<div align=center><font class=yellow>Being that you are a Giant, you cannot attack with  priests.</div></font>";
+		include("include/attack/ldrop.php");
+		include("include/attack/table.php");
+		die();
+	}
+	elseif($race == Giant AND $upriest > 0)	{
+		echo"<div align=center><font class=yellow>Being that you are a Giant, you cannot attack with priests.</div></font>";
 		include("include/attack/ldrop.php");
 		include("include/attack/table.php");
 		die();

@@ -13,13 +13,15 @@ ob_start("callback");
 
 include("functions.php");
 
+$version_query = mysql_db_query($dbnam, "SELECT version FROM game_info");
+	$version = mysql_result($version_query, "version");
 ?>
 <html>
 <head> 
-<title>Medieval Battles</title>
+<title>Medieval Battles .:::. <? echo "$version"; ?></title>
 	<link rel=stylesheet type="text/css" href="css/ingame.css">
-	<script language="JavaScript" src="fade.js"></script>
 </head>
+
 
 <body>
 <table class=outer border="0" cellpadding="1" cellspacing="0"  width="100%">

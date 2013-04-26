@@ -10,9 +10,9 @@ if($setchg == 1)	{
 
 	mysql_query("UPDATE user SET csnum='$snum' WHERE email='$email' AND pw='$pw'");
 	echo "
-		<font class=inner2>You are viewing Settlement $snum</font><br><br>
-		<select name=empvalue>
-			<option selected value=ns>-Select an Empire-</option>";
+		<font class='inner2'>You are viewing Settlement $snum</font><br><br>
+		<select name='empvalue'>
+			<option selected value='ns'>-Select an Empire-</option>";
 
 	$query_string = "SELECT userid, ename FROM user WHERE setid='$snum'";
 	$result_id = mysql_query($query_string, $var);
@@ -26,9 +26,9 @@ if($setchg == 1)	{
 else	{
 
 	echo "
-		<font class=inner2>You are viewing Settlement $csnum</font><br><br>
-		<select name=empvalue>
-			<option selected value=ns>-Select an Empire-</option>";
+		<font class='inner2'>You are viewing Settlement $csnum</font><br><br>
+		<select name='empvalue'>
+			<option selected value='ns'>-Select an Empire-</option>";
 
 	$query_string = "SELECT userid, ename FROM user WHERE setid='$csnum'";
 	$result_id = mysql_query($query_string, $var);
@@ -42,10 +42,10 @@ else	{
 
 echo "
 </center>
-<table border=1 bordercolor=#000000 align=center width=40% cellpadding=0 cellspacing=0>
-	<tr><td class=main colspan=2><b class=reg>Intelligence</b></td>
-	<tr><td class=main2 colspan=2>Here, you can gather information on an empire.<br>You have $thieves thieves available.</td>
-	<tr><td class=inner2>Thieves:</td><td class=inner2><input type=number name=send size=10></td>
-	<tr><td class=inner2 colspan=2><input type=submit name=gather value=Send class=button></td>
-		<input type=hidden name=gather value=1>";
+<table border='1' bordercolor='#000000' align='center' width='40%' cellpadding='0' cellspacing='0'>
+	<tr><td class='main' colspan='2'><b class='reg'>Intelligence</b></td>
+	<tr><td class='main2' colspan='2'>You have $thieves thieves available.</td>
+	<tr><td class='inner2'>Thieves:</td><td class='inner2'><input type=number name=send size=15></td>
+	<tr><td class='inner2' colspan='2'><input type='submit' name='gather' value='Send' class='button'></td>
+		<input type='hidden' name='gather' value='1'>";
 ?>

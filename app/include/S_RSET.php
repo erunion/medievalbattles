@@ -7,13 +7,14 @@ $warriorc = implode("", explode(",", $warriorc));
 $wizardc = implode("", explode(",", $wizardc));
 $priestc = implode("", explode(",", $priestc));
 $archerc = implode("", explode(",", $archerc));
+$suicidec = implode("", explode(",", $suicidec));
 $recruits = implode("", explode(",", $recruits));
 
 if($gp != 0)	 {
-//	scientist
-	$max_scientist = ($gp / 500); 
-		if($max_scientist > $recruits)	{	$max_scientist = $recruits;	}
-		$max_scientist = floor($max_scientist);
+//	sage
+	$max_sage = ($gp / 500); 
+		if($max_sage > $recruits)	{	$max_sage = $recruits;	}
+		$max_sage = floor($max_sage);
 //	thief
 	$max_thief = ($gp / 200);  
 		if($max_thief > $recruits)	{	$max_thief = $recruits;	}
@@ -39,7 +40,7 @@ if($gp != 0)	 {
 	if($max_arch > $recruits)	{	$max_arch = $recruits;	}
 		$max_arch = floor($max_arch);
 //	suicide civ
-	$max_suicide = ($gp / 5000);	
+	$max_suicide = ($gp / $suicidec);	
 	if($max_suicide > $recruits)	{	$max_suicide = $recruits;	 }
 		$max_suicide = floor($max_suicide);
 //	catapult
@@ -49,7 +50,7 @@ if($gp != 0)	 {
 }
 
 if($recruits == 0 OR $gp == 0)	{
-	$max_scientist = 0;
+	$max_sage = 0;
 	$max_thief = 0;
 	$max_explorer = 0;
 	$max_war = 0;
@@ -66,11 +67,12 @@ $warriorc = number_format($warriorc);
 $wizardc = number_format($wizardc);
 $priestc = number_format($priestc);
 $archerc = number_format($archerc);
+$suicidec = number_format($suicidec);
 $recruits = number_format($recruits);
 
 ?>
 
-<table border="0" bordercolor="#808080" align=center width="80%">
+<table border="0" bordercolor="#808080" align=center width="85%">
 	<tr>
   		<td colspan=10 class=main><b class=top>Train Recruits</b></td>
  	<tr>
@@ -83,12 +85,12 @@ $recruits = number_format($recruits);
 		<td class=main2><b class=reg>Max</b></td>
   		<td class=main2><b class=reg>Amount</b></td>
 	<tr>				  
-  		<td class=inner align=center><b class=reg>Scientist</b></td>
-  		<td class=inner align=center><? ; echo"$tscientists"; ?></td>
+  		<td class=inner align=center><b class=reg>Sage</b></td>
+  		<td class=inner align=center><? ; echo"$tsages"; ?></td>
   		<td class=inner align=center>500</td>
-		<td class=inner align=center colspan=2><? echo"$dbscientist"; ?></td>
-		<td class=inner align=center><? echo"$max_scientist"; ?></td>
-  		<td class=inner align=center><input type="number" name="uscientist" size=8></td>
+		<td class=inner align=center colspan=2><? echo"$dbsage"; ?></td>
+		<td class=inner align=center><? echo"$max_sage"; ?></td>
+  		<td class=inner align=center><input type="number" name="usage" size=8></td>
  	<tr>				
   		<td class=inner align=center><b class=reg>Thief</b></td>
   		<td class=inner align=center><? echo"$thieves"; ?></td>
@@ -104,7 +106,7 @@ $recruits = number_format($recruits);
 		<td class=inner align=center><? echo"$max_explorer"; ?></td>
   		<td class=inner align=center><input type="number" name="uexplorer" size=8></td>
 </table>
-<table border=0 bordercolor=#808080 align=center width=80%>
+<table border=0 bordercolor=#808080 align=center width=85%>
 	<tr>				
   		<td class=main2><b class=reg>Unit</b></td>
   		<td class=main2><b class=reg>Owned</b></td>
@@ -123,7 +125,7 @@ $recruits = number_format($recruits);
   		<td class=inner2><center><input type="number" name="uwarrior" size=8></center></td>
 <? 
 if($race != Giant)	{
-	if($class != Ranger)	{
+	if(($class != Ranger) AND ($class != Insurrectionist))	{
 		echo"
 	<tr>				
   		<td class=inner2><b class=reg>Wizard</b></td>
@@ -134,6 +136,7 @@ if($race != Giant)	{
   		<td class=inner align=center>$max_wiz</td>
   		<td class=inner2><center><input type=number name=uwizard size=8></center></td>";
 	}
+	if($race != Demon)	{
 	echo"
 	<tr>				 
   		<td class=inner2><b class=reg>Priest</b></td>
@@ -143,6 +146,7 @@ if($race != Giant)	{
 		<td class=inner2>$dbpri2</td>
 		<td class=inner align=center>$max_pri</td>
 		<td class=inner2><center><input type=number name=upriest size=8></center></td>";
+	}
 }
 
 if($res[r13pts] >= 125000)	 {
@@ -158,14 +162,14 @@ if($res[r13pts] >= 125000)	 {
 </table>";
 }
 
-if($res[r13pts] >= 125000 OR $res[r14pts] >= 125000)	 {
+if(($res[r13pts] >= 125000) OR ($res[r14pts] >= 125000))	 {
 	echo "
-<table border=0 bordercolor=#808080 align=center width=80%>
+<table border=0 bordercolor=#808080 align=center width=85%>
 	<tr>				
   		<td class=main2><b class=reg>Unit</b></td>
   		<td class=main2><b class=reg>Owned</b></td>
   		<td class=main2><b class=reg>GP cost</b></td>		
-		<td class=main2><b class=reg>Wood Cost</b></td>
+		<td class=main2><b class=reg>Lumber Cost</b></td>
 		<td class=main2><b class=reg>Training (1 tick)</b></td>
 		<td class=main2><b class=reg>Training (2 ticks)</b></td>
 		<td class=main2><b class=reg>Training (3 ticks)</b></td>
@@ -191,7 +195,7 @@ if($res[r14pts] >= 125000)	 {
 	<tr>				  
   		<td class=inner align=center><b class=reg>Suicide Civilian</b></td>
   		<td class=inner align=center>$suicide</td>
-  		<td class=inner align=center>5,000</td>		
+  		<td class=inner align=center>$suicidec</td>		
 		<td class=inner align=center>0</td>
 		<td class=inner align=center>$dbsuicide</td>
 		<td class=inner align=center>$dbsuicide2</td>

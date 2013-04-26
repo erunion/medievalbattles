@@ -1,6 +1,9 @@
 <? 
 include("include/igtop.php");
 
+echo "<font class=yellow><div align=center><b>Barter will be down for the remainder of the game. The barter will return in Version 6 as the Auction Barter. <br>There will not be a guild barter in Version 6.</b></div></font>";
+die();
+
 if($barter_clock > 1)	 {
 	echo "<font class=yellow><div align=center><b>You can barter items when your empires age is over 1 week!<br>You have $barter_clock tick(s) left!</b></div></font>";
 	die();
@@ -57,7 +60,7 @@ else	{
 	elseif($class == Ranger AND $b_type == Wizard)	{	echo"<font class=yellow><div align=center>Rangers can't possess Wizards!</font></div>";	die();	 }
 			
 	if($b_type == "Explorer")	 {
-		$newexplorers = $explorers + $b_amount;
+		$newexplorers = $aexplorers + $b_amount;
 		mysql_query("UPDATE military SET explorers='$newexplorers' WHERE email='$email' AND pw='$pw'");
 						
 			if($b_meth == gp)	{
@@ -312,7 +315,7 @@ else	{
 	elseif($cost  <= 0)	{	echo"<font class=yellow><div align=center>Invalid cost!</font></div><br><br>.";	die();	 }
 	elseif($amount <= 0)	 {	echo"<font class=yellow><div align=center>Invalid cost!</font></div><br><br>.";	die();	 }
 //	number of unit checks
-	elseif($type == "Explorer" AND $explorers < $amount)	{	echo"<font class=yellow><div align=center>You don't have that much many explorers!</font></div><br><br>";	die();	 }
+	elseif($type == "Explorer" AND $aexplorers < $amount)	{	echo"<font class=yellow><div align=center>You don't have that much many explorers!</font></div><br><br>";	die();	 }
 	elseif($type == "Land" AND $aland < $amount)	{	echo"<font class=yellow><div align=center>You don't have that much available land!</font></div><br><br>";	die();	 }
 	elseif($type == "Mountain" AND $amts < $amount)	{	echo"<font class=yellow><div align=center>You don't have that much available mountains!</font></div><br><br>"; die();	}
 	elseif($type == "Priest" AND $priests < $amount)	{	echo"<font class=yellow><div align=center>You don't have that many Priests!</font></div><br><br>";	 die();	}
@@ -323,7 +326,7 @@ else	{
 	elseif($type == "Wizard" AND $wizards < $amount)	 {	echo"<font class=yellow><div align=center>You don't have that many Wizards!</font></div><br><br>";	die();	 }
 	elseif($type == "Archer" AND $archer < $amount)	 {	echo"<font class=yellow><div align=center>You don't have that many Archers!</font></div><br><br>";	die();	 }
 //	invalid number checks
-	elseif($type == "Explorer" AND $explorers <= 0)	{	echo"<font class=yellow><div align=center>Invaild number.</font></div><br><br>";	die();	 }
+	elseif($type == "Explorer" AND $aexplorers <= 0)	{	echo"<font class=yellow><div align=center>Invaild number.</font></div><br><br>";	die();	 }
 	elseif($type == "Land" AND $aland <= 0)	{	echo"<font class=yellow><div align=center>Invaild number.</font></div><br><br>";	die();	 }
 	elseif($type == "Mountain" AND $amts <= 0)	{	echo"<font class=yellow><div align=center>Invaild number.</font></div><br><br>";	die();	 }
 	elseif($type == "Priest" AND $priests <= 0)	{	echo"<font class=yellow><div align=center>Invaild number.</font></div><br><br>";	die();	 }					
@@ -341,7 +344,7 @@ else	{
 
 	mysql_query("INSERT INTO barter (seller, cost, type, amount, barterid, userid, method, page, guild)	VALUES	('$ename', '$cost', '$type', '$amount', '$maxbid', '$userid', '$method', '$page', '$empireguild') ");
 					
-	if($type == "Explorer")	{	$newexplorers= $explorer - $amount;	mysql_query("UPDATE military SET explorers='$newexplorers' WHERE email='$email' AND pw='$pw'");	}
+	if($type == "Explorer")	{	$newexplorers= $aexplorers - $amount;	mysql_query("UPDATE military SET explorers='$newexplorers' WHERE email='$email' AND pw='$pw'");	}
 	if($type == "Priest")	{	$newpri= $priests - $amount;	 mysql_query("UPDATE military SET priests='$newpri' WHERE email='$email' AND pw='$pw'");	}
 	if($type == "Recruit")	{	$newrec= $recruits - $amount;	mysql_query("UPDATE military SET recruits='$newrec' WHERE email='$email' AND pw='$pw'");	}
 	if($type == "Scientist")	{	$newsicen= $scientists - $amount;	mysql_query("UPDATE military SET scientists='$newsicen' WHERE email='$email' AND pw='$pw'");	}
@@ -389,7 +392,7 @@ else	{
 		$b_userid = $barter[userid];
 
 	if($b_userid != $userid)	{	echo"<font class=yellow><div align=center>You cannot cancel other empire barters.</font></div><br><br>";	die();	 }
-	if($b_type == "Explorer")	{	$newexplorers = $explorers + $b_amount;	 mysql_query("UPDATE military SET explorers='$newexplorers' WHERE email='$email' AND pw='$pw'");	}
+	if($b_type == "Explorer")	{	$newexplorers = $aexplorers + $b_amount;	 mysql_query("UPDATE military SET explorers='$newexplorers' WHERE email='$email' AND pw='$pw'");	}
 	if($b_type == "Priest")	{	$newpriests = $priests + $b_amount;	mysql_query("UPDATE military SET priests='$newpriests' WHERE email='$email' AND pw='$pw'");	}
 	if($b_type == "Recruit")	 {	$newrec = $recruits + $b_amount;	mysql_query("UPDATE military SET recruits='$newrec' WHERE email='$email' AND pw='$pw'");	}
 	if($b_type == "Scientist")	{	$newscien = $scientists + $b_amount;	 mysql_query("UPDATE military SET scientists='$newscien' WHERE email='$email' AND pw='$pw'");	}

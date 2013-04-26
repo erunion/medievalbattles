@@ -339,7 +339,7 @@ include("include/connect.php");
 
 			mysql_query("DELETE FROM buildings WHERE email='$tmail'"); 
 			mysql_query("DELETE FROM military WHERE email='$tmail'");
-			mysql_query("DELETE FROM return WHERE email='$tmail'"); 
+			mysql_query("DELETE FROM returntbl WHERE email='$tmail'"); 
 			mysql_query("DELETE FROM research WHERE email='$tmail'");
 			mysql_query("DELETE FROM explore WHERE email='$tmail'"); 
 			mysql_query("DELETE FROM user WHERE email='$tmail'");
@@ -468,22 +468,22 @@ mysql_query("UPDATE military SET dbexplorer = \"0\"");
 mysql_query("UPDATE military SET dbthief = \"0\"");
 
 // Reset Return Table
-mysql_query("UPDATE return SET war1 = \"0\"");
-mysql_query("UPDATE return SET war2 = \"0\"");
-mysql_query("UPDATE return SET war3 = \"0\"");
-mysql_query("UPDATE return SET war4 = \"0\"");
-mysql_query("UPDATE return SET wiz1 = \"0\"");
-mysql_query("UPDATE return SET wiz2 = \"0\"");
-mysql_query("UPDATE return SET wiz3 = \"0\"");
-mysql_query("UPDATE return SET wiz4 = \"0\"");
-mysql_query("UPDATE return SET pri1 = \"0\"");
-mysql_query("UPDATE return SET pri2 = \"0\"");
-mysql_query("UPDATE return SET pri3 = \"0\"");
-mysql_query("UPDATE return SET pri4 = \"0\"");
-mysql_query("UPDATE return SET time1 = \"0\"");
-mysql_query("UPDATE return SET time2 = \"0\"");
-mysql_query("UPDATE return SET time3 = \"0\"");
-mysql_query("UPDATE return SET time4 = \"0\"");
+mysql_query("UPDATE returntbl SET war1 = \"0\"");
+mysql_query("UPDATE returntbl SET war2 = \"0\"");
+mysql_query("UPDATE returntbl SET war3 = \"0\"");
+mysql_query("UPDATE returntbl SET war4 = \"0\"");
+mysql_query("UPDATE returntbl SET wiz1 = \"0\"");
+mysql_query("UPDATE returntbl SET wiz2 = \"0\"");
+mysql_query("UPDATE returntbl SET wiz3 = \"0\"");
+mysql_query("UPDATE returntbl SET wiz4 = \"0\"");
+mysql_query("UPDATE returntbl SET pri1 = \"0\"");
+mysql_query("UPDATE returntbl SET pri2 = \"0\"");
+mysql_query("UPDATE returntbl SET pri3 = \"0\"");
+mysql_query("UPDATE returntbl SET pri4 = \"0\"");
+mysql_query("UPDATE returntbl SET time1 = \"0\"");
+mysql_query("UPDATE returntbl SET time2 = \"0\"");
+mysql_query("UPDATE returntbl SET time3 = \"0\"");
+mysql_query("UPDATE returntbl SET time4 = \"0\"");
 
 // Reset Research Table
 mysql_query("UPDATE research SET r1 = \"0\"");

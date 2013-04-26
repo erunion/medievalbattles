@@ -10,7 +10,7 @@
 
 <div align=center>		
 	<font class=red>Empire Joining/Deleting</font><br>
-	<font class=green>Donating/Receiving from Funds</font><br>
+	<!-- <font class=green>Donating/Receiving from Funds</font><br> -->
 	<font class=blue>Leaving/Joining a Guild</font><br>
 	<font class=yellow>Attacking (successful/unsuccessful)</font><br>
 	<font class=orange>Successfully defended empire</font><br>

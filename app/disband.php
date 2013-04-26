@@ -2,9 +2,9 @@
 include("include/igtop.php");
 
 echo "
-<center>
-<b class=reg> | <a href=disband.php>Disband</a> | <a href=equip.php>Equip</a> | <a href=wconstruct.php>Construct Weapon</a> | <a href=aconstruct.php>Construct Armor</a> |</b>
-</center>
+<div align=center>
+<b>&nbsp;[&nbsp;<a href=disband.php>Disband</a>&nbsp;]&nbsp;&nbsp;[&nbsp;<a href=equip.php>Equip</a>&nbsp;]&nbsp;&nbsp;[&nbsp;<a href=wconstruct.php>Construct Weapon</a>&nbsp;]&nbsp;&nbsp;[&nbsp;<a href=aconstruct.php>Construct Armor</a>&nbsp;]</b>
+</div>
 <br><br>";
 
 if(!IsSet($trains))	 {
@@ -24,17 +24,27 @@ else	{
 		include("include/disband_table.php");
 		die();
 	}
-	elseif($uthief < 0 OR $uscientist < 0 OR $uexplorer < 0 OR $uwarrior < 0 OR $uwizard < 0 OR $upriest < 0 OR $uarcher < 0)	 {
+	elseif($uwizard > 0 AND $class == Insurrectionist)	{
+		echo"<div align=center><font class=yellow>You do not have Wizards!</div></font>";
+		include("include/disband_table.php");
+		die();
+	}
+	elseif($upriest > 0 AND $class == Demon)	{
+		echo"<div align=center><font class=yellow>You do not have Priests!</div></font>";
+		include("include/disband_table.php");
+		die();
+	}
+	elseif($uthief < 0 OR $usage < 0 OR $uexplorer < 0 OR $uwarrior < 0 OR $uwizard < 0 OR $upriest < 0 OR $uarcher < 0)	 {
 		echo"<div align=center><font class=yellow>You can't disband negative or 0 units!</font></div>"; 
 		include("include/disband_table.php");
 		die();
 	}
-	elseif($gp < (($uthief + $uscientist + $upriest + $uwizard + $uwarrior + $uarcher) * 200))	 {
+	elseif($gp < (($uthief + $uexplorer + $usage + $upriest + $uwizard + $uwarrior + $uarcher) * 200))	 {
 		echo"<div align=center><font class=yellow>You don't have that many gold pieces!</font></div>";
 		include("include/disband_table.php");
 		die(); 
 	} 
-	elseif(($thieves < $uthief) OR ($scientists < $uscientist) OR ($explorers < $uexplorer) OR ($priests < $upriest) OR ($wizards < $uwizard) OR ($warriors < $uwarrior) OR ($archers < $uarcher))	 {
+	elseif(($thieves < $uthief) OR ($sages < $usage) OR ($explorers < $uexplorer) OR ($priests < $upriest) OR ($wizards < $uwizard) OR ($warriors < $uwarrior) OR ($archers < $uarcher))	 {
 		echo"<div align=center><font class=yellow>You don't have that many units!</font></div>";
 		include("include/disband_table.php");
 		die(); 
@@ -45,23 +55,23 @@ else	{
 		die(); 
 	}
 	
-	$gp = $gp - (($uthief + $uscientist + $uexplorer + $upriest + $uwizard + $uwarrior + $uarcher) * 200);	
+	$gp = $gp - (($uthief + $usage + $uexplorer + $upriest + $uwizard + $uwarrior + $uarcher) * 200);	
 	$gp = round($gp);
 	mysql_query("UPDATE user SET gp='$gp' WHERE email='$email' AND pw='$pw'"); 
 
-	$new_recruits = $recruits + ($uthief + $uscientist + $uexplorer + $upriest + $uwizard + $uwarrior + $uarcher);
+	$new_recruits = $recruits + ($uthief + $usage + $uexplorer + $upriest + $uwizard + $uwarrior + $uarcher);
 	mysql_query("UPDATE military SET recruits='$new_recruits' WHERE email='$email' AND pw='$pw'");
 
 	$new_thieves = $thieves - $uthief;
-	$new_scientists = $scientists - $uscientist;
-	$new_explorers = $explorers - $uexplorer;
+	$new_sages = $sages - $usage;
+	$new_explorers = $aexplorers - $uexplorer;
 	$new_priests = $priests - $upriest;
 	$new_wizards = $wizards - $uwizard;
 	$new_warriors = $warriors - $uwarrior;
 	$new_archers = $archers - $uarcher;
 
 	mysql_query("UPDATE military SET thieves='$new_thieves' WHERE email='$email' AND pw='$pw'");
-	mysql_query("UPDATE military SET scientists='$new_scientists' WHERE email='$email' AND pw='$pw'");
+	mysql_query("UPDATE military SET sages='$new_sages' WHERE email='$email' AND pw='$pw'");
 	mysql_query("UPDATE military SET explorers='$new_explorers' WHERE email='$email' AND pw='$pw'");
 	mysql_query("UPDATE military SET priests='$new_priests' WHERE email='$email' AND pw='$pw'");
 	mysql_query("UPDATE military SET wizards='$new_wizards' WHERE email='$email' AND pw='$pw'");

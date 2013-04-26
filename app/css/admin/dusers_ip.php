@@ -4,31 +4,31 @@ include("include/igtop.php");
 
 echo "
 <center><br><br>
-<table border=1 bordercolor=#000000 align=center width=95% cellpadding=0 cellspacing=0>
+<table border=1 bordercolor=#000000 align=center width=100% cellpadding=0 cellspacing=0>
 	<tr>
-		<td class=main colspan=10><b class=reg>All Users</b></td>
+		<td colspan=10><b>All Users by IP</b></td>
 	<tr>
-		<td class=main2><b class=reg>Name</b></td>
-		<td class=main2><b class=reg>Email</b></td>
-		<td class=main2><b class=reg>IP</b></td>
-		<td class=main2><b class=reg>Mtns</b></td>
-		<td class=main2><b class=reg>Land</b></td>
-		<td class=main2><b class=reg>Exp</b></td>
-		<td class=main2><b class=reg>Guild</b></td>
-		<td class=main2><b class=reg>LastLogin</b></td>";
+		<td><b>Name</b></td>
+		<td><b>Email</b></td>
+		<td><b>IP</b></td>
+		<td><b>Su ID</b></td>
+		<td><b>Cur ID</b></td>
+		<td><b>Exp</b></td>
+		<td><b>Guild</b></td>
+		<td><b>LastLogin</b></td>";
 
-$result_id = mysql_db_query($dbnam, "SELECT ename, email, ip, mts, land, exp, guild, lastlogin FROM user ORDER BY ip ASC");
+$result_id = mysql_db_query($dbnam, "SELECT ename, email, ip, signup_comp_id, current_comp_id, exp, guild, lastlogin FROM user ORDER BY ip ASC");
 while ($row = mysql_fetch_row($result_id))	{
 	echo "
 	<tr align=center valign=top colspan=10>
-		<td class=main2><font class=grey>$row[0]</td>
-		<td class=main2><font class=grey>$row[1]</td>
-		<td class=main2><font class=grey>$row[2]</td>
-		<td class=main2><font class=grey>$row[3]</td>
-		<td class=main2><font class=grey>$row[4]</td>
-		<td class=main2><font class=grey>$row[5]</td>
-		<td class=main2><font class=grey>$row[6]</td>
-		<td class=main2><font class=grey>$row[7]</td>\n";
+		<td><tt>$row[0]</tt></td>
+		<td><tt>$row[1]</tt></td>
+		<td><tt>$row[2]</tt></td>
+		<td><tt>$row[3]</tt></td>
+		<td><tt>$row[4]</tt></td>
+		<td><tt>$row[5]</tt></td>
+		<td><tt>$row[6]</tt></td>
+		<td><tt>$row[7]</tt></td>\n";
 }
 echo "</table><br>
 </td>

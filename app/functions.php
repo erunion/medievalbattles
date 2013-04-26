@@ -116,12 +116,14 @@ $military = mysql_fetch_array($military_query);
 		$warriors = $military['warriors'];
 		$priests = $military['priests'];
 		$archers = $military['archers'];
-		$scientists = $military['scientists'];
+		$sages = $military['sages'];
 		$thieves = $military['thieves'];
 		$explorers = $military['explorers'];
 		$suicide = $military['suicide'];
 		$catapult = $military['catapult'];
 		$maxciv = $military['maxciv'];
+		$golem = $military['golem'];
+		$irongolem = $military['irongolem'];
 	## equipped weapon, spell, bow and armor
 		$cweapon = $military['cweapon'];
 		$cspell = $military['cspell'];
@@ -157,7 +159,7 @@ $military = mysql_fetch_array($military_query);
 		$tarchers = $archers + $arch1 + $arch2 + $arch3 + $arch4;
 	## units in creation	
 		$dbexplorer = $military['dbexplorer'];
-		$dbscientist = $military['dbscientist'];
+		$dbsage = $military['dbsage'];
 		$dbthief = $military['dbthief'];
 		$dbwar = $military['dbwar'];	$dbwar2 = $military['dbwar2'];
 		$dbwiz = $military['dbwiz'];		$dbwiz2 = $military['dbwiz2'];
@@ -165,6 +167,8 @@ $military = mysql_fetch_array($military_query);
 		$dbarch = $military['dbarch'];	$dbarch2 = $military['dbarch2'];
 		$dbsuicide = $military['dbsuicide'];	$dbsuicide2 = $military['dbsuicide2'];	$dbsuicide3 = $military['dbsuicide3'];
 		$dbcatapult = $military['dbcatapult'];	$dbcatapult2 = $military['dbcatapult2'];	$dbcatapult3 = $military['dbcatapult3'];
+		$dbgolem = $military['dbgolem'];
+		$dbirongolem = $military['dbirongolem'];
 
 //	select explore items
 $explore_query = "SELECT * FROM explore WHERE email='$email' AND pw= '$pw'";
@@ -177,7 +181,7 @@ $explore = mysql_fetch_array($explore_query);
 	$mthrs = $explore['mthrs'];
 
 //	select data from return table
-$return_query = "SELECT * FROM return WHERE email='$email' AND pw= '$pw'";
+$return_query = "SELECT * FROM returntbl WHERE email='$email' AND pw= '$pw'";
 $return_query = mysql_db_query($dbnam, $return_query) or die("Error: " . mysql_error());
 $return = mysql_fetch_array($return_query);
 	## party 1	
@@ -185,28 +189,37 @@ $return = mysql_fetch_array($return_query);
 		$wiz1 = $return['wiz1'];			$WIZ_1 = $return['wiz1'];
 		$pri1 = $return['pri1'];			$PRI_1 = $return['pri1'];
 		$arch1 = $return['arch1'];		$ARCH_1 = $return['arch1'];
+		$golem1 = $return['golem1'];		$GOLEM_1 = $return['golem1'];
+		$irongolem1 = $return['irongolem1'];		$IRONGOLEM_1 = $return['irongolem1'];
 		$time1 = $return['time1'];		$TIME_1 = $return['time1'];
 	## party 2	
 		$war2 = $return['war2'];		$WAR_2 = $return['war2'];
 		$wiz2 = $return['wiz2'];			$WIZ_2 = $return['wiz2'];
 		$pri2 = $return['pri2'];			$PRI_2 = $return['pri2'];
 		$arch2 = $return['arch2'];		$ARCH_2 = $return['arch2'];
+		$golem2 = $return['golem2'];		$GOLEM_2 = $return['golem2'];
+		$irongolem2 = $return['irongolem2'];		$IRONGOLEM_2 = $return['irongolem2'];
 		$time2 = $return['time2'];		$TIME_2 = $return['time2'];
 	## party 3
 		$war3 = $return['war3'];	 	$WAR_3 = $return['war3'];
 		$wiz3 = $return['wiz3'];			$WIZ_3 = $return['wiz3'];
 		$pri3 = $return['pri3'];			$PRI_3 = $return['pri3'];
 		$arch3 = $return['arch3'];		$ARCH_3 = $return['arch3'];
+		$golem3 = $return['golem3'];		$GOLEM_3 = $return['golem3'];
+		$irongolem3 = $return['irongolem3'];		$IRONGOLEM_3 = $return['irongolem3'];
 		$time3 = $return['time3'];		$TIME_3 = $return['time3'];
 	## party 4
 		$war4 = $return['war4'];		$WAR_4 = $return['war4'];
 		$wiz4 = $return['wiz4'];			$WIZ_4 = $return['wiz4'];
 		$pri4 = $return['pri4'];			$PRI_4 = $return['pri4'];
 		$arch4 = $return['arch4'];		$ARCH_4 = $return['arch4'];
+		$golem4 = $return['golem4'];		$GOLEM_4 = $return['golem4'];
+		$irongolem4 = $return['irongolem4'];		$IRONGOLEM_4 = $return['irongolem4'];
 		$time4 = $return['time4'];		$TIME_4 = $return['time4'];
 	## fleets					
 		$FLEETS_ = mysql_db_query($dbnam, "SELECT fleets FROM user WHERE userid='$userid'");
-		$_FLEETS = mysql_result($FLEETS_, "_FLEETS");	
+		$_FLEETS = mysql_result($FLEETS_, "_FLEETS");
+
 //	total all units together
 	$warquery = "SELECT sum(amount) FROM barter WHERE seller='$ename' AND type='Warrior'";
 	$warresult = mysql_db_query($dbnam, $warquery) or die("Error: " . mysql_error());
@@ -224,18 +237,29 @@ $return = mysql_fetch_array($return_query);
 	$archresult = mysql_db_query($dbnam, $archquery) or die("Error: " . mysql_error());
 	$archcheck = mysql_fetch_array($archresult);
 
-	$ascientists = $scientists;
+	$asages = $sages;
 	$aexplorers = $explorers;
-	$tscientists = $scientists + $res['r1'] + $res['r2'] + $res['r3'] + $res['r4'] + $res['r5'] + $res['r6'] + $res['r7'] + $res['r8'] + $res['r9'] + $res['r10'] + $res['r11'] + $res['r12'] + $res['r13'] + $res['r14'];
+	$tsages = $sages + $res['r1'] + $res['r2'] + $res['r3'] + $res['r4'] + $res['r5'] + $res['r6'] + $res['r7'] + $res['r8'] + $res['r9'] + $res['r10'] + $res['r11'] + $res['r12'] + $res['r13'] + $res['r14'] + $res['r15'] + $res['r16'];
 	$texplorers = $explorers + $expland + $expmt;
     
-	$warriorc = (($warriors + $dbwar + $dbwar2 + $WAR_1 + $WAR_2 + $WAR_3 + $WAR_4 + $warcheck[0]) * .8) + 500;
+	$warriorc_bonus = 1;	
+	$priest_bonus = 1;	
+	$wizard_bonus = 1;	
+	$suicide_bonus = 1;	
+	
+	if($race == 'Demon')	{	$warriorc_bonus = .75;	}
+	if($race == 'Angel')	{	$priest_bonus = .75;	}
+	if($class == 'Warlock')	{	$wizard_bonus = .75;	}
+	if(($class == 'Warlock') AND ($race == 'Demon'))	{	$warriorc_bonus = 1.05;	}
+	if($class == 'Insurrectionist')	{	$suicide_bonus = .50;	}
+
+	$warriorc = (((($warriors + $dbwar + $dbwar2 + $WAR_1 + $WAR_2 + $WAR_3 + $WAR_4 + $warcheck[0]) * .8) + 500) * $warriorc_bonus);
 		if($warriorc > 10000)	{	$warriorc = 10000;	}
 		$warriorc = round($warriorc);		
-	$wizardc = (($wizards + $dbwiz + $dbwiz2 + $WIZ_1 + $WIZ_2 + $WIZ_3 + $WIZ_4 + $wizcheck[0]) * .7) + 400;
+	$wizardc = (((($wizards + $dbwiz + $dbwiz2 + $WIZ_1 + $WIZ_2 + $WIZ_3 + $WIZ_4 + $wizcheck[0]) * .7) + 400) * $wizard_bonus);
 		if($wizardc > 10000)	{	$wizardc = 10000;	}
 		$wizardc = round($wizardc);
-	$priestc = (($priests + $dbpri + $dbpri2 + $PRI_1 + $PRI_2 + $PRI_3 + $PRI_4 + $pricheck[0]) *  .65) + 100;
+	$priestc = (((($priests + $dbpri + $dbpri2 + $PRI_1 + $PRI_2 + $PRI_3 + $PRI_4 + $pricheck[0]) *  .65) + 100) * $priest_bonus);
 		if($priestc > 10000)	{	$priestc = 10000;	}
 		$priestc = round($priestc);
 	$archerc = (($archers + $dbarch + $dbarch2 + $ARCH_1 + $ARCH_2 + $ARCH_3 + $ARCH_4 + $archcheck[0]) * .75) + 450;
@@ -244,6 +268,15 @@ $return = mysql_fetch_array($return_query);
 	$explorec = (($texplorers + $aexplorers + $dbexplorer) * .875) + 1000;
 		if($explorec > 10000)	{	$explorec = 10000;	}
 		$explorec = round($explorec);
+	$suicidec = 5000 * $suicide_bonus;
+		if($suicidec > 10000)	{	$suicidec = 10000;	}
+		$suicidec = round($suicidec);
+	$golemc = (($golem + $dbgolem + $GOLEM_1 + $GOLEM_2 + $GOLEM_3 + $GOLEM_4) * .50) + 5000;
+		if($golemc > 20000)	{	$golemc = 20000;	}
+		$golemc = round($golemc);
+	$irongolemc = (($irongolem + $dbirongolem + $IRONGOLEM_1 + $IRONGOLEM_2 + $IRONGOLEM_3 + $IRONGOLEM_4) * 2) + 5000;
+		if($irongolemc > 30000)	{	$irongolemc = 30000;	}
+		$irongolemc = round($irongolemc);
 	
 //	cost for buildings ( b_cost=land & bm_cost=mountains )
 	$bm_cost =  300 + (20 * (($gm + $im + $dim + $dgm) * .2));	
@@ -264,14 +297,20 @@ $atrbutton = "<form type=get action=aconstruct.php><input class=button type=subm
 $amrbutton = "<form type=get action=aconstruct.php><input class=button type=submit name=updaet11 value=Construct><input type=hidden name=update11 value=11></form>";
 
 // empire defense modifiers
-	if($class== Fighter)	{	$empmodifier = 1.05;	}
-	if($class == Cleric)	{	$empmodifier = 1.00;	}
-	if($class == Ranger)	{	$empmodifier = 1.00;	}
-	if($class == Mage)	{	$empmodifier = .95;		}
-	if($race == Giant)		{	$empmodifier = $empmodifier + .25;	 }
+	$empmodifier = 1;
+	if($class == 'Fighter')	{	$empmodifier = 1.05;	}
+	if($class == 'Cleric')	{	$empmodifier = 1.00;	}
+	if($class == 'Ranger')	{	$empmodifier = 1.00;	}
+	if($class == 'Mage')	{	$empmodifier = .95;		}
+	if($class == 'Warlock')	{	$empmodifier = .95;		}
+	if($class == 'Savant')	{	$empmodifier = .80;		}
+	if($class == 'Insurrectionist')	{	$empmodifier = 1.05;		}
+	if($race == 'Giant')		{	$empmodifier = $empmodifier + .25;	 }
+	if($race == 'Demon')		{	$empmodifier = $empmodifier + .10;	 }
+	if($race == 'Night Elf')		{	$empmodifier = $empmodifier - .10;	 }
 
 // defense calculation
-	$tdefense = (($warriors * $warpower) + ($wizards * $wizpower) + ($priests * $pripower) + ($archers * $archpower) + ($catapult * 30) + ($wp * 15)) * $empmodifier;
+	$tdefense = (($warriors * $warpower) + ($wizards * $wizpower) + ($priests * $pripower) + ($archers * $archpower) + ($golem * 38) + ($irongolem * 50) + ($catapult * 30) + ($wp * 15)) * $empmodifier;
 	$tdefense = round ($tdefense);
 
 // gold production for fighters
@@ -279,66 +318,112 @@ $amrbutton = "<form type=get action=aconstruct.php><input class=button type=subm
 		$goldpro1 = $gm * 300; 
 		$goldpro = $goldpro1 * .95;
 	}
-		elseif($res['r11pts'] >= 100000)	{
-			$goldpro1 = $gm * 300; 
-			$goldpro = $goldpro1 * 1.05;
-		}
-		elseif($class == Dwarf)	{
-			$goldpro1 = $gm * 300; 
-			$goldpro = $goldpro1 * 1.2;
-				if($res['r11pts'] >= 100000)	 {
-					$goldpro1 = $gm * 300; 
-					$goldpro = $goldpro1 * 1.3;
-				}
-		}
-
+	elseif($res['r11pts'] >= 100000)	{
+		$goldpro1 = $gm * 300; 
+		$goldpro = $goldpro1 * 1.05;
+	}
+	elseif($class == "Dwarf")	{
+		$goldpro1 = $gm * 300; 
+		$goldpro = $goldpro1 * 1.2;
+			if($res['r11pts'] >= 100000)	 {
+				$goldpro1 = $gm * 300; 
+				$goldpro = $goldpro1 * 1.3;
+			}
+	}
 // gold production for mages
 	if($class == "Mage")	{
 		$goldpro1 = $gm * 300; 
 		$goldpro = $goldpro1 * 1.1;
 	}
-		elseif($res['r11pts'] >= 100000)	{
-			$goldpro1 = $gm * 300; 
-			$goldpro = $goldpro1 * 1.2;
-		}
-
+	elseif($res['r11pts'] >= 100000)	{
+		$goldpro1 = $gm * 300; 
+		$goldpro = $goldpro1 * 1.2;
+	}
 // gold production for clerics		
 	if($class == "Cleric")	{
 		$goldpro = $gm * 300;
 	}
-		elseif($res['r11pts'] >= 100000)	{
-			$goldpro1 = $gm * 300; 
-			$goldpro = $goldpro1 * 1.1;
-		} 
+	elseif($res['r11pts'] >= 100000)	{
+		$goldpro1 = $gm * 300; 
+		$goldpro = $goldpro1 * 1.1;
+	} 
 // gold production for rangers			
 	if($class == "Ranger")	{
 		$goldpro = $gm * 300;
 	}
-		elseif($res['r11pts'] >= 100000)	{
-			$goldpro1 = $gm * 300; 
-			$goldpro = $goldpro1 * 1.1;
-		} 
+	elseif($res['r11pts'] >= 100000)	{
+		$goldpro1 = $gm * 300; 
+		$goldpro = $goldpro1 * 1.1;
+	} 
+// gold production for demons			
+	if($race == "Demon")	{
+		$goldpro1 = $gm * 300;
+		$goldpro = $goldpro1 * 1.5;
+	}
+	elseif($res['r11pts'] >= 100000)	{
+		$goldpro1 = $gm * 300; 
+		$goldpro = $goldpro1 * 1.15;
+	} 
+// gold production for insurrectionists			
+	if($class == "Insurrectionist")	{
+		$goldpro1 = $gm * 300;
+		$goldpro = $goldpro1 * .90;
+	}
+	elseif($res['r11pts'] >= 100000)	{
+		$goldpro1 = $gm * 300; 
+		$goldpro = $goldpro1 * 1;
+	} 
+// gold production for savants			
+	if($class == "Savant")	{
+		$goldpro1 = $gm * 300;
+		$goldpro = $goldpro1 * 1.50;
+	}
+	elseif($res['r11pts'] >= 100000)	{
+		$goldpro1 = $gm * 300; 
+		$goldpro = $goldpro1 * 1.60;
+	} 
+
 //hourly production
-	$imhourly = $im * 1.945;
+	$imhourly = $im * 1.9;
 
 	if($res['r12pts'] >= 100000)	 {
-		$imhourly = $im * 2.045;
+		$imhourly = $im * 2.0;
 	}
-	if($race == Dwarf)	{
-		$imhourly = $im * 2.095;
+	if($race == "Dwarf")	{
+		$imhourly = $im * 2.0;
 			if($res['r12pts'] >= 100000)	{
-				$imhourly = $im * 2.195;
+				$imhourly = $im * 2.1;
 			}
+	}
+	if($race == "Demon")	{
+		$imhourly = $im * 1.95;
+			if($res['r12pts'] >= 100000)	{
+				$imhourly = $im * 2.5;
+			}
+	}
+
+	$foodhourly = $farm * .5;
+
+	if($res['r15pts'] >= 100000)	 {
+		$foodhourly = $farm * 2;
 	}
 
 	$imhourly = round($imhourly);
 	$gmhourly = $goldpro;
 	$woodhourly = $lmill * 2;
-	$foodhourly = $farm * .5;
-	$civhourly = $home * .265;
+	$civhourly = $home * .2;
+
+	if($race == "Night Elf")	{
+		$civhourly = $home * .05;
+	}
+	if($race == "Demon")	{
+		$civhourly = $home * .1;
+	}
+	if($race == "Elf")	{	
+		$civhourly == $home * .1;	
+	}
 
 	if($class == Ranger)	{	$woodhourly = $lmill * 2.1;	 }	// wood production for rangers
-	if($race == Elf)	{	$civhourly == $home * .165;	}	// civilian production for elves
 	if($race == Giant)	 {	$foodhourly = $farm * .6;	}	// food production for giants
 
 	$rechourly = $civ * .007;
@@ -351,6 +436,8 @@ $amrbutton = "<form type=get action=aconstruct.php><input class=button type=subm
 	$twizards = $wizards + $wiz1 + $wiz2 + $wiz3 + $wiz4;
 	$tpriests = $priests + $pri1 + $pri2 + $pri3 + $pri4;
 	$tarchers = $archers + $arch1 + $arch2 + $arch3 + $arch4;
+	$tgolems = $golem + $golem1 + $golem2 + $golem3 + $golem4;
+	$tirongolems = $irongolem + $irongolem1 + $irongolem2 + $irongolem3 + $irongolem4;
 //	exp values for attack equations
 	$archexpa = 26;
 	$warexpa = 23;
@@ -427,9 +514,9 @@ $amrbutton = "<form type=get action=aconstruct.php><input class=button type=subm
 		$tarchers = number_format($tarchers);	
 		$archerc = number_format($archerc);
 		// scientists
-		$scientists = number_format($scientists);		
-		$dbscientist = number_format($dbscientist);	
-		$ascientists = number_format($ascientists);	
+		$sages = number_format($sages);		
+		$dbsage = number_format($dbsage);	
+		$asages = number_format($asages);	
 		// explorers
 		$explorers = number_format($explorers);	
 		$dbexplorer = number_format($dbexplorer);	
@@ -438,6 +525,11 @@ $amrbutton = "<form type=get action=aconstruct.php><input class=button type=subm
 		// thieves
 		$thieves = number_format($thieves);	
 		$dbthief = number_format($dbthief);
+		// golems
+		$golem = number_format($golem);	
+		$dbgolem = number_format($dbgolem);
+		$irongolem = number_format($irongolem);	
+		$dbirongolem = number_format($dbirongolem);
 		// maximum values
 		$maxciv = number_format($maxciv);
 		$maxtrain = number_format($maxtrain);

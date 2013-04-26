@@ -13,7 +13,7 @@ echo "
 ## warrior weapons
 ###############
 
-	if(!IsSet($shortsword))	{
+if(!IsSet($shortsword))	{
 }
 else
 {    
@@ -430,6 +430,9 @@ else
 		elseif ($race == Giant) 
 			{echo"<div align=center><font class=yellow>You are a Giant, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
 			} 
+		elseif ($race == Demon) 
+			{echo"<div align=center><font class=yellow>You are a Demon, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			} 
 					include("include/connect.php");		
 					$iron = $iron - 4000;
 					$gp = $gp - 200000;
@@ -471,6 +474,9 @@ else
 		elseif ($race == Giant) 
 			{echo"<div align=center><font class=yellow>You are a Giant, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
 			}
+		elseif ($race == Demon) 
+			{echo"<div align=center><font class=yellow>You are a Demon, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			} 
 		elseif ($priweapon[mace] < 0) 
 			{echo"<div align=center><font class=yellow>You must first construct Maces before you can construct Flails.<br><br></font></div>";include("include/S_WEP.php");die();
 			}	
@@ -514,6 +520,9 @@ else
 		elseif ($race == Giant) 
 			{echo"<div align=center><font class=yellow>You are a Giant, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
 			}
+		elseif ($race == Demon) 
+			{echo"<div align=center><font class=yellow>You are a Demon, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			} 
 		elseif ($priweapon[mace] < 1) 
 			{echo"<div align=center><font class=yellow>You must first construct Maces before you can construct the Sword of Zakarum. <br><br></font></div>";include("include/S_WEP.php");die();
 			}
@@ -560,6 +569,9 @@ else
 		elseif ($race == Giant) 
 			{echo"<div align=center><font class=yellow>You are a Giant, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
 			}
+		elseif ($race == Demon) 
+			{echo"<div align=center><font class=yellow>You are a Demon, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			} 
 		elseif ($priweapon[mace] < 1) 
 			{echo"<div align=center><font class=yellow>You must first construct Mace before you can construct the Footman's Flail. <br><br></font></div>";include("include/S_WEP.php");die();
 			}
@@ -609,6 +621,9 @@ else
 		elseif ($race == Giant) 
 			{echo"<div align=center><font class=yellow>You are a Giant, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
 			}
+		elseif ($race == Demon) 
+			{echo"<div align=center><font class=yellow>You are a Demon, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			} 
 		elseif ($priweapon[mace] < 1) 
 			{echo"<div align=center><font class=yellow>You must first construct Mace before you can construct the Morning Star. <br><br></font></div>";include("include/S_WEP.php");die();
 			}
@@ -661,6 +676,9 @@ else
 		elseif ($race == Giant) 
 			{echo"<div align=center><font class=yellow>You are a Giant, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
 			}
+		elseif ($race == Demon) 
+			{echo"<div align=center><font class=yellow>You are a Demon, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			} 
 		elseif ($priweapon[mace] < 1) 
 			{echo"<div align=center><font class=yellow>You must first construct Mace before you can construct the Thyora's Tear. <br><br></font></div>";include("include/S_WEP.php");die();
 			}
@@ -719,6 +737,9 @@ else
 		elseif ($race == Giant) 
 			{echo"<div align=center><font class=yellow>You are a Giant, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
 			}
+		elseif ($race == Demon) 
+			{echo"<div align=center><font class=yellow>You are a Demon, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			} 
 		elseif ($priweapon[mace] < 1) 
 			{echo"<div align=center><font class=yellow>You must first construct Mace before you can construct the Flail of Isidole. <br><br></font></div>";include("include/S_WEP.php");die();
 			}
@@ -780,6 +801,9 @@ else
 		elseif ($race == Giant) 
 			{echo"<div align=center><font class=yellow>You are a Giant, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
 			}
+		elseif ($race == Demon) 
+			{echo"<div align=center><font class=yellow>You are a Demon, you cannot construct this weapon.<br><br></font></div>";include("include/S_WEP.php");die();
+			} 
 		elseif ($priweapon[mace] < 1) 
 			{echo"<div align=center><font class=yellow>You must first construct Mace before you can construct the Eldamar's Star. <br><br></font></div>";include("include/S_WEP.php");die();
 			}

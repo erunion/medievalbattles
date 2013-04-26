@@ -1,6 +1,9 @@
 <? 
 include("include/igtop.php");
 
+echo "<font class=yellow><div align=center><b>Barter will be down for the remainder of the game. The barter will return in Version 6 as the Auction Barter. <br>There will not be a guild barter in Version 6.</b></div></font>";
+die();
+
 if($barter_clock > 1)	 {
 	echo "<font class=yellow><div align=center><b>You can barter items when your empires age is over 1 week!<br>You have $barter_clock tick(s) left!</b></div></font>";
 	die();
@@ -296,8 +299,8 @@ else	{
 	elseif($bcheck[0] >= 4)	 {	echo"<font class=yellow><div align=center>You alreay have 4 items up for sale!</div></font>";	 die();	}
 //	various race/class checks
 	elseif($type == Wizard AND $class == Ranger)	{	echo"<font class=yellow><div align=center>Rangers can't possess Wizards!</font></div>";	die();	 }
-	elseif($type == Wizard AND $race == giant)	{	echo"<div align=center><font class=yellow>Giants can't possess Wizards!</font></div><br><br>";	 die();	}
-	elseif($type == Priest AND $race == giant)	{	echo"<div align=center><font class=yellow>Giants can't possess Priests!</font></div><br><br>";	die();	 }
+	elseif($type == Wizard AND $race == Giant)	{	echo"<div align=center><font class=yellow>Giants can't possess Wizards!</font></div><br><br>";	 die();	}
+	elseif($type == Priest AND $race == Giant)	{	echo"<div align=center><font class=yellow>Giants can't possess Priests!</font></div><br><br>";	die();	 }
 	elseif($res[r13pts] < 125000 AND $b_type == Archer)	{	echo"<font class=yellow><div align=center>You must research Archery for Archers.<br><br></div></font>";	die();	 }
 //	various invalid checks
 	elseif($type != "Explorer" AND $type != "Scientist" AND $type != "Wizard" AND $type != "Priest" AND $type != "Warrior" AND $type != "Thief" AND $type != "Recruit" AND $type != "Land" AND $type != "Mountain" AND $type != "Archer")	 {	echo"<div align=center><font class=yellow>Invalid type!</font></div><br><br>";	die();	 }

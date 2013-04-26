@@ -24,7 +24,7 @@ echo "
 <br><br>
 <table border=0 bordercolor=#404040 width=95% align=center cellspacing=1 cellpadding = 0>
 	<tr>
-		<td colspan=4 class=main><b class=reg>News for $setguildname</b></td>
+		<td colspan=4 class=main><b class=reg>News for $empireguild</b></td>
 	<tr align=left>
 		<td class=main2 width=20% align=left><b class=reg>Date/Time</b></td>
 		<td class=main2 align=left><b class=reg width=80%>News</b></td>";

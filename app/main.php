@@ -18,7 +18,7 @@ echo"
 				<tr>	
 					<td colspan=2 class=main2>The empire of <b class=top> $ename ($setid)</td>
 				<tr>
-					<td class=inner2><b><font class=red>Class:</font></b> $class</td>
+					<td class=inner2><b><font class=red>Race/Class:</font></b> $race $class</td>
 					<td class=inner2><b><font class=red>Civilians:</font></b> $civ</td>
 				<tr>
 					<td class=inner2><b><font class=red>Experience:</font></b> $exp</td>
@@ -33,41 +33,42 @@ echo"
 if($res[r13pts] >= 125000)	 {
 	echo "
 					<td class=inner2><b><font class=red>Lumber:</font></b> $lumber</td>
-					<td class=inner2><b><font class=red>Empire Defense:</font></b> $tdefense</td>	
-				<tr><td colspan=2>&nbsp;</td>
-				<tr><td class=inner2 colspan=2><b><font class=red>SL Notice:</font></b> $setnotice[0]</td>";
-	if($empireguild != None)	{
-		echo "<tr><td class=inner2 colspan=2><b><font class=red>GL Notice:</font></b> $guildnotice[0]</td>";
-	}
+					<td class=inner2><b><font class=red>Empire Defense:</font></b> $tdefense</td>";	
 }
 else	{
 	echo "		
-					<td class=inner2 colspan=2><b><font class=red>Empire Defense:</font></b> $tdefense</td>
-				<tr><td colspan=2>&nbsp;</td>
-				<tr><td class=inner2 colspan=2><b><font class=red>SL Notice:</font></b> $setnotice[0]</td>";
-	if($empireguild != None)	{
-		echo "<tr><td class=inner2 colspan=2><b><font class=red>GL Notice:</font></b> $guildnotice[0]</td>";
-	}
+					<td class=inner2 colspan=2><b><font class=red>Empire Defense:</font></b> $tdefense</td>";
 }
+echo "				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr align=center>
+		<td>
+			<table border=0 bordercolor=#808080 width=70%>
+				<tr><td class=slglnotice><b><font class=red>SL Notice:</font></b></td><td class=slglnotice width=80%>$setnotice[0]</td>";
+	if($empireguild != None)	{
+		echo "<tr><td class=slglnotice><b><font class=red>GL Notice:</font></b></td><td class=slglnotice width=80%>$guildnotice[0]</td>";
+	}
 ?>
 		</td>
 	</tr>
 </table>
-  <br><br>
+<br><br>
 <?
 // are they a guild leader?
 $guild_leader_query = mysql_db_query($dbnam, "SELECT owner FROM guild WHERE owner='$userid'");
 	$GL = mysql_fetch_array($guild_leader_query);
 
-echo "<div align=center>";
-echo "<b><a href=main.php?pageid=news>Empire News</a></b>";
-if($sl == yes)	{	echo " | <b><a href=sl.php>Settlement Management</a></b>";	}
-if($GL[0] == $userid)		{	echo " | <b><a href=guildconfig.php>Guild Management</a></b>";	 }
+echo "<div align=center>
+	<b>&nbsp;[&nbsp;<a href=main.php?pageid=news>Empire News</a>&nbsp;]&nbsp;</b>";
+if($sl == yes)	{	echo "<b>&nbsp;[&nbsp;<a href=sl.php>Settlement Management</a>&nbsp;]&nbsp;</b>";	}
+if($GL[0] == $userid)		{	echo "<b>&nbsp;[&nbsp;<a href=guildconfig.php>Guild Management</a>&nbsp;]&nbsp;</b>";	 }
 
 echo "</b></div><br><br>";
 
 if ($pageid == 'news')	{
-	$empnews_sel = mysql_db_query($dbnam, "SELECT count(yourid) FROM empnews WHERE yourid='$userid'");	
+	$empnews_sel = mysql_db_query($dbnam, "SELECT count(yourid) FROM empnews WHERE yourid='$userid'") or die(mysql_error());	
 	$emp_sel = mysql_result($empnews_sel,"emp_sel");
 	
 	if($emp_sel == 0 OR $emp_sel == "")	{
@@ -75,9 +76,8 @@ if ($pageid == 'news')	{
 		die();
 	}
 
-	mysql_query("UPDATE user SET nno =\"0\" WHERE email='$email' AND pw='$pw'");
+	mysql_query("UPDATE user SET nno='0' WHERE email='$email' AND pw='$pw'");
 
-	include("include/connect.php");
 echo "
 		<table border=0 bordercolor=#404040 width=80% align=center cellspacing=1>
 			<tr>
@@ -90,7 +90,7 @@ echo "
 	$result_id = mysql_query($query_string, $var);
 	while ($row = mysql_fetch_row($result_id))	{
 		echo "
-			<tr align=left valign=TOP>
+			<tr align=left valign=top>
 				<td bgcolor=404040>$row[0]</td>
 				<td bgcolor=404040>$row[1]</td>\n";
 	}

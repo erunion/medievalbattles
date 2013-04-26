@@ -204,7 +204,6 @@ CREATE TABLE `guild` (
 # Dumping data for table `guild`
 #
 
-
 # --------------------------------------------------------
 
 #
@@ -228,7 +227,6 @@ CREATE TABLE `guildmsgs` (
 #
 # Dumping data for table `guildmsgs`
 #
-
 
 # --------------------------------------------------------
 
@@ -269,6 +267,7 @@ CREATE TABLE `guildrequests` (
 #
 # Dumping data for table `guildrequests`
 #
+
 
 # --------------------------------------------------------
 
@@ -501,13 +500,13 @@ CREATE TABLE `research` (
 # --------------------------------------------------------
 
 #
-# Table structure for table `return`
+# Table structure for table `returntbl`
 #
 # Creation: Jun 11, 2003 at 01:43 PM
 # Last update: Jun 14, 2003 at 04:47 PM
 #
 
-CREATE TABLE `return` (
+CREATE TABLE `returntbl` (
   `email` varchar(50) NOT NULL default '',
   `pw` varchar(50) NOT NULL default '',
   `userid` bigint(255) NOT NULL default '0',
@@ -536,7 +535,7 @@ CREATE TABLE `return` (
 ) TYPE=MyISAM;
 
 #
-# Dumping data for table `return`
+# Dumping data for table `returntbl`
 #
 
 

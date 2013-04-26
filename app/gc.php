@@ -11,8 +11,6 @@ else	{
 		die();
 	}
 	else	{
-		
-		include("include/connect.php");
 
 		$guild_name = mysql_db_query($dbnam, "SELECT gname FROM guild WHERE gid='$gid'");	
 			$g_name = mysql_result($guild_name,"g_name");
@@ -33,7 +31,7 @@ else	{
 		mysql_query("INSERT INTO messages (origin, datesent, yourid, message, mid)		VALUES	('$ename', '$clock', '$owner', '$umessage', '$ymid') ");
 	
 		echo "<div align=center><font class=yellow><b>Your message has been sent to the Guild Leader of $g_name.</b></font></div></center>";
-		 session_unregister('gid'); 
+		session_unregister('gid'); 
 	}
 }
 
@@ -74,43 +72,39 @@ if($request == 'yes')	{
 	}	
 }
 
-
-
-include("include/connect.php");
-$tablename = "user";
-
 echo "  <br><br>
 <table border=0 width=90% align=center cellpadding=5>
 	<tr>
-		<td class=main colspan=5><b class=reg>Current Guilds</b></td>
+		<td class=main colspan=6><b class=reg>Current Guilds</b></td>
 	<tr>
-		<td class=main2 colspan=5><font class=yellow size=2px><b>Only 15 Empires Per Guild</b></font></td>
+		<td class=main2 colspan=6><font class=yellow size=2px><b>Only 15 Empires Per Guild</b></font></td>
 	<tr>
-		<td class=main2 width=20%><b class=reg>Name</b></td>
-		<td class=main2 width=60%><b class=reg>Info</b></td>
+		<td class=main2><b class=reg>Flag</b></td>
+		<td class=main2><b class=reg>Name</b></td>
+		<td class=main2 width=40%><b class=reg>Info</b></td>
 		<td class=main2 width=4%><b class=reg>Members</b></td>
-		<td class=main2 width=16%><b class=reg>Created</b></td>
-		<td class=main2 width=16%><b class=reg>Request</b></td>";
+		<td class=main2><b class=reg>Created</b></td>
+		<td class=main2></td>";
 
-$query_string = "SELECT g.gname, g.info, g.datemade, g.gid, count(u.ename) AS guildmem FROM guild g LEFT JOIN user u ON g.gname = u.guild GROUP BY u.guild ORDER BY guildmem DESC";
-$result_id = mysql_query($query_string, $var);
-while ($row = mysql_fetch_row($result_id))	{
+$query_string = "SELECT g.gname, g.info, g.datemade, g.gid, g.flag, count(u.ename) AS guildmem FROM guild g LEFT JOIN user u ON g.gname = u.guild GROUP BY u.guild ORDER BY guildmem DESC LIMIT 0, 60";
+$result_id = mysql_db_query($dbnam, $query_string);
+while ($row = mysql_fetch_array($result_id))	{
 	$row[0] = htmlspecialchars($row[0]);
 	$row[1] = htmlspecialchars($row[1]);
 	$urlencode_guild = urlencode($row[0]);
-	$guild_mem_query = mysql_db_query($dbnam, "SELECT count(ename) FROM user WHERE guild = '$row[0]'");
-	$guildmem = mysql_result($guild_mem_query, "guildmem");
 
 	echo "
 	<tr align=center valign=top colspan=6>
+		<td bgcolor=#404040><a href=\"$row[flag]\" target=newwindow><img src=\"$row[flag]\" width=50 height=50 border=0></a></td>
 		<td bgcolor=#404040><a href=gc.php?pageid=mgl&gid=$row[3]>$row[0]</a></td>
-		<td bgcolor=#404040 align=left>$row[1]</td>
-		<td bgcolor=#404040>$guildmem</td>
+		<td bgcolor=#404040>$row[1]</td>
+		<td bgcolor=#404040>$row[5]</td>
 		<td bgcolor=#404040>$row[2]</td>
-		<td bgcolor=#404040><a href=gc.php?request=yes&req_guild=$urlencode_guild>Send Request</a></td>";
+		<td bgcolor=#404040><a href=gc.php?request=yes&req_guild=$urlencode_guild>Request<br>Mbrshp.</a></td>";
 }
 echo "</table><br><br>";
 
+if($empireguild == "None")	{
 
 if(!IsSet($create))	{
 	include("include/S_GM.php");
@@ -166,7 +160,7 @@ else	{
 		die();
 	}
 	elseif($cpw =="" OR $ccpw == "")	{
-		echo "<div align=center><font class=yellow>You must have a config password!</font></div>";
+		echo "<div align=center><font class=yellow>You must have a deletion password!</font></div>";
 		include("include/S_GM.php");
 		die();
 	}
@@ -185,12 +179,12 @@ else	{
 		mysql_query("UPDATE user SET guild='$gname' WHERE email='$email' AND pw='$pw'");
 		mysql_query("DELETE FROM guildrequests WHERE applicant='$userid'");
 						
-		$creating_guild_name = ereg_replace(" ", "", "$creating_guild_name");
-		
 		echo"<div align=center><font class=yellow><b><u>$creating_guild_name</u> has been successfully created!</b></font></div>";
 		include("include/S_GM.php");
 		die();
 	}
+}
+}	else	{
 }
 ?>
 </td>

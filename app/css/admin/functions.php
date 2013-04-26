@@ -173,7 +173,7 @@ $explore = mysql_fetch_array($explore_query);
 	$mthrs = $explore['mthrs'];
 
 //	select data from return table
-$return_query = "SELECT * FROM return WHERE email='$email' AND pw= '$pw'";
+$return_query = "SELECT * FROM returntbl WHERE email='$email' AND pw= '$pw'";
 $return_query = mysql_db_query($dbnam, $return_query) or die("Error: " . mysql_error());
 $return = mysql_fetch_array($return_query);
 	## party 1	

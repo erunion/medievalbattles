@@ -6,7 +6,7 @@ if(!IsSet($daccount))	{
 	echo "<form type=post action=dempire.php>
 		<table border=1 bordercolor=#000000 align=center cellpadding=0 cellspacing=0>
 			<tr>
-				<td colspan=2><font color=#ffffff><b>Delete Account</b></font></td>
+				<td colspan=2><b>Delete Account</b></td>
 			<tr>
 				<td><input type=\"text\" name=\"empre\" maxlength=\"50\"></td>
 				<td><input type=\"submit\" name=\"daccount\" value=\"Delete\"></td>
@@ -28,7 +28,7 @@ else	{
 
 	mysql_query("DELETE FROM buildings WHERE email='$tmail'"); 
 	mysql_query("DELETE FROM military WHERE email='$tmail'");
-	mysql_query("DELETE FROM return WHERE email='$tmail'"); 
+	mysql_query("DELETE FROM returntbl WHERE email='$tmail'"); 
 	mysql_query("DELETE FROM research WHERE email='$tmail'");
 	mysql_query("DELETE FROM explore WHERE email='$tmail'"); 
 	mysql_query("DELETE FROM user WHERE email='$tmail'");

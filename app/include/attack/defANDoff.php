@@ -1,6 +1,4 @@
-<?
-include("include/connect.php");
-		
+<?		
 // select user table for the empire being attacked
 $result = mysql_db_query($dbnam, "SELECT * FROM user WHERE userid='$empvalue'");
 $evu = mysql_fetch_array($result);
@@ -30,11 +28,18 @@ $tgid = mysql_fetch_array($tG_id);
 				
 $modifier = 1;
 
-if($evu['class'] == 'Fighter')	 {	$modifier = 1.05;	};
-if($evu['class'] == 'Mage')	{	$modifier = .95;	};
-if($evu['race'] == 'Giant')	{	$modifier = $modifier + .25;	};
+if($class == 'Fighter')	{	$modifier = 1.05;	}
+if($class == 'Cleric')	{	$modifier = 1.00;	}
+if($class == 'Ranger')	{	$modifier = 1.00;	}
+if($class == 'Mage')	{	$modifier = .95;		}
+if($class == 'Warlock')	{	$modifier = .95;		}
+if($class == 'Savant')	{	$modifier = .80;		}
+if($class == 'Insurrectionist')	{	$modifier = 1.05;		}
+if($race == 'Giant')		{	$modifier = $modifier + .25;	 }
+if($race == 'Demon')		{	$modifier = $modifier + .10;	 }
+if($race == 'Night Elf')		{	$modifier = $modifier - .10;	 }
 				
-$cdefense = round((($uwarrior * $warpower) + ($uwizard * $wizpower) + ($upriest * $pripower) + ($uarcher * $archpower)) * $empmodifier);	
+$cdefense = round((($uwarrior * $warpower) + ($uwizard * $wizpower) + ($upriest * $pripower) + ($uarcher * $archpower) + ($ugolem * 38) + ($uirongolem * 50)) * $modifier);	
 				
-$evpower = round((($evm[warriors] * $evm[warpower]) + ($evm[wizards] * $evm[wizpower]) + ($evm[priests] * $evm[pripower]) + ($evm[archers] * $evm[archpower]) + ($evb[wp] * 15) + ($evm[catapult] * 30)) * $modifier);
+$evpower = round((($evm[warriors] * $evm[warpower]) + ($evm[wizards] * $evm[wizpower]) + ($evm[priests] * $evm[pripower]) + ($evm[archers] * $evm[archpower]) + ($evm[golem] * 38) + ($evm[irongolem] * 50) + ($evb[wp] * 15) + ($evm[catapult] * 30)) * $modifier);
 ?>

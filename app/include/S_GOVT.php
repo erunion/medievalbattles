@@ -1,16 +1,16 @@
 <?php
 
 echo "
-	<table border=1 bordercolor=#000000 align=center width=\"80%\">
+	<table border='1' bordercolor='#000000' align='center' width='80%'>
 		<tr>
-			<td class=main colspan=7 cellpadding=1 cellspacing=0><b class=reg>Settlement: $setid</b></td>
+			<td class='main' colspan='7' cellpadding='1' cellspacing='0'><b class='reg'>Government for Settlement $setid</b></td>
 		<tr>
-			<td class=main2 width=><b class=reg>Empire Name</b></td>
-			<td class=main2 width=><b class=reg>AIM</b></td>
-			<td class=main2 width=><b class=reg>MSN</b></td>
-			<td class=main2 width=><b class=reg>Last Logged In</b></td>
-			<td class=main2 width=><b class=reg>Votes Received</b></td>
-			<td class=main2 width=><b class=reg>Voting For</b></td>";
+			<td class='main2'><b class='reg'>Empire Name</b></td>
+			<td class='main2'><b class='reg'>AIM</b></td>
+			<td class='main2'><b class='reg'>MSN</b></td>
+			<td class='main2'><b class='reg'>Last Logged In</b></td>
+			<td class='main2'><b class='reg'>Votes Received</b></td>
+			<td class='main2'><b class='reg'>Voting For</b></td>";
 $query_string = "SELECT ename, aim, msn, lastlogin, vote, votefor, sl, userid FROM user WHERE setid='$setid' ORDER BY userid ASC";
 $result_id = mysql_query($query_string, $var);
 while ($row = mysql_fetch_row($result_id))	{
@@ -35,7 +35,7 @@ while ($row = mysql_fetch_row($result_id))	{
 				$color = "#404040";
 			}
 	echo "
-		<tr align=center valign=top colspan=7>
+		<tr align='center' valign='top' colspan='7'>
 			<td bgcolor=$color>$row[0]</td>";
 if($AIMcheck[0] != "")	{	echo "<td bgcolor=$color>$AIM_VAR</td>";	}
 else	{	echo "<td bgcolor=$color></td>";	}

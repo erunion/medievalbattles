@@ -42,10 +42,12 @@ if($race != Giant)	{
 			if($armor[tr] == 1)	{	echo"<option value='Travellers Robe'>Travellers Robe</option>";	}
 			if($armor[mr] == 1)	{	echo"<option value='Magicians Robe'>Magicians Robe</option>";	}
 			if($armor[ma] == 1)	{	echo"<option value='Mythril Armor'>Mythril Armor</option>";	}
-	}
-	echo"
+	echo "
 			</select>
-		</td>
+		</td>";
+	}
+	if($race != Demon)	{
+	echo"
  	<tr>
 		<td class=inner2><b>Priest</b></td>
 		<td class=inner2>$priarmor</td>
@@ -61,6 +63,7 @@ if($race != Giant)	{
 echo"
 			</select>
 		</td>";
+	}
 }
 
 if($res[r13pts] >= 125000)	 {
@@ -88,7 +91,7 @@ if($res[r13pts] >= 125000)	 {
 </table> 
 <br>
 <center>
-<input class=button type="submit" name="update2" value="Equip">
+<input class=button type="submit" name="update2" value="Equip Armor">
 <input type="hidden" name="update2" value="1">
 </center>
 </form>

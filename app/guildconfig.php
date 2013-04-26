@@ -13,6 +13,8 @@ if($guild_owner[owner] != $userid)	{
 else	{
 	$guild_info = mysql_db_query($dbnam, "SELECT info FROM guild WHERE owner='$userid'");
 		$ginfo = mysql_result($guild_info,"ginfo");
+	$guild_flag = mysql_db_query($dbnam, "SELECT flag FROM guild WHERE owner='$userid'");
+		$gflag = mysql_result($guild_flag,"gflag");
 	$guild_notice = mysql_db_query($dbnam, "SELECT notice FROM guild WHERE owner='$userid'");
 		$gnotice = mysql_result($guild_notice,"gnotice");
 	$C_PW = mysql_db_query($dbnam, "SELECT cpw FROM guild WHERE owner='$userid'");
@@ -27,7 +29,6 @@ include("include/guild_request.php");
 if(!IsSet($accept))	{
 }
 else	{	
-	
 	// retrieve necessary guild info
 	$guild_info_query = mysql_db_query($dbnam, "SELECT * FROM guild WHERE owner='$userid'");
 		$guild_info = mysql_fetch_array($guild_info_query);
@@ -46,7 +47,6 @@ else	{
 		die();
 	}
 	elseif($current_guild[guild] == None)	{
-
 		mysql_query("UPDATE user SET guild='$guild_info[gname]' WHERE userid='$auserid'");
 		mysql_query("INSERT INTO empnews (date, news, yourid) VALUES	('$clock', '<font class=blue>You were accepted into $guild_info[gname].</font>', '$auserid') ");
 
@@ -65,11 +65,9 @@ else	{
 		die();
 	}
 }
-
 if(!IsSet($reject))	{
 }
 else	{	
-	
 	// retrieve necessary guild info
 	$guild_info_query = mysql_db_query($dbnam, "SELECT * FROM guild WHERE owner='$userid'");
 		$guild_info = mysql_fetch_array($guild_info_query);
@@ -79,9 +77,8 @@ else	{
 	// get their current guild
 	$current_guild_query = mysql_db_query($dbnam, "SELECT guild FROM user WHERE userid='$auserid'");
 		$current_guild = mysql_fetch_array($current_guild_query);
-	
+
 	if(($current_guild[guild] == None) OR ($current_guild[guild] != None))	 {
-		
 		mysql_query("INSERT INTO empnews (date, news, yourid) VALUES	('$clock', '<font class=blue>You were rejected from $guild_info[gname].</font>', '$auserid') ");
 		mysql_query("DELETE FROM guildrequests WHERE applicant='$auserid' AND gl_userid='$userid'");
 
@@ -100,7 +97,8 @@ else	{
 	include("include/S_SINFOS.php");
 	mysql_query("UPDATE guild SET info='$info' WHERE owner='$userid'");
 	mysql_query("UPDATE guild SET notice='$notice' WHERE owner='$userid'");
-	echo "<div align=center><font class=yellow>Guild Settings Updated!</font></div>";
+	mysql_query("UPDATE guild SET flag='$flag' WHERE owner='$userid'");
+	echo "<div align=center><font class=yellow><br>Guild Settings Updated!</font></div>";
 	include("include/S_GCONFIG.php");
 	include("include/S_GKICK.php");
 	include("include/S_GDEL.php");
@@ -110,7 +108,6 @@ else	{
 ################
 ##	kick member
 ################
-
 if(!IsSet($kick))	{
 	include("include/S_GKICK.php");
 }
@@ -144,15 +141,11 @@ else	{
 		die();
 	}
 	else	{
-
 		$new_mem = $guild_info[mem] - 1;
-	
 		mysql_query("UPDATE user SET guild='None' WHERE userid='$remp'");
 		mysql_query("UPDATE guild SET mem='$new_mem' WHERE owner='$userid'");	
 		mysql_query("DELETE FROM barter WHERE seller='$empire_info[0]' AND guild='$empireguild'");
-	
 		mysql_query("INSERT INTO empnews (date, news, yourid) VALUES	('$clock', '<font class=blue>You were removed from $guild_info[gname].</font>', '$remp') ");
-	
 		mysql_query("INSERT INTO guildnews (date, news, guildid) VALUES	('$clock', '<font class=blue>$empire_info[0] has been removed from the guild.</font>', '$guild_info[gid]') ");
 
 		echo"<div align=center><font class=yellow>$empire_info[0] has been removed from your guild.</font></div>";
@@ -169,14 +162,12 @@ if(!IsSet($deleteg))	{
 	include("include/S_GDEL.php");
 }
 else	{
-		
 	if($C_pass == $cpw)	 {
-
 		//	determine guild name
-			$GuildName = mysql_db_query($dbnam, "SELECT gname FROM guild WHERE owner='$userid'");
+		$GuildName = mysql_db_query($dbnam, "SELECT gname FROM guild WHERE owner='$userid'");
 			$GN = mysql_result($GuildName,"GN");
 		//	determine guild id
-			$GuildID = mysql_db_query($dbnam, "SELECT gid FROM guild WHERE owner='$userid'");
+		$GuildID = mysql_db_query($dbnam, "SELECT gid FROM guild WHERE owner='$userid'");
 			$GIDD = mysql_result($GuildID,"GIDD");
 
 		mysql_query("UPDATE user SET guild='None' WHERE guild='$GN'");

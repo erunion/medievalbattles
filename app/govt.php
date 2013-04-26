@@ -28,7 +28,7 @@ if(!IsSet($change))	{
 
 echo "
 			<select name=empvalue>
-				<option selected value=ns>-Select an Empire-</option>
+				<option selected value=ns>-- Select an Empire --</option>
 					<option select value=NOemp>-None-</option>";
 
 $query_string = "SELECT userid, ename FROM user WHERE setid='$setid' ORDER BY userid ASC";

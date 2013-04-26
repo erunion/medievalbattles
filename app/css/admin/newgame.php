@@ -1,6 +1,6 @@
 <?
-mysql_connect (localhost, username, password);
-mysql_select_db(db) or die('Error with connect');
+mysql_connect ("localhost", "username", "password") or die(mysql_error());
+mysql_select_db("database") or die(mysql_error());
 
 mysql_query("DELETE FROM emailvalidate");
 echo "<div align=center><b>All validation codes have been deleted from the database.</b></div>";
@@ -16,7 +16,7 @@ mysql_query("DELETE FROM setforumsmsgs");
 echo "<div align=center><b>All settlement forum posts have been deleted from the database.</b></div>";
 
 mysql_query("DELETE FROM user");
-mysql_query("DELETE FROM return");
+mysql_query("DELETE FROM returntbl");
 mysql_query("DELETE FROM research");
 mysql_query("DELETE FROM military");
 mysql_query("DELETE FROM explore");

@@ -3,7 +3,6 @@ include("include/igtop.php");
 
 echo "<center><b class=reg>| <a href=buildings.php> -Construct- </a> |</b></center><br>";
 
-
 if(!IsSet($update))	{
 	include("include/S_DBUILD.php");
 }

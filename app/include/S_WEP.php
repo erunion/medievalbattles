@@ -114,6 +114,7 @@ if($class == Fighter)	{
 }
 
 if($race != Giant)	{
+	if($race != Demon)	{
 	echo "
 			 <tr>
 				<td class=main2 colspan=5><b>Priest Weapons</b></td>
@@ -138,7 +139,7 @@ if($race != Giant)	{
 	echo "
 				</td>
 			 <tr>
-    			<td class=inner2>Sword of Zakarum</td>
+    			<td class=inner2>Scepter of Zakarum</td>
 				<td class=inner2>500,000</td>
 				<td class=inner2>12,000</td>
 				<td class=inner2>";
@@ -177,6 +178,7 @@ if($race != Giant)	{
 				else	{	echo "<i>Completed</i>";	}
 	echo "
 				</td>";
+	}
 }
 
 if($class == Cleric)	{
