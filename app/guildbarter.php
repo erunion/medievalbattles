@@ -1,7 +1,13 @@
 <? 
 include("include/igtop.php");
 
+if($barter_clock > 1)	 {
+	echo "<font class=yellow><div align=center><b>You can barter items when your empires age is over 1 week!<br>You have $barter_clock tick(s) left!</b></div></font>";
+	die();
+}
+
 echo "<center> <b class=reg> | <a href=barter.php> -Game- </a> | <a href=guildbarter.php> -Guild- </a> | </b></center><br>";	
+
 if($empireguild == None)	{
 	echo "<div align=center><font class=yellow><b>You must be the member of a guild to use this barter!</b></font></div>";
 	die();

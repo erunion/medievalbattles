@@ -276,13 +276,8 @@ else	{
 				$gresult1 = mysql_db_query($dbnam, "SELECT * FROM guild WHERE owner='$evu[userid]'");
 				$setno = mysql_fetch_array($gresult1);
 
-				$tblname = "$guild[gname]" . "main" ."$guild[gid]";
-				$tblname2 = "$guild[gname]" . "msgs" . "$guild[gid]";	
-
 				mysql_query("UPDATE user SET guild='None' WHERE guild='$guild[gname]'");
 				mysql_query("DELETE FROM guild WHERE owner='$evu[userid]'");
-				mysql_query("DROP TABLE $tblname");
-				mysql_query("DROP TABLE $tblname2");
 		}
 		
 		mysql_query("DELETE FROM user WHERE userid='$empvalue'");

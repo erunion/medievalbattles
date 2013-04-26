@@ -4,7 +4,7 @@ include("include/igtop.php");
 if(!IsSet($sendmessage))	{
 }
 else	{
-	
+
 	if($umessage == "")	{
 		echo "<div align=center><font class=yellow>You did not type anything to send.</font></div>";
 		include("include/S_MESS.php"); 
@@ -39,7 +39,7 @@ else	{
 
 if ($pageid == 'mgl')	{
 	session_register('gid');
-		$guild_name = mysql_db_query($dbnam, "SELECT gname FROM guild WHERE gid = '$gid'");	
+		$guild_name = mysql_db_query($dbnam, "SELECT gname FROM guild WHERE gid='$gid'");	
 			$g_name = mysql_result($guild_name,"g_name");
 	echo "<div align=center><font class=yellow><b>You are messaging the Guild Leader of <u>$g_name</u>.</b></font></div>";
 ?>
@@ -58,20 +58,20 @@ session_unregister('gid');
 
 
 if($request == 'yes')	{
-	session_register('guild');
 
-	$guild_info_query = mysql_db_query($dbnam, "SELECT gname, gid, owner FROM guild WHERE gname='$guild'");	
+	$guild_info_query = mysql_db_query($dbnam, "SELECT * FROM guild WHERE gname='$req_guild'");
 		$guild_info = mysql_fetch_array($guild_info_query);
+	$gl_check_query = mysql_db_query($dbnam, "SELECT * FROM guild WHERE owner='$userid'");
+		$gl_check = mysql_fetch_array($gl_check_query);
 	
-	if($guild_info[owner] == $userid)	 {
+	if($gl_check[owner] === $userid)	 {
 		echo "<div align=center><font class=yellow><b>Guild Leaders cannot request to join other guilds!</b></font></div>";
 		die();
 	}
 	else	{
 		mysql_query("INSERT INTO guildrequests (applicant, gl_userid)		VALUES	('$userid', '$guild_info[owner]') ");
-		echo "<div align=center><font class=yellow><b>Your request to join <u>$guild_info[gname]</u> has been sent.</b></font></div>";
+		echo "<div align=center><font class=yellow><b>Your request to join <u>$guild_info[gname]</u> has been sent.</b></font></div>";	
 	}	
-	session_unregister('guild');
 }
 
 
@@ -84,7 +84,7 @@ echo "  <br><br>
 	<tr>
 		<td class=main colspan=5><b class=reg>Current Guilds</b></td>
 	<tr>
-		<td class=main2 colspan=5><font class=yellow size=2px><b>Only 30 Empires Per Guild</b></font></td>
+		<td class=main2 colspan=5><font class=yellow size=2px><b>Only 15 Empires Per Guild</b></font></td>
 	<tr>
 		<td class=main2 width=20%><b class=reg>Name</b></td>
 		<td class=main2 width=60%><b class=reg>Info</b></td>
@@ -107,7 +107,7 @@ while ($row = mysql_fetch_row($result_id))	{
 		<td bgcolor=#404040 align=left>$row[1]</td>
 		<td bgcolor=#404040>$guildmem</td>
 		<td bgcolor=#404040>$row[2]</td>
-		<td bgcolor=#404040><a href=gc.php?request=yes&guild=$urlencode_guild>Send Request</a></td>";
+		<td bgcolor=#404040><a href=gc.php?request=yes&req_guild=$urlencode_guild>Send Request</a></td>";
 }
 echo "</table><br><br>";
 
@@ -117,18 +117,18 @@ if(!IsSet($create))	{
 }
 else	{
 
+	// parse whitespace out
+		$creating_guild_name = trim($gname);
 	// check to see if guild name is being used
-		$query = "SELECT gname FROM guild WHERE gname='$gname'";
-		$result = mysql_db_query($dbnam, $query);
+		$result = mysql_db_query($dbnam, "SELECT gname FROM guild WHERE gname='$creating_guild_name'");
 		$namecheck = mysql_fetch_array($result);
  	// check to see if they are a GL
-		$check_owner_query = "SELECT owner FROM guild WHERE owner='$ename'";
-		$check_owner_result = mysql_db_query($dbnam, $check_owner_query);
+		$check_owner_result = mysql_db_query($dbnam, "SELECT owner FROM guild WHERE owner='$ename'");
 		$check_owner = mysql_fetch_array($check_owner_result);
  			
-	$GNAME_lower = strtolower($gname);
-	$SEL_G_lower = strtolower($namecheck['gname']);
-	$gname_length = strlen($gname);
+	$GNAME_lower = strtolower($creating_guild_name);
+	$SEL_G_lower = strtolower($namecheck[gname]);
+	$gname_length = strlen($creating_guild_name);
 	
 	if($gname_length > 15)	{
 		echo "<div align=center><font class=yellow>Your guild name can't be more than 15 characters!</font></div>";
@@ -177,23 +177,17 @@ else	{
 			$mgid = mysql_result($M_gid, "mgid");	
 		
 		$info = htmlspecialchars($info);
-		$gname = htmlspecialchars($gname);
+		$creating_guild_name = htmlspecialchars($creating_guild_name);
 		$gid = $mgid + 1;
 		
 		include("include/connect.php");
-		mysql_query("INSERT INTO guild (gname, info, gid, datemade, cpw, owner)	 VALUES	('$gname', '$info', '$gid', '$clock', '$cpw', '$userid') ");
+		mysql_query("INSERT INTO guild (gname, info, gid, datemade, cpw, owner)	 VALUES	('$creating_guild_name', '$info', '$gid', '$clock', '$cpw', '$userid') ");
 		mysql_query("UPDATE user SET guild='$gname' WHERE email='$email' AND pw='$pw'");
 		mysql_query("DELETE FROM guildrequests WHERE applicant='$userid'");
 						
-		$gname = ereg_replace(" ", "", "$gname");
-
-		$tblname = "$gname" . "main" . "$gid";
-		$tblname2 = "$gname" . "msgs" . "$gid";
-
-		//mysql_query("CREATE TABLE  $tblname (topicid smallint(6) not null unique auto_increment, name varchar(30) null, host varchar(50) null, topic varchar(60) null, lastpost varchar(20) default 0 null, lastposter varchar(255) default 0 null, replies smallint(6) default 0 null, message text null, datestamp varchar(20) default 0 null)");			
-		//mysql_query("CREATE TABLE  $tblname2 (messageid smallint(6) not null unique auto_increment, name varchar(30) null, host varchar(50) null, topic varchar(60) null, topicid smallint(6) null, message text null, datestamp varchar(20) default 0 null)");
+		$creating_guild_name = ereg_replace(" ", "", "$creating_guild_name");
 		
-		echo"<div align=center><font class=yellow><b><u>$gname</u> has been successfully created!</b></font></div>";
+		echo"<div align=center><font class=yellow><b><u>$creating_guild_name</u> has been successfully created!</b></font></div>";
 		include("include/S_GM.php");
 		die();
 	}

@@ -2,8 +2,7 @@
 include("include/connect.php");
 
 // check and make sure email exists
-$EMAIL_QUERY = "SELECT email FROM user WHERE email='$email' AND pw='$pw'";
-$EMAIL_RESULT = mysql_db_query($dbnam, $EMAIL_QUERY);
+$EMAIL_RESULT = mysql_db_query($dbnam, "SELECT email FROM user WHERE email='$email' AND pw='$pw'");
 $E_Check = mysql_fetch_array($EMAIL_RESULT);
 
 if($login == 1 AND $pw != "" AND $email !="")	 {
@@ -11,6 +10,15 @@ if($login == 1 AND $pw != "" AND $email !="")	 {
 	$uuserid = mysql_db_query($dbnam, "SELECT userid FROM user WHERE email = '$email' AND pw = '$pw'");
 	$userid = mysql_result($uuserid,"userid");	
 	
+// account validation
+$validate_query = "SELECT * FROM emailvalidate WHERE userid='$userid'";
+$validate_result = mysql_db_query($dbnam, $validate_query);
+$validate = mysql_fetch_array($validate_result);
+
+	$code = $validate['code'];
+	$validate_checker = $validate['check'];
+	$validate_clock = $validate['clock'];
+
 // select all armors
 $armor_query = "SELECT * FROM military WHERE email='$email' AND pw='$pw'";
 $armor_result = mysql_db_query($dbnam, $armor_query);
@@ -63,6 +71,7 @@ $user = mysql_fetch_array($user_query);
 	$safemode = $user['safemode'];
 	$race = $user['race'];
 	$empireguild = $user['guild'];
+	$barter_clock = $user['barterclock'];
 
 // select buildings items
 $buildings_query = "SELECT * FROM buildings WHERE email='$email' AND pw= '$pw'";
@@ -70,7 +79,6 @@ $buildings_query = mysql_db_query($dbnam, $buildings_query) or die("Error: " . m
 $buildings = mysql_fetch_array($buildings_query);
 
 	$home = $buildings['home'];
-	$kennel = $buildings['kennel'];
 	$barrack = $buildings['barrack'];
 	$farm = $buildings['farm'];	 
 	$wp = $buildings['wp'];
@@ -81,7 +89,6 @@ $buildings = mysql_fetch_array($buildings_query);
 	$amts = $buildings['amts'];
 
 	$dhome = $buildings['dhome'];
-	$dkennel = $buildings['dkennel'];
 	$dbarrack = $buildings['dbarrack'];
 	$dfarm = $buildings['dfarm'];
 	$dwp = $buildings['dwp'];
@@ -90,7 +97,6 @@ $buildings = mysql_fetch_array($buildings_query);
 	$dim = $buildings['dim'];
 
 	$Hhrs = $buildings['Hhrs'];
-	$Khrs = $buildings['Khrs'];
 	$Bhrs = $buildings['Bhrs'];
 	$Fhrs = $buildings['Fhrs'];
 	$Whrs = $buildings['Whrs'];
@@ -103,10 +109,6 @@ $military_query = "SELECT * FROM military WHERE email='$email' AND pw= '$pw'";
 $military_query = mysql_db_query($dbnam, $military_query) or die("Error: " . mysql_error());
 $military = mysql_fetch_array($military_query);
 
-	## class info?
-		$mclass1 = mysql_db_query($dbnam, "SELECT class1 FROM military WHERE email = '$email' AND pw = '$pw'");
-		$mclass2 = mysql_db_query($dbnam, "SELECT class2 FROM military WHERE email = '$email' AND pw = '$pw'");
-		$mclass3 = mysql_db_query($dbnam, "SELECT class3 FROM military WHERE email = '$email' AND pw = '$pw'");
 	## current unit x
 		$civ = $military['civ'];
 		$recruits = $military['recruits'];
@@ -226,22 +228,28 @@ $return = mysql_fetch_array($return_query);
 	$aexplorers = $explorers;
 	$tscientists = $scientists + $res['r1'] + $res['r2'] + $res['r3'] + $res['r4'] + $res['r5'] + $res['r6'] + $res['r7'] + $res['r8'] + $res['r9'] + $res['r10'] + $res['r11'] + $res['r12'] + $res['r13'] + $res['r14'];
 	$texplorers = $explorers + $expland + $expmt;
-//	cost for units
-    $warriorc = (($warriors + $dbwar + $dbwar2 + $WAR_1 + $WAR_2 + $WAR_3 + $WAR_4 + $warcheck[0]) * .8) + 500;
+    
+	$warriorc = (($warriors + $dbwar + $dbwar2 + $WAR_1 + $WAR_2 + $WAR_3 + $WAR_4 + $warcheck[0]) * .8) + 500;
+		if($warriorc > 10000)	{	$warriorc = 10000;	}
+		$warriorc = round($warriorc);		
 	$wizardc = (($wizards + $dbwiz + $dbwiz2 + $WIZ_1 + $WIZ_2 + $WIZ_3 + $WIZ_4 + $wizcheck[0]) * .7) + 400;
+		if($wizardc > 10000)	{	$wizardc = 10000;	}
+		$wizardc = round($wizardc);
 	$priestc = (($priests + $dbpri + $dbpri2 + $PRI_1 + $PRI_2 + $PRI_3 + $PRI_4 + $pricheck[0]) *  .65) + 100;
+		if($priestc > 10000)	{	$priestc = 10000;	}
+		$priestc = round($priestc);
 	$archerc = (($archers + $dbarch + $dbarch2 + $ARCH_1 + $ARCH_2 + $ARCH_3 + $ARCH_4 + $archcheck[0]) * .75) + 450;
+		if($archerc > 10000)	{	$archerc = 10000;	}
+		$archerc = round($archerc);
 	$explorec = (($texplorers + $aexplorers + $dbexplorer) * .875) + 1000;
-	
-	$wizardc = round($wizardc);
-	$warriorc = round($warriorc);
-	$priestc = round($priestc);
-	$archerc = round($archerc);
-	$explorec = round($explorec);
+		if($explorec > 10000)	{	$explorec = 10000;	}
+		$explorec = round($explorec);
 	
 //	cost for buildings ( b_cost=land & bm_cost=mountains )
 	$bm_cost =  300 + (20 * (($gm + $im + $dim + $dgm) * .2));	
- 	$b_cost =  300 + (20  * (($home + $kennel + $barrack + $farm + $lmill + $wp + $dhome + $dkennel + $dbarrack + $dfarm + $dwp + $dlmill) * .2));
+		if($bm_cost > 20000)	{	$bm_cost = 20000;	}
+ 	 $b_cost =  300 + (20  * (($home + $barrack + $farm + $lmill + $wp + $dhome + $dbarrack + $dfarm + $dwp + $dlmill) * .2));
+		if($b_cost > 20000)	{	$b_cost = 20000;	}
 
 //	buttons for construct armor page
 $acsbutton = " <form type=get action=aconstruct.php><input class=button type=submit name=update2 value=Construct><input type=hidden name=update2 value=2></form>";

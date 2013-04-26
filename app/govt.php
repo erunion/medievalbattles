@@ -170,9 +170,8 @@ else	{
 		$selectedempvotes = mysql_db_query($dbnam, "SELECT vote FROM user WHERE ename='$fename'");	
 			$selempvotes = mysql_result($selectedempvotes,"selempvotes");
 	 
-		$newvotecount = $selempvotes + 1;
-			
 		//	set vote+1 where empire selected
+		$newvotecount = $selempvotes + 1;
 		mysql_query("UPDATE user SET vote='$newvotecount' WHERE ename='$fename'");
 		 
 		//	select max amount of votes in your set
@@ -189,8 +188,6 @@ else	{
 		}
 				
 		echo"<div align=center><font class=yellow>You have voted for $fename.</font></div><br>";
-		include("include/S_GOVT.php");
-		die();
 	}
 }
 

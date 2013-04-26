@@ -21,12 +21,12 @@ else	{
 		include("include/S_BUILD.php");
 		die();
 	}
-	elseif($uhome < 0 OR $ubarrack < 0 OR $ufarm < 0 OR $uwp < 0 OR $ugm < 0 OR $uim < 0 )	{
+	elseif($uhome < 0 OR $ubarrack < 0 OR $ufarm < 0 OR $ulmill < 0 OR $uwp < 0 OR $ugm < 0 OR $uim < 0)	{
 		echo"<div align=center><font class=yellow>You can't build negative or 0 buildings.</font></div>"; 
 		include("include/S_BUILD.php");
 		die();
 	}
-	elseif($aland < $uhome + $ubarrack + $ufarm + $uwp)	{
+	elseif($aland < $uhome + $ubarrack + $ufarm + $uwp + $ulmill)	{
 		echo"<div align=center><font class=yellow>Not enough land!</font></div>";
 		include("include/S_BUILD.php");
 		die();
@@ -36,13 +36,6 @@ else	{
 		include("include/S_BUILD.php");
 		die();
 	} 
-	elseif($uwp > 0 AND $race == Orc)	{
-		echo"<div align=center><font class=yellow>You can't construct Wooden Platforms, becuase you're an Orc!</font></div>";
-		include("include/S_BUILD.php");
-		die();
-	}
-		
-	include("include/connect.php");
 
 	$gp = $gp -  (($bm_cost * ($ugm + $uim)) + ($b_cost * ($ufarm + $ubarrack + $uhome + $uwp + $ulmill)));
 	$gp = round($gp);

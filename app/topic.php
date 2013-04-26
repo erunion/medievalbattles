@@ -3,8 +3,15 @@ include("include/igtop.php");
 include("common.php");
 include("include/connect.php");
 
-$query1 = "SELECT name, topic, message, datestamp FROM setforums WHERE topicid='$topicid' AND setid='$setid'";
-$result1 = mysql_query($query1) or die("Could not execute the query");
+$result= mysql_query("SELECT topicid, setid FROM setforums WHERE setid='$setid' AND topicid='$topicid'") or die("Error! " . mysql_error());
+$settlement_check = mysql_fetch_array($result);
+
+if($setid != $settlement_check[setid])	{
+	echo"<div align=center><font class=yellow>You cannot view forum posts in other settlements!</font></div>";
+	die();
+}
+
+$result1 = mysql_query("SELECT name, topic, message, datestamp FROM setforums WHERE topicid='$topicid' AND setid='$setid'") or die("Error! " . mysql_error());
 
 if ($result1) { 
 echo"

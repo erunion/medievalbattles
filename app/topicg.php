@@ -3,8 +3,15 @@
 include("include/igtop.php");
 include("commong.php");
 
-$query1 = "SELECT name, topic, message, datestamp FROM guildthreads WHERE topicid='$topicid'";
-$result1 = mysql_query($query1) or die(mysql_error());
+$result= mysql_query("SELECT topicid, guildname FROM guildthreads WHERE guildname='$empireguild' AND topicid='$topicid'") or die("Error! " . mysql_error());
+$guild_check = mysql_fetch_array($result);
+
+if($empireguild != $guild_check[guildname])	{
+	echo"<div align=center><font class=yellow>You cannot view forum posts in other guilds!</font></div>";
+	die();
+}
+
+$result1 = mysql_query("SELECT name, topic, message, datestamp FROM guildthreads WHERE topicid='$topicid'") or die("Error!" . mysql_error());
 
 if ($result1) { 
 	echo"

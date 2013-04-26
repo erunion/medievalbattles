@@ -3,7 +3,7 @@
 include("include/igtop.php");
 
 if($empireguild == None)	{
-	echo"<div align=center><font class=yellow>You must be the member of a guild to view this page.</font></div>";
+	echo"<div align=center><font class=yellow><b>You must be the member of a guild to view this page.</b></font></div>";
 	die();
 }
 // leave the guild?

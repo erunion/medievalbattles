@@ -1,0 +1,49 @@
+body	{
+	color:#FFFFFF;
+	background-color: #000000;
+}
+td {
+	font-size: 14px; 
+	color: #ffffff; 
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
+}
+input {
+	font-size: 14px; 
+	color: #ffffff; 
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
+	background-color: #000000;
+	border-color: #990000;
+}
+textarea {
+	background-color: #000000;
+	border-color: #990000;
+}
+select {
+	font-size: 14px; 
+	color: #ffffff; 
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
+	background-color: #000000;
+	border-color: #990000;
+}
+.button {
+	font-size: 14px; 
+	color: #ffffff; 
+	font-family: tahoma, verdana, arial, helvetica, sans-serif; 
+	background-color: #000000;
+}
+a:active {
+	color: #000000; 
+	text-decoration: none;
+}
+a:link {
+	color: #ffffff; 
+	text-decoration: none;
+}
+a:visited {
+	color: #ffffff; 
+	text-decoration: none;
+}
+a:hover {
+	color: #990000; 
+	text-decoration: none;
+}

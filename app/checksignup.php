@@ -6,23 +6,34 @@ if($signup)	{
 	$pw = md5($pw);
 		
 	include("include/connect.php");
-
-	$numberplayers = mysql_db_query($dbnam, "SELECT count(userid) FROM user");
-	$noplayers = mysql_result($numberplayers,"noplayers");
-
-	// is email already in database?
+ 	
+	// insert ip address into db
+	function gethostname()		{
+		$ipaddress = getenv('REMOTE_ADDR');
+		if (!$ipaddress) { $ipaddress = getenv('REMOTE_ADDR'); }
+		$ipaddress = @GetHostByAddr($ipaddress);
+		return $ipaddress;
+	}
+	$ipaddress = gethostname(); 
+	//	select number of players
+		$numberplayers = mysql_db_query($dbnam, "SELECT count(userid) FROM user");
+		$noplayers = mysql_result($numberplayers, "noplayers");
+	//	parse whitespace out of empire name
+		$ename = trim($ename);
+	//	email already in the database?
 		$emresult = mysql_db_query($dbnam, "SELECT email FROM user WHERE email='$email'");
 		$emnamecheck = mysql_fetch_array($emresult);
-
-	// what about the empire ename?
+	// empire name already in the database?
 		$eresult = mysql_db_query($dbnam, "SELECT ename FROM user WHERE ename='$ename'");
 		$enamecheck = mysql_fetch_array($eresult);
-
+	//	dropcase of empire name and email
 		$ename1 = strtolower($ename);
 		$enamecheck1 = strtolower($enamecheck[0]);
-
 		$email1 = strtolower($email);
 		$emnamecheck1 = strtolower($emnamecheck[0]);
+	//	are they a multi?
+		$ip_query = mysql_db_query($dbnam, "SELECT count(userid) FROM user WHERE ip='$ipaddress'");
+		$check_ip = mysql_result($ip_query, "check_ip");
 
 	if($enamecheck1 == $ename1 AND $ename != "")	{	echo "$ename is already being used!";	die();	 }
 	elseif($emnamecheck1 == $email1 AND $email != "")	{	echo "$email is already being used!";	 die();	}
@@ -30,25 +41,24 @@ if($signup)	{
 	elseif($class == ns)	{	echo "You must have a class to play the game!";	die();	 }
 	elseif($race == ns)	{	echo "You must have a race to play the game!";	die();	 }
 	elseif($ename == "")	{	echo "You must have an empire name to play the game!";	die();	 }
-	elseif($noplayers >= 600)	{	echo "Game is full! Try again later!";	die();	 }	
+	elseif($noplayers >= 450)	{	echo "Game is full! Try again later!";	die();	 }	
 	elseif (($email == "") and ($cemail == ""))	{	echo "You must have an email to play!";	die();	 }
 	elseif ($email != $cemail)	{	echo "Emails don't match!";	die();	 }	
 	elseif (($pw == "") and ($cpw == ""))	{	echo "You must have a password to play!";	die();	 }
 	elseif ($pw != $cpw)	 {	echo "Passwords don't match!";	die();	 }
 	elseif($class != Cleric AND $class != Fighter AND $class != Mage AND $class != Ranger)	 {	echo "That class doesn't exist!";	 die();	}
+	elseif($check_ip[0] >= 1)	 {	echo "You are only allowed one account per computer!";	 die();	}
 	
 	//	select minimum amount of members
-	$Sett_least = mysql_db_query($dbnam, "SELECT min(members) FROM settlement");
-	$least_set = mysql_result($Sett_least,"least_set");
-
+		$Sett_least = mysql_db_query($dbnam, "SELECT min(members) FROM settlement");
+		$least_set = mysql_result($Sett_least,"least_set");
 	//	select a random settlement
-	$maxset0 = mysql_db_query($dbnam, "SELECT max(setid) AS maxset FROM settlement");
-	$maxset = mysql_result($maxset0,"maxset");
-	$sel_mem = rand(1,$maxset);
-
+		$maxset0 = mysql_db_query($dbnam, "SELECT max(setid) AS maxset FROM settlement");
+		$maxset = mysql_result($maxset0,"maxset");
+		$sel_mem = rand(1,$maxset);
 	//	extract members from settlement
-	$Random_mem = mysql_db_query($dbnam, "SELECT members FROM settlement WHERE setid='$sel_mem'");
-	$R_Mem = mysql_result($Random_mem,"R_Mem");
+		$Random_mem = mysql_db_query($dbnam, "SELECT members FROM settlement WHERE setid='$sel_mem'");
+		$R_Mem = mysql_result($Random_mem,"R_Mem");
 
 	if($least_set != $R_Mem)	{
 		 $Sett_least = mysql_db_query($dbnam, "SELECT min(members) FROM settlement");
@@ -71,6 +81,9 @@ if($signup)	{
 	$buildingsuserid = mysql_db_query($dbnam, "SELECT max(userid) FROM user");
 	$buserid = mysql_result($buildingsuserid,"buserid");
 	$newbuserid = $buserid + 1;
+
+	//	create activation code
+		mysql_query("INSERT INTO emailvalidate (userid, code, check)		VALUES	('$newbuserid', '$pw', '1') ");
 
 	if (($email === $cemail) and ($pw === $cpw) and ($email != "") and ($cemail != "") and ($pw != "") and ($cpw != ""))	{
  		$part1 = rand(250, 350);
@@ -124,7 +137,7 @@ if($signup)	{
 			}
 		
 		$exp = ($war * $warexp) + ($pri * $priexp) + ($wiz * $wizexp) + ($arch * $archexp) + ($maxciv * 10) + (250 * 8) + (200 * 5);
-		mysql_query ("INSERT INTO user (email,  pw, ename, msn, aim, gp, iron, exp, food, land, mts, setid, class, userid, race, safemode)	 VALUES ('$email', '$pw', '$ename', '$msn', '$aim', '$gp', '$iron', '$exp', '1500', '250', '200', '$snum', '$class', '$newbuserid', '$race', '48')	");
+		mysql_query ("INSERT INTO user (email,  pw, ename, msn, aim, gp, iron, exp, food, land, mts, setid, class, userid, race, safemode, signup_comp_id)	 VALUES ('$email', '$pw', '$ename', '$msn', '$aim', '$gp', '$iron', '$exp', '1500', '250', '200', '$snum', '$class', '$newbuserid', '$race', '48', '$computer_id')	");
 		
 		mysql_query("INSERT INTO buildings (email, pw, home, barrack, farm, wp, gm, im, aland, amts, userid)	VALUES	('$email', '$pw', '50', '50', '50', '0', '50', '50', '100', '100', '$newbuserid') ");
 		
@@ -145,18 +158,20 @@ if($signup)	{
 		echo "Thank you for signing up for Medieval Battles. You are in settlement $snum.<br>
 		Your login information has been emailed to you.<br><br><a href=index.php>You can login now here</a>";	
 
-		$subject = "Welcome to Medieval Battles";
-		$body = "
-		Thank you for being apart of the new online game, Medieval Battles.
-		Your empire name is $ename
-		Your email is $email
-		Your password is $opw
-		You will need your email and password to login to your account.
+$subject = "Welcome to Medieval Battles";
+$body = "
+Thank you for being apart of the online game, Medieval Battles.
+Your empire name is $ename. 
+Your email is $email. 
+Your password is $opw.
 
-		If you have any questions you can email us at support@medievalbattles.com";
+Before you can login though, you must activate your account. We have recently created this type of system to reduce the amount of people with multiple or false accounts. To activate your account, click here:
+http://www.medievalbattles.com/activate_account.php?activate=true&act_userid=$newbuserid&act_code=$pw
 
-		$from = "From: support@medievalbattles.com\r\nbcc: phb@sendhost\r\nContent-type: text/plain\r\nX-mailer: PHP/" . phpversion();
-		$mailsend = mail("$email","$subject","$body","$from");
+If you have any questions you can email us at support@medievalbattles.com";
+
+$from = "From: support@medievalbattles.com\r\nbcc: phb@sendhost\r\nContent-type: text/plain\r\nX-mailer: PHP/" . phpversion();
+$mailsend = mail("$email","$subject","$body","$from");
 
 		die();
 	}

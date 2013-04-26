@@ -1,14 +1,14 @@
 <?php
 
 include("include/igtop.php");
-echo "<br><br>";
+
 
 //	determine guild name
 $empire_guild_query = mysql_db_query($dbnam, "SELECT guild FROM user WHERE email='$email' AND pw='$pw'");	
 	$empireguild = mysql_result($empire_guild_query,"empireguild");
 
 if($empireguild == None)	{
-	echo"<div align=center><font class=yellow>You must be the member of a guild to view this page.</font></div>";
+	echo"<div align=center><font class=yellow><b>You must be the member of a guild to view this page.</b></font></div>";
 	die();
 }
 

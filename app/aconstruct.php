@@ -2,11 +2,11 @@
 
 include("include/igtop.php");
 
-echo "	
+echo "
 <center>
-<b class=reg>| <a href=equip.php> -Equip- </a> | <a href=wconstruct.php> -Construct Weapon- </a> | <a href=aconstruct.php> -Construct Armor- </a>|</b>
+<b class=reg> | <a href=disband.php>Disband</a> | <a href=equip.php>Equip</a> | <a href=wconstruct.php>Construct Weapon</a> | <a href=aconstruct.php>Construct Armor</a> |</b>
 </center>
-<br><br>";
+<br>";
 
 $PREFIX = "<div align=center><font class=yellow>";
 $SUFFIX = "<br><br></font></div>";

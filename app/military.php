@@ -1,11 +1,11 @@
-<? include("include/igtop.php");?>
+<? 
+include("include/igtop.php");
+
+echo "
 <center>
-	<b class=reg> | <a href="equip.php"> -Equip- </a> | <a href="wconstruct.php"> -Construct Weapon- </a> | <a href="aconstruct.php"> -Construct Armor- </a>|</b>
-	 </center>
-	  <br>
-
-
-<?
+<b class=reg> | <a href=disband.php>Disband</a> | <a href=equip.php>Equip</a> | <a href=wconstruct.php>Construct Weapon</a> | <a href=aconstruct.php>Construct Armor</a> |</b>
+</center>
+<br>";
 
 if(!IsSet($recruited))	 {
 	include("include/S_RCIV.php");
@@ -56,7 +56,7 @@ else	{
 
 	include("include/nexplode.php");
 
-	$totalunits =  "$twarriors + $twizards + $tpriests + $tarchers + $dbwar2 + $dbwar + $dbwiz2 + $dbwiz + $dbpri2 + $dbpri + $dbarch2 + $dbarch";
+	$totalunits =  $twarriors + $twizards + $tpriests + $tarchers + $dbwar2 + $dbwar + $dbwiz2 + $dbwiz + $dbpri2 + $dbpri + $dbarch2 + $dbarch;
 	$barrack_cap = $barrack * 50;
 	if($race == Human)	{	$barrack_cap = $barrack * 35;	}
 
@@ -92,12 +92,12 @@ else	{
 		die();
 	}
 	elseif($gp < ($uthief * 200) + ($uexplorer * $explorec) + ($uscientist * 500) + ($priestc * $upriest) + ($wizardc * $uwizard) + ($warriorc * $uwarrior) + ($archerc * $uarcher) + ($ucatapult * 5000) + ($usuicide * 5000))	 {
-		echo"<div align=center><font class=yellow>You don't have that enough gold pieces!</font></div>";
+		echo"<div align=center><font class=yellow>You don't have that many gold pieces!</font></div>";
 		include("include/S_RSET.php");
 		die(); 
 	} 
 	elseif($lumber < ($ucatapult * 200))	 {
-		echo"<div align=center><font class=yellow>You don't have that enough lumber!</font></div>";
+		echo"<div align=center><font class=yellow>You don't have that much lumber!</font></div>";
 		include("include/S_RSET.php");
 		die(); 
 	} 
@@ -115,7 +115,7 @@ else	{
 	}
 			include("include/connect.php");
 
-	 		$gp = $gp - ( (($uthief * 200) + ($uscientist * 500) + ($uexplorer * $explorec)) + (($priestc * $upriest) + ($wizardc * $uwizard) + ($warriorc * $uwarrior) + ($archerc * $uarcher)) + (($ucatapult * 5000) + ($usuicide * 500)));	
+	 		$gp = $gp - ( (($uthief * 200) + ($uscientist * 500) + ($uexplorer * $explorec)) + (($priestc * $upriest) + ($wizardc * $uwizard) + ($warriorc * $uwarrior) + ($archerc * $uarcher)) + (($ucatapult * 5000) + ($usuicide * 5000)));	
 	 		$gp = round($gp);
 
 	 		$lumber = $lumber - ($ucatapult * 200);	

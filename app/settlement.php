@@ -32,7 +32,7 @@ if (!IsSet($change))	{
 else	{
 	
 	if($snum < 1 OR $snum > $maxset)	 {
-		echo"<center>Settlement $snum does not exist $ename.</center>";
+		echo"<center>Settlement $snum does not exist.</center>";
 		die();
 	}
 

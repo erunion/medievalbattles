@@ -1,7 +1,6 @@
 <?php include("include/igtop.php");?>
 
 <center> <b class=reg> | <a href="status.php?pageid=production"> -Production- </a> |  <a href="status.php?pageid=parties"> -Parties- </a> | <a href="status.php?pageid=building"> -Building- </a> | <a href="status.php?pageid=training"> -Training- </a> | </b></center><br>				
-<center><font class=yellow>At the status page, you can see how your empire is doing and what is in development</font></center><br>
 
 <? 
 if ($pageid == 'production')	{

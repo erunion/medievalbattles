@@ -1,10 +1,11 @@
 <?
-
 include("include/igtop.php");
 
 echo "
-<center> <b class=reg> | <a href=equip.php> -Equip- </a> | <a href=wconstruct.php> -Construct Weapon- </a> | <a href=aconstruct.php> -Construct Armor- </a> | </b></center><br>";
-
+<center>
+<b class=reg> | <a href=disband.php>Disband</a> | <a href=equip.php>Equip</a> | <a href=wconstruct.php>Construct Weapon</a> | <a href=aconstruct.php>Construct Armor</a> |</b>
+</center>
+<br>";
 	
 if(!IsSet($update))	{
 	include("include/S_EQUIPO.php");

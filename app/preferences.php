@@ -1,5 +1,5 @@
 <? 
-include("include/igtop-pref-del.php"); 
+include("include/act_igtop.php"); 
 
 if(!IsSet($empnews))	{
 	echo "<div align=center><a href=preferences.php?empnews=true>Delete Empire News</a>";

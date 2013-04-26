@@ -139,38 +139,42 @@ else	{
     
 		$irongain = $evu[iron] * .08;
 		$civgain = $evm[civ] * .08;
+		$lumbergain = $evm[lumber] * .08;
 	
 		$gpgain = round($gpgain);
 		$irongain = round($irongain);
 		$civgain = round($civgain);
+		$lumbergaim = round($lumbergain);
 	
 		mysql_query("UPDATE user SET gp = gp + $gpgain WHERE email='$email' AND pw='$pw'");
 		mysql_query("UPDATE user SET iron = iron + $irongain WHERE email='$email' AND pw='$pw'");
+		mysql_query("UPDATE user SET lumber = lumber + $lumbergaim WHERE email='$email' AND pw='$pw'");
 		mysql_query("UPDATE military SET civ = civ + $civgain WHERE email='$email' AND pw='$pw'");
 		
 		mysql_query("UPDATE user SET gp = gp - $gpgain WHERE userid = '$empvalue'");
 		mysql_query("UPDATE user SET iron = iron - $irongain WHERE userid = '$empvalue'");
+		mysql_query("UPDATE user SET lumber = lumber - $lumbergaim WHERE userid = '$empvalue'");
 		mysql_query("UPDATE military SET civ  = civ - $civgain WHERE userid = '$empvalue'");
 
-		mysql_query("INSERT INTO setnews (date, news, setid) VALUES	('$clock', '<font class=yellow>$ename ($setid) successfully attacked $evu[ename] ($evu[setid]) for resources</font>', '$setid') ");
+		mysql_query("INSERT INTO setnews (date, news, setid) VALUES ('$clock', '<font class=yellow>$ename ($setid) successfully attacked $evu[ename] ($evu[setid]) for resources</font>', '$setid') ");
 				
 		if($gid[0] != "")	{
-			mysql_query("INSERT INTO guildnews (date, news, gid) VALUES	('$clock', '<font class=yellow>$ename ($setid) successfully attacked $evu[ename] ($evu[setid]) for resources</font>', '$gid[0]') ");
+			mysql_query("INSERT INTO guildnews (date, news, gid) VALUES ('$clock', '<font class=yellow>$ename ($setid) successfully attacked $evu[ename] ($evu[setid]) for resources</font>', '$gid[0]') ");
 		}
 				
-		mysql_query("INSERT INTO setnews (date, news, setid)	 VALUES	('$clock', '<font class=lg>$evu[ename] ($evu[setid]) lost resources to $ename ($setid)</font>', '$tsetid') ");
+		mysql_query("INSERT INTO setnews (date, news, setid) VALUES ('$clock', '<font class=lg>$evu[ename] ($evu[setid]) lost resources to $ename ($setid)</font>', '$tsetid') ");
 				
 		if($tgid[0] != "")	{
-			mysql_query("INSERT INTO guildnews (date, news, gid)	VALUES	('$clock', '<font class=lg>$evu[ename] ($evu[setid]) lost resources to $ename ($setid)</font>', '$tgid[0]') ");
+			mysql_query("INSERT INTO guildnews (date, news, gid)	 VALUES ('$clock', '<font class=lg>$evu[ename] ($evu[setid]) lost resources to $ename ($setid)</font>', '$tgid[0]') ");
 		}
  
-		echo"<div align=center><font class=yellow>Success! You have managed to gain $gpgain gold pieces, $irongain iron and $civgain civilians from $evu[ename]($evu[setid])!</font><br><br><font class=orange>$your_losses<br><br></font></div>";
+		echo"<div align=center><font class=yellow>Success! You have managed to gain $gpgain gold pieces, $irongain iron, $lumbergain lumber, and $civgain civilians from $evu[ename]($evu[setid])!</font><br><br><font class=orange>$your_losses<br><br></font></div>";
 		include("include/attack/rdrop.php");
 		include("include/attack/table.php");
 
 		mysql_query("UPDATE user SET nno = nno + 1 WHERE userid='$empvalue'");
 
-		mysql_query("INSERT INTO empnews (date, news, yourid)	VALUES	('$clock', '<font class=yellow>We have unsuccessfully defended our empire against $ename ($setid) and lost resources</font>' , '$empvalue') ");
+		mysql_query("INSERT INTO empnews (date, news, yourid)	VALUES	('$clock', '<font class=yellow>We have unsuccessfully defended our empire against $ename ($setid) and lost $gpgain gold pieces, $irongain iron, $lumbergain lumber, and $civgain civilians.</font>' , '$empvalue') ");
 		die();
 	}
 }

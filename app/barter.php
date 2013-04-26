@@ -1,6 +1,11 @@
 <? 
 include("include/igtop.php");
 
+if($barter_clock > 1)	 {
+	echo "<font class=yellow><div align=center><b>You can barter items when your empires age is over 1 week!<br>You have $barter_clock tick(s) left!</b></div></font>";
+	die();
+}
+
 echo "<center> <b class=reg> | <a href=barter.php> -Game- </a> | <a href=guildbarter.php> -Guild- </a> | </b></center><br>";	
 
 if(!IsSet($barter))	{
@@ -43,10 +48,10 @@ else	{
 	elseif($race == Giant AND $b_type == Wizard)	{	echo"<font class=yellow><div align=center>Giants can't possess Wizards!</div></font><br><br>";	 die();	}
 	elseif($race == Giant  AND $b_type == Priest)	{	echo"<font class=yellow><div align=center>Giants can't possess Priests</div></font><br><br>";	die();	 }
 	elseif($class == Ranger AND $b_type == Wizard)	{	echo"<font class=yellow><div align=center>Rangers can't possess Wizards!</div></font><br><br>";	die();	 }
-	elseif($res[r13pts] < 125000 AND $b_type == Archer)	{	echo"<font class=yellow><div align=center>You must research Archery for Archers.<br><br></div></font>";	die();	 }
+	elseif($res[r13pts] < 125000 AND $b_type == Archer)	{echo"<font class=yellow><div align=center>You must research Archery for Archers.<br><br></div></font>";	die();	 }
 			
 	if($b_type == "Explorer")	 {
-		$newexplorers = $explorers + $b_amount;
+		$newexplorers = $aexplorers + $b_amount;
 		mysql_query("UPDATE military SET explorers='$newexplorers' WHERE email='$email' AND pw='$pw'");
 		
 			if($b_meth == gp)	{
@@ -301,7 +306,7 @@ else	{
 	elseif($cost  <= 0)	{	echo"<font class=yellow><div align=center>Invalid cost!</font></div><br><br>.";	die();	 }
 	elseif($amount <= 0)	 {	echo"<font class=yellow><div align=center>Invalid cost!</font></div><br><br>.";	die();	 }
 //	number of unit checks
-	elseif($type == "Explorer" AND $explorers < $amount)	{	echo"<font class=yellow><div align=center>You don't have that much many Explorers!</font></div><br><br>";	die();	 }
+	elseif($type == "Explorer" AND $aexplorers < $amount)	{	echo"<font class=yellow><div align=center>You don't have that much many Explorers!</font></div><br><br>";	die();	 }
 	elseif($type == "Land" AND $aland < $amount)	{	echo"<font class=yellow><div align=center>You don't have that much available land!</font></div><br><br>";	die();	 }
 	elseif($type == "Mountain" AND $amts < $amount)	{	echo"<font class=yellow><div align=center>You don't have that much available mountains!</font></div><br><br>"; die();	}
 	elseif($type == "Priest" AND $priests < $amount)	{	echo"<font class=yellow><div align=center>You don't have that many Priests!</font></div><br><br>";	 die();	}
@@ -310,9 +315,9 @@ else	{
 	elseif($type == "Thief" AND $thieves < $amount)	{	echo"<font class=yellow><div align=center>You don't have that many Thieves!</font></div><br><br>";	die();	 }
 	elseif($type == "Warrior" AND $warriors < $amount)	{	echo"<font class=yellow><div align=center>You don't have that many Warriors.</font></div><br><br>";	 die();	}
 	elseif($type == "Wizard" AND $wizards < $amount)	 {	echo"<font class=yellow><div align=center>You don't have that many Wizards!</font></div><br><br>";	die();	 }
-	elseif($type == "Archer" AND $archers < $amount)	 {	echo"<font class=yellow><div align=center>You don't have that many Archers!</font></div><br><br>";	die();	 }
+	elseif(($type == "Archer") AND ($archers < $amount))	 {	echo"<font class=yellow><div align=center>You don't have that many Archers!</font></div><br><br>";	die();	 }
 //	invalid number checks
-	elseif($type == "Explorer" AND $explorers <= 0)	{	echo"<font class=yellow><div align=center>Invaild number.</font></div><br><br>";	die();	 }
+	elseif($type == "Explorer" AND $aexplorers <= 0)	{	echo"<font class=yellow><div align=center>Invaild number.</font></div><br><br>";	die();	 }
 	elseif($type == "Land" AND $aland <= 0)	{	echo"<font class=yellow><div align=center>Invaild number.</font></div><br><br>";	die();	 }
 	elseif($type == "Mountain" AND $amts <= 0)	{	echo"<font class=yellow><div align=center>Invaild number.</font></div><br><br>";	die();	 }
 	elseif($type == "Priest" AND $priests <= 0)	{	echo"<font class=yellow><div align=center>Invaild number.</font></div><br><br>";	die();	 }					
@@ -331,7 +336,7 @@ else	{
 
 	mysql_query("INSERT INTO barter (seller, cost, type, amount, barterid, userid, method)	VALUES	('$ename', '$cost', '$type', '$amount', '$maxbid', '$userid', '$method') ");
 					
-	if($type == "Explorer")	{	$newexplorers = $explorers - $amount;	mysql_query("UPDATE military SET explorers='$newexplorers' WHERE email='$email' AND pw='$pw'");	}
+	if($type == "Explorer")	 {	$newexplorers = $aexplorers - $amount;	mysql_query("UPDATE military SET explorers='$newexplorers' WHERE email='$email' AND pw='$pw'");	}
 	if($type == "Priest")	{	$newpri= $priests - $amount;	 mysql_query("UPDATE military SET priests='$newpri' WHERE email='$email' AND pw='$pw'");	}
 	if($type == "Recruit")	{	$newrec= $recruits - $amount;	mysql_query("UPDATE military SET recruits='$newrec' WHERE email='$email' AND pw='$pw'");	}
 	if($type == "Scientist")	{	$newsicen= $scientists - $amount;	mysql_query("UPDATE military SET scientists='$newsicen' WHERE email='$email' AND pw='$pw'");	}
@@ -379,7 +384,7 @@ else	{
 		$b_userid = $barter[userid];
 
 	if($b_userid != $userid)	{	echo"<font class=yellow><div align=center>You cannot cancel other empire barters.</font></div><br><br>";	die();	 }
-	if($b_type == "Explorer")	{	$newexplorers = $explorers + $b_amount;	 mysql_query("UPDATE military SET explorers='$newexplorers' WHERE email='$email' AND pw='$pw'");	}
+	if($b_type == "Explorer")	{	$newexplorers = $aexplorers + $b_amount;	 mysql_query("UPDATE military SET explorers='$newexplorers' WHERE email='$email' AND pw='$pw'");	}
 	if($b_type == "Priest")	{	$newpriests = $priests + $b_amount;	mysql_query("UPDATE military SET priests='$newpriests' WHERE email='$email' AND pw='$pw'");	}
 	if($b_type == "Recruit")	 {	$newrec = $recruits + $b_amount;	mysql_query("UPDATE military SET recruits='$newrec' WHERE email='$email' AND pw='$pw'");	}
 	if($b_type == "Scientist")	{	$newscien = $scientists + $b_amount;	 mysql_query("UPDATE military SET scientists='$newscien' WHERE email='$email' AND pw='$pw'");	}

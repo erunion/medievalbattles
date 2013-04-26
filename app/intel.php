@@ -85,9 +85,12 @@ else	{
 
 			if($evu['class']== Fighter)	{	$tempmodifier = 1.05;	}
 			if($evu['class'] == Mage)	{	$tempmodifier = .95;		}
-			if($evu[race] == Giant)	{	$tempmodifier = $tempmodifier + .25;	}
+			if($evu['class'] == Cleric)	{	$tempmodifier = 1.00;	}
+			if($evu['class'] == Ranger)	{	$tempmodifier = 1.00;	}
+			if($evu[race] == Giant)		{	$tempmodifier = $tempmodifier + .25;	 }
 
-			$evdef = round( ($evm[warriors] * $evm[warpower]) + ($evm[wizards] * $evm[wizpower]) + ($evm[priests] * $evm[pripower]) + ($evm[archers] * $evm[archpower]) + ($evm[catapult] * 30) + ($evb[wp] * 10) * $tempmodifier);
+			$evdef = (($evm[warriors] * $evm[warpower]) + ($evm[wizards] * $evm[wizpower]) + ($evm[priests] * $evm[pripower]) + ($evm[archers] * $evm[archpower]) + ($evm[catapult] * 30) + ($evb[wp] * 10)) * $tempmodifier;
+			$evdef = round($evdef);
 
 			$evu[gp] = number_format($evu[gp]);
 			$evu[iron]=number_format($evu[iron]);
@@ -99,7 +102,7 @@ else	{
 			$evm[wizards]=number_format($evm[wizards]);
 			$evm[priests]=number_format($evm[priests]);
 			$evm[archers]=number_format($evm[archers]);
-			$evm[catapult]=number_format($evm[catapults]);
+			$evm[catapult]=number_format($evm[catapult]);
 			$evdef=number_format($evdef);
 
 echo"

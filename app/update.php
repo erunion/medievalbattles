@@ -1,16 +1,21 @@
 <?	
 //include("www/include/connect.php");
+//include("www/include/clock.php");
 include("include/connect.php");
-
+include("include/clock.php");
 
 	mysql_query("UPDATE game_info SET tick='yes'");
 	$max_userid = mysql_db_query($dbnam, "SELECT max(userid) FROM user"); 
 	$max_UID = mysql_result($max_userid, "max_UID");
 	
 While($INC_ID < $max_UID + 1)	{		
-			$query = "SELECT * FROM user WHERE userid='$INC_ID'";
+			$query = "SELECT * FROM emailvalidate WHERE userid='$INC_ID'";
 			$result = mysql_db_query($dbnam, $query) or die("Error in query! " . mysql_error());
-			$user = mysql_fetch_array($result);
+			$validate = mysql_fetch_array($result);
+
+			$query1 = "SELECT * FROM user WHERE userid='$INC_ID'";
+			$result1 = mysql_db_query($dbnam, $query1) or die("Error in query! " . mysql_error());
+			$user = mysql_fetch_array($result1);
 
 			$query2 = "SELECT * FROM military WHERE userid='$INC_ID'";
 			$result2 = mysql_db_query($dbnam, $query2) or die("Error in query! " . mysql_error());
@@ -130,9 +135,9 @@ While($INC_ID < $max_UID + 1)	{
 
 			mysql_query("UPDATE buildings SET aland = aland + $land_gain, amts = amts + $mt_gain WHERE userid='$INC_ID'");
 			mysql_query("UPDATE user SET land = land + $land_gain, mts = mts + $mt_gain WHERE userid='$INC_ID'");
-#############
+###############
 ##	return troops
-#############
+###############
 			if($ret[time1] == 1)	{
 				mysql_query("UPDATE military SET warriors = warriors + $ret[war1], wizards = wizards + $ret[wiz1],priests = priests + $ret[pri1],archers = archers + $ret[arch1]  WHERE userid='$INC_ID'");
 				mysql_query("UPDATE user SET fleets = fleets + 1 WHERE userid='$INC_ID'");
@@ -150,20 +155,21 @@ While($INC_ID < $max_UID + 1)	{
 				mysql_query("UPDATE user SET fleets = fleets + 1 WHERE userid='$INC_ID'");
 			}
 ###############
-##	AIDS
+##	ASS
 ###############
-	if($user[countdown] == 1)	 {
-		include("include/clock.php");
+	mysql_query("UPDATE emailvalidate SET clock= clock - 1 WHERE clock > 0 AND userid ='$INC_ID'");
+	
+	if($validate[clock] == 1 AND $validate[check] == 1)	 {
 		mysql_query("INSERT INTO setnews (date, news, setid) 	VALUES	('$clock', '<font class=red>$user[ename] has been deleted for inactivity.</font>', '$user[setid]') ");
 		
 		//	send them an email
 		$email = $user[email];
 		$subject = "Your Medieval Battles Account Deleted";
 		$body = "
-		Since you have not logged into your account after one week upon signing up, your account was deleted. You are welcome to create another account though. Just go to:
-		www.medievalbattles.com/index?signup=yes. If you have any questions reguarding this, just email us at: support@medievalbattles.com
+Since you did not activate your account within one day upon signing up, your account was deleted. You are welcome to create another account though. Just go to:
+www.medievalbattles.com/index?signup=yes. If you have any questions reguarding this, just email us at: support@medievalbattles.com
 
-		This email is automated. Your reply will not be recieved.";
+This email is automated. Your reply will not be recieved.";
 		$from = "From: account_deleted@medievalbattles.com\r\nbcc: phb@sendhost\r\nContent-type: text/plain\r\nX-mailer: PHP/" . phpversion();
 		$mailsend = mail("$email", "$subject", "$body", "$from");
 		
@@ -174,6 +180,36 @@ While($INC_ID < $max_UID + 1)	{
 		mysql_query("DELETE FROM research WHERE email='$user[email]' AND pw='$user[pw]'");
 		mysql_query("DELETE FROM return WHERE email='$user[email]' AND pw='$user[pw]'");
 		mysql_query("DELETE FROM explore WHERE email='$user[email]' AND pw='$user[pw]'");
+		mysql_query("DELETE FROM emailvalidate WHERE userid='$INC_ID'");
+		mysql_query("UPDATE user SET votefor='None' WHERE votefor='$user[ename]'");
+	}
+###############
+##	AIDS
+###############
+	mysql_query("UPDATE user SET countdown= countdown - 1 WHERE userid ='$INC_ID'");
+	
+	if($user[countdown] == 1)	 {
+		mysql_query("INSERT INTO setnews (date, news, setid) 	VALUES	('$clock', '<font class=red>$user[ename] has been deleted for inactivity.</font>', '$user[setid]') ");
+		
+		//	send them an email
+		$email = $user[email];
+		$subject = "Your Medieval Battles Account Deleted";
+		$body = "
+Since you have not logged into your account after one week upon signing up, your account was deleted. You are welcome to create another account though. Just go to:
+www.medievalbattles.com/index?signup=yes. If you have any questions reguarding this, just email us at: support@medievalbattles.com
+
+This email is automated. Your reply will not be recieved.";
+		$from = "From: account_deleted@medievalbattles.com\r\nbcc: phb@sendhost\r\nContent-type: text/plain\r\nX-mailer: PHP/" . phpversion();
+		$mailsend = mail("$email", "$subject", "$body", "$from");
+		
+		//	remove them from the database
+		mysql_query("DELETE FROM user WHERE email='$user[email]' AND pw='$user[pw]'");
+		mysql_query("DELETE FROM military WHERE email='$user[email]' AND pw='$user[pw]'");
+		mysql_query("DELETE FROM buildings WHERE email='$user[email]' AND pw='$user[pw]'");
+		mysql_query("DELETE FROM research WHERE email='$user[email]' AND pw='$user[pw]'");
+		mysql_query("DELETE FROM return WHERE email='$user[email]' AND pw='$user[pw]'");
+		mysql_query("DELETE FROM explore WHERE email='$user[email]' AND pw='$user[pw]'");
+		mysql_query("DELETE FROM emailvalidate WHERE userid='$INC_ID'");
 		mysql_query("UPDATE user SET votefor='None' WHERE votefor='$user[ename]'");
 	}
 ###############
@@ -263,11 +299,11 @@ While($INC_ID < $max_UID + 1)	{
 
 
 	$INC_ID = $INC_ID + 1;
-}
+}	
 ###############
-##	AIDS
+##	BTC
 ###############
-		mysql_query("UPDATE user SET countdown= countdown - 1 WHERE countdown > 0");
+		mysql_query("UPDATE user SET barterclock= barterclock - 1 WHERE barterclock > 0");
 #####################
 ##	clear exp2 column
 #####################
@@ -383,35 +419,27 @@ While($INC_ID < $max_UID + 1)	{
 	mysql_query("DELETE FROM guildnews WHERE age='192'");
 
 	mysql_query("UPDATE user SET exp = 1000 WHERE exp < 1000");
-
 	mysql_query("UPDATE game_info SET tick = 'no'");
 
-		While($SET_INC < 61)
-  			{
-				$SET_STRENGTH = mysql_db_query($dbnam, "SELECT sum(exp) FROM user WHERE setid = '$SET_INC'");	
-				$S_STRENGTH = mysql_result($SET_STRENGTH,"S_STRENGTH");	
-
-				mysql_query("UPDATE settlement SET setstrength = '$S_STRENGTH' WHERE setid='$SET_INC'");
-				$SET_INC = $SET_INC + 1;
-			} 	
+	While($SET_INC < 31)	{
+		$SET_STRENGTH = mysql_db_query($dbnam, "SELECT sum(exp) FROM user WHERE setid = '$SET_INC'");	
+			$S_STRENGTH = mysql_result($SET_STRENGTH,"S_STRENGTH");	
+		mysql_query("UPDATE settlement SET setstrength = '$S_STRENGTH' WHERE setid='$SET_INC'");
+		$SET_INC = $SET_INC + 1;
+	} 	
 	
-		
-		$MAX_GUILDID = mysql_db_query($dbnam, "SELECT max(gid) FROM guild");	
+	$MAX_GUILDID = mysql_db_query($dbnam, "SELECT max(gid) FROM guild");	
 		$MAX_GID = mysql_result($MAX_GUILDID,"MAX_GID");
 
-		While($GUILD_INC < $MAX_GID + 1)	 	
-			{
-						$guild_name_query = mysql_db_query($dbnam, "SELECT gname FROM guild WHERE gid='$GUILD_INC'");
-						$guild_name = mysql_fetch_array($guild_name_query);
-						
-						$guild_user_exp = mysql_db_query($dbnam, "SELECT sum(exp) FROM user WHERE guild='$guild_name[gname]'");	
-							$user_exp = mysql_result($guild_user_exp, "user_exp");
-
-						mysql_query("UPDATE guild SET strength='$user_exp' WHERE gid='$GUILD_INC'");
+	While($GUILD_INC < $MAX_GID + 1)	{
+		$guild_name_query = mysql_db_query($dbnam, "SELECT gname FROM guild WHERE gid='$GUILD_INC'");
+			$guild_name = mysql_fetch_array($guild_name_query);
+		$guild_user_exp = mysql_db_query($dbnam, "SELECT sum(exp) FROM user WHERE guild='$guild_name[gname]'");	
+			$user_exp = mysql_result($guild_user_exp, "user_exp");
+		mysql_query("UPDATE guild SET strength='$user_exp' WHERE gid='$GUILD_INC'");
 				
-				$GUILD_INC = $GUILD_INC + 1;
-					
-			}
+		$GUILD_INC = $GUILD_INC + 1;
+	}
 	
 echo "Sending email to Mako informing him of the tick.<BR>";
 

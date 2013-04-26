@@ -34,6 +34,7 @@ if($pwcheck[0] == $pw)	{
 	mysql_query("UPDATE user SET countdown='336' WHERE email='$email' AND pw='$pw'");
 	mysql_query("UPDATE user SET lastlogin='$clock' WHERE ename='$ename'");
 	mysql_query("UPDATE user SET online='1' WHERE ename='$ename'");
+	mysql_query("UPDATE user SET current_comp_id='$computer_id' WHERE ename='$ename'");
 
 	$user_set_query = mysql_db_query($dbnam, "SELECT setid FROM user WHERE email='$email' AND pw='$pw'");
 		$set = mysql_result($user_set_query, "set");

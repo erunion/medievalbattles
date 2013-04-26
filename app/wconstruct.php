@@ -1,18 +1,18 @@
-<?php include("include/igtop.php");?>
+<?php
 
+include("include/igtop.php");
+
+echo "
 <center>
- <b class=reg></a> | <a href="equip.php"> -Equip- </a> | <a href="wconstruct.php"> -Construct Weapon- </a> | <a href="aconstruct.php"> -Construct Armor- </a> |</b>
-  </center>
-  <br>
-  <br>
+<b class=reg> | <a href=disband.php>Disband</a> | <a href=equip.php>Equip</a> | <a href=wconstruct.php>Construct Weapon</a> | <a href=aconstruct.php>Construct Armor</a> |</b>
+</center>
+<br>";
  
 
-<?php
 ###############
 ## warrior weapons
 ###############
-?>
-<?php
+
 	if(!IsSet($shortsword))	{
 }
 else
