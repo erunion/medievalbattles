@@ -1,0 +1,6 @@
+{
+  "name": "Medieval Battles",
+  "tagline": "A free browser based, MMORPG.",
+  "body": "Medieval Battles was a browser based MMORPG that ran from 2002 until sometime in 2007. It was a lot of fun, but was plagued by my overall lack of experience with programming (I taught myself how to program through it) and managing a community.\r\n\r\nIt's now [open source](https://github.com/erunion/medievalbattles). The database is mostly there though you might run into some issues with a table (or two) or data missing.\r\n\r\nI've thought about reviving it, but just haven't had the time.\r\n\r\nIf you spin up an instance, I'd love to hear about it.\r\n\r\n&mdash; Jon Ursenbach, 2016",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
